@@ -9,9 +9,10 @@
 en:
   header:
     account: My account
+    activity_reports: Activity reports
     language_toggle: English
     logout: "Log out"
-    title: "Application Title"
+    title: "Medicaid Community Engagement"
     close: "Close"
   flash:
     error_heading:
