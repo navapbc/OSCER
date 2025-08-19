@@ -30,6 +30,7 @@ VOLUME /rails/tmp
 ##########################################################################################
 FROM base AS build
 
+# Temporary workaround for a Hash Sum Mismatch error that can occur with apt-get
 RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/99custom && \
     echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/99custom && \
     echo "Acquire::BrokenProxy    true;" >> /etc/apt/apt.conf.d/99custom
@@ -37,13 +38,13 @@ RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/99custom && \
 # Install packages needed to build gems
 RUN apt-get update -qq \
     && apt-get install --no-install-recommends -y \
-        build-essential \
-        git \
-        libpq-dev \
-        libvips \
-        libyaml-dev \
-        pkg-config \
-        npm \
+    build-essential \
+    git \
+    libpq-dev \
+    libvips \
+    libyaml-dev \
+    pkg-config \
+    npm \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -61,6 +62,7 @@ FROM build AS dev
 
 ENV RAILS_ENV="development"
 
+# Temporary workaround for a Hash Sum Mismatch error that can occur with apt-get
 RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/99custom && \
     echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/99custom && \
     echo "Acquire::BrokenProxy    true;" >> /etc/apt/apt.conf.d/99custom
@@ -68,8 +70,8 @@ RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/99custom && \
 # Install packages needed for development
 RUN apt-get update -qq \
     && apt-get install --no-install-recommends -y \
-        postgresql-client \
-        graphviz \
+    postgresql-client \
+    graphviz \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -124,6 +126,7 @@ ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle"
 
+# Temporary workaround for a Hash Sum Mismatch error that can occur with apt-get
 RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/99custom && \
     echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/99custom && \
     echo "Acquire::BrokenProxy    true;" >> /etc/apt/apt.conf.d/99custom
@@ -131,9 +134,9 @@ RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/99custom && \
 # Install packages needed for deployment
 RUN apt-get update -qq \
     && apt-get install -y --no-install-recommends \
-        libvips \
-        libyaml-dev \
-        postgresql-client \
+    libvips \
+    libyaml-dev \
+    postgresql-client \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
