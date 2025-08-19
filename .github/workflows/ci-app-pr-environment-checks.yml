@@ -8,14 +8,7 @@ on:
       commit_hash:
         required: true
         type: string
-  # !! Once you've set up the dev environment and are ready to enable PR
-  # environments, run:
-  #
-  # nava-platform infra update --answers-only --data app_has_dev_env_setup=true .
-  #
-  # to enable these lines. They are here as comments for context.
-  #
-  # pull_request:
+  pull_request:
 
 jobs:
   update:
