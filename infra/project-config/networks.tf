@@ -1,10 +1,10 @@
 locals {
   network_configs = {
     dev = {
-      account_name = "dev"
+      account_name = "nava-community-engagement-medicaid"
 
       domain_config = {
-        manage_dns = true
+        manage_dns = false
         # Placeholder value for the hosted zone
         # A hosted zone represents a domain and all of its subdomains. For example, a
         # hosted zone of foo.domain.com includes foo.domain.com, bar.foo.domain.com, etc.
