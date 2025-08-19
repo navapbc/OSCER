@@ -24,6 +24,6 @@ class ApplicationController < ActionController::Base
       return users_mfa_preference_path
     end
 
-    users_account_path
+    activity_report_application_forms_path
   end
 end

@@ -34,7 +34,7 @@ RSpec.describe Users::MfaController do
       user.reload
       expect(user.mfa_preference).to eq("opt_out")
 
-      expect(response).to redirect_to(users_account_path)
+      expect(response).to redirect_to(activity_report_application_forms_path)
     end
 
     it "does not set preference when selecting software token" do
