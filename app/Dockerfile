@@ -30,6 +30,10 @@ VOLUME /rails/tmp
 ##########################################################################################
 FROM base AS build
 
+RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/99custom && \
+    echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/99custom && \
+    echo "Acquire::BrokenProxy    true;" >> /etc/apt/apt.conf.d/99custom
+
 # Install packages needed to build gems
 RUN apt-get update -qq \
     && apt-get install --no-install-recommends -y \
@@ -56,6 +60,10 @@ RUN npm install
 FROM build AS dev
 
 ENV RAILS_ENV="development"
+
+RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/99custom && \
+    echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/99custom && \
+    echo "Acquire::BrokenProxy    true;" >> /etc/apt/apt.conf.d/99custom
 
 # Install packages needed for development
 RUN apt-get update -qq \
@@ -115,6 +123,10 @@ FROM base AS release
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle"
+
+RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/99custom && \
+    echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/99custom && \
+    echo "Acquire::BrokenProxy    true;" >> /etc/apt/apt.conf.d/99custom
 
 # Install packages needed for deployment
 RUN apt-get update -qq \
