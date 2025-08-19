@@ -21,6 +21,9 @@
         <ul class="usa-nav__primary usa-accordion">
             <% if user_signed_in? %>
               <li class="usa-nav__primary-item">
+                <%= link_to t('header.activity_reports'), activity_report_application_forms_path, class: "usa-nav-link" %>
+              </li>
+              <li class="usa-nav__primary-item">
                 <%= link_to t('header.account'), users_account_path, class: "usa-nav-link" %>
               </li>
               <li class="usa-nav__primary-item">

@@ -1,0 +1,11 @@
+<%= render template: "flex/application_forms/show", locals: {
+  title: t(".title"),
+  back_link_text: t(".back"),
+  index_path: activity_report_application_forms_path,
+  created_at: @activity_report_application_form.created_at.strftime("%B %d, %Y at %I:%M %p"),
+  current_status: @activity_report_application_form.status,
+  next_step: t(".next_step.status.#{@activity_report_application_form.status}"),
+  submitted_on_text: t(".submitted_on")
+} %>
+
+<%= link_to t(".edit"), edit_activity_report_application_form_path(@activity_report_application_form), class: "usa-button usa-button--outline" %>

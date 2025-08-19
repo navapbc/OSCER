@@ -11,7 +11,7 @@ locals {
         hosted_zone = "engage.navateam.com"
 
         certificate_configs = {
-         # Example certificate configuration for a certificate that is managed by the project
+          # Example certificate configuration for a certificate that is managed by the project
           "engage.navateam.com" = {
             source = "issued"
           }
