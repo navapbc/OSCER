@@ -19,16 +19,9 @@ locals {
   #   }
   # }
   secrets = {
-    # Example generated secret
-    # RANDOM_SECRET = {
-    #   manage_method     = "generated"
-    #   secret_store_name = "/${var.app_name}-${var.environment}/random-secret"
-    # }
-
-    # Example secret that references a manually created secret
-    # SECRET_SAUCE = {
-    #   manage_method     = "manual"
-    #   secret_store_name = "/${var.app_name}-${var.environment}/secret-sauce"
-    # }
+    SECRET_KEY_BASE = {
+      manage_method     = "generated"
+      secret_store_name = "/${var.app_name}-${var.environment}/service/rails-secret-key-base"
+    }
   }
 }
