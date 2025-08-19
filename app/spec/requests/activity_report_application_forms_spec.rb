@@ -13,17 +13,24 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/activity_report_application_forms", type: :request do
-  
+  include Warden::Test::Helpers
+
+  let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
+
   # This should return the minimal set of attributes required to create a valid
   # ActivityReportApplicationForm. As you add validations to ActivityReportApplicationForm, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { employer_name: "Acme Corp" }
   }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  before do
+    login_as user
+  end
+
+  after do
+    Warden.test_reset!
+  end
 
   describe "GET /index" do
     it "renders a successful response" do
@@ -69,32 +76,19 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         expect(response).to redirect_to(activity_report_application_form_url(ActivityReportApplicationForm.last))
       end
     end
-
-    context "with invalid parameters" do
-      it "does not create a new ActivityReportApplicationForm" do
-        expect {
-          post activity_report_application_forms_url, params: { activity_report_application_form: invalid_attributes }
-        }.to change(ActivityReportApplicationForm, :count).by(0)
-      end
-
-      it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post activity_report_application_forms_url, params: { activity_report_application_form: invalid_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-    end
   end
 
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { employer_name: "New Employer Corp" }
       }
 
       it "updates the requested activity_report_application_form" do
         activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
         patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
         activity_report_application_form.reload
-        skip("Add assertions for updated state")
+        expect(activity_report_application_form.employer_name).to eq("New Employer Corp")
       end
 
       it "redirects to the activity_report_application_form" do
@@ -102,14 +96,6 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
         activity_report_application_form.reload
         expect(response).to redirect_to(activity_report_application_form_url(activity_report_application_form))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
-        patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: invalid_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end

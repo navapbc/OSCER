@@ -1,9 +1,9 @@
 <%= render partial: "application/breadcrumbs", locals: { crumbs: [
-  { name: "Medicaid applications", url: medicaid_application_forms_path },
-  ], current_name: "New medicaid application" } %>
+  { name: "Activity reports", url: activity_report_application_forms_path },
+  ], current_name: "New activity report" } %>
 
-<% content_for :title, "New activity report application form" %>
+<% content_for :title, "New activity report" %>
 
-<h1>New activity report application form</h1>
+<h1>New activity report</h1>
 
 <%= render "form", activity_report_application_form: @activity_report_application_form %>
