@@ -5,7 +5,7 @@ RSpec.describe "activity_report_application_forms/edit", type: :view do
     ActivityReportApplicationForm.create!()
   }
 
-  before(:each) do
+  before do
     assign(:activity_report_application_form, activity_report_application_form)
   end
 

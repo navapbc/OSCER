@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "activity_report_application_forms/index", type: :view do
-  before(:each) do
+  before do
     assign(:activity_report_application_forms, [
       ActivityReportApplicationForm.create!(),
       ActivityReportApplicationForm.create!()
@@ -10,6 +10,7 @@ RSpec.describe "activity_report_application_forms/index", type: :view do
 
   it "renders a list of activity_report_application_forms" do
     render
-    cell_selector = 'div>p'
+    cell_selector = 'tr'
+    assert_select cell_selector, count: 3
   end
 end

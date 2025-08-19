@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "activity_report_application_forms/new", type: :view do
-  before(:each) do
+  before do
     assign(:activity_report_application_form, ActivityReportApplicationForm.new())
   end
 
