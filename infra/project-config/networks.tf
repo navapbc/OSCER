@@ -8,11 +8,15 @@ locals {
         # Placeholder value for the hosted zone
         # A hosted zone represents a domain and all of its subdomains. For example, a
         # hosted zone of foo.domain.com includes foo.domain.com, bar.foo.domain.com, etc.
-        hosted_zone = "engage.navateam.com"
+        hosted_zone = "medicaid.navateam.com"
 
         certificate_configs = {
           # Example certificate configuration for a certificate that is managed by the project
-          "engage.navateam.com" = {
+          "medicaid.navateam.com" = {
+            source = "issued"
+          }
+
+          "app.medicaid.navateam.com" = {
             source = "issued"
           }
 
