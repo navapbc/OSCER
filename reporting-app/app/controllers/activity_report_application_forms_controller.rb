@@ -20,6 +20,10 @@ class ActivityReportApplicationFormsController < ApplicationController
 
   # GET /activity_report_application_forms/1/edit
   def edit
+    respond_to do |format|
+      format.html # render edit form with existing supporting_documents
+      format.json { render json: @activity_report_application_form.as_json(include: { supporting_documents: { include: :blob } }) }
+    end
   end
 
   # POST /activity_report_application_forms or /activity_report_application_forms.json
@@ -69,7 +73,8 @@ class ActivityReportApplicationFormsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def activity_report_application_form_params
       params.require(:activity_report_application_form).permit(
-        :employer_name
+        :employer_name,
+        supporting_documents: []
       )
     end
 end
