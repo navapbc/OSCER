@@ -19,7 +19,7 @@ locals {
   # If enabled, the networks associated with this application's environments
   # will have NAT gateways, which allows the service in the private subnet to
   # make calls to the internet.
-  has_external_non_aws_service = false
+  has_external_non_aws_service = true
 
   has_incident_management_service = false
 
@@ -28,7 +28,7 @@ locals {
   # 1. Creates a Cognito user pool
   # 2. Creates a Cognito user pool app client
   # 3. Adds environment variables for the app client to the service
-  enable_identity_provider = false
+  enable_identity_provider = true
 
   # Whether or not the application should deploy a notification service.
   #
