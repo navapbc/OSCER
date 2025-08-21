@@ -1,4 +1,4 @@
-class ActivityReportCasesController < ApplicationController
+class ActivityReportCasesController < Flex::StaffController
   before_action :set_activity_report_case, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
   skip_after_action :verify_authorized
