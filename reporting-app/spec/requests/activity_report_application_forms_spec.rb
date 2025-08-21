@@ -23,6 +23,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
   let(:valid_attributes) do
     {
       employer_name: "Acme Corp",
+      reporting_period: (Date.today - 1.month).beginning_of_month,
       supporting_documents: [
         fixture_file_upload('spec/fixtures/files/test_document_1.pdf', 'application/pdf'),
         fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain'),
