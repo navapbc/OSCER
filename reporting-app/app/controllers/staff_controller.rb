@@ -6,6 +6,7 @@ class StaffController < Flex::StaffController
   skip_after_action :verify_policy_scoped
 
   def case_classes
-    []
+    # Add case classes in your application
+    [ ActivityReportCase ]
   end
 end
