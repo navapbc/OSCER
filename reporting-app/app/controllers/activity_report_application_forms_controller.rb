@@ -74,6 +74,7 @@ class ActivityReportApplicationFormsController < ApplicationController
     def activity_report_application_form_params
       params.require(:activity_report_application_form).permit(
         :employer_name,
+        :minutes,
         supporting_documents: []
       )
     end
