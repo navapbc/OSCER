@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   resources :activity_report_application_forms
 
-  resources :activity_report_cases do
-    collection do
-      get :closed
-    end
-  end
-
   scope path: "/staff" do
+    resources :activity_report_cases do
+      collection do
+        get :closed
+      end
+    end
+
     resources :tasks, only: [ :index, :show, :update ] do
       collection do
         post :pick_up_next_task
