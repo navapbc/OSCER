@@ -21,7 +21,8 @@ RSpec.describe "/activity_report_application_forms", type: :request do
   # ActivityReportApplicationForm. As you add validations to ActivityReportApplicationForm, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    { employer_name: "Acme Corp" }
+    { employer_name: "Acme Corp" },
+    { reporting_period: (Date.today - 1.month).beginning_of_month }
   }
 
   before do
