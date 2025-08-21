@@ -1,4 +1,4 @@
-name: CI app
+name: CI reporting-app
 
 on:
   push:
@@ -6,15 +6,15 @@ on:
       - main
     paths:
       - app/**
-      - .github/workflows/ci-app.yml
+      - .github/workflows/ci-reporting-app.yml
   pull_request:
     paths:
       - app/**
-      - .github/workflows/ci-app.yml
+      - .github/workflows/ci-reporting-app.yml
 
 defaults:
   run:
-    working-directory: ./app
+    working-directory: ./reporting-app
 
 jobs:
   # As an enhancement, it is possible to share the built docker image and share
@@ -28,9 +28,8 @@ jobs:
 
       # https://github.com/docker/compose/issues/1973
       - name: Create required env files
-        working-directory: ./
         run: |
-          touch ./app/.env
+          touch .env
 
       - run: make lint-ci
 
