@@ -46,6 +46,10 @@ module TemplateApplicationRails
       g.factory_bot suffix: "factory"
     end
 
+    config.after_initialize do
+      ActivityReportBusinessProcess.start_listening_for_events
+    end
+
     # Support UUID generation. This was a callout in the ActiveStorage guide
     # https://edgeguides.rubyonrails.org/active_storage_overview.html#setup
     Rails.application.config.generators { |g| g.orm :active_record, primary_key_type: :uuid }
