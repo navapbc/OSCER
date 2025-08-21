@@ -69,7 +69,8 @@ class ActivityReportApplicationFormsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def activity_report_application_form_params
       params.require(:activity_report_application_form).permit(
-        :employer_name
+        :employer_name,
+        :reporting_period
       )
     end
 end
