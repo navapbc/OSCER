@@ -1,6 +1,22 @@
 Rails.application.routes.draw do
   resources :activity_report_application_forms
 
+  scope path: "/staff" do
+    resources :activity_report_cases do
+      collection do
+        get :closed
+      end
+    end
+
+    resources :tasks, only: [ :index, :show, :update ] do
+      collection do
+        post :pick_up_next_task
+      end
+    end
+  end
+
+  get "/staff", to: "staff#index"
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
