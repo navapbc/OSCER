@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_21_213802) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_22_011433) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_21_213802) do
     t.datetime "updated_at", null: false
     t.string "employer_name"
     t.date "reporting_period"
+    t.uuid "user_id"
+    t.integer "status"
+    t.datetime "submitted_at"
   end
 
   create_table "activity_report_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
