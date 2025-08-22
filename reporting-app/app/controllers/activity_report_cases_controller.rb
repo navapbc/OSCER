@@ -1,10 +1,4 @@
-class ActivityReportCasesController < Flex::StaffController
-  before_action :set_activity_report_case, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!
-  skip_after_action :verify_authorized
-  skip_after_action :verify_policy_scoped
-
-
+class ActivityReportCasesController < StaffController
   before_action :set_activity_report_case, only: %i[ show edit update destroy ]
 
   # GET /activity_report_cases or /activity_report_cases.json
