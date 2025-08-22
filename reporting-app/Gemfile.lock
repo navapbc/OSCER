@@ -1,6 +1,6 @@
 GIT
   remote: https://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:x-oauth-basic@github.com/navapbc/flex-sdk.git
-  revision: cdef3a0c502717c56818b8fb289bac1fe8b3df41
+  revision: d469768ed9614526e0728922390d957d4937123d
   specs:
     flex (0.1.0)
       rails (>= 7.1.5.1)
