@@ -103,6 +103,17 @@ RSpec.describe "/activity_report_application_forms", type: :request do
           "test_document_3.docx"
         )
       end
+
+      it "creates an activity report case" do
+        expect {
+          post activity_report_application_forms_url, params: { activity_report_application_form: valid_attributes }
+        }.to change(ActivityReportCase, :count).by(1)
+
+        created_form = ActivityReportApplicationForm.last
+        kase = ActivityReportCase.find_by(application_form_id: created_form.id)
+        expect(kase).not_to be_nil
+        expect(kase.business_process_instance.current_step).to eq("submit_report")
+      end
     end
 
     context "with invalid parameters" do
@@ -156,6 +167,47 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         expect(activity_report_application_form.supporting_documents.count).to eq(1)
         expect(activity_report_application_form.supporting_documents.first.filename.to_s).to eq("test_document_2.txt")
       end
+    end
+
+    context "with invalid parameters" do
+      let(:new_attributes) {
+        {
+          employer_name: "New Employer Corp",
+          minutes: 10 # Under 15 minutes
+        }
+      }
+
+      it "does not update the requested activity_report_application_form" do
+        activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
+        patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
+        activity_report_application_form.reload
+        expect(activity_report_application_form.minutes).to eq(60)
+      end
+
+      it "renders a successful response (i.e. to display the 'edit' template)" do
+        activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
+        patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
+
+  describe "POST /submit" do
+    let(:application_form) { ActivityReportApplicationForm.create! valid_attributes
+}
+
+    before do
+      post submit_activity_report_application_form_url(application_form)
+    end
+
+    it "marks the activity report as submitted" do
+      application_form.reload
+      expect(application_form).to be_submitted
+    end
+
+    it "sets the current step of the case to 'review_report'" do
+      kase = ActivityReportCase.find_by(application_form_id: application_form.id)
+      expect(kase.business_process_instance.current_step).to eq("review_report")
     end
   end
 

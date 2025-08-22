@@ -2,10 +2,10 @@ class ReviewActivityReportTasksController < TasksController
   def update
     @task.mark_completed
 
-    if params[:commit] == "Approve"
+    if params[:commit] == "approve"
       puts "Approving activity report case:"
       puts @case.id
-    elsif params[:commit] == "Deny"
+    else
       puts "Denying activity report case:"
       puts @case.id
     end
