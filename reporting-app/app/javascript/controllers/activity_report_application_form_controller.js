@@ -18,8 +18,6 @@ export default class extends Controller {
       const hours = parseFloat(hoursField.value)
       const minutes = Math.round(hours * 60)
       hoursField.value = minutes
-    } else {
-      hoursField.value = 0
     }
   }
 }
