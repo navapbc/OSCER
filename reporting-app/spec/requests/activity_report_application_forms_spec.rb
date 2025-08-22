@@ -23,12 +23,20 @@ RSpec.describe "/activity_report_application_forms", type: :request do
   let(:valid_attributes) do
     {
       employer_name: "Acme Corp",
+      minutes: 60, # 1 hour
       reporting_period: (Date.today - 1.month).beginning_of_month,
       supporting_documents: [
         fixture_file_upload('spec/fixtures/files/test_document_1.pdf', 'application/pdf'),
         fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain'),
         fixture_file_upload('spec/fixtures/files/test_document_3.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
       ]
+    }
+  end
+
+  let(:invalid_attributes) do
+    {
+      employer_name: "",
+      minutes: 10 # Less than minimum 15 minutes
     }
   end
 
@@ -96,6 +104,19 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         )
       end
     end
+
+    context "with invalid parameters" do
+      it "does not create a new ActivityReportApplicationForm" do
+        expect {
+          post activity_report_application_forms_url, params: { activity_report_application_form: invalid_attributes }
+        }.to change(ActivityReportApplicationForm, :count).by(0)
+      end
+
+      it "renders a successful response (i.e. to display the 'new' template)" do
+        post activity_report_application_forms_url, params: { activity_report_application_form: invalid_attributes }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
   end
 
   describe "PATCH /update" do
@@ -103,6 +124,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
       let(:new_attributes) {
         {
           employer_name: "New Employer Corp",
+          minutes: 45, # 45 minutes
           supporting_documents: [
             fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain')
           ]
@@ -114,6 +136,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
         activity_report_application_form.reload
         expect(activity_report_application_form.employer_name).to eq("New Employer Corp")
+        expect(activity_report_application_form.minutes).to eq(45)
       end
 
       it "redirects to the activity_report_application_form" do

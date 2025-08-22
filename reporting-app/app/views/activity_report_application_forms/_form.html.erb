@@ -1,4 +1,4 @@
-<%= flex_form_with(model: activity_report_application_form, data: { turbo: false }) do |f| %>
+<%= flex_form_with(model: activity_report_application_form, data: { turbo: false, controller: "activity-report-application-form" }) do |f| %>
   <%= f.text_field :employer_name %>
   <%= f.select :reporting_period,
     6.times.map { |i|
@@ -6,6 +6,20 @@
       [date.strftime("%B %Y"), date]
     }, { prompt: "- Select -" }
   %>
+  
+  <div class="usa-form-group">
+    <%= f.label :minutes, "Hours worked", class: "usa-label" %>
+    <%= f.number_field :minutes, 
+        step: 0.25, 
+        min: 0.25,
+        value: activity_report_application_form.minutes ? (activity_report_application_form.minutes / 60.0) : nil,
+        data: { 
+          "hours-to-minutes" => true 
+        },
+        class: "usa-input",
+        id: "activity_report_application_form_minutes" %>
+    <div class="usa-hint">Enter time in quarter hour increments (e.g., 1.25, 2.5, 3.75)</div>
+  </div>
   
   <% if activity_report_application_form.supporting_documents.attached? %>
     <div class="usa-form-group">
