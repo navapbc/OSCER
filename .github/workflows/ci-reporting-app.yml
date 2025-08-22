@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - app/**
+      - reporting-app/**
       - .github/workflows/ci-reporting-app.yml
   pull_request:
     paths:
-      - app/**
+      - reporting-app/**
       - .github/workflows/ci-reporting-app.yml
 
 defaults:
