@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_21_223030) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_22_011433) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,33 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_21_223030) do
     t.datetime "updated_at", null: false
     t.string "employer_name"
     t.integer "minutes"
+    t.date "reporting_period"
+    t.uuid "user_id"
+    t.integer "status"
+    t.datetime "submitted_at"
+  end
+
+  create_table "activity_report_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "application_form_id"
+    t.integer "status"
+    t.string "business_process_current_step"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "flex_tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type"
+    t.text "description"
+    t.integer "status", default: 0
+    t.uuid "assignee_id"
+    t.uuid "case_id"
+    t.date "due_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignee_id"], name: "index_flex_tasks_on_assignee_id"
+    t.index ["case_id"], name: "index_flex_tasks_on_case_id"
+    t.index ["status"], name: "index_flex_tasks_on_status"
+    t.index ["type"], name: "index_flex_tasks_on_type"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -3,6 +3,7 @@ class ActivityReportApplicationForm < Flex::ApplicationForm
 
   flex_attribute :employer_name, :string
   flex_attribute :minutes, :integer
+  flex_attribute :reporting_period, :date
 
   # Validation for minimum 15 minutes
   validates :minutes, presence: true, numericality: { 

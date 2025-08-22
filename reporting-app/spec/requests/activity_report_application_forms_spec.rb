@@ -24,6 +24,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
     {
       employer_name: "Acme Corp",
       minutes: 60, # 1 hour
+      reporting_period: (Date.today - 1.month).beginning_of_month,
       supporting_documents: [
         fixture_file_upload('spec/fixtures/files/test_document_1.pdf', 'application/pdf'),
         fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain'),
@@ -88,7 +89,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
 
       it "redirects to the created activity_report_application_form" do
         post activity_report_application_forms_url, params: { activity_report_application_form: valid_attributes }
-        expect(response).to redirect_to(activity_report_application_form_url(ActivityReportApplicationForm.last))
+        expect(response).to redirect_to(review_activity_report_application_form_url(ActivityReportApplicationForm.last))
       end
 
       it "attaches multiple supporting documents" do
@@ -142,7 +143,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
         patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
         activity_report_application_form.reload
-        expect(response).to redirect_to(activity_report_application_form_url(activity_report_application_form))
+        expect(response).to redirect_to(review_activity_report_application_form_url(activity_report_application_form))
       end
 
       it "updates the supporting documents" do

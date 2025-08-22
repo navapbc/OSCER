@@ -1,5 +1,11 @@
 <%= flex_form_with(model: activity_report_application_form, data: { turbo: false, controller: "activity-report-application-form" }) do |f| %>
   <%= f.text_field :employer_name %>
+  <%= f.select :reporting_period,
+    6.times.map { |i|
+      date = (Date.today - i.months).beginning_of_month
+      [date.strftime("%B %Y"), date]
+    }, { prompt: "- Select -" }
+  %>
   
   <div class="usa-form-group">
     <%= f.label :minutes, "Hours worked", class: "usa-label" %>
@@ -31,6 +37,8 @@
   <% end %>
   
   <%= f.file_field :supporting_documents, multiple: true, 
-      hint: activity_report_application_form.supporting_documents.attached? ? "Upload new documents (will replace existing ones)" : nil %>
+      hint: activity_report_application_form.supporting_documents.attached? ? "Upload new documents (will replace existing ones)" : nil
+  %>
+
   <%= f.submit "Save", big: true %>
 <% end %>
