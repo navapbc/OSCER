@@ -17,6 +17,12 @@
           <%= @activity_report_application_form.employer_name %>
         </td>
       </tr>
+      <tr>
+        <th scope="row">Hours worked</th>
+        <td class="border-top-0">
+          <%= number_with_precision(@activity_report_application_form.minutes / 60.0, precision: 2, strip_insignificant_zeros: true) %> hours
+        </td>
+      </tr>
       <% @activity_report_application_form.supporting_documents.each do |document| %>
         <tr>
           <th scope="row">Supporting document</th>
