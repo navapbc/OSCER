@@ -1,5 +1,12 @@
 class ActivityReportApplicationFormsController < ApplicationController
-  before_action :set_activity_report_application_form, only: %i[ show edit update destroy ]
+  before_action :set_activity_report_application_form, only: %i[
+    show
+    edit
+    review
+    update
+    submit
+    destroy
+  ]
   before_action :authenticate_user!
   skip_after_action :verify_authorized
   skip_after_action :verify_policy_scoped
@@ -26,14 +33,18 @@ class ActivityReportApplicationFormsController < ApplicationController
     end
   end
 
+  # GET /activity_report_cases/1/review
+  def review
+  end
+
   # POST /activity_report_application_forms or /activity_report_application_forms.json
   def create
     @activity_report_application_form = ActivityReportApplicationForm.new(activity_report_application_form_params)
 
     respond_to do |format|
       if @activity_report_application_form.save
-        format.html { redirect_to @activity_report_application_form, notice: "Activity report application form was successfully created." }
-        format.json { render :show, status: :created, location: @activity_report_application_form }
+        format.html { redirect_to review_activity_report_application_form_path(@activity_report_application_form), notice: "Activity report application form was successfully created." }
+        format.json { render :show, status: :created, location: review_activity_report_application_form_path(@activity_report_application_form) }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @activity_report_application_form.errors, status: :unprocessable_entity }
@@ -45,13 +56,19 @@ class ActivityReportApplicationFormsController < ApplicationController
   def update
     respond_to do |format|
       if @activity_report_application_form.update(activity_report_application_form_params)
-        format.html { redirect_to @activity_report_application_form, notice: "Activity report application form was successfully updated." }
-        format.json { render :show, status: :ok, location: @activity_report_application_form }
+        format.html { redirect_to review_activity_report_application_form_path(@activity_report_application_form), notice: "Activity report application form was successfully updated." }
+        format.json { render :show, status: :ok, location: review_activity_report_application_form_path(@activity_report_application_form) }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @activity_report_application_form.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # POST /activity_report_application_forms/1/submit
+  def submit
+    @activity_report_application_form.submit_application
+    redirect_to @activity_report_application_form
   end
 
   # DELETE /activity_report_application_forms/1 or /activity_report_application_forms/1.json
