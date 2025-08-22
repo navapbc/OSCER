@@ -3,38 +3,7 @@
 <h1>Review and submit</h1>
 
 <div class="usa-section margin-top-4 padding-0">
-  <table class="usa-table usa-table--borderless width-full">
-    <tbody>
-      <tr>
-        <th scope="row">Reporting period</th>
-        <td class="border-top-0">
-          <%= @activity_report_application_form.reporting_period.strftime("%B %Y") %>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">Employer name</th>
-        <td class="border-top-0">
-          <%= @activity_report_application_form.employer_name %>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">Hours worked</th>
-        <td class="border-top-0">
-          <%= @activity_report_application_form.minutes ? number_with_precision(@activity_report_application_form.minutes / 60.0, precision: 2, strip_insignificant_zeros: true) : "" %>
-        </td>
-      </tr>
-      <% @activity_report_application_form.supporting_documents.each do |document| %>
-        <tr>
-          <th scope="row">Supporting document</th>
-          <td>
-            <%= link_to document.filename, rails_blob_path(document, disposition: "attachment"),
-                target: "_blank", class: "usa-link" %>
-            (<%= number_to_human_size(document.byte_size) %>)
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%= render partial: 'activity_report_application_forms/activity_report_application_form', locals: { activity_report_application_form: @activity_report_application_form } %>
 </div>
 
 <%= flex_form_with(url: submit_activity_report_application_form_path(@activity_report_application_form), method: :post) do |f| %>
