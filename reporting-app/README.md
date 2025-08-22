@@ -18,7 +18,7 @@ This is a [Ruby on Rails](https://rubyonrails.org/) application. It includes:
 
 As a Rails app, much of the directory structure is driven by Rails conventions. We've also included directories for common patterns, such as adapters, form objects and services.
 
-**[Refer to the Software Architecture doc for more detail](../docs/app/software-architecture.md).**
+**[Refer to the Software Architecture doc for more detail](../docs/reporting-app/software-architecture.md).**
 
 Below are the primary directories to be aware of when working on the app:
 
@@ -119,10 +119,10 @@ You will need to set the other cognito variables as well; setting `AUTH_ADAPTER`
 
 ## 📇 Additional reading
 
-Beyond this README, you should also refer to the [`docs/app` directory](../docs/app) for more detailed info. Some highlights:
+Beyond this README, you should also refer to the [`docs/reporting-app` directory](../docs/reporting-app) for more detailed info. Some highlights:
 
-- [Technical foundation](../docs/app/technical-foundation.md)
-- [Software architecture](../docs/app/software-architecture.md)
-- [Authentication & Authorization](../docs/app/auth.md)
-- [Internationalization (i18n)](../docs/app/internationalization.md)
-- [Container images](../docs/app/container-images.md)
+- [Technical foundation](../docs/reporting-app/technical-foundation.md)
+- [Software architecture](../docs/reporting-app/software-architecture.md)
+- [Authentication & Authorization](../docs/reporting-app/auth.md)
+- [Internationalization (i18n)](../docs/reporting-app/internationalization.md)
+- [Container images](../docs/reporting-app/container-images.md)

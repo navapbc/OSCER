@@ -28,8 +28,9 @@ jobs:
 
       # https://github.com/docker/compose/issues/1973
       - name: Create required env files
+        working-directory: ./
         run: |
-          touch .env
+          touch ./reporting-app/.env
 
       - run: make lint-ci
 

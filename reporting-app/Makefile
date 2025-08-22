@@ -24,7 +24,7 @@ __check_defined = \
 # Constants
 ##################################################
 
-APP_NAME := app
+APP_NAME := reporting-app
 
 # Support other container tools like `finch`
 ifdef CONTAINER_CMD
