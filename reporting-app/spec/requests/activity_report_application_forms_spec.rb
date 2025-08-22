@@ -193,8 +193,9 @@ RSpec.describe "/activity_report_application_forms", type: :request do
   end
 
   describe "POST /submit" do
-    let(:application_form) { ActivityReportApplicationForm.create! valid_attributes 
+    let(:application_form) { ActivityReportApplicationForm.create! valid_attributes
 }
+
     before do
       post submit_activity_report_application_form_url(application_form)
     end
@@ -203,7 +204,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
       application_form.reload
       expect(application_form).to be_submitted
     end
-    
+
     it "sets the current step of the case to 'review_report'" do
       kase = ActivityReportCase.find_by(application_form_id: application_form.id)
       expect(kase.business_process_instance.current_step).to eq("review_report")
