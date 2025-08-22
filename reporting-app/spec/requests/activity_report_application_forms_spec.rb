@@ -81,7 +81,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
 
       it "redirects to the created activity_report_application_form" do
         post activity_report_application_forms_url, params: { activity_report_application_form: valid_attributes }
-        expect(response).to redirect_to(activity_report_application_form_url(ActivityReportApplicationForm.last))
+        expect(response).to redirect_to(review_activity_report_application_form_url(ActivityReportApplicationForm.last))
       end
 
       it "attaches multiple supporting documents" do
@@ -120,7 +120,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
         patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
         activity_report_application_form.reload
-        expect(response).to redirect_to(activity_report_application_form_url(activity_report_application_form))
+        expect(response).to redirect_to(review_activity_report_application_form_url(activity_report_application_form))
       end
 
       it "updates the supporting documents" do
