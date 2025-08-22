@@ -1,1 +1,0 @@
-json.partial! "activity_report_application_forms/activity_report_application_form", activity_report_application_form: @activity_report_application_form

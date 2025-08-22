@@ -16,10 +16,6 @@ locals {
             source = "issued"
           }
 
-          "app.medicaid.navateam.com" = {
-            source = "issued"
-          }
-
           # Example certificate configuration for a certificate that is issued elsewhere and imported into the project
           # (currently not supported, will be supported via https://github.com/navapbc/template-infra/issues/559)
           # "platform-test-dev.navateam.com" = {
