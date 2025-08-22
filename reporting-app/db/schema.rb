@@ -46,8 +46,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_22_011433) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "employer_name"
-    t.integer "minutes"
     t.date "reporting_period"
+    t.integer "minutes"
     t.uuid "user_id"
     t.integer "status"
     t.datetime "submitted_at"
