@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   resources :activity_report_application_forms do
     member do
-      get :review, action: "review"
-      post :submit, action: "submit"
+      get :review
+      post :submit
     end
   end
 
