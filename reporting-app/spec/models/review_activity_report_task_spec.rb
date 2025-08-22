@@ -8,7 +8,7 @@ RSpec.describe ReviewActivityReportTask, type: :model do
   end
   
   describe "creation" do
-    let(:test_case) { create(:test_case) }
+    let(:test_case) { ActivityReportCase.create }
     
     it "can be created with valid attributes" do
       task = described_class.from_case(test_case)
