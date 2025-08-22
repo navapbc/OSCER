@@ -157,6 +157,28 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         expect(activity_report_application_form.supporting_documents.first.filename.to_s).to eq("test_document_2.txt")
       end
     end
+
+    context "with invalid parameters" do
+      let(:new_attributes) {
+        {
+          employer_name: "New Employer Corp",
+          minutes: 10 # Under 15 minutes
+        }
+      }
+
+      it "does not update the requested activity_report_application_form" do
+        activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
+        patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
+        activity_report_application_form.reload
+        expect(activity_report_application_form.minutes).to eq(60)
+      end
+
+      it "renders a successful response (i.e. to display the 'edit' template)" do
+        activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
+        patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
   end
 
   describe "DELETE /destroy" do
