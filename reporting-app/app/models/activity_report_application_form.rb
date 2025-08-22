@@ -6,7 +6,7 @@ class ActivityReportApplicationForm < Flex::ApplicationForm
   flex_attribute :reporting_period, :date
 
   # Validation for minimum 15 minutes
-  validates :minutes, presence: true, numericality: { 
+  validates :minutes, on: :submit, numericality: {
     greater_than_or_equal_to: 15,
     message: "must be at least 15 minutes"
   }
@@ -17,7 +17,7 @@ class ActivityReportApplicationForm < Flex::ApplicationForm
 
   def minutes_must_be_quarter_hour_increments
     return unless minutes.present?
-    
+
     # Check if minutes is a multiple of 15 (quarter hour)
     unless (minutes % 15).zero?
       errors.add(:minutes, "must be in quarter hour increments (15, 30, 45, 60, etc.)")

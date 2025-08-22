@@ -109,7 +109,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
       it "does not create a new ActivityReportApplicationForm" do
         expect {
           post activity_report_application_forms_url, params: { activity_report_application_form: invalid_attributes }
-        }.to change(ActivityReportApplicationForm, :count).by(0)
+        }.not_to change(ActivityReportApplicationForm, :count)
       end
 
       it "renders a successful response (i.e. to display the 'new' template)" do
