@@ -8,12 +8,13 @@ class ActivityReportApplicationFormsController < ApplicationController
     destroy
   ]
   before_action :authenticate_user!
+  before_action :require_current_user_to_be_activity_report_application_form_user, only: %i[ show edit update submit destroy ]
   skip_after_action :verify_authorized
   skip_after_action :verify_policy_scoped
 
   # GET /activity_report_application_forms or /activity_report_application_forms.json
   def index
-    @activity_report_application_forms = ActivityReportApplicationForm.all
+    @activity_report_application_forms = ActivityReportApplicationForm.where(user_id: current_user.id).order(created_at: :desc)
   end
 
   # GET /activity_report_application_forms/1 or /activity_report_application_forms/1.json
@@ -22,6 +23,9 @@ class ActivityReportApplicationFormsController < ApplicationController
 
   # GET /activity_report_application_forms/new
   def new
+    # TODO: user shouldn't matter here, as it can not be set from the form
+    # submission, but it may be a required DB parameter at some point?
+    # @activity_report_application_form = ActivityReportApplicationForm.new(user_id: current_user.id)
     @activity_report_application_form = ActivityReportApplicationForm.new
   end
 
@@ -40,6 +44,7 @@ class ActivityReportApplicationFormsController < ApplicationController
   # POST /activity_report_application_forms or /activity_report_application_forms.json
   def create
     @activity_report_application_form = ActivityReportApplicationForm.new(activity_report_application_form_params)
+    @activity_report_application_form.user_id = current_user.id
 
     respond_to do |format|
       if @activity_report_application_form.save
@@ -89,6 +94,16 @@ class ActivityReportApplicationFormsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_activity_report_application_form
       @activity_report_application_form = ActivityReportApplicationForm.find(params[:id])
+    end
+
+    def require_current_user_to_be_activity_report_application_form_user
+      unless is_current_user_activity_report_application_form_user?
+        redirect_to activity_report_application_forms_path, status: :unauthorized, alert: "You must be the user of this activity report application form to modify it."
+      end
+    end
+
+    def is_current_user_activity_report_application_form_user?
+      @activity_report_application_form.user_id == current_user.id
     end
 
     # Only allow a list of trusted parameters through.

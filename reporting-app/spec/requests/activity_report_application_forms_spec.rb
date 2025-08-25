@@ -17,11 +17,14 @@ RSpec.describe "/activity_report_application_forms", type: :request do
 
   let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
 
+  let(:other_user) { User.create!(email: "test-other@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
+
   # This should return the minimal set of attributes required to create a valid
   # ActivityReportApplicationForm. As you add validations to ActivityReportApplicationForm, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
     {
+      user_id: user.id,
       employer_name: "Acme Corp",
       minutes: 60, # 1 hour
       reporting_period: (Date.today - 1.month).beginning_of_month,
@@ -49,8 +52,13 @@ RSpec.describe "/activity_report_application_forms", type: :request do
   end
 
   describe "GET /index" do
-    it "renders a successful response" do
+    it "renders a successful response with existing forms" do
       ActivityReportApplicationForm.create! valid_attributes
+      get activity_report_application_forms_url
+      expect(response).to be_successful
+    end
+
+    it "renders a successful response with no forms" do
       get activity_report_application_forms_url
       expect(response).to be_successful
     end
@@ -61,6 +69,13 @@ RSpec.describe "/activity_report_application_forms", type: :request do
       activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
       get activity_report_application_form_url(activity_report_application_form)
       expect(response).to be_successful
+    end
+
+    it "errors if not owning user" do
+      login_as other_user
+      activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
+      get activity_report_application_form_url(activity_report_application_form)
+      expect(response).to be_client_error
     end
   end
 
@@ -76,6 +91,14 @@ RSpec.describe "/activity_report_application_forms", type: :request do
       activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
       get edit_activity_report_application_form_url(activity_report_application_form)
       expect(response).to be_successful
+    end
+
+    it "renders an error response for non-owning user" do
+      login_as other_user
+
+      activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
+      get edit_activity_report_application_form_url(activity_report_application_form)
+      expect(response).to be_client_error
     end
   end
 
@@ -93,6 +116,19 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         expect {
           post activity_report_application_forms_url, params: { activity_report_application_form: valid_attributes }
         }.to change(ActivityReportApplicationForm, :count).by(1)
+
+        created_form = ActivityReportApplicationForm.last
+        expect(created_form.user_id).to eq(user.id)
+      end
+
+      # TODO:
+      it "creates a new ActivityReportApplicationForm, with only approved attributes" do
+        expect {
+          post activity_report_application_forms_url, params: { activity_report_application_form: valid_attributes }
+        }.to change(ActivityReportApplicationForm, :count).by(1)
+
+        created_form = ActivityReportApplicationForm.last
+        expect(created_form.user_id).to eq(user.id)
       end
 
       it "redirects to the created activity_report_application_form" do
@@ -158,6 +194,21 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         expect(activity_report_application_form.minutes).to eq(45)
       end
 
+      it "does not update the requested activity_report_application_form if non-owning user" do
+        login_as other_user
+
+        activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
+        # TODO: clone or dup?
+        activity_report_application_form_original = activity_report_application_form.clone
+        patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
+
+        # TODO: assert DB state is still the previous state
+        activity_report_application_form.reload
+        expect(activity_report_application_form).to eq(activity_report_application_form_original)
+
+        expect(response).to be_client_error
+      end
+
       it "redirects to the activity_report_application_form" do
         activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
         patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
@@ -204,6 +255,8 @@ RSpec.describe "/activity_report_application_forms", type: :request do
     let(:application_form) { ActivityReportApplicationForm.create! valid_attributes
 }
 
+    # TODO: test case for other_user
+
     it "marks the activity report as submitted" do
       post submit_activity_report_application_form_url(application_form)
 
@@ -239,6 +292,15 @@ RSpec.describe "/activity_report_application_forms", type: :request do
       expect {
         delete activity_report_application_form_url(activity_report_application_form)
       }.to change(ActivityReportApplicationForm, :count).by(-1)
+    end
+
+    it "does not destroy the requested activity_report_application_form if non-owning user" do
+      login_as other_user
+
+      activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
+      expect {
+        delete activity_report_application_form_url(activity_report_application_form)
+      }.not_to change(ActivityReportApplicationForm, :count)
     end
 
     it "redirects to the activity_report_application_forms list" do
