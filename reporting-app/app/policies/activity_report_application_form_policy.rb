@@ -1,7 +1,6 @@
 class ActivityReportApplicationFormPolicy < ApplicationPolicy
   def index?
-    # TODO: assuming all logged in users can create an activity report at the moment?
-    user
+    user # any logged-in user
   end
 
   def show?
@@ -9,26 +8,23 @@ class ActivityReportApplicationFormPolicy < ApplicationPolicy
   end
 
   def create?
-    # TODO: assuming all logged in users can create an activity report at the moment?
-    user
+    user # any logged-in user
   end
 
   def update?
-    owning_user?
+    owning_user? && record.in_progress?
   end
 
   def review?
-    # TODO: not nil may be more controller logic? not exactly authorization, but kinda
-    owning_user? && record.submitted_at.nil?
+    owning_user? && record.in_progress?
   end
 
   def destroy?
-    # TODO: not nil may be more controller logic? not exactly authorization, but kinda
-    owning_user? && record.submitted_at.nil?
+    owning_user? && record.in_progress?
   end
 
   def submit?
-    owning_user?
+    owning_user? && !record.submitted?
   end
 
   class Scope < ApplicationPolicy::Scope

@@ -4,7 +4,9 @@ RSpec.describe ActivityReportApplicationFormPolicy, type: :policy do
   subject { described_class.new(current_user, record) }
 
   let(:owning_user) { create(:user) }
-  let(:record) { create(:activity_report_application_form, user_id: owning_user.id) }
+  let(:base_record) { create(:activity_report_application_form, user_id: owning_user.id) }
+
+  let(:record) { base_record }
 
   let(:resolved_scope) do
     described_class::Scope.new(current_user, ActivityReportApplicationForm.all).resolve
@@ -20,6 +22,20 @@ RSpec.describe ActivityReportApplicationFormPolicy, type: :policy do
     let(:current_user) { owning_user }
 
     it { is_expected.to permit_all_actions }
+
+    it 'includes all records in the resolved scope' do
+      expect(resolved_scope).to include(record)
+    end
+  end
+
+  context "when owning user, on submitted form" do
+    let(:current_user) { owning_user }
+    let(:record) do
+      base_record.submit_application
+      base_record
+    end
+
+    it { is_expected.to forbid_only_actions(:destroy, :review, :edit, :update, :submit) }
 
     it 'includes all records in the resolved scope' do
       expect(resolved_scope).to include(record)
