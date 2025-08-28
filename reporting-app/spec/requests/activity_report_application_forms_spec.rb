@@ -81,7 +81,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
 
   describe "GET /review" do
     it "renders a successful response" do
-      activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
+      activity_report_application_form = ActivityReportApplicationForm.create! valid_attributes
       get review_activity_report_application_form_url(activity_report_application_form)
       expect(response).to be_successful
     end
