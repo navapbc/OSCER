@@ -20,6 +20,20 @@ aws ssm put-parameter --name "/reporting-app-staging/service/ivaas-api-key" --va
 aws ssm put-parameter --name "/reporting-app-prod/service/ivaas-api-key" --value "<your-production-api-key>" --type "SecureString" --description "Income verification as a service API key for production environment"
 ```
 
+## Configure API endpoints for IVaaS
+
+```bash
+aws ssm put-parameter --name "/reporting-app-dev/service/ivaas-base-url" --value "https://sandbox-verify-demo.navapbc.cloud/api/v1" --type "SecureString" --description "Income verification as a service base URL for dev environment"
+```
+
+```bash
+aws ssm put-parameter --name "/reporting-app-staging/service/ivaas-base-url" --value "https://sandbox-verify-demo.navapbc.cloud/api/v1" --type "SecureString" --description "Income verification as a service base URL for staging environment"
+```
+
+```bash
+aws ssm put-parameter --name "/reporting-app-prod/service/ivaas-base-url" --value TBD --type "SecureString" --description "Income verification as a service base URL for production environment"
+```
+
 ## Apply the changes to your environments
 
 For the dev environment, run:
