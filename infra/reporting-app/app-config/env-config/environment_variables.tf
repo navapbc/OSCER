@@ -23,5 +23,10 @@ locals {
       manage_method     = "generated"
       secret_store_name = "/${var.app_name}-${var.environment}/service/rails-secret-key-base"
     }
+
+    IVAAS_API_KEY = {
+      manage_method     = "manual"
+      secret_store_name = "/${var.app_name}-${var.environment}/service/ivaas-api-key"
+    }
   }
 }
