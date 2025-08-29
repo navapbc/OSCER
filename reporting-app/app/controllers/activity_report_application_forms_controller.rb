@@ -33,7 +33,7 @@ class ActivityReportApplicationFormsController < ApplicationController
     end
   end
 
-  # GET /activity_report_cases/1/review
+  # GET /activity_report_application_forms/1/review
   def review
   end
 
