@@ -4,7 +4,7 @@ The reporting app leverages the Centers for Medicare and Medicaid Services (CMS)
 
 ## Obtain IVaaS API keys
 
-Contact your CMS representative to obtain API keys. You'll want two API keys, one for [IVaaS sandbox demo environment](https://sandbox-verify-demo.navapbc.cloud/cbv/entry) and one for the IVaaS production environment.
+Contact your CMS representative to obtain API keys. You'll want two API keys, one for [IVaaS sandbox demo environment](https://sandbox-verify-demo.navapbc.cloud/cbv/entry) and one for the IVaaS production environment. You'll also be given a unique client agency identifier representing your organization.
 
 ## Store your API keys as SSM secrets
 
@@ -20,19 +20,9 @@ aws ssm put-parameter --name "/reporting-app-staging/service/ivaas-api-key" --va
 aws ssm put-parameter --name "/reporting-app-prod/service/ivaas-api-key" --value "<your-production-api-key>" --type "SecureString" --description "Income verification as a service API key for production environment"
 ```
 
-## Configure API endpoints for IVaaS
+## Update the client agency ID for your instance of the reporting app
 
-```bash
-aws ssm put-parameter --name "/reporting-app-dev/service/ivaas-base-url" --value "https://sandbox-verify-demo.navapbc.cloud/api/v1" --type "SecureString" --description "Income verification as a service base URL for dev environment"
-```
-
-```bash
-aws ssm put-parameter --name "/reporting-app-staging/service/ivaas-base-url" --value "https://sandbox-verify-demo.navapbc.cloud/api/v1" --type "SecureString" --description "Income verification as a service base URL for staging environment"
-```
-
-```bash
-aws ssm put-parameter --name "/reporting-app-prod/service/ivaas-base-url" --value TBD --type "SecureString" --description "Income verification as a service base URL for production environment"
-```
+Update the `IVAAS_CLIENT_AGENCY_ID` variable in [environment_variables.tf](/infra/reporting-app/app-config/env-config/environment_variables.tf) with the value provided to you by the IVaaS team.
 
 ## Apply the changes to your environments
 
