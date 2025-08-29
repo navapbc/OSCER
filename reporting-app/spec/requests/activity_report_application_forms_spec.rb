@@ -204,16 +204,30 @@ RSpec.describe "/activity_report_application_forms", type: :request do
     let(:application_form) { ActivityReportApplicationForm.create! valid_attributes
 }
 
-    before do
-      post submit_activity_report_application_form_url(application_form)
-    end
-
     it "marks the activity report as submitted" do
+      post submit_activity_report_application_form_url(application_form)
+
       application_form.reload
       expect(application_form).to be_submitted
     end
 
+    it "redirects to GET /show on success" do
+      post submit_activity_report_application_form_url(application_form)
+
+      expect(response).to redirect_to(activity_report_application_form_url(application_form))
+    end
+
+    it "redirects to GET /edit on error" do
+      empty_form = ActivityReportApplicationForm.create!(user_id: user.id)
+
+      post submit_activity_report_application_form_url(empty_form)
+
+      expect(response).to redirect_to(edit_activity_report_application_form_url(empty_form))
+    end
+
     it "sets the current step of the case to 'review_report'" do
+      post submit_activity_report_application_form_url(application_form)
+
       kase = ActivityReportCase.find_by(application_form_id: application_form.id)
       expect(kase.business_process_instance.current_step).to eq("review_report")
     end

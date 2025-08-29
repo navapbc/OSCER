@@ -67,8 +67,12 @@ class ActivityReportApplicationFormsController < ApplicationController
 
   # POST /activity_report_application_forms/1/submit
   def submit
-    @activity_report_application_form.submit_application
-    redirect_to @activity_report_application_form
+    if @activity_report_application_form.submit_application
+      redirect_to @activity_report_application_form, notice: "Application submitted"
+    else
+      flash[:errors] = @activity_report_application_form.errors.full_messages
+      redirect_to edit_activity_report_application_form_url(@activity_report_application_form)
+    end
   end
 
   # DELETE /activity_report_application_forms/1 or /activity_report_application_forms/1.json
