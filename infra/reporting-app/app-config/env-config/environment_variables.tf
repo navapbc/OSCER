@@ -24,6 +24,11 @@ locals {
       secret_store_name = "/${var.app_name}-${var.environment}/service/rails-secret-key-base"
     }
 
+    IVAAS_BASE_URL = {
+      manage_method     = "manual"
+      secret_store_name = "/${var.app_name}-${var.environment}/service/ivaas-base-url"
+    }
+
     IVAAS_API_KEY = {
       manage_method     = "manual"
       secret_store_name = "/${var.app_name}-${var.environment}/service/ivaas-api-key"
