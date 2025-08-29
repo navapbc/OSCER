@@ -8,12 +8,10 @@ class ActivityReportApplicationFormsController < ApplicationController
     destroy
   ]
   before_action :authenticate_user!
-  skip_after_action :verify_authorized
-  skip_after_action :verify_policy_scoped
 
   # GET /activity_report_application_forms or /activity_report_application_forms.json
   def index
-    @activity_report_application_forms = ActivityReportApplicationForm.all
+    @activity_report_application_forms = policy_scope(ActivityReportApplicationForm).order(created_at: :desc)
   end
 
   # GET /activity_report_application_forms/1 or /activity_report_application_forms/1.json
@@ -22,7 +20,7 @@ class ActivityReportApplicationFormsController < ApplicationController
 
   # GET /activity_report_application_forms/new
   def new
-    @activity_report_application_form = ActivityReportApplicationForm.new
+    @activity_report_application_form = authorize ActivityReportApplicationForm.new
   end
 
   # GET /activity_report_application_forms/1/edit
@@ -40,6 +38,9 @@ class ActivityReportApplicationFormsController < ApplicationController
   # POST /activity_report_application_forms or /activity_report_application_forms.json
   def create
     @activity_report_application_form = ActivityReportApplicationForm.new(activity_report_application_form_params)
+    @activity_report_application_form.user_id = current_user.id
+
+    authorize @activity_report_application_form
 
     respond_to do |format|
       if @activity_report_application_form.save
@@ -88,7 +89,7 @@ class ActivityReportApplicationFormsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_activity_report_application_form
-      @activity_report_application_form = ActivityReportApplicationForm.find(params[:id])
+      @activity_report_application_form = authorize ActivityReportApplicationForm.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
