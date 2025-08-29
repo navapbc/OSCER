@@ -4,7 +4,7 @@
       <tr>
         <th scope="row">Reporting period</th>
         <td class="border-top-0">
-          <%= activity_report_application_form.reporting_period.strftime("%B %Y") %>
+          <%= activity_report_application_form.reporting_period&.strftime("%B %Y") %>
         </td>
       </tr>
       <tr>
