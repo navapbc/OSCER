@@ -204,13 +204,16 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         login_as other_user
 
         activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
-        # TODO: clone or dup (and ignore other attibutes)?
-        activity_report_application_form_original = activity_report_application_form.clone
+        activity_report_application_form_original = activity_report_application_form.dup
+
         patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
 
         # assert DB state is still in the previous state
         activity_report_application_form.reload
-        expect(activity_report_application_form).to eq(activity_report_application_form_original)
+
+        ignored_attributes = [ "id", "created_at", "updated_at" ]
+        expect(activity_report_application_form.attributes.except(*ignored_attributes))
+          .to eq(activity_report_application_form_original.attributes.except(*ignored_attributes))
 
         expect(response).to be_client_error
       end
@@ -260,8 +263,6 @@ RSpec.describe "/activity_report_application_forms", type: :request do
   describe "POST /submit" do
     let(:application_form) { ActivityReportApplicationForm.create! valid_db_attributes }
 
-    # TODO: test case for other_user
-
     it "marks the activity report as submitted" do
       post submit_activity_report_application_form_url(application_form)
 
@@ -288,6 +289,14 @@ RSpec.describe "/activity_report_application_forms", type: :request do
 
       kase = ActivityReportCase.find_by(application_form_id: application_form.id)
       expect(kase.business_process_instance.current_step).to eq("review_report")
+    end
+
+    it "errors if not owning user" do
+      login_as other_user
+
+      post submit_activity_report_application_form_url(application_form)
+
+      expect(response).to be_client_error
     end
   end
 
