@@ -4,7 +4,7 @@ The reporting app leverages the Centers for Medicare and Medicaid Services (CMS)
 
 ## Obtain IVaaS API keys
 
-Contact your CMS representative to obtain API keys. You'll want two API keys, one for [IVaaS sandbox demo environment](https://sandbox-verify-demo.navapbc.cloud/) and one for the IVaaS production environment.
+Contact your CMS representative to obtain API keys. You'll want two API keys, one for [IVaaS sandbox demo environment](https://sandbox-verify-demo.navapbc.cloud/cbv/entry) and one for the IVaaS production environment.
 
 ## Store your API keys as SSM secrets
 
