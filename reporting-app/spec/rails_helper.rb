@@ -15,6 +15,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require_relative 'support/factory_bot'
+require_relative 'support/pundit_spec_view_helper'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -38,8 +39,10 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
 RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include PunditSpecViewHelper, type: :view
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
