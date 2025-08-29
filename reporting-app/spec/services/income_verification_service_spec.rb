@@ -1,14 +1,15 @@
 require 'rails_helper'
+require 'webmock/rspec'
 
 RSpec.describe IncomeVerificationService do
-  let(:dummy_config) { IncomeVerificationService::Config.new(api_key: 'dummy-api-key', base_url: 'https://dummy.example.com', client_agency_id: 'dummy-agency', log_level: :info) }
+  let(:config) { IncomeVerificationService::Config.new(api_key: 'dummy-api-key', base_url: 'https://ivaas.com', client_agency_id: 'dummy-agency', log_level: :info) }
   subject(:service) { described_class.new(config: config) }
 
   describe '.Config' do
     describe '.from_env' do
       before do
         allow(ENV).to receive(:[]).with('IVAAS_API_KEY').and_return('env-api-key')
-        allow(ENV).to receive(:[]).with('IVAAS_BASE_URL').and_return('https://env.example.com')
+        allow(ENV).to receive(:[]).with('IVAAS_BASE_URL').and_return('https://ivaas.com')
         allow(ENV).to receive(:[]).with('IVAAS_CLIENT_AGENCY_ID').and_return('env-agency')
         allow(Rails.configuration).to receive(:log_level).and_return(:debug)
       end
@@ -16,7 +17,7 @@ RSpec.describe IncomeVerificationService do
       it 'creates a config from environment variables' do
         config = described_class::Config.from_env
         expect(config.api_key).to eq('env-api-key')
-        expect(config.base_url).to eq('https://env.example.com')
+        expect(config.base_url).to eq('https://ivaas.com')
         expect(config.client_agency_id).to eq('env-agency')
         expect(config.log_level).to eq(:debug)
       end
@@ -24,14 +25,17 @@ RSpec.describe IncomeVerificationService do
   end
 
   describe '#create_invitation' do
+    let(:activity_report_application_form) { create(:activity_report_application_form) }
+    let(:name) { Flex::Name.new(first: 'Cassian', last: 'Andor') }
+    
     let(:expected_request_body) do
       {
         language: 'en',
         client_agency_id: config.client_agency_id,
         agency_partner_metadata: {
-          case_number: '111222',
-          first_name: 'Cassian',
-          last_name: 'Andor'
+          case_number: activity_report_application_form.id,
+          first_name: name.first,
+          last_name: name.last
         }
       }
     end
@@ -61,7 +65,7 @@ RSpec.describe IncomeVerificationService do
     end
 
     it 'creates an invitation and returns an Invitation object' do
-      invitation = service.create_invitation
+      invitation = service.create_invitation(activity_report_application_form, name)
 
       expect(invitation).to be_an(IncomeVerificationService::Invitation)
       expect(invitation.tokenized_url).to eq('https://ivaas.example.com/invitation/token123')
@@ -80,7 +84,7 @@ RSpec.describe IncomeVerificationService do
       end
 
       it 'raises a Faraday error' do
-        expect { service.create_invitation }.to raise_error(Faraday::ServerError)
+        expect { service.create_invitation(activity_report_application_form, name) }.to raise_error(Faraday::ServerError)
       end
     end
 
@@ -95,7 +99,7 @@ RSpec.describe IncomeVerificationService do
       end
 
       it 'raises a JSON parsing error' do
-        expect { service.create_invitation }.to raise_error(Faraday::ParsingError)
+        expect { service.create_invitation(activity_report_application_form, name) }.to raise_error(Faraday::ParsingError)
       end
     end
   end

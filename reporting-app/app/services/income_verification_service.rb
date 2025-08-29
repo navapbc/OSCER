@@ -17,15 +17,15 @@ class IncomeVerificationService
     @config = config
   end
 
-  def create_invitation()
+  def create_invitation(activity_report_application_form, name)
     res = conn.post('/api/v1/invitations') do |req|
       req.body = {
         language: 'en',
         client_agency_id: @config.client_agency_id,
         agency_partner_metadata: {
-          case_number: '111222',
-          first_name: 'Cassian',
-          last_name: 'Andor'
+          case_number: activity_report_application_form.id,
+          first_name: name.first,
+          last_name: name.last
         }
       }.to_json
     end
