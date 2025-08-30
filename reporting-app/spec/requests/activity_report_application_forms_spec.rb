@@ -300,6 +300,41 @@ RSpec.describe "/activity_report_application_forms", type: :request do
     end
   end
 
+  describe "POST /verify" do
+    let(:application_form) { ActivityReportApplicationForm.create! valid_db_attributes }
+    let(:invitation) { 
+      IncomeVerificationService::Invitation.new(
+        tokenized_url: "https://ivaas.gov/en/cbv/entry?token=dummy-token",
+        expiration_date: DateTime.now + 7.days,
+        language: "en"
+      ) 
+    }
+    let(:mock_service) { instance_double(IncomeVerificationService) }
+
+    before do
+      allow(IncomeVerificationService).to receive(:new).and_return(mock_service)
+      allow(mock_service).to receive(:create_invitation)
+        .with(application_form, instance_of(Flex::Name))
+        .and_return(invitation)
+    end
+
+    it "creates an invitation and redirects to the tokenized URL" do
+      post verify_activity_report_application_form_url(application_form)
+
+      expect(mock_service).to have_received(:create_invitation)
+      expect(response).to redirect_to("https://ivaas.gov/en/cbv/entry?token=dummy-token")
+    end
+
+    it "errors if not owning user" do
+      login_as other_user
+
+      post verify_activity_report_application_form_url(application_form)
+
+      expect(response).to be_client_error
+      expect(mock_service).not_to have_received(:create_invitation)
+    end
+  end
+
   describe "DELETE /destroy" do
     it "destroys the requested activity_report_application_form" do
       activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
