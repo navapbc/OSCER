@@ -18,9 +18,9 @@ class IncomeVerificationService
   end
 
   def create_invitation(activity_report_application_form, name)
-    res = conn.post('/api/v1/invitations') do |req|
+    res = conn.post("/api/v1/invitations") do |req|
       req.body = {
-        language: 'en',
+        language: "en",
         client_agency_id: @config.client_agency_id,
         agency_partner_metadata: {
           case_number: activity_report_application_form.id,
@@ -35,9 +35,9 @@ class IncomeVerificationService
 
   private
 
-  def conn()
+  def conn
     Faraday.new(url: @config.base_url) do |f|
-      f.request :authorization, 'Bearer', -> { @config.api_key }
+      f.request :authorization, "Bearer", -> { @config.api_key }
 
       # Sets the Content-Type header to application/json on each request.
       # Also, if the request body is a Hash, it will automatically be encoded as JSON.

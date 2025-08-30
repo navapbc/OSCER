@@ -2,8 +2,10 @@ require 'rails_helper'
 require 'webmock/rspec'
 
 RSpec.describe IncomeVerificationService do
-  let(:config) { IncomeVerificationService::Config.new(api_key: 'dummy-api-key', base_url: 'https://ivaas.com', client_agency_id: 'dummy-agency', log_level: :info) }
   subject(:service) { described_class.new(config: config) }
+
+  let(:config) { IncomeVerificationService::Config.new(api_key: 'dummy-api-key', base_url: 'https://ivaas.com', client_agency_id: 'dummy-agency', log_level: :info) }
+
 
   describe '.Config' do
     describe '.from_env' do
@@ -27,7 +29,7 @@ RSpec.describe IncomeVerificationService do
   describe '#create_invitation' do
     let(:activity_report_application_form) { create(:activity_report_application_form) }
     let(:name) { Flex::Name.new(first: 'Cassian', last: 'Andor') }
-    
+
     let(:expected_request_body) do
       {
         language: 'en',
