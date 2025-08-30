@@ -5,6 +5,7 @@ class ActivityReportApplicationFormsController < ApplicationController
     review
     update
     submit
+    verify
     destroy
   ]
   before_action :authenticate_user!
@@ -12,6 +13,7 @@ class ActivityReportApplicationFormsController < ApplicationController
   # GET /activity_report_application_forms or /activity_report_application_forms.json
   def index
     @activity_report_application_forms = policy_scope(ActivityReportApplicationForm).order(created_at: :desc)
+    @in_progress_activity_reports = @activity_report_application_forms.in_progress
   end
 
   # GET /activity_report_application_forms/1 or /activity_report_application_forms/1.json
@@ -75,6 +77,16 @@ class ActivityReportApplicationFormsController < ApplicationController
       redirect_to edit_activity_report_application_form_url(@activity_report_application_form)
     end
   end
+
+  # POST /activity_report_application_forms/1/verify
+  def verify
+    # TODO(https://linear.app/nava-platform/issue/TSS-309/refactor-ivaas-handoff-to-use-existing-activityreport):
+    # We should get the name from the certification request. For now, we'll use a placeholder name
+    name = Flex::Name.new(first: "Jane", last: "Doe")
+    invitation = IncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
+    redirect_to invitation.tokenized_url, allow_other_host: true
+  end
+
 
   # DELETE /activity_report_application_forms/1 or /activity_report_application_forms/1.json
   def destroy

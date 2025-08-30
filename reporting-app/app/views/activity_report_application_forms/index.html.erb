@@ -1,3 +1,36 @@
+<h1>Report your community engagement</h2>
+<p class="usa-intro">
+  Verify your community engagement requirements using the Centers for Medicare and Medicaid Service's income reporting app.
+</p>
+
+<section class="d-flex flex-column flex-md-row gap-4 align-items-start justify-content-between">
+  <table class="usa-table usa-table--borderless width-full">
+    <thead>
+      <tr>
+        <th scope="col">
+          Case number
+        </th>
+        <th scope="col">
+          
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for activity_report in @in_progress_activity_reports do %>
+        <tr>
+          <td>
+            <%= activity_report.id %>
+          </td>
+          <td>
+            <%= render partial: "verify_activity_report_button", locals: { activity_report: } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>
+
+
 <%= render template: "flex/application_forms/index", locals: {
   title: t(".title"),
   intro: t(".intro"),
