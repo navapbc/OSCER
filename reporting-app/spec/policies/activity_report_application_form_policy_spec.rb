@@ -35,7 +35,7 @@ RSpec.describe ActivityReportApplicationFormPolicy, type: :policy do
       base_record
     end
 
-    it { is_expected.to forbid_only_actions(:destroy, :review, :edit, :update, :submit) }
+    it { is_expected.to forbid_only_actions(:destroy, :review, :edit, :update, :submit, :verify) }
 
     it 'includes all records in the resolved scope' do
       expect(resolved_scope).to include(record)
