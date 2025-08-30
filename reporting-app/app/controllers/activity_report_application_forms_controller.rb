@@ -80,7 +80,6 @@ class ActivityReportApplicationFormsController < ApplicationController
 
   # POST /activity_report_application_forms/1/verify
   def verify
-    # TODO(https://linear.app/nava-platform/issue/TSS-309/refactor-ivaas-handoff-to-use-existing-activityreport):
     # We should get the name from the certification request. For now, we'll use a placeholder name
     name = Flex::Name.new(first: "Jane", last: "Doe")
     invitation = IncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
