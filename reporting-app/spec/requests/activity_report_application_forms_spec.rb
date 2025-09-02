@@ -303,13 +303,13 @@ RSpec.describe "/activity_report_application_forms", type: :request do
   describe "POST /verify" do
     let(:application_form) { ActivityReportApplicationForm.create! valid_db_attributes }
     let(:invitation) {
-      IncomeVerificationService::Invitation.new(
+      CMSIncomeVerificationService::Invitation.new(
         tokenized_url: "https://ivaas.gov/en/cbv/entry?token=dummy-token",
         expiration_date: DateTime.now + 7.days,
         language: "en"
       )
     }
-    let(:mock_service) { instance_double(IncomeVerificationService) }
+    let(:mock_service) { instance_double(CMSIncomeVerificationService) }
 
     before do
       allow(IncomeVerificationService).to receive(:new).and_return(mock_service)

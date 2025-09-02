@@ -1,10 +1,10 @@
 require 'rails_helper'
 require 'webmock/rspec'
 
-RSpec.describe IncomeVerificationService do
+RSpec.describe CMSIncomeVerificationService do
   subject(:service) { described_class.new(config: config) }
 
-  let(:config) { IncomeVerificationService::Config.new(api_key: 'dummy-api-key', base_url: 'https://ivaas.com', client_agency_id: 'dummy-agency', log_level: :info) }
+  let(:config) { CMSIncomeVerificationService::Config.new(api_key: 'dummy-api-key', base_url: 'https://ivaas.com', client_agency_id: 'dummy-agency', log_level: :info) }
 
 
   describe '.Config' do

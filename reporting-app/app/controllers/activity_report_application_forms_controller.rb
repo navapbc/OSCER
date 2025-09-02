@@ -82,7 +82,7 @@ class ActivityReportApplicationFormsController < ApplicationController
   def verify
     # We should get the name from the certification request. For now, we'll use a placeholder name
     name = Flex::Name.new(first: "Jane", last: "Doe")
-    invitation = IncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
+    invitation = CMSIncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
     redirect_to invitation.tokenized_url, allow_other_host: true
   end
 
