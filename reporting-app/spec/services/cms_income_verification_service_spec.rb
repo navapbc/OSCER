@@ -4,7 +4,12 @@ require 'webmock/rspec'
 RSpec.describe CMSIncomeVerificationService do
   subject(:service) { described_class.new(config: config) }
 
-  let(:config) { CMSIncomeVerificationService::Config.new(api_key: 'dummy-api-key', base_url: 'https://ivaas.com', client_agency_id: 'dummy-agency', log_level: :info) }
+  let(:config) { CMSIncomeVerificationService::Config.new(
+    api_key: Faker::Alphanumeric.alphanumeric(number: 10),
+    base_url: 'https://ivaas.com',
+    client_agency_id: 'dummy-agency',
+    log_level: :info
+  ) }
 
 
   describe '.Config' do
@@ -69,7 +74,7 @@ RSpec.describe CMSIncomeVerificationService do
     it 'creates an invitation and returns an Invitation object' do
       invitation = service.create_invitation(activity_report_application_form, name)
 
-      expect(invitation).to be_an(IncomeVerificationService::Invitation)
+      expect(invitation).to be_an(CMSIncomeVerificationService::Invitation)
       expect(invitation.tokenized_url).to eq('https://ivaas.example.com/invitation/token123')
       expect(invitation.expiration_date).to eq(DateTime.parse('2025-08-30T00:00:00Z'))
       expect(invitation.language).to eq('en')
