@@ -9,15 +9,7 @@ Contact your CMS representative to obtain API keys. You'll want two API keys, on
 ## Store your API keys as SSM secrets
 
 ```bash
-aws ssm put-parameter --name "/reporting-app-dev/service/ivaas-api-key" --value "<your-sandbox-demo-api-key>" --type "SecureString" --description "Income verification as a service API key for sandbox demo environment"
-```
-
-```bash
-aws ssm put-parameter --name "/reporting-app-staging/service/ivaas-api-key" --value "<your-sandbox-demo-api-key>" --type "SecureString" --description "Income verification as a service API key for sandbox demo environment"
-```
-
-```bash
-aws ssm put-parameter --name "/reporting-app-prod/service/ivaas-api-key" --value "<your-production-api-key>" --type "SecureString" --description "Income verification as a service API key for production environment"
+aws ssm put-parameter --name "/reporting-app-<ENVIRONMENT>/service/ivaas-api-key" --value "<YOUR_SANDBOX_DEMO_API_KEY>" --type "SecureString" --description "Income verification as a service API key"
 ```
 
 ## Update the client agency ID for your instance of the reporting app
