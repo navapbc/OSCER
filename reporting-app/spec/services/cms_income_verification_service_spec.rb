@@ -1,13 +1,14 @@
 require 'rails_helper'
 require 'webmock/rspec'
+require 'securerandom'
 
 RSpec.describe CMSIncomeVerificationService do
   subject(:service) { described_class.new(config: config) }
 
   let(:config) { CMSIncomeVerificationService::Config.new(
-    api_key: Faker::Alphanumeric.alphanumeric(number: 10),
-    base_url: 'https://ivaas.com',
-    client_agency_id: 'dummy-agency',
+    api_key: SecureRandom.hex(32),
+    base_url: Faker::Internet.url(path: "").sub(/http/, "https"),
+    client_agency_id: Faker::Alphanumeric.alpha,
     log_level: :info
   ) }
 
