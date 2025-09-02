@@ -7,6 +7,9 @@ locals {
     # WORKER_THREADS_COUNT    = 4
     # LOG_LEVEL               = "info"
     # DB_CONNECTION_POOL_SIZE = 5
+
+    IVAAS_BASE_URL         = "https://sandbox-verify-demo.navapbc.cloud/api/"
+    IVAAS_CLIENT_AGENCY_ID = "sandbox"
   }
 
   # Configuration for secrets
@@ -22,6 +25,11 @@ locals {
     SECRET_KEY_BASE = {
       manage_method     = "generated"
       secret_store_name = "/${var.app_name}-${var.environment}/service/rails-secret-key-base"
+    }
+
+    IVAAS_API_KEY = {
+      manage_method     = "manual"
+      secret_store_name = "/${var.app_name}-${var.environment}/service/ivaas-api-key"
     }
   }
 }
