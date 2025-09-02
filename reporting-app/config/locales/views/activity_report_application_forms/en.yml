@@ -1,8 +1,8 @@
 en:
   activity_report_application_forms:
     index:
-      title: "Manual reporting"
-      intro: "Manually track and submit activity reports through OSCER"
+      title: "Report your community engagement (OSCER)"
+      intro: "Certify your community engagement requirements through OSCER."
       new_button: "New activity report"
       in_progress_applications:
         heading: "In-progress activity reports"

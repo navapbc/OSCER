@@ -1,6 +1,6 @@
-<h1>Report your community engagement</h2>
+<h1>Report your community engagement (IVaaS)</h2>
 <p class="usa-intro">
-  Verify your community engagement requirements using the Centers for Medicare and Medicaid Service's income reporting app.
+  Certify your community engagement requirements using the Centers for Medicare and Medicaid Service's income reporting app.
 </p>
 
 <section class="d-flex flex-column flex-md-row gap-4 align-items-start justify-content-between">
@@ -22,7 +22,12 @@
             <%= activity_report.id %>
           </td>
           <td>
-            <%= render partial: "verify_activity_report_button", locals: { activity_report: } %>
+            <%= link_to "Certify",
+                        edit_activity_report_application_form_path(
+                          activity_report,
+                          reporting_source: "income_verification_service"
+                        ),
+                        class: "usa-button" %>
           </td>
         </tr>
       <% end %>

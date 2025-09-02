@@ -26,10 +26,23 @@ class ActivityReportApplicationFormsController < ApplicationController
   end
 
   # GET /activity_report_application_forms/1/edit
+  # 
+  # @param reporting_source [String] Override which reporting service to use ("income_verification_service", "reporting_app")
   def edit
-    respond_to do |format|
-      format.html # render edit form with existing supporting_documents
-      format.json { render json: @activity_report_application_form.as_json(include: { supporting_documents: { include: :blob } }) }
+    default_reporting_source = Rails.application.config.reporting_source
+    reporting_source = params[:reporting_source] || default_reporting_source
+
+    if reporting_source == "income_verification_service"
+      puts "Redirecting user to CMS Income Verification Service"
+      # We should get the name from the certification request. For now, we'll use a placeholder name
+      name = Flex::Name.new(first: "Jane", last: "Doe")
+      invitation = CMSIncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
+      redirect_to invitation.tokenized_url, allow_other_host: true
+    else
+      respond_to do |format|
+        format.html # render edit form with existing supporting_documents
+        format.json { render json: @activity_report_application_form.as_json(include: { supporting_documents: { include: :blob } }) }
+      end
     end
   end
 
@@ -77,15 +90,6 @@ class ActivityReportApplicationFormsController < ApplicationController
       redirect_to edit_activity_report_application_form_url(@activity_report_application_form)
     end
   end
-
-  # POST /activity_report_application_forms/1/verify
-  def verify
-    # We should get the name from the certification request. For now, we'll use a placeholder name
-    name = Flex::Name.new(first: "Jane", last: "Doe")
-    invitation = CMSIncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
-    redirect_to invitation.tokenized_url, allow_other_host: true
-  end
-
 
   # DELETE /activity_report_application_forms/1 or /activity_report_application_forms/1.json
   def destroy

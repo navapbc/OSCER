@@ -3,7 +3,6 @@ Rails.application.routes.draw do
     member do
       get :review
       post :submit
-      post :verify
     end
   end
 
