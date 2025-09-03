@@ -69,6 +69,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_160308) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "certifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "beneficiary_id"
+    t.text "case_number"
+    t.jsonb "certification_requirements"
+    t.jsonb "beneficiary_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["beneficiary_id"], name: "index_certifications_on_beneficiary_id"
+    t.index ["case_number"], name: "index_certifications_on_case_number"
+  end
+
   create_table "flex_tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type"
     t.text "description"
