@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :certifications
   resources :activity_report_application_forms do
     resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ] do
       member do
