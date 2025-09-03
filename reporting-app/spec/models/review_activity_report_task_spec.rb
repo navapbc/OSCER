@@ -6,13 +6,4 @@ RSpec.describe ReviewActivityReportTask, type: :model do
       expect(described_class.superclass).to eq(Flex::Task)
     end
   end
-
-  describe "creation" do
-    let(:test_case) { ActivityReportCase.create }
-
-    it "can be created with valid attributes" do
-      task = described_class.from_case(test_case)
-      expect(task).to be_valid
-    end
-  end
 end

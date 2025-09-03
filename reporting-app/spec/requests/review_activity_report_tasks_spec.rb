@@ -6,7 +6,7 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
   let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
   let(:application_form) { create(:activity_report_application_form) }
   let(:kase) { create(:activity_report_case, application_form_id: application_form.id) }
-  let(:task) { create(:review_activity_report_task, case_id: kase.id) }
+  let(:task) { create(:review_activity_report_task, case: kase) }
 
   before do
     login_as user
