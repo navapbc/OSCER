@@ -16,7 +16,13 @@ RSpec.describe "activity_report_application_forms/show", type: :view do
 
   it "renders link to edit when editable" do
     render
-    expect(rendered).to have_link("Edit activity report", href: edit_activity_report_application_form_path(activity_report_application_form))
+    expect(rendered).to have_link(
+      "Edit activity report",
+      href: edit_activity_report_application_form_path(
+        activity_report_application_form,
+        reporting_source: "reporting_app"
+      )
+    )
   end
 
   it "does not render link to edit when not editable" do
