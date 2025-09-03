@@ -1,0 +1,39 @@
+<h1>Certifications</h1>
+
+<%= link_to "Create Certification", new_certification_path(), class: "usa-button" %>
+
+<section class="d-flex flex-column flex-md-row gap-4 align-items-start justify-content-between">
+  <table class="usa-table usa-table--borderless width-full">
+    <thead>
+      <tr>
+        <th scope="col">
+          Cert ID
+        </th>
+        <th scope="col">
+          Created
+        </th>
+        <th scope="col">
+          Actions
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for certification in @certifications do %>
+        <tr>
+          <td>
+            <%= certification.id %>
+          </td>
+          <td>
+              <!-- TODO: local_time defaults to CST? Why? Should at minimum
+              inherit from an app config item. Or probably better to just use
+              https://github.com/basecamp/local_time? -->
+            <%= local_time(certification.created_at, format: :long) %>
+          </td>
+          <td>
+              <%= link_to "Show", certification_path(certification), class: "usa-button" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

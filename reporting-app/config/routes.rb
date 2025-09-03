@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :certifications
   resources :activity_report_application_forms do
     resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ] do
       member do
@@ -17,6 +16,8 @@ Rails.application.routes.draw do
   get "/dashboard", to: "dashboard#index"
 
   scope path: "/staff" do
+    resources :certifications
+
     resources :activity_report_cases do
       collection do
         get :closed
