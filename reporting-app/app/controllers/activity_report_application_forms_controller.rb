@@ -26,7 +26,7 @@ class ActivityReportApplicationFormsController < ApplicationController
   end
 
   # GET /activity_report_application_forms/1/edit
-  # 
+  #
   # @param reporting_source [String] Override which reporting service to use ("income_verification_service", "reporting_app")
   def edit
     default_reporting_source = Rails.application.config.reporting_source
