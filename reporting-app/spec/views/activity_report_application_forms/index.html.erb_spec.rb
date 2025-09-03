@@ -6,11 +6,14 @@ RSpec.describe "activity_report_application_forms/index", type: :view do
       ActivityReportApplicationForm.create!(),
       ActivityReportApplicationForm.create!()
     ])
+    assign(:in_progress_activity_reports, [
+      ActivityReportApplicationForm.create!()
+    ])
   end
 
   it "renders a list of activity_report_application_forms" do
     render
     cell_selector = 'tr'
-    assert_select cell_selector, count: 3
+    assert_select cell_selector, count: 5
   end
 end

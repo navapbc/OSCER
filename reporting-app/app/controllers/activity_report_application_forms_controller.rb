@@ -5,6 +5,7 @@ class ActivityReportApplicationFormsController < ApplicationController
     review
     update
     submit
+    verify
     destroy
   ]
   before_action :authenticate_user!
@@ -12,6 +13,7 @@ class ActivityReportApplicationFormsController < ApplicationController
   # GET /activity_report_application_forms or /activity_report_application_forms.json
   def index
     @activity_report_application_forms = policy_scope(ActivityReportApplicationForm).order(created_at: :desc)
+    @in_progress_activity_reports = @activity_report_application_forms.in_progress
   end
 
   # GET /activity_report_application_forms/1 or /activity_report_application_forms/1.json
@@ -24,10 +26,23 @@ class ActivityReportApplicationFormsController < ApplicationController
   end
 
   # GET /activity_report_application_forms/1/edit
+  #
+  # @param reporting_source [String] Override which reporting service to use ("income_verification_service", "reporting_app")
   def edit
-    respond_to do |format|
-      format.html # render edit form with existing supporting_documents
-      format.json { render json: @activity_report_application_form.as_json(include: { supporting_documents: { include: :blob } }) }
+    default_reporting_source = Rails.application.config.reporting_source
+    reporting_source = params[:reporting_source] || default_reporting_source
+
+    if reporting_source == "income_verification_service"
+      puts "Redirecting user to CMS Income Verification Service"
+      # We should get the name from the certification request. For now, we'll use a placeholder name
+      name = Flex::Name.new(first: "Jane", last: "Doe")
+      invitation = CMSIncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
+      redirect_to invitation.tokenized_url, allow_other_host: true
+    else
+      respond_to do |format|
+        format.html # render edit form with existing supporting_documents
+        format.json { render json: @activity_report_application_form.as_json(include: { supporting_documents: { include: :blob } }) }
+      end
     end
   end
 

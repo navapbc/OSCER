@@ -94,18 +94,55 @@ RSpec.describe "/activity_report_application_forms", type: :request do
   end
 
   describe "GET /edit" do
-    it "renders a successful response" do
-      activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
-      get edit_activity_report_application_form_url(activity_report_application_form)
-      expect(response).to be_successful
+    let(:activity_report_application_form) { ActivityReportApplicationForm.create! valid_db_attributes }
+
+    context "with reporting source set to 'income_verification_service'" do
+      let(:invitation) {
+        CMSIncomeVerificationService::Invitation.new(
+          tokenized_url: "https://ivaas.gov/en/cbv/entry?token=dummy-token",
+          expiration_date: DateTime.now + 7.days,
+          language: "en"
+        )
+      }
+      let(:mock_service) { instance_double(CMSIncomeVerificationService) }
+
+      before do
+        allow(Rails.application.config).to receive(:reporting_source).and_return("income_verification_service")
+        allow(CMSIncomeVerificationService).to receive(:new).and_return(mock_service)
+        allow(mock_service).to receive(:create_invitation)
+          .with(activity_report_application_form, instance_of(Flex::Name))
+          .and_return(invitation)
+      end
+
+      it "redirects to the income verification service" do
+        get edit_activity_report_application_form_url(activity_report_application_form)
+        expect(response).to redirect_to("https://ivaas.gov/en/cbv/entry?token=dummy-token")
+      end
+
+      it "renders an error response for non-owning user" do
+        login_as other_user
+
+        get edit_activity_report_application_form_url(activity_report_application_form)
+        expect(response).to be_client_error
+      end
     end
 
-    it "renders an error response for non-owning user" do
-      login_as other_user
+    context "with reporting source set to 'reporting_app'" do
+      before do
+        allow(Rails.application.config).to receive(:reporting_source).and_return("reporting_app")
+      end
 
-      activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
-      get edit_activity_report_application_form_url(activity_report_application_form)
-      expect(response).to be_client_error
+      it "renders a successful response" do
+        get edit_activity_report_application_form_url(activity_report_application_form)
+        expect(response).to be_successful
+      end
+
+      it "renders an error response for non-owning user" do
+        login_as other_user
+
+        get edit_activity_report_application_form_url(activity_report_application_form)
+        expect(response).to be_client_error
+      end
     end
   end
 
