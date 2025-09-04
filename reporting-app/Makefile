@@ -155,6 +155,9 @@ db-test-prepare: ## Prepare the test database
 db-seed: ## Seed the database
 	$(RAILS_RUN_CMD) db:seed
 
+db-reseed: ## Re-seed the database
+	$(RAILS_RUN_CMD) db:seed:replant
+
 db-reset: ## Reset the database
 	$(RAILS_RUN_CMD) db:reset
 
