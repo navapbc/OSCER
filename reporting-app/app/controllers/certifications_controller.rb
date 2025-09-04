@@ -23,6 +23,15 @@ class CertificationsController < StaffController
     @certification = Certification.new(certification_params)
 
     if @certification.save
+      # TODO: could be moved to an event processing step or something
+      is_exempt = false
+      if not is_exempt
+        # TODO: for demo purposes, create an activity report associated with the
+        # current user for this Certification
+        bene_user = current_user
+        ActivityReportApplicationForm.create!(user_id: bene_user.id, certification_id: @certification.id)
+      end
+
       render :show, status: :created, location: @certification
     else
       render json: @certification.errors, status: :unprocessable_entity
