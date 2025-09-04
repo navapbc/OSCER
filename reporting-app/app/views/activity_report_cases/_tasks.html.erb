@@ -1,0 +1,15 @@
+<% if @tasks.any? %>
+  <ul class="usa-alert__text usa-list">
+    <% @tasks.each do |task| %>
+      <li class="usa-list-item">
+        <strong><%= task.name %></strong> - <%= task.status.humanize %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <div style="padding: unset;" class="usa-alert usa-alert--info usa-alert--slim  usa-alert--no-icon" role="status">
+    <div class="usa-alert__body">
+      <p class="usa-alert__text">No tasks available</p>
+    </div>
+  </div>
+<% end %>

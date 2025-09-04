@@ -15,6 +15,9 @@ class ActivityReportCasesController < StaffController
   def show
     @case = ActivityReportCase.find(params[:id])
     @activity_report_application_form = ActivityReportApplicationForm.find(@case.application_form_id) if @case.application_form_id
+    @tasks = @case.tasks || []
+    @section = params[:section] || "details"
+    @documents = @activity_report_application_form.supporting_documents if @activity_report_application_form
   end
 
   # GET /activity_report_cases/new
