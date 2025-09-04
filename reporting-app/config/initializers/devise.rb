@@ -9,7 +9,12 @@ Devise.setup do |config|
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
   # time the user will be asked for credentials again. Default is 30 minutes.
-  config.timeout_in = 15.minutes
+  # Set session timeout to 1 hour only in development and test environments.
+  config.timeout_in = if Rails.env.development? || Rails.env.test?
+    1.hour
+  else
+    30.minutes
+  end
 
   # ==> Navigation configuration
   # Lists the formats that should be treated as navigational. Formats like
