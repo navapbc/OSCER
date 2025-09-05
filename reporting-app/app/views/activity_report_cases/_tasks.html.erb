@@ -1,8 +1,9 @@
+<h2 id="case-details-heading" class="usa-heading-lg margin-bottom-1">Case Tasks</h2>
 <% if @tasks.any? %>
-  <ul class="usa-alert__text usa-list">
+  <ul class="usa-alert__text usa-list margin-top-1">
     <% @tasks.each do |task| %>
       <li class="usa-list-item">
-        <strong><%= task.name %></strong> - <%= task.status.humanize %>
+        <%= link_to task.class.name.underscore.humanize, task %> (<%= task.status.humanize %>)
       </li>
     <% end %>
   </ul>

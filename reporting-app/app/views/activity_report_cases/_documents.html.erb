@@ -3,9 +3,7 @@
   <ul class="usa-alert__text usa-list margin-top-1">
     <% @documents.each do |document| %>
       <li class="usa-list-item">
-        <%= link_to(rails_blob_path(document, disposition: "attachment"), target: "_blank") do %>
-          <strong><%= document.filename %></strong> - <%= document.content_type.humanize %>
-        <% end %>
+        <%= link_to("#{document.filename} - #{document.content_type.humanize.downcase}", document.blob, target: "_blank") %>
       </li>
     <% end %>
   </ul>
