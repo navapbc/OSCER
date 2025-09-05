@@ -1,5 +1,5 @@
 <%
-    content_for :title, @name
+    content_for :title, @name || "Case ##{@case.id}"
 %>
 <section class="usa-section margin-top-1 padding-top-0">
   <div class="grid-container">

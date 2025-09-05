@@ -18,7 +18,7 @@ class ActivityReportCasesController < StaffController
     @tasks = @case.tasks || []
     @section = params[:section] || "details"
     @documents = @activity_report_application_form.supporting_documents if @activity_report_application_form
-    @name = [ "John Doe", "Jane Doe", "Jack Doe", "Jill Doe" ].sample # Placeholder until we have user data
+    @name = @activity_report_application_form.employer_name if @activity_report_application_form
   end
 
   # GET /activity_report_cases/new

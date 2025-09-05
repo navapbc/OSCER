@@ -1,19 +1,14 @@
-<%
-    birthday = rand(65.years.ago..18.years.ago).to_date
-    birthday_formatted = birthday.strftime("%B %e, %Y")
-    years_old = (Date.today - birthday).to_i / 365
-%>
 <h2 id="case-details-heading" class="usa-heading-lg margin-bottom-3">Case Details</h2>
 <dl class="grid-row grid-gap margin-0">
   <div class="grid-col-12 tablet:grid-col-6">
     <div class="margin-bottom-2">
       <dt class="text-bold font-sans-sm text-base-dark">Case ID</dt>
-      <dd class="margin-left-0 margin-top-1 font-sans-md"><%= kase.id %></dd>
+      <dd class="margin-left-0 margin-top-1 font-sans-sm"><%= kase.id %></dd>
     </div>
     <div class="margin-bottom-2">
-      <dt class="text-bold font-sans-sm text-base-dark">Date of Birth</dt>
+      <dt class="text-bold font-sans-sm text-base-dark">Reporting Period</dt>
       <dd class="margin-left-0 margin-top-1 font-sans-sm">
-        <%= birthday_formatted %> (<%= years_old %> years old)
+        <%= @activity_report_application_form.reporting_period.strftime("%B, %Y") %>
       </dd>
     </div>
   </div>
@@ -21,6 +16,10 @@
     <div class="margin-bottom-2">
       <dt class="text-bold font-sans-sm text-base-dark">Assigned Worker</dt>
       <dd class="margin-left-0 margin-top-1 font-sans-md">William Worker</dd>
+    </div>
+    <div class="margin-bottom-2">
+      <dt class="text-bold font-sans-sm text-base-dark">Hours</dt>
+      <dd class="margin-left-0 margin-top-1 font-sans-md"><%= number_with_precision(@activity_report_application_form.minutes / 60.0, precision: 2, strip_insignificant_zeros: true) %></dd>
     </div>
     <div class="margin-bottom-2">
       <dt class="text-bold font-sans-sm text-base-dark">Last Updated</dt>
