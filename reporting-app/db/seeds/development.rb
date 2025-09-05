@@ -13,5 +13,12 @@
   app_form.save!
   app_form.supporting_documents.attach(io: File.open(Rails.root.join("db", "seeds", "files", "equipment_list.png"), "r"), filename: "equipment_list.png", content_type: "image/png")
   app_form.save!
-  app_form
+
+  app_form.submit_application
+
+  # 3.times do
+  #   ReviewActivityReportTask.create!(
+  #     case: ActivityReportCase.find(application_form_id: app_form.id)
+  #   )
+  # end
 end
