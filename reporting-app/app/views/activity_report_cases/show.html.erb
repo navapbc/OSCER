@@ -28,7 +28,7 @@
     </div>
     <div class="grid-row grid-gap border-top-2px border-base-lighter padding-top-2">
       <div class="tablet:grid-col-3 margin-bottom-4 margin-left-0 margin-right-0 tablet:margin-bottom-0">
-        <nav aria-label="Side navigation,">
+        <nav aria-label="Side navigation">
           <ul class="usa-sidenav">
             <li class="usa-sidenav__item">
               <%= link_to "Details", activity_report_case_path(@case, section: "details"), data: { turbo_frame: "case_summary" }, class: (params[:section] == "details" || params[:section].blank? ? "usa-current" : nil) %>
