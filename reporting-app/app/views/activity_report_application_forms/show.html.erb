@@ -1,4 +1,20 @@
-<%= render template: "flex/application_forms/show", locals: {
+<% content_for :title, t(".title") %>
+
+<%= link_to t(".back"), activity_report_application_forms_path %>
+
+<h1><%= t(".title") %></h1>
+
+<%= link_to "Add activity", new_activity_report_application_form_activity_path(@activity_report_application_form), class: class_names("usa-button") %>
+
+<% for month, activities in @activity_report_application_form.activities.group_by(&:month) do %>
+  <h2><%= month.strftime("%B %Y") %></h2>
+  <% for activity in activities %>
+    <p><%= activity.name %></p>
+    <p><%= activity.hours %></p>
+  <% end %>
+<% end %>
+
+<%# render template: "flex/application_forms/show", locals: {
   title: t(".title"),
   back_link_text: t(".back"),
   index_path: activity_report_application_forms_path,
@@ -7,14 +23,3 @@
   next_step: t(".next_step.status.#{@activity_report_application_form.status}"),
   submitted_on_text: t(".submitted_on")
 } %>
-
-<% if policy(@activity_report_application_form).edit? %>
-  <%= link_to t(".edit"),
-              edit_activity_report_application_form_path(
-                @activity_report_application_form,
-                reporting_source: "reporting_app"
-              ),
-              class: "usa-button usa-button--outline" %>
-<% else %>
-  <%= button_tag t(".edit"), class: "usa-button usa-button--outline", type: "button", disabled: true %>
-<% end %>
