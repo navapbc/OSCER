@@ -1,5 +1,5 @@
 <%
-    birthday = Faker::Date.birthday(min_age: 18, max_age: 65)
+    birthday = rand(65.years.ago..18.years.ago).to_date
     birthday_formatted = birthday.strftime("%B %e, %Y")
     years_old = (Date.today - birthday).to_i / 365
 %>
