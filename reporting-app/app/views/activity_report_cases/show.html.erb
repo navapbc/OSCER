@@ -1,6 +1,5 @@
 <%
-    name = Faker::Name.name
-    content_for :title, name
+    content_for :title, @name
 %>
 <section class="usa-section margin-top-1 padding-top-0">
   <div class="grid-container">
@@ -10,7 +9,7 @@
           <%= link_to "Cases", activity_report_cases_path %>
         </li>
         <li class="usa-breadcrumb__list-item usa-current" aria-current="page">
-          <%= name %>
+          <%= @name %>
         </li>
       </ol>
     </nav>
