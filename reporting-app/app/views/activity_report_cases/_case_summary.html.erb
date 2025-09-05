@@ -1,0 +1,18 @@
+<section class="usa-section padding-top-0 padding-left-0" aria-labelledby="case-details-heading">
+  <div class="usa-card grid-row grid-gap">
+    <div class="grid-col-12">
+      <div class="usa-card__container bg-white padding-3 radius-md">
+        <% case section %>
+        <% when "notes" %>
+          <%= render partial: "activity_report_cases/notes", locals: { kase: @case } %>
+        <% when "tasks" %>
+          <%= render partial: "activity_report_cases/tasks", locals: { kase: @case } %>
+        <% when "documents" %>
+          <%= render partial: "activity_report_cases/documents", locals: { kase: @case } %>
+        <% else %>
+          <%= render partial: "activity_report_cases/details", locals: { kase: @case } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

@@ -14,7 +14,11 @@ class ActivityReportCasesController < StaffController
   # GET /activity_report_cases/1 or /activity_report_cases/1.json
   def show
     @case = ActivityReportCase.find(params[:id])
-    @activity_report_application_form = ActivityReportApplicationForm.find(@case.application_form_id) if @case.application_form_id
+    @activity_report_application_form = ActivityReportApplicationForm.find(@case.application_form_id)
+    @tasks = @case.tasks || []
+    @section = params[:section] || "details"
+    @documents = @activity_report_application_form.supporting_documents
+    @name = @activity_report_application_form.employer_name
   end
 
   # GET /activity_report_cases/new
