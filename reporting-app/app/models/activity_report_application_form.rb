@@ -1,9 +1,12 @@
 class ActivityReportApplicationForm < Flex::ApplicationForm
   has_many_attached :supporting_documents
+  has_many :activities, strict_loading: true
 
   flex_attribute :employer_name, :string
   flex_attribute :minutes, :integer
   flex_attribute :reporting_period, :date
+
+  default_scope { includes(:activities) }
 
   # Validation for minimum 15 minutes
   validates :minutes, on: :submit, numericality: {
