@@ -8,9 +8,18 @@
 
 <% for month, activities in @activity_report_application_form.activities.group_by(&:month) do %>
   <h2><%= month.strftime("%B %Y") %></h2>
-  <div class="grid-container">
+  <div class="grid-container font-body-md">
     <% for activity in activities %>
       <%= render activity %>
     <% end %>
+
+    <div class="grid-row text-bold">
+      <div class="grid-col-7 grid-offset-2">
+        Total
+      </div>
+      <div class="grid-col-3 border-top-1px text-right">
+        <%= activities.sum(&:hours) %>
+      </div>
+    </div>
   </div>
 <% end %>
