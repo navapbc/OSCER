@@ -1,6 +1,6 @@
 <div id="<%= dom_id activity %>" class="grid-row">
   <div class="grid-col-7 grid-offset-2">
-    Work for <%= activity.name %>
+    <%= link_to "Work for #{activity.name}", edit_activity_report_application_form_activity_path(activity.activity_report_application_form, activity) %>
   </div>
   <div class="grid-col-3 text-right">
     <%= activity.hours %>
