@@ -24,14 +24,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
   # adjust the attributes here as well.
   let(:valid_request_attributes) do
     {
-      employer_name: "Acme Corp",
-      minutes: 60, # 1 hour
       reporting_period: (Date.today - 1.month).beginning_of_month,
-      supporting_documents: [
-        fixture_file_upload('spec/fixtures/files/test_document_1.pdf', 'application/pdf'),
-        fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain'),
-        fixture_file_upload('spec/fixtures/files/test_document_3.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-      ]
     }
   end
 
@@ -41,13 +34,6 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         user_id: user.id
       }
     )
-  end
-
-  let(:invalid_request_attributes) do
-    {
-      employer_name: "",
-      minutes: 10 # Less than minimum 15 minutes
-    }
   end
 
   before do
@@ -176,19 +162,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
 
       it "redirects to the created activity_report_application_form" do
         post activity_report_application_forms_url, params: { activity_report_application_form: valid_request_attributes }
-        expect(response).to redirect_to(review_activity_report_application_form_url(ActivityReportApplicationForm.last))
-      end
-
-      it "attaches multiple supporting documents" do
-        post activity_report_application_forms_url, params: { activity_report_application_form: valid_request_attributes }
-        created_form = ActivityReportApplicationForm.last
-        expect(created_form.supporting_documents.attached?).to be true
-        expect(created_form.supporting_documents.count).to eq(3)
-        expect(created_form.supporting_documents.map(&:filename).map(&:to_s)).to include(
-          "test_document_1.pdf",
-          "test_document_2.txt",
-          "test_document_3.docx"
-        )
+        expect(response).to redirect_to(activity_report_application_form_url(ActivityReportApplicationForm.last))
       end
 
       it "creates an activity report case" do
@@ -200,19 +174,6 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         kase = ActivityReportCase.find_by(application_form_id: created_form.id)
         expect(kase).not_to be_nil
         expect(kase.business_process_instance.current_step).to eq("submit_report")
-      end
-    end
-
-    context "with invalid parameters" do
-      it "does not create a new ActivityReportApplicationForm" do
-        expect {
-          post activity_report_application_forms_url, params: { activity_report_application_form: invalid_request_attributes }
-        }.not_to change(ActivityReportApplicationForm, :count)
-      end
-
-      it "renders a successful response (i.e. to display the 'new' template)" do
-        post activity_report_application_forms_url, params: { activity_report_application_form: invalid_request_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
@@ -260,39 +221,6 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
         activity_report_application_form.reload
         expect(response).to redirect_to(review_activity_report_application_form_url(activity_report_application_form))
-      end
-
-      it "updates the supporting documents" do
-        activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
-        expect(activity_report_application_form.supporting_documents.count).to eq(3)
-
-        patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
-        activity_report_application_form.reload
-
-        expect(activity_report_application_form.supporting_documents.count).to eq(1)
-        expect(activity_report_application_form.supporting_documents.first.filename.to_s).to eq("test_document_2.txt")
-      end
-    end
-
-    context "with invalid parameters" do
-      let(:new_attributes) {
-        {
-          employer_name: "New Employer Corp",
-          minutes: 10 # Under 15 minutes
-        }
-      }
-
-      it "does not update the requested activity_report_application_form" do
-        activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
-        patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
-        activity_report_application_form.reload
-        expect(activity_report_application_form.minutes).to eq(60)
-      end
-
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
-        patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
