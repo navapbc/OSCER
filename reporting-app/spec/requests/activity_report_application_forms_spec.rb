@@ -24,7 +24,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
   # adjust the attributes here as well.
   let(:valid_request_attributes) do
     {
-      reporting_period: (Date.today - 1.month).beginning_of_month,
+      reporting_period: (Date.today - 1.month).beginning_of_month
     }
   end
 
