@@ -4,6 +4,8 @@
 
 <h1><%= t(".title") %></h1>
 
+<p class="usa-intro"><%= t(".intro") %></p>
+
 <%= link_to "Add activity", new_activity_report_application_form_activity_path(@activity_report_application_form), class: class_names("usa-button") %>
 <%= link_to "Review and submit", review_activity_report_application_form_path(@activity_report_application_form), class: class_names("usa-button") %>
 

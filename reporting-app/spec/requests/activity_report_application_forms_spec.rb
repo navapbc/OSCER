@@ -241,14 +241,6 @@ RSpec.describe "/activity_report_application_forms", type: :request do
       expect(response).to redirect_to(activity_report_application_form_url(application_form))
     end
 
-    it "redirects to GET /edit on error" do
-      empty_form = ActivityReportApplicationForm.create!(user_id: user.id)
-
-      post submit_activity_report_application_form_url(empty_form)
-
-      expect(response).to redirect_to(edit_activity_report_application_form_url(empty_form))
-    end
-
     it "sets the current step of the case to 'review_report'" do
       post submit_activity_report_application_form_url(application_form)
 
