@@ -20,7 +20,7 @@ RSpec.describe "/activities", type: :request do
   let(:other_user) { User.create!(email: "test-other@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
 
   let!(:activity_report_application_form) { create(:activity_report_application_form, :with_activities, user_id: user.id) }
-  let!(:activity) { activity_report_application_form.activities.first }
+  let!(:existing_activity) { activity_report_application_form.activities.first }
   
   # This should return the minimal set of attributes required to create a valid
   # Activity. As you add validations to Activity, be sure to
@@ -56,7 +56,7 @@ RSpec.describe "/activities", type: :request do
 
   describe "GET /show" do
     it "renders a successful response" do
-      get activity_report_application_form_activity_url(activity_report_application_form, activity)
+      get activity_report_application_form_activity_url(activity_report_application_form, existing_activity)
       expect(response).to be_successful
     end
   end
@@ -70,7 +70,7 @@ RSpec.describe "/activities", type: :request do
 
   describe "GET /edit" do
     it "renders a successful response" do
-      get edit_activity_report_application_form_activity_url(activity_report_application_form, activity)
+      get edit_activity_report_application_form_activity_url(activity_report_application_form, existing_activity)
       expect(response).to be_successful
     end
   end
@@ -93,29 +93,30 @@ RSpec.describe "/activities", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          name: "New Employer Corp",
+          hours: 100.0,
+          supporting_documents: [
+            fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain')
+          ]
+        }
       }
 
+      before do
+        patch activity_report_application_form_activity_url(activity_report_application_form, existing_activity), params: { activity: new_attributes }
+      end
+
       it "updates the requested activity" do
-        activity = Activity.create! valid_attributes
-        patch activity_url(activity), params: { activity: new_attributes }
-        activity.reload
-        skip("Add assertions for updated state")
+        activity_report_application_form.reload
+        updated_activity = activity_report_application_form.activities_by_id[existing_activity.id]
+        expect(updated_activity.name).to eq("New Employer Corp")
+        expect(updated_activity.hours).to eq(100.0)
+        expect(updated_activity.supporting_documents.count).to eq(1)
+        expect(updated_activity.supporting_documents.first.filename.to_s).to eq("test_document_2.txt")
       end
 
-      it "redirects to the activity" do
-        activity = Activity.create! valid_attributes
-        patch activity_url(activity), params: { activity: new_attributes }
-        activity.reload
-        expect(response).to redirect_to(activity_url(activity))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        activity = Activity.create! valid_attributes
-        patch activity_url(activity), params: { activity: invalid_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
+      it "redirects to the activity report" do
+        expect(response).to redirect_to(activity_report_application_form_url(activity_report_application_form))
       end
     end
   end
