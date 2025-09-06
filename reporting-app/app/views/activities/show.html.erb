@@ -5,3 +5,7 @@
 <h1><%= t(".title.work", name: @activity.name) %></h1>
 
 <%= render @activity %>
+
+<div class="margin-top-4">
+  <%= link_to t(".edit"), edit_activity_report_application_form_activity_path(@activity.activity_report_application_form, @activity), class: class_names("usa-button") %>
+</div>
