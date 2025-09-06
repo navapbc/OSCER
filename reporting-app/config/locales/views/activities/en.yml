@@ -13,3 +13,4 @@ en:
         work: "Work for %{name}"
       back: "Back to activity report"
       edit: "Edit activity"
+      destroy: "Delete activity"
