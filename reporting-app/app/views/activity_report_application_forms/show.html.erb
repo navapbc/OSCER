@@ -6,11 +6,11 @@
 
 <%= link_to "Add activity", new_activity_report_application_form_activity_path(@activity_report_application_form), class: class_names("usa-button") %>
 
-<% for month, activities in @activity_report_application_form.activities.group_by(&:month) do %>
+<% for month, activities in @activity_report_application_form.activities_by_month do %>
   <h2><%= month.strftime("%B %Y") %></h2>
   <div class="grid-container font-body-md">
     <% for activity in activities %>
-      <%= render "activity_row", activity: activity %>
+      <%= render "activity_row", activity_report_application_form: @activity_report_application_form, activity: %>
     <% end %>
 
     <%= render "month_total_row", activities: activities %>
