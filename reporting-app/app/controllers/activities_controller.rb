@@ -24,7 +24,6 @@ class ActivitiesController < ApplicationController
     authorize @activity_report_application_form, :update?
 
     @activity = @activity_report_application_form.activities.build(activity_params)
-    @activity_report_application_form.activities << @activity
 
     respond_to do |format|
       if @activity_report_application_form.save!
