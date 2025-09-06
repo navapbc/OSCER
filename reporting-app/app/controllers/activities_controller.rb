@@ -57,11 +57,11 @@ class ActivitiesController < ApplicationController
   def destroy
     authorize @activity_report_application_form, :update?
 
-    @activity_report_application_form.activities = @activity_report_application_form.activities.reject { |activity| activity.id == params[:id].to_i }
+    @activity_report_application_form.activities = @activity_report_application_form.activities.reject { |activity| activity.id == params[:id] }
     @activity_report_application_form.save!
 
     respond_to do |format|
-      format.html { redirect_to activities_path, status: :see_other, notice: "Activity was successfully destroyed." }
+      format.html { redirect_to activity_report_application_form_path(@activity_report_application_form), status: :see_other, notice: "Activity was successfully destroyed." }
       format.json { head :no_content }
     end
   end
