@@ -21,7 +21,7 @@ RSpec.describe "/activities", type: :request do
 
   let!(:activity_report_application_form) { create(:activity_report_application_form, :with_activities, user_id: user.id) }
   let!(:existing_activity) { activity_report_application_form.activities.first }
-  
+
   # This should return the minimal set of attributes required to create a valid
   # Activity. As you add validations to Activity, be sure to
   # adjust the attributes here as well.
