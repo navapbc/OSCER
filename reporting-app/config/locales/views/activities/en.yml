@@ -8,3 +8,7 @@ en:
       title: "Activity"
       back: "Back to activity report"
       edit: "Edit activity"
+    show:
+      title:
+        work: "Work for %{name}"
+      back: "Back to activity report"
