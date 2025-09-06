@@ -3,11 +3,6 @@ class ActivitiesController < ApplicationController
   before_action :set_activity_report_application_form, only: %i[ new create ]
   before_action :set_activity, only: %i[ show edit update destroy ]
 
-  # GET /activities or /activities.json
-  def index
-    @activities = Activity.all
-  end
-
   # GET /activities/1 or /activities/1.json
   def show
   end
