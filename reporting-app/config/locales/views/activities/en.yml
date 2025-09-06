@@ -12,3 +12,4 @@ en:
       title:
         work: "Work for %{name}"
       back: "Back to activity report"
+      edit: "Edit activity"
