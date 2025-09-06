@@ -7,6 +7,26 @@
       <% end %>
 
       <%= render "month_total_row", activities: activities %>
+
+      <%# Required hours row %>
+      <div class="grid-row">
+        <div class="grid-col-7 grid-offset-2">
+          Required hours
+        </div>
+        <div class="grid-col-3 text-right">
+          80.0
+        </div>
+      </div>
+
+      <%# Additional hours needed row %>
+      <div class="grid-row text-bold">
+        <div class="grid-col-7 grid-offset-2">
+          Additional hours needed
+        </div>
+        <div class="grid-col-3 border-top-1px text-right">
+          <%= [0.0, 80.0 - activities.sum(&:hours)].max %>
+        </div>
+      </div>
     </div>
   <% end %>
 </div>
