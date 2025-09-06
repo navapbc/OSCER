@@ -123,16 +123,14 @@ RSpec.describe "/activities", type: :request do
 
   describe "DELETE /destroy" do
     it "destroys the requested activity" do
-      activity = Activity.create! valid_attributes
       expect {
-        delete activity_url(activity)
+        delete activity_report_application_form_activity_url(activity_report_application_form, existing_activity)
       }.to change(Activity, :count).by(-1)
     end
 
     it "redirects to the activities list" do
-      activity = Activity.create! valid_attributes
-      delete activity_url(activity)
-      expect(response).to redirect_to(activities_url)
+      delete activity_report_application_form_activity_url(activity_report_application_form, existing_activity)
+      expect(response).to redirect_to(activity_report_application_form_url(activity_report_application_form))
     end
   end
 end
