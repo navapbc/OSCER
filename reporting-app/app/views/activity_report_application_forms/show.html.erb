@@ -5,14 +5,9 @@
 <h1><%= t(".title") %></h1>
 
 <%= link_to "Add activity", new_activity_report_application_form_activity_path(@activity_report_application_form), class: class_names("usa-button") %>
+<%= link_to "Review and submit", review_activity_report_application_form_path(@activity_report_application_form), class: class_names("usa-button") %>
 
-<% for month, activities in @activity_report_application_form.activities_by_month do %>
-  <h2><%= month.strftime("%B %Y") %></h2>
-  <div class="grid-container font-body-md">
-    <% for activity in activities %>
-      <%= render "activity_row", activity_report_application_form: @activity_report_application_form, activity: %>
-    <% end %>
+<%# Temporary spacing workaround %>
+<div class="margin-top-6"></div>
 
-    <%= render "month_total_row", activities: activities %>
-  </div>
-<% end %>
+<%= render @activity_report_application_form %>

@@ -59,7 +59,7 @@ class ActivityReportApplicationFormsController < ApplicationController
 
     respond_to do |format|
       if @activity_report_application_form.save
-        format.html { redirect_to review_activity_report_application_form_path(@activity_report_application_form), notice: "Activity report application form was successfully created." }
+        format.html { redirect_to @activity_report_application_form, notice: "Activity report application form was successfully created." }
         format.json { render :show, status: :created, location: review_activity_report_application_form_path(@activity_report_application_form) }
       else
         format.html { render :new, status: :unprocessable_entity }
