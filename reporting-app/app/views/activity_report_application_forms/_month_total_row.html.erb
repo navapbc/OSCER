@@ -1,0 +1,8 @@
+<div class="grid-row text-bold">
+  <div class="grid-col-7 grid-offset-2">
+    Total
+  </div>
+  <div class="grid-col-3 border-top-1px text-right">
+    <%= activities.sum(&:hours) %>
+  </div>
+</div>
