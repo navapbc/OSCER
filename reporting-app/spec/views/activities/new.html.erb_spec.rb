@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "activities/new", type: :view do
   let(:activity_report_application_form) { create(:activity_report_application_form) }
 
-  before(:each) do
+  before do
     assign(:activity_report_application_form, activity_report_application_form)
     assign(:activity, activity_report_application_form.activities.build)
   end

@@ -4,7 +4,7 @@ RSpec.describe "activities/edit", type: :view do
   let(:activity_report_application_form) { create(:activity_report_application_form, :with_activities) }
   let(:activity) { activity_report_application_form.activities.first }
 
-  before(:each) do
+  before do
     assign(:activity_report_application_form, activity_report_application_form)
     assign(:activity, activity)
   end
