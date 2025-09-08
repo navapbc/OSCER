@@ -100,7 +100,7 @@ RSpec.describe "/activities", type: :request do
       it "does not create a new Activity" do
         expect {
           post activity_report_application_form_activities_url(activity_report_application_form), params: { activity: invalid_attributes }
-        }.to change(Activity, :count).by(0)
+        }.not_to change(Activity, :count)
       end
 
       it "renders a response with 422 status (unprocessable entity)" do
