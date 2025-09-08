@@ -8,4 +8,7 @@ class Activity < ApplicationRecord
   flex_attribute :month, :date
   flex_attribute :hours, :decimal
   flex_attribute :name, :string
+
+  validates :name, presence: true
+  validates :hours, presence: true, numericality: { greater_than: 0 }
 end

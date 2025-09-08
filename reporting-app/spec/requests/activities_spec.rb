@@ -46,6 +46,13 @@ RSpec.describe "/activities", type: :request do
     )
   end
 
+  let(:invalid_attributes) {
+    {
+      name: "",
+      hours: "Not a number"
+    }
+  }
+
   before do
     login_as user
   end
@@ -88,6 +95,24 @@ RSpec.describe "/activities", type: :request do
         expect(response).to redirect_to(activity_report_application_form_url(activity_report_application_form))
       end
     end
+
+    context "with invalid parameters" do
+      it "does not create a new Activity" do
+        expect {
+          post activity_report_application_form_activities_url(activity_report_application_form), params: { activity: invalid_attributes }
+        }.to change(Activity, :count).by(0)
+      end
+
+      it "renders a response with 422 status (unprocessable entity)" do
+        post activity_report_application_form_activities_url(activity_report_application_form), params: { activity: invalid_attributes }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "renders error messages" do
+        post activity_report_application_form_activities_url(activity_report_application_form), params: { activity: invalid_attributes }
+        expect(response.body).to include("Hours is not a number")
+      end
+    end
   end
 
   describe "PATCH /update" do
@@ -117,6 +142,27 @@ RSpec.describe "/activities", type: :request do
 
       it "redirects to the activity report" do
         expect(response).to redirect_to(activity_report_application_form_url(activity_report_application_form))
+      end
+    end
+
+    context "with invalid parameters" do
+      before do
+        patch activity_report_application_form_activity_url(activity_report_application_form, existing_activity), params: { activity: invalid_attributes }
+      end
+
+      it "renders a response with 422 status (unprocessable entity)" do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "renders error messages" do
+        expect(response.body).to include("Hours is not a number")
+      end
+
+      it "does not update the activity" do
+        activity_report_application_form.reload
+        updated_activity = activity_report_application_form.activities_by_id[existing_activity.id]
+        expect(updated_activity.name).not_to eq("")
+        expect(updated_activity.hours).not_to eq("Not a number")
       end
     end
   end

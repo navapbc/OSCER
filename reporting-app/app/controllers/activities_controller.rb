@@ -26,7 +26,7 @@ class ActivitiesController < ApplicationController
     @activity = @activity_report_application_form.activities.build(activity_params)
 
     respond_to do |format|
-      if @activity_report_application_form.save!
+      if @activity_report_application_form.save
         format.html { redirect_to @activity_report_application_form, notice: "Activity was successfully created." }
         format.json { render :show, status: :created, location: @activity }
       else
@@ -43,7 +43,7 @@ class ActivitiesController < ApplicationController
     @activity.attributes = activity_params
 
     respond_to do |format|
-      if @activity_report_application_form.save!
+      if @activity_report_application_form.save
         format.html { redirect_to @activity_report_application_form, notice: "Activity was successfully updated." }
         format.json { render :show, status: :ok, location: @activity }
       else
