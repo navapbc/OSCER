@@ -1,5 +1,4 @@
 class ActivityReportApplicationForm < Flex::ApplicationForm
-  has_many_attached :supporting_documents
   has_many :activities, strict_loading: true, autosave: true, dependent: :destroy
 
   flex_attribute :employer_name, :string
