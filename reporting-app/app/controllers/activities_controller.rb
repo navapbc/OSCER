@@ -5,22 +5,25 @@ class ActivitiesController < ApplicationController
 
   # GET /activities/1 or /activities/1.json
   def show
+    authorize @activity_report_application_form
   end
 
   # GET /activities/new
   def new
     @activity = @activity_report_application_form.activities.build
-    authorize [@activity_report_application_form, @activity]
+    authorize @activity_report_application_form, :edit?
   end
 
   # GET /activities/1/edit
   def edit
+    authorize @activity_report_application_form, :edit?
   end
 
   # POST /activities or /activities.json
   def create
+    authorize @activity_report_application_form, :update?
+
     @activity = @activity_report_application_form.activities.build(activity_params)
-    authorize [@activity_report_application_form, @activity]
 
     respond_to do |format|
       if @activity_report_application_form.save!
@@ -67,7 +70,6 @@ class ActivitiesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_activity
       @activity = @activity_report_application_form.activities_by_id[params[:id]]
-      authorize [@activity_report_application_form, @activity]
     end
 
     def set_activity_report_application_form
