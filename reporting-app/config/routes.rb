@@ -1,15 +1,13 @@
 Rails.application.routes.draw do
-  scope path: "/dashboard" do
-    resources :activity_report_application_forms do
-      resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ]
-      member do
-        get :review
-        post :submit
-      end
+  resources :activity_report_application_forms do
+    resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ]
+    member do
+      get :review
+      post :submit
     end
   end
 
-  get "/dashboard", to: "activity_report_application_forms#index"
+  get "/dashboard", to: "dashboard#index"
 
   scope path: "/staff" do
     resources :activity_report_cases do

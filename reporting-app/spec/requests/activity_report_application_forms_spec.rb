@@ -12,7 +12,7 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/dashboard", type: :request do
+RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
   include Warden::Test::Helpers
 
   let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
@@ -42,19 +42,6 @@ RSpec.describe "/dashboard", type: :request do
 
   after do
     Warden.test_reset!
-  end
-
-  describe "GET /index" do
-    it "renders a successful response with existing forms" do
-      ActivityReportApplicationForm.create! valid_db_attributes
-      get activity_report_application_forms_url
-      expect(response).to be_successful
-    end
-
-    it "renders a successful response with no forms" do
-      get activity_report_application_forms_url
-      expect(response).to be_successful
-    end
   end
 
   describe "GET /show" do
@@ -269,10 +256,10 @@ RSpec.describe "/dashboard", type: :request do
       }.not_to change(ActivityReportApplicationForm, :count)
     end
 
-    it "redirects to the activity_report_application_forms list" do
+    it "redirects to the dashboard" do
       activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
       delete activity_report_application_form_url(activity_report_application_form)
-      expect(response).to redirect_to(activity_report_application_forms_url)
+      expect(response).to redirect_to(dashboard_path)
     end
   end
 end
