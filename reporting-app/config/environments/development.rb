@@ -20,6 +20,9 @@ Rails.application.configure do
   # Enable server timing.
   config.server_timing = true
 
+  config.time_zone = "Central Time (US & Canada)"
+  config.active_record.default_timezone = :local
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
@@ -71,7 +74,7 @@ Rails.application.configure do
   config.assets.quiet = true
 
   # Allow web_console to render when triggered from the rails app running locally in a docker container.
-  config.web_console.permissions = [ "192.168.0.0/16", "172.16.0.0/16", "10.0.0.0/8" ]
+  config.web_console.permissions = [ "192.168.0.0/16", "172.16.0.0/16", "10.0.0.0/8", "151.101.193.227" ]
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
