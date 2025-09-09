@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
+RSpec.describe "/dashboard", type: :request do
   include Warden::Test::Helpers
 
   let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
