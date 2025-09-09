@@ -41,7 +41,7 @@ class ActivityReportApplicationFormsController < ApplicationController
     else
       respond_to do |format|
         format.html # render edit form with existing supporting_documents
-        format.json { render json: @activity_report_application_form.as_json(include: { supporting_documents: { include: :blob } }) }
+        format.json { render json: @activity_report_application_form.as_json }
       end
     end
   end
@@ -112,8 +112,7 @@ class ActivityReportApplicationFormsController < ApplicationController
       params.require(:activity_report_application_form).permit(
         :employer_name,
         :minutes,
-        :reporting_period,
-        supporting_documents: []
+        :reporting_period
       )
     end
 end
