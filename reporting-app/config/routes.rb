@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  scope path: "/home" do
-    resources :activity_report_application_forms, path: '' do
+  scope path: "/dashboard" do
+    resources :activity_report_application_forms do
       resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ]
       member do
         get :review
@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get "/dashboard", to: "activity_report_application_forms#index"
 
   scope path: "/staff" do
     resources :activity_report_cases do

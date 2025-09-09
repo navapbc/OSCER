@@ -51,7 +51,7 @@ RSpec.describe Users::SessionsController do
         locale: "en"
       }
 
-      expect(response).to redirect_to(activity_report_application_forms_path)
+      expect(response).to redirect_to(dashboard_path)
     end
 
     it "signs in and redirects to MFA preference page if a preference is not set" do
@@ -155,7 +155,7 @@ RSpec.describe Users::SessionsController do
         locale: "en"
       }
 
-      expect(response).to redirect_to(activity_report_application_forms_path)
+      expect(response).to redirect_to(dashboard_path)
     end
   end
 end
