@@ -5,7 +5,6 @@ class ActivityReportApplicationFormsController < ApplicationController
     review
     update
     submit
-    verify
     destroy
   ]
   before_action :authenticate_user!
