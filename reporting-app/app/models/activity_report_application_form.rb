@@ -1,8 +1,6 @@
 class ActivityReportApplicationForm < Flex::ApplicationForm
   has_many :activities, strict_loading: true, autosave: true, dependent: :destroy
 
-  flex_attribute :employer_name, :string
-  flex_attribute :minutes, :integer
   flex_attribute :reporting_period, :date
 
   def activities_by_id
