@@ -11,6 +11,12 @@ Rails.application.routes.draw do
       collection do
         get :closed
       end
+
+      member do
+        get :tasks
+        get :documents
+        get :notes
+      end
     end
 
     resources :tasks, only: [ :index, :show, :update ] do

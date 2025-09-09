@@ -1,0 +1,10 @@
+en:
+  activity_report_cases:
+    show:
+      title: "Details"
+    tasks:
+      title: "Tasks"
+    documents:
+      title: "Documents"
+    notes:
+      title: "Notes"

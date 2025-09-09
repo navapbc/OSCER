@@ -1,0 +1,22 @@
+<%= render template: 'flex/cases/show', locals: {
+  model_class: ActivityReportCase,
+  kase: @case,
+  sidenav: [
+    {
+      text: "Details",
+      link: polymorphic_path(@case)
+    },
+    {
+      text: "Tasks",
+      link: tasks_activity_report_case_path(@case)
+    },
+    {
+      text: "Documents",
+      link: documents_activity_report_case_path(@case)
+    },
+    {
+      text: "Notes",
+      link: notes_activity_report_case_path(@case)
+    }
+  ]
+} %>
