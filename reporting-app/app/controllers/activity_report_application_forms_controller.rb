@@ -10,12 +10,6 @@ class ActivityReportApplicationFormsController < ApplicationController
   ]
   before_action :authenticate_user!
 
-  # GET /dashboard or /dashboard.json
-  def index
-    @activity_report_application_forms = policy_scope(ActivityReportApplicationForm).order(created_at: :desc)
-    @in_progress_activity_reports = @activity_report_application_forms.in_progress
-  end
-
   # GET /activity_report_application_forms/1 or /activity_report_application_forms/1.json
   def show
   end
@@ -96,7 +90,7 @@ class ActivityReportApplicationFormsController < ApplicationController
     @activity_report_application_form.destroy!
 
     respond_to do |format|
-      format.html { redirect_to activity_report_application_forms_path, status: :see_other, notice: "Activity report application form was successfully destroyed." }
+      format.html { redirect_to dashboard_path, status: :see_other, notice: "Activity report application form was successfully destroyed." }
       format.json { head :no_content }
     end
   end
