@@ -96,17 +96,18 @@ class ActivityReportApplicationFormsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_activity_report_application_form
-      @activity_report_application_form = authorize ActivityReportApplicationForm.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def activity_report_application_form_params
-      params.require(:activity_report_application_form).permit(
-        :employer_name,
-        :minutes,
-        :reporting_period
-      )
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_activity_report_application_form
+    @activity_report_application_form = authorize ActivityReportApplicationForm.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def activity_report_application_form_params
+    params.require(:activity_report_application_form).permit(
+      :employer_name,
+      :minutes,
+      :reporting_period
+    )
+  end
 end
