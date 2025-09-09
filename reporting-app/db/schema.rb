@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_09_160308) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_09_212156) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,6 +80,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_160308) do
     t.datetime "updated_at", null: false
     t.index ["beneficiary_id"], name: "index_certifications_on_beneficiary_id"
     t.index ["case_number"], name: "index_certifications_on_case_number"
+  end
+  
+  create_table "exemption_application_forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.integer "status"
+    t.datetime "submitted_at"
+    t.string "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "flex_tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

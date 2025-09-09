@@ -4,6 +4,7 @@ class DashboardController < ApplicationController
   # GET /dashboard or /dashboard.json
   def index
     @activity_report_application_forms = policy_scope(ActivityReportApplicationForm).order(created_at: :desc)
+    @exemption_application_forms = policy_scope(ExemptionApplicationForm).order(created_at: :desc)
     @in_progress_activity_reports = @activity_report_application_forms.in_progress
   end
 end

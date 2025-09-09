@@ -13,6 +13,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :exemption_application_forms do
+    member do
+      get :review
+      post :submit
+    end
+  end
+
   get "/dashboard", to: "dashboard#index"
 
   scope path: "/api", as: :api, defaults: { format: :json } do

@@ -37,14 +37,28 @@
 
 
 <%= render template: "flex/application_forms/index", locals: {
-  title: t(".title"),
-  intro: t(".intro"),
-  new_button_text: t(".new_button"),
+  title: t(".activity_report.title"),
+  intro: t(".activity_report.intro"),
+  new_button_text: t(".activity_report.new_button"),
   new_path: new_activity_report_application_form_path,
-  in_progress_applications_heading: t(".in_progress_applications.heading"),
+  in_progress_applications_heading: t(".activity_report.in_progress_applications.heading"),
   application_forms: @activity_report_application_forms.map { |form| {
     created_at: form.created_at.strftime("%B %d, %Y at %I:%M %p"),
     path: activity_report_application_form_path(form),
+    status: form.status
+  }}
+} %>
+
+
+<%= render template: "flex/application_forms/index", locals: {
+  title: t(".exemption_report.title"),
+  intro: t(".exemption_report.intro"),
+  new_button_text: t(".exemption_report.new_button"),
+  new_path: new_exemption_application_form_path,
+  in_progress_applications_heading: t(".exemption_report.in_progress_applications.heading"),
+  application_forms: @exemption_application_forms.map { |form| {
+    created_at: form.created_at.strftime("%B %d, %Y at %I:%M %p"),
+    path: exemption_application_form_path(form),
     status: form.status
   }}
 } %>

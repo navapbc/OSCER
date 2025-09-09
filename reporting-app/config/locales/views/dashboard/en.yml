@@ -1,8 +1,15 @@
 en:
   dashboard:
     index:
-      title: "Report your community engagement (OSCER)"
-      intro: "Certify your community engagement requirements through OSCER."
-      new_button: "New activity report"
-      in_progress_applications:
-        heading: "In-progress activity reports"
+      activity_report:
+        title: "Report your community engagement (OSCER)"
+        intro: "Certify your community engagement requirements through OSCER."
+        new_button: "New activity report"
+        in_progress_applications:
+          heading: "In-progress activity reports"
+      exemption_report:
+        title: "Claim an exemption"
+        intro: "If you are unable to meet the community engagement requirements, you can claim an exemption."
+        new_button: "New exemption application"
+        in_progress_applications:
+          heading: "In-progress exemption applications"
