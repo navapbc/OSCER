@@ -1,0 +1,23 @@
+<h2>Month</h2>
+<p><%= activity.month.strftime("%B %Y") %></p>
+
+<h2>Employer name</h2>
+<p><%= activity.name %></p>
+
+<h2>Hours</h2>
+<p><%= activity.hours %></p>
+
+<h2>Supporting documents</h2>
+<% if activity.supporting_documents.any? %>
+  <ul class="usa-list">
+    <% activity.supporting_documents.each do |document| %>
+      <li>
+        <%= link_to document.filename, rails_blob_path(document, disposition: "attachment"), 
+            target: "_blank", class: "usa-link" %>
+        (<%= number_to_human_size(document.byte_size) %>)
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No supporting documents</p>
+<% end %>

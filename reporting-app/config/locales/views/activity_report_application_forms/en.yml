@@ -11,6 +11,9 @@ en:
       back: "Back to activity reports"
       edit: "Edit activity report"
       submitted_on: "Submitted on"
+      intro:
+        in_progress: "Complete and submit your activity report"
+        submitted: "Your activity report is being reviewed"
       next_step:
         status:
           in_progress: "Complete and submit your activity report"

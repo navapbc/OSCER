@@ -5,10 +5,6 @@
     reporting_period: Date.today.prev_month.beginning_of_month
   )
   app_form.save!
-  app_form.supporting_documents.attach(io: File.open(Rails.root.join("db", "seeds", "files", "fake_paystub.png"), "r"), filename: "paystub_#{Date.current.prev_month.strftime("%b").downcase}.png", content_type: "image/png")
-  app_form.save!
-  app_form.supporting_documents.attach(io: File.open(Rails.root.join("db", "seeds", "files", "fake_paystub.pdf"), "r"), filename: "paystub_#{Date.current.prev_month.prev_month.strftime("%b").downcase}.pdf", content_type: "application/pdf")
-  app_form.save!
 
   app_form.submit_application
 end

@@ -41,7 +41,7 @@ class ActivityReportApplicationFormsController < ApplicationController
     else
       respond_to do |format|
         format.html # render edit form with existing supporting_documents
-        format.json { render json: @activity_report_application_form.as_json(include: { supporting_documents: { include: :blob } }) }
+        format.json { render json: @activity_report_application_form.as_json }
       end
     end
   end
@@ -59,7 +59,7 @@ class ActivityReportApplicationFormsController < ApplicationController
 
     respond_to do |format|
       if @activity_report_application_form.save
-        format.html { redirect_to review_activity_report_application_form_path(@activity_report_application_form), notice: "Activity report application form was successfully created." }
+        format.html { redirect_to @activity_report_application_form, notice: "Activity report application form was successfully created." }
         format.json { render :show, status: :created, location: review_activity_report_application_form_path(@activity_report_application_form) }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -112,8 +112,7 @@ class ActivityReportApplicationFormsController < ApplicationController
       params.require(:activity_report_application_form).permit(
         :employer_name,
         :minutes,
-        :reporting_period,
-        supporting_documents: []
+        :reporting_period
       )
     end
 end

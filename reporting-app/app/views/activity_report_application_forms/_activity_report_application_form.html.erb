@@ -1,34 +1,32 @@
 <div id="<%= dom_id activity_report_application_form %>">
-  <table class="usa-table usa-table--borderless width-full">
-    <tbody>
-      <tr>
-        <th scope="row">Reporting period</th>
-        <td class="border-top-0">
-          <%= activity_report_application_form.reporting_period&.strftime("%B %Y") %>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">Employer name</th>
-        <td class="border-top-0">
-          <%= activity_report_application_form.employer_name %>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">Hours worked</th>
-        <td class="border-top-0">
-          <%= activity_report_application_form.minutes ? number_with_precision(activity_report_application_form.minutes / 60.0, precision: 2, strip_insignificant_zeros: true) : "" %>
-        </td>
-      </tr>
-      <% activity_report_application_form.supporting_documents.each do |document| %>
-        <tr>
-          <th scope="row">Supporting document</th>
-          <td>
-            <%= link_to document.filename, rails_blob_path(document, disposition: "attachment"),
-                target: "_blank", class: "usa-link" %>
-            (<%= number_to_human_size(document.byte_size) %>)
-          </td>
-        </tr>
+  <% for month, activities in activity_report_application_form.activities_by_month do %>
+    <h2><%= month.strftime("%B %Y") %></h2>
+    <div class="grid-container font-body-md">
+      <% for activity in activities %>
+        <%= render "activity_row", activity_report_application_form:, activity: %>
       <% end %>
-    </tbody>
-  </table>
+
+      <%= render "month_total_row", activities: activities %>
+
+      <%# Required hours row %>
+      <div class="grid-row">
+        <div class="grid-col-7 grid-offset-2">
+          Required hours
+        </div>
+        <div class="grid-col-3 text-right">
+          80.0
+        </div>
+      </div>
+
+      <%# Additional hours needed row %>
+      <div class="grid-row text-bold">
+        <div class="grid-col-7 grid-offset-2">
+          Additional hours needed
+        </div>
+        <div class="grid-col-3 border-top-1px text-right">
+          <%= [0.0, 80.0 - activities.sum(&:hours)].max %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>

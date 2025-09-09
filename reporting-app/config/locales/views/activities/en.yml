@@ -1,0 +1,16 @@
+en:
+  activities:
+    edit:
+      title: "Activity"
+      back: "Back to activity report"
+      edit: "Edit activity"
+    new:
+      title: "Activity"
+      back: "Back to activity report"
+      edit: "Edit activity"
+    show:
+      title:
+        work: "Work for %{name}"
+      back: "Back to activity report"
+      edit: "Edit activity"
+      destroy: "Delete activity"
