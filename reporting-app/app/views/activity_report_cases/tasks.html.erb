@@ -6,7 +6,7 @@
     <ul class="usa-alert__text usa-list margin-top-1">
       <% @tasks.each do |task| %>
         <li class="usa-list-item">
-          <%= link_to task.class.name.underscore.humanize, task %> (<%= task.status.humanize %>)
+          <%= link_to task.class.name.underscore.humanize, task_path(task) %> (<%= task.status.humanize %>)
         </li>
       <% end %>
     </ul>
