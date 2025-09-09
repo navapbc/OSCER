@@ -182,11 +182,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
     context "with valid parameters" do
       let(:new_attributes) {
         {
-          employer_name: "New Employer Corp",
-          minutes: 45, # 45 minutes
-          supporting_documents: [
-            fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain')
-          ]
+          reporting_period: (Date.today - 3.month).beginning_of_month
         }
       }
 
@@ -194,8 +190,7 @@ RSpec.describe "/activity_report_application_forms", type: :request do
         activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
         patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
         activity_report_application_form.reload
-        expect(activity_report_application_form.employer_name).to eq("New Employer Corp")
-        expect(activity_report_application_form.minutes).to eq(45)
+        expect(activity_report_application_form.reporting_period).to eq((Date.today - 3.month).beginning_of_month)
       end
 
       it "does not update the requested activity_report_application_form if non-owning user" do
