@@ -3,19 +3,19 @@
   kase: @case,
   sidenav: [
     {
-      text: "Details",
+      text: t(".details"),
       link: polymorphic_path(@case)
     },
     {
-      text: "Tasks",
+      text: t(".tasks"),
       link: tasks_activity_report_case_path(@case)
     },
     {
-      text: "Documents",
+      text: t(".documents"),
       link: documents_activity_report_case_path(@case)
     },
     {
-      text: "Notes",
+      text: t(".notes"),
       link: notes_activity_report_case_path(@case)
     }
   ]
