@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
-  resources :activity_report_application_forms do
-    resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ]
-    member do
-      get :review
-      post :submit
+  scope path: "/home" do
+    resources :activity_report_application_forms, path: '' do
+      resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ]
+      member do
+        get :review
+        post :submit
+      end
     end
   end
 
