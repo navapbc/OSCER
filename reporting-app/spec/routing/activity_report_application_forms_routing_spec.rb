@@ -2,10 +2,6 @@ require "rails_helper"
 
 RSpec.describe ActivityReportApplicationFormsController, type: :routing do
   describe "routing" do
-    it "routes to #index" do
-      expect(get: "/activity_report_application_forms").to route_to("activity_report_application_forms#index")
-    end
-
     it "routes to #new" do
       expect(get: "/activity_report_application_forms/new").to route_to("activity_report_application_forms#new")
     end

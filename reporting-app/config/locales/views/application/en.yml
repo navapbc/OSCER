@@ -9,7 +9,7 @@
 en:
   header:
     account: My account
-    activity_reports: Activity reports
+    dashboard: Dashboard
     language_toggle: English
     logout: "Log out"
     title: "Medicaid Community Engagement"

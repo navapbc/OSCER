@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "activity_report_application_forms/index", type: :view do
+RSpec.describe "dashboard/index", type: :view do
   before do
     assign(:activity_report_application_forms, [
       ActivityReportApplicationForm.create!(),

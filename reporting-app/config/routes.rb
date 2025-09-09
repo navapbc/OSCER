@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get "/dashboard", to: "dashboard#index"
+
   scope path: "/staff" do
     resources :activity_report_cases do
       collection do
