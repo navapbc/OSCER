@@ -20,8 +20,8 @@ Rails.application.configure do
   # Enable server timing.
   config.server_timing = true
 
-  config.time_zone = "Central Time (US & Canada)"
-  config.active_record.default_timezone = :local
+  config.time_zone = ENV["TIME_ZONE"] || "UTC" # Convenient for time display in local development
+  config.active_record.default_timezone = :utc
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
