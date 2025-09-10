@@ -32,7 +32,6 @@ class ExemptionApplicationFormsController < ApplicationController
 
     respond_to do |format|
       if @exemption_application_form.save
-        # TODO: redirect to review page
         format.html { redirect_to @exemption_application_form, notice: "Exemption application form was successfully created." }
         format.json { render :show, status: :created, location: @exemption_application_form }
       else
@@ -46,7 +45,6 @@ class ExemptionApplicationFormsController < ApplicationController
   def update
     respond_to do |format|
       if @exemption_application_form.update(exemption_application_form_params)
-        # TODO: redirect to review page
         format.html { redirect_to @exemption_application_form, notice: "Exemption application form was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @exemption_application_form }
       else
