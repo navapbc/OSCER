@@ -66,7 +66,7 @@ RSpec.describe "/exemption_application_forms", type: :request do
       it "does not create a new ExemptionApplicationForm" do
         expect {
           post exemption_application_forms_url, params: { exemption_application_form: invalid_attributes }
-        }.to change(ExemptionApplicationForm, :count).by(0)
+        }.not_to change(ExemptionApplicationForm, :count)
       end
 
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
@@ -79,15 +79,13 @@ RSpec.describe "/exemption_application_forms", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        exemption_type: "incarceration"
+        { exemption_type: "incarceration" }
       }
 
       it "updates the requested exemption_application_form" do
-        exemption_application_form = ExemptionApplicationForm.create! valid_attributes
-        expect(exemption_application_form.exemption_type).to eq("short_term_hardship")
+        exemption_application_form = create(:exemption_application_form, user_id: user.id, exemption_type: "short_term_hardship")
         patch exemption_application_form_url(exemption_application_form), params: { exemption_application_form: new_attributes }
-        exemption_application_form.reload
-        expect(exemption_application_form.exemption_type).to eq("incarceration")
+        expect(exemption_application_form.reload.exemption_type).to eq("incarceration")
       end
 
       it "redirects to the exemption_application_form" do
@@ -107,14 +105,37 @@ RSpec.describe "/exemption_application_forms", type: :request do
 
   describe "DELETE /destroy" do
     it "destroys the requested exemption_application_form" do
+      form = create(:exemption_application_form, user_id: user.id)
       expect {
-        delete exemption_application_form_url(existing_exemption_application_form)
+        delete exemption_application_form_url(form)
       }.to change(ExemptionApplicationForm, :count).by(-1)
     end
 
     it "redirects to the dashboard" do
       delete exemption_application_form_url(existing_exemption_application_form)
       expect(response).to redirect_to(dashboard_path)
+    end
+  end
+
+  describe "GET /review" do
+    it "renders a successful response" do
+      get review_exemption_application_form_url(existing_exemption_application_form)
+      expect(response).to be_successful
+    end
+  end
+
+  describe "POST /submit" do
+    it "marks the activity report as submitted" do
+      post submit_exemption_application_form_url(existing_exemption_application_form)
+
+      existing_exemption_application_form.reload
+      expect(existing_exemption_application_form).to be_submitted
+    end
+
+    it "redirects to GET /show on success" do
+      post submit_exemption_application_form_url(existing_exemption_application_form)
+
+      expect(response).to redirect_to(exemption_application_form_url(existing_exemption_application_form))
     end
   end
 end

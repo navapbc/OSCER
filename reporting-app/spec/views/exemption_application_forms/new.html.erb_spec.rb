@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "exemption_application_forms/new", type: :view do
-  before(:each) do
+  before do
     assign(:exemption_application_form, ExemptionApplicationForm.new())
   end
 

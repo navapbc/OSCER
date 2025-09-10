@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :exemption_application_form do
     exemption_type { "short_term_hardship" }
-    
+
     trait :with_supporting_documents do
       after(:build) do |form|
         form.supporting_documents.attach([
@@ -10,7 +10,7 @@ FactoryBot.define do
         ])
       end
     end
-    
+
     trait :incarceration do
       exemption_type { "incarceration" }
     end
