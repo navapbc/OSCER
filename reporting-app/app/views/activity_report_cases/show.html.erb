@@ -36,7 +36,7 @@
       <h2 class="usa-heading-md margin-top-2 margin-bottom-2">Activities</h2>
       <% if @activity_report_application_form.activities_by_month&.any? %>
         <div class="usa-accordion usa-accordion--bordered">
-          <% @activity_report_application_form.activities_by_month&.each do |month, activities| %>
+          <% @activity_report_application_form.activities_by_month.each do |month, activities| %>
             <h4 class="usa-accordion__heading">
               <button
                 type="button"
@@ -48,7 +48,7 @@
               </button>
             </h4>
             <div id="accordion-<%= month.strftime('%Y-%m') %>" class="usa-accordion__content usa-prose">
-              <% activities&.each_with_index do |activity, activity_index| %>
+              <% activities.each_with_index do |activity, activity_index| %>
                 <% if activity_index != 0 %>
                   <hr class="margin-bottom-3" />
                 <% end %>
@@ -71,7 +71,7 @@
                       <dd class="margin-left-0 margin-top-1 font-sans-sm">
                         <% if activity.supporting_documents&.any? %>
                           <ul>
-                            <% activity.supporting_documents&.each do |document| %>
+                            <% activity.supporting_documents.each do |document| %>
                               <li class="usa-list-item">
                                 <%= link_to("#{document.filename}", document.blob, target: "_blank") %>
                               </li>
