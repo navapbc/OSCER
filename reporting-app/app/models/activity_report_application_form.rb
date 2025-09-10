@@ -16,7 +16,7 @@ class ActivityReportApplicationForm < Flex::ApplicationForm
     @activities_by_month ||= activities.group_by(&:month)
   end
 
-  default_scope { includes(:activities) }
+  default_scope { includes(:activities, :certification) }
 
   accepts_nested_attributes_for :activities, allow_destroy: true
 end

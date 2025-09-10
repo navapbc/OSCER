@@ -7,6 +7,8 @@ class Certification < ApplicationRecord
 
   has_many :activity_report_application_forms
 
+  default_scope { includes(:activity_report_application_forms) }
+
   # TODO: some of this should be required, but leaving it open at the moment
   # validates :beneficiary_id, presence: true
 end

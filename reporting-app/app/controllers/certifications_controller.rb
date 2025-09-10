@@ -30,7 +30,9 @@ class CertificationsController < StaffController
         # TODO: for demo purposes, create an activity report associated with the
         # current user for this Certification
         bene_user = current_user
-        ActivityReportApplicationForm.create!(user_id: bene_user.id, certification_id: @certification.id)
+        activity_report = ActivityReportApplicationForm.create!(user_id: bene_user.id, certification: @certification)
+        # due to strict loading
+        @certification.activity_report_application_forms = [ activity_report ]
       end
 
       render :show, status: :created, location: @certification
