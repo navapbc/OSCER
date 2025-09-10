@@ -7,7 +7,7 @@ class CreateExemptionApplicationForms < ActiveRecord::Migration[7.2]
       t.datetime :submitted_at
 
       # Additional form attributes
-      t.string :type
+      t.string :exemption_type
 
       t.timestamps
     end

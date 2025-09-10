@@ -1,7 +1,7 @@
-<%= flex_form_with(model: exemption_application_form, data: { turbo: false }) do |form| %>
-  <%= form.radio_button :type, "Short-term Hardship", { label: "Short-term Hardship", hint: "You are experiencing a short-term hardship as defined here: TODO: Add link to the definition" } %>
-  <%= form.radio_button :type, "Incarceration", { label: "Incarceration", hint: "You are currently incarcerated or have left incarceration within the last 3 months." } %>
+<%= flex_form_with(model: exemption_application_form, data: { turbo: false }) do |f| %>
+  <%= f.radio_button :exemption_type, "short_term_hardship", { label: "Short-term Hardship", hint: "You are experiencing a short-term hardship as defined here: TODO: Add link to the definition" } %>
+  <%= f.radio_button :exemption_type, "incarceration", { label: "Incarceration", hint: "You are currently incarcerated or have left incarceration within the last 3 months." } %>
   
 
-  <%= form.submit "Save", big: true %>
+  <%= f.submit "Save", big: true %>
 <% end %>

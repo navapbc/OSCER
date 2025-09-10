@@ -86,7 +86,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_212156) do
     t.uuid "user_id"
     t.integer "status"
     t.datetime "submitted_at"
-    t.string "type"
+    t.string "exemption_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
