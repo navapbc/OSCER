@@ -1,8 +1,10 @@
-5.times do
+5.times do |index|
   app_form = ActivityReportApplicationForm.create!(
     reporting_period: Date.today.prev_month.beginning_of_month
   )
   app_form.save!
+
+  next if index == 0 # Skip adding activities for the first form to test empty state
 
   app_form.activities.create!(
     name: "Community Meeting",
