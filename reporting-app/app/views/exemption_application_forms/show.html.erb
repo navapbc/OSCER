@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @exemption_application_form %>
+
+<div>
+  <%= link_to "Edit this exemption application form", edit_exemption_application_form_path(@exemption_application_form) %> |
+  <%= link_to "Back to exemption application forms", exemption_application_forms_path %>
+
+  <%= button_to "Destroy this exemption application form", @exemption_application_form, method: :delete %>
+</div>

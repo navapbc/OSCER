@@ -1,0 +1,9 @@
+<%= render partial: "application/breadcrumbs", locals: { crumbs: [
+  { name: "Dashboard", url: dashboard_path },
+  ], current_name: "New exemption" } %>
+
+<% content_for :title, "New exemption" %>
+
+<h1>New exemption</h1>
+
+<%= render "form", exemption_application_form: @exemption_application_form %>
