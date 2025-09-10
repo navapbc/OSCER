@@ -22,6 +22,11 @@ RSpec.describe ExemptionApplicationForm, type: :model do
           expect(exemption_form.exemption_type).to eq(type)
         end
       end
+
+      it "cannot be set to an invalid type" do
+        exemption_form.exemption_type = "invalid_type"
+        expect(exemption_form.save).to be(false)
+      end
     end
   end
 end

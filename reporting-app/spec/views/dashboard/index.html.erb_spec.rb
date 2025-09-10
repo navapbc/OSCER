@@ -3,18 +3,18 @@ require 'rails_helper'
 RSpec.describe "dashboard/index", type: :view do
   before do
     assign(:activity_report_application_forms, [
-      ActivityReportApplicationForm.create!(),
-      ActivityReportApplicationForm.create!()
+      create(:activity_report_application_form),
+      create(:activity_report_application_form)
     ])
     assign(:in_progress_activity_reports, [
-      ActivityReportApplicationForm.create!()
+      create(:activity_report_application_form)
     ])
     assign(:exemption_application_forms, [
-      ExemptionApplicationForm.create!(),
-      ExemptionApplicationForm.create!()
+      create(:exemption_application_form),
+      create(:exemption_application_form)
     ])
     assign(:in_progress_exemptions, [
-      ExemptionApplicationForm.create!()
+      create(:exemption_application_form)
     ])
   end
 

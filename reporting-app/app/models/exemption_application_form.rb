@@ -9,4 +9,6 @@ class ExemptionApplicationForm < Flex::ApplicationForm
   default_scope { with_attached_supporting_documents }
 
   flex_attribute :exemption_type, :string
+
+  validates :exemption_type, inclusion: { in: ALLOWED_TYPES }
 end

@@ -2,10 +2,6 @@ require "rails_helper"
 
 RSpec.describe ExemptionApplicationFormsController, type: :routing do
   describe "routing" do
-    it "routes to #index" do
-      expect(get: "/exemption_application_forms").to route_to("exemption_application_forms#index")
-    end
-
     it "routes to #new" do
       expect(get: "/exemption_application_forms/new").to route_to("exemption_application_forms#new")
     end
@@ -33,6 +29,14 @@ RSpec.describe ExemptionApplicationFormsController, type: :routing do
 
     it "routes to #destroy" do
       expect(delete: "/exemption_application_forms/1").to route_to("exemption_application_forms#destroy", id: "1")
+    end
+
+    it "routes to #review" do
+      expect(get: "/exemption_application_forms/1/review").to route_to("exemption_application_forms#review", id: "1")
+    end
+
+    it "routes to #submit" do
+      expect(post: "/exemption_application_forms/1/submit").to route_to("exemption_application_forms#submit", id: "1")
     end
   end
 end

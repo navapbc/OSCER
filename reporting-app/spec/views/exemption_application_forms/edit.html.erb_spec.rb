@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "exemption_application_forms/edit", type: :view do
-  let(:exemption_application_form) {
-    ExemptionApplicationForm.create!()
-  }
+  let(:exemption_application_form) { create(:exemption_application_form) }
 
   before(:each) do
     assign(:exemption_application_form, exemption_application_form)
