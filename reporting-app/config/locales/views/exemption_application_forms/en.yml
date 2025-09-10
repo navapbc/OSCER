@@ -1,0 +1,14 @@
+en:
+  exemption_application_forms:
+    show:
+      title: "Exemption"
+      back: "Back to exemptions"
+      edit: "Edit exemption"
+      submitted_on: "Submitted on"
+      intro:
+        in_progress: "Complete and submit your exemption"
+        submitted: "Your exemption is being reviewed"
+      next_step:
+        status:
+          in_progress: "Complete and submit your exemption"
+          submitted: "Your exemption is being reviewed"

@@ -1,2 +1,19 @@
 <div id="<%= dom_id exemption_application_form %>">
+  <h2>Exemption Type</h2>
+  <p><%= exemption_application_form.exemption_type&.humanize %></p>
+
+  <h2>Supporting documents</h2>
+  <% if exemption_application_form.supporting_documents.any? %>
+    <ul class="usa-list">
+      <% exemption_application_form.supporting_documents.each do |document| %>
+        <li>
+          <%= link_to document.filename, rails_blob_path(document, disposition: "attachment"), 
+              target: "_blank", class: "usa-link" %>
+          (<%= number_to_human_size(document.byte_size) %>)
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No supporting documents</p>
+  <% end %>
 </div>

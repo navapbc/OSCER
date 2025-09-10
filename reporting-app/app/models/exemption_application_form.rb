@@ -6,7 +6,7 @@ class ExemptionApplicationForm < Flex::ApplicationForm
 
   has_many_attached :supporting_documents
 
-  # default_scope { with_attached_supporting_documents }
+  default_scope { with_attached_supporting_documents }
 
   flex_attribute :exemption_type, :string
 end

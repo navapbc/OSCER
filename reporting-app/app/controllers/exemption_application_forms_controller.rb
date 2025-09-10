@@ -89,7 +89,8 @@ class ExemptionApplicationFormsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def exemption_application_form_params
       params.require(:exemption_application_form).permit(
-        :exemption_type
+        :exemption_type,
+        supporting_documents: []
         )
     end
 end
