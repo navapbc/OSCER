@@ -4,7 +4,7 @@ class ExemptionApplicationForm < Flex::ApplicationForm
     "incarceration"
   ].freeze
 
-  has_many :supporting_documents
+  has_many_attached :supporting_documents
 
   # default_scope { with_attached_supporting_documents }
 
