@@ -6,5 +6,6 @@ class DashboardController < ApplicationController
     @activity_report_application_forms = policy_scope(ActivityReportApplicationForm).order(created_at: :desc)
     @exemption_application_forms = policy_scope(ExemptionApplicationForm).order(created_at: :desc)
     @in_progress_activity_reports = @activity_report_application_forms.in_progress
+    @has_current_exemption = false # TODO: Exemptions will need to be retrieved from another source in the future
   end
 end
