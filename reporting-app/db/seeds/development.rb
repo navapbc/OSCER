@@ -32,7 +32,6 @@
       { io: File.open(Rails.root.join("db/seeds/files/fake_training_certificate.pdf")), filename: "Training Certificate.pdf", content_type: "application/pdf" }
     ]
   )
-
   app_form.activities.create!(
     name: "Policy Discussion",
     month: Date.today.prev_month.prev_month.beginning_of_month,
