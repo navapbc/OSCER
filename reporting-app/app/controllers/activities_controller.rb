@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_activity_report_application_form
-  before_action :set_activity, only: %i[ show edit update destroy ]
+  before_action :set_activity, only: %i[ show edit update documents upload_document destroy_document destroy ]
 
   # GET /activities/1 or /activities/1.json
   def show
@@ -19,6 +19,29 @@ class ActivitiesController < ApplicationController
     authorize @activity_report_application_form, :edit?
   end
 
+  # GET /activities/1/documents
+  def documents
+    authorize @activity_report_application_form, :edit?
+  end
+
+  # GET /activities/1/upload_document
+  def upload_document
+    authorize @activity_report_application_form, :edit?
+
+    supporting_documents = params.require(:activity).permit(:supporting_documents)[:supporting_documents]
+    @activity.supporting_documents.attach(supporting_documents)
+    
+    respond_to do |format|
+      if @activity_report_application_form.save
+        format.html { redirect_to documents_activity_report_application_form_activity_path(@activity_report_application_form, @activity) }
+        format.json { render :show, status: :ok, location: @activity }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @activity.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # POST /activities or /activities.json
   def create
     authorize @activity_report_application_form, :update?
@@ -27,7 +50,7 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       if @activity_report_application_form.save
-        format.html { redirect_to @activity_report_application_form, notice: "Activity was successfully created." }
+        format.html { redirect_to documents_activity_report_application_form_activity_path(@activity_report_application_form, @activity) }
         format.json { render :show, status: :created, location: @activity }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -44,7 +67,7 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       if @activity_report_application_form.save
-        format.html { redirect_to @activity_report_application_form, notice: "Activity was successfully updated." }
+        format.html { redirect_to documents_activity_report_application_form_activity_path(@activity_report_application_form, @activity) }
         format.json { render :show, status: :ok, location: @activity }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -78,6 +101,6 @@ class ActivitiesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def activity_params
-      params.require(:activity).permit(:month, :hours, :name, supporting_documents: [])
+      params.require(:activity).permit(:month, :hours, :name)
     end
 end
