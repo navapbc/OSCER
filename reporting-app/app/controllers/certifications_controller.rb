@@ -23,7 +23,8 @@ class CertificationsController < StaffController
     @certification = Certification.new(certification_params)
 
     if @certification.save
-      # TODO: could be moved to an event processing step or something
+      # TODO: this logic could/should be moved to an business process/event
+      # processing step
       is_exempt = false
       if not is_exempt
         # TODO: for demo purposes, create an activity report associated with the
@@ -63,12 +64,16 @@ class CertificationsController < StaffController
     # Only allow a list of trusted parameters through.
     def certification_params
       params.require(:certification).permit(:beneficiary_id, :case_number, :certification_requirements, :beneficiary_data).tap do |params|
-        if params[:certification_requirements].present?
-            params[:certification_requirements] = JSON.parse(params[:certification_requirements])
-        end
+        begin
+          if params[:certification_requirements].present?
+              params[:certification_requirements] = JSON.parse(params[:certification_requirements])
+          end
 
-        if params[:beneficiary_data].present?
-            params[:beneficiary_data] = JSON.parse(params[:beneficiary_data])
+          if params[:beneficiary_data].present?
+              params[:beneficiary_data] = JSON.parse(params[:beneficiary_data])
+          end
+        rescue JSON::ParserError => e
+          raise ActionController::BadRequest.new(e.message)
         end
       end
     end

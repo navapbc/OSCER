@@ -15,6 +15,10 @@ Rails.application.routes.draw do
 
   get "/dashboard", to: "dashboard#index"
 
+  scope path: "/api", as: :api, defaults: { format: :json } do
+    resources :certifications, only: [ :create, :show ]
+  end
+
   scope path: "/staff" do
     resources :certifications
 
