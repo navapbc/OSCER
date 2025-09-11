@@ -1,5 +1,5 @@
 class ExemptionApplicationFormsController < ApplicationController
-  before_action :set_exemption_application_form, only: %i[ show edit update destroy review submit ]
+  before_action :set_exemption_application_form, only: %i[ show edit update destroy review submit documents upload_documents ]
 
   # GET /exemption_application_forms/1 or /exemption_application_forms/1.json
   def show
@@ -13,7 +13,7 @@ class ExemptionApplicationFormsController < ApplicationController
   # GET /exemption_application_forms/1/edit
   def edit
     respond_to do |format|
-      format.html # render edit form with existing supporting_documents
+      format.html { redirect_to documents_exemption_application_form_path(@exemption_application_form) }
       format.json { render json: @exemption_application_form.as_json }
     end
   end
@@ -27,7 +27,7 @@ class ExemptionApplicationFormsController < ApplicationController
 
     respond_to do |format|
       if @exemption_application_form.save
-        format.html { redirect_to @exemption_application_form, notice: "Exemption application form was successfully created." }
+        format.html { redirect_to documents_exemption_application_form_path(@exemption_application_form) }
         format.json { render :show, status: :created, location: @exemption_application_form }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -70,6 +70,31 @@ class ExemptionApplicationFormsController < ApplicationController
     else
       flash[:errors] = @exemption_application_form.errors.full_messages
       redirect_to edit_exemption_application_form_url(@exemption_application_form)
+    end
+  end
+
+  # GET /exemption_application_forms/1/documents
+  def documents
+    # authorize @exemption_application_form, :edit?
+
+    # @documents = @exemption_application_form.supporting_documents
+  end
+
+  # POST /exemption_application_forms/1/upload_documents
+  def upload_documents
+    # authorize @exemption_application_form, :edit?
+
+    supporting_documents = params.require(:exemption_application_form).permit(supporting_documents: [])[:supporting_documents]
+    @exemption_application_form.supporting_documents.attach(supporting_documents)
+
+    respond_to do |format|
+      if @exemption_application_form.save
+        format.html { redirect_to documents_exemption_application_form_path(@exemption_application_form) }
+        format.json { render :show, status: :ok, location: @exemption_application_form }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @exemption_application_form.errors, status: :unprocessable_entity }
+      end
     end
   end
 

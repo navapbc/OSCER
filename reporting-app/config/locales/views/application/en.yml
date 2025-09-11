@@ -29,5 +29,9 @@ en:
     column: "Column"
     description: "Description"
   supporting_documents:
+    title: "Supporting documents"
+    continue: "Continue"
     heading: "Supporting documents"
     no_documents_text: "No supporting documents"
+    upload_document_label: "Upload supporting document(s)"
+    upload: "Upload document(s)"

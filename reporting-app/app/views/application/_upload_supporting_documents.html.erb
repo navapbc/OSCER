@@ -6,13 +6,11 @@
   - url: The URL for the upload form action
   - method: HTTP method for the form (default: :post)
   - field_name: The field name for the documents (default: :supporting_documents)
-  - form_model: The model array for form_with (optional, defaults to model)
 %>
 
 <%
   field_name ||= :supporting_documents
   method ||= :post
-  form_model ||= model
   documents = model.send(field_name)
 %>
 
@@ -32,7 +30,7 @@
 <% end %>
 
 <%= flex_form_with(
-  model: form_model,
+  model: model,
   url: url,
   method: method) do |f| %>
 

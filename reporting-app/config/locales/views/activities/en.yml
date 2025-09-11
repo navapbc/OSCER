@@ -1,11 +1,5 @@
 en:
   activities:
-    documents:
-      title: "Supporting documents"
-      uploaded_documents: "Uploaded documents"
-      upload_document_label: "Upload supporting document"
-      upload: "Upload document"
-      continue: "Continue"
     edit:
       title: "Edit activity"
       back: "Back to activity report"
