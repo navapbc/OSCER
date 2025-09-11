@@ -38,5 +38,13 @@ RSpec.describe ExemptionApplicationFormsController, type: :routing do
     it "routes to #submit" do
       expect(post: "/exemption_application_forms/1/submit").to route_to("exemption_application_forms#submit", id: "1")
     end
+
+    it "routes to #documents" do
+      expect(get: "/exemption_application_forms/1/documents").to route_to("exemption_application_forms#documents", id: "1")
+    end
+
+    it "routes to #upload_documents" do
+      expect(post: "/exemption_application_forms/1/upload_documents").to route_to("exemption_application_forms#upload_documents", id: "1")
+    end
   end
 end

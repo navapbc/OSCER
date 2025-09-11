@@ -44,7 +44,7 @@ RSpec.describe "/exemption_application_forms", type: :request do
   describe "GET /edit" do
     it "renders a successful response" do
       get edit_exemption_application_form_url(existing_exemption_application_form)
-      expect(response).to be_successful
+      expect(response).to redirect_to(documents_exemption_application_form_path(existing_exemption_application_form))
     end
   end
 
@@ -58,7 +58,7 @@ RSpec.describe "/exemption_application_forms", type: :request do
 
       it "redirects to the created exemption_application_form" do
         post exemption_application_forms_url, params: { exemption_application_form: valid_attributes }
-        expect(response).to redirect_to(exemption_application_form_url(ExemptionApplicationForm.last))
+        expect(response).to redirect_to(documents_exemption_application_form_path(ExemptionApplicationForm.last))
       end
     end
 
@@ -136,6 +136,13 @@ RSpec.describe "/exemption_application_forms", type: :request do
       post submit_exemption_application_form_url(existing_exemption_application_form)
 
       expect(response).to redirect_to(exemption_application_form_url(existing_exemption_application_form))
+    end
+  end
+
+  describe "GET /documents" do
+    it "renders a successful response" do
+      get documents_exemption_application_form_url(existing_exemption_application_form)
+      expect(response).to be_successful
     end
   end
 end

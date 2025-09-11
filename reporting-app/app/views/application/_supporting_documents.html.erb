@@ -1,40 +1,27 @@
 <%# 
-  Partial for displaying and uploading supporting documents
+  Read-only partial for displaying supporting documents
   
   Parameters:
-  - form: The form builder object
   - model: The model object to check for attached documents
   - field_name: The field name for the documents (default: :supporting_documents)
-  - label: Custom label text (default: "Currently attached documents:")
-  - hint: Custom hint text for the file field
 %>
 
 <%
   field_name ||= :supporting_documents
-  label ||= "Currently attached documents:"
   documents = model.send(field_name)
-  url = url_for(model)
 %>
 
-<% if documents.attached? %>
-  <div class="usa-form-group">
-    <label class="usa-label"><%= label %></label>
-    <ul class="usa-list">
-      <% documents.each do |document| %>
-        <li>
-          <%= link_to document.filename, rails_blob_path(document, disposition: "attachment"),
+<h2><%= t("supporting_documents.heading") %></h2>
+<% if documents.any? %>
+  <ul class="usa-list">
+    <% documents.each do |document| %>
+      <li>
+        <%= link_to document.filename, rails_blob_path(document, disposition: "attachment"), 
             target: "_blank", class: "usa-link" %>
-          (<%= number_to_human_size(document.byte_size) %>)
-        </li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
-<%= flex_form_with(model: model, url: url, method: :post) do |f| %>
-  <% documents.each do |document| %>
-    <%= f.hidden_field :supporting_documents, multiple: true, value: document.signed_id %>
-  <% end %>
-
-  <%= f.file_field(field_name, label: "Upload new documents", multiple: true) %>
+        (<%= number_to_human_size(document.byte_size) %>)
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p><%= t("supporting_documents.no_documents_text") %></p>
 <% end %>

@@ -75,15 +75,10 @@ class ExemptionApplicationFormsController < ApplicationController
 
   # GET /exemption_application_forms/1/documents
   def documents
-    # authorize @exemption_application_form, :edit?
-
-    # @documents = @exemption_application_form.supporting_documents
   end
 
   # POST /exemption_application_forms/1/upload_documents
   def upload_documents
-    # authorize @exemption_application_form, :edit?
-
     supporting_documents = params.require(:exemption_application_form).permit(supporting_documents: [])[:supporting_documents]
     @exemption_application_form.supporting_documents.attach(supporting_documents)
 
