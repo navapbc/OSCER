@@ -11,6 +11,16 @@ class ActivityReportApplicationForm < Flex::ApplicationForm
     @activities_by_month ||= activities.group_by(&:month)
   end
 
+  def sum_of_activity_hours
+    activities.sum(&:hours)
+  end
+
+  def average_of_activity_hours_per_month
+    return 0 if activities_by_month.empty?
+
+    sum_of_activity_hours.to_f / activities_by_month.size
+  end
+
   default_scope { includes(:activities) }
 
   accepts_nested_attributes_for :activities, allow_destroy: true
