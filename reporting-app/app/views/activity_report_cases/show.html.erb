@@ -67,20 +67,8 @@
                   </div>
                   <div class="grid-col-12 tablet:grid-col-6">
                     <div class="margin-bottom-2">
-                      <dt class="text-bold font-sans-sm text-base-dark">Supporting Documentation</dt>
-                      <dd class="margin-left-0 margin-top-1 font-sans-sm">
-                        <% if activity.supporting_documents&.any? %>
-                          <ul>
-                            <% activity.supporting_documents.each do |document| %>
-                              <li class="usa-list-item">
-                                <%= link_to("#{document.filename}", document.blob, target: "_blank") %>
-                              </li>
-                            <% end %>
-                          </ul>
-                        <% else %>
-                          <span class="font-sans-sm">No supporting documents uploaded.</span>
-                        <% end %>
-                      </dd>
+                      <%= render "application/supporting_documents_read_only", 
+                          model: activity %>
                     </div>
                   </div>
                 </dl>

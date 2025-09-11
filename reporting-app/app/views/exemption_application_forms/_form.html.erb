@@ -2,9 +2,5 @@
   <%= f.radio_button :exemption_type, "short_term_hardship", { label: "Short-term Hardship", hint: "You are experiencing a short-term hardship as defined here: TODO: Add link to the definition" } %>
   <%= f.radio_button :exemption_type, "incarceration", { label: "Incarceration", hint: "You are currently incarcerated or have left incarceration within the last 3 months." } %>
 
-  <%= render "application/supporting_documents", 
-    form: f, 
-    model: exemption_application_form %>  
-
   <%= f.submit "Save", big: true %>
 <% end %>
