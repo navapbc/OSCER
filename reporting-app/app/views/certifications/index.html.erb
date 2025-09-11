@@ -1,19 +1,21 @@
-<h1>Certifications</h1>
+<% content_for :title, t(".title") %>
 
-<%= link_to "Create Certification", new_certification_path(), class: "usa-button" %>
+<h1><%= t(".title") %></h1>
+
+<%= link_to t(".create"), new_certification_path(), class: "usa-button" %>
 
 <section class="d-flex flex-column flex-md-row gap-4 align-items-start justify-content-between">
   <table class="usa-table usa-table--borderless width-full">
     <thead>
       <tr>
         <th scope="col">
-          Cert ID
+          <%= t(".columns.col_case_id") %>
         </th>
         <th scope="col">
-          Created
+          <%= t(".columns.col_created") %>
         </th>
         <th scope="col">
-          Actions
+          <%= t(".columns.col_actions") %>
         </th>
       </tr>
     </thead>
@@ -27,7 +29,7 @@
             <%= local_time(certification.created_at, format: :long) %>
           </td>
           <td>
-              <%= link_to "Show", certification_path(certification), class: "usa-button" %>
+              <%= link_to t(".actions.show"), certification_path(certification), class: "usa-button" %>
           </td>
         </tr>
       <% end %>

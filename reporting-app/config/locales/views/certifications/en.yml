@@ -1,0 +1,21 @@
+en:
+  certifications:
+    index:
+      title: "Certifications"
+      create: "Create Certification"
+      columns:
+        col_case_id: "Case ID"
+        col_created: "Created"
+        col_actions: "Actions"
+      actions:
+        show: "Show"
+    show:
+      title: "Certification"
+      submit: "Update"
+      activity_reports:
+        header: "Associated reports"
+        col_activity_report_id: "Activity Report ID"
+        col_cases: "Cases"
+    new:
+      title: "New Certification"
+      submit: "Create"

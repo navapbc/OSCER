@@ -1,19 +1,23 @@
-<% content_for :title, "Certification" %>
+<%= render partial: "application/breadcrumbs", locals: { crumbs: [
+  { name: t("certifications.index.title"), url: certifications_path },
+  ], current_name: @certification.id  } %>
 
-<h1>Certification</h1>
+<% content_for :title, t(".title") %>
 
-<%= render "form", certification_form: @certification, submit_text: "Update" %>
+<h1><%= t(".title") %></h1>
 
-<h2>Associated reports</h2>
+<%= render "form", certification_form: @certification, submit_text: t(".submit") %>
+
+<h2><%= t(".activity_reports.header") %></h2>
 
 <table class="usa-table usa-table--borderless width-full">
     <thead>
       <tr>
         <th scope="col">
-          Activity Report ID
+          <%= t(".activity_reports.col_activity_report_id") %>
         </th>
         <th scope="col">
-          Cases
+          <%= t(".activity_reports.col_cases") %>
         </th>
       </tr>
     </thead>
