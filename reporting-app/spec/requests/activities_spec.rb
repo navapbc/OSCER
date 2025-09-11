@@ -125,9 +125,6 @@ RSpec.describe "/activities", type: :request do
         {
           name: "New Employer Corp",
           hours: 100.0
-          # supporting_documents: [
-          #   fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain')
-          # ]
         }
       }
 
