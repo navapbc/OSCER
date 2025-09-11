@@ -19,6 +19,8 @@ module TemplateApplicationRails
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
 
+    config.time_zone = ENV["TIME_ZONE"] || "Eastern Time (US & Canada)" # Convenient for time display in local development
+
     # Fetch authentication flow; default to cognito
     Rails.application.config.auth_adapter = ENV.fetch("AUTH_ADAPTER", "cognito")
 
