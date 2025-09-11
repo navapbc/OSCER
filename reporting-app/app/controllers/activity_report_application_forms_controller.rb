@@ -33,7 +33,7 @@ class ActivityReportApplicationFormsController < ApplicationController
       redirect_to invitation.tokenized_url, allow_other_host: true
     else
       respond_to do |format|
-        format.html # render edit form with existing supporting_documents
+        format.html
         format.json { render json: @activity_report_application_form.as_json }
       end
     end
