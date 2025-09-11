@@ -74,7 +74,7 @@ Rails.application.configure do
   config.assets.quiet = true
 
   # Allow web_console to render when triggered from the rails app running locally in a docker container.
-  config.web_console.permissions = [ "192.168.0.0/16", "172.16.0.0/16", "10.0.0.0/8", "151.101.193.227" ]
+  config.web_console.permissions = [ "192.168.0.0/16", "172.16.0.0/16", "10.0.0.0/8" ]
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
