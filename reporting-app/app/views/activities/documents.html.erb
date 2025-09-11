@@ -1,7 +1,3 @@
-<% content_for :title, t("supporting_documents.title") %>
-
-<h1><%= t("supporting_documents.title") %></h1>
-
 <%= render "application/upload_supporting_documents",
   model: @activity,
   url: upload_documents_activity_report_application_form_activity_path(@activity_report_application_form, @activity) %>

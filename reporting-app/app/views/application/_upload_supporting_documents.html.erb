@@ -13,6 +13,9 @@
   method ||= :post
   documents = model.send(field_name)
 %>
+<% content_for :title, t("supporting_documents.title") %>
+
+<h1><%= t("supporting_documents.title") %></h1>
 
 <% if documents.attached? %>
   <div class="usa-form-group">

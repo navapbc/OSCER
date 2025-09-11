@@ -1,7 +1,3 @@
-<% content_for :title, t("supporting_documents.title") %>
-
-<h1><%= t("supporting_documents.title") %></h1>
-
 <%= render "application/upload_supporting_documents",
   model: @exemption_application_form,
   url: upload_documents_exemption_application_form_path(@exemption_application_form) %>
