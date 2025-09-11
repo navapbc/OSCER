@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ActivityReportApplicationForm, type: :model do
+  let (:form) { create(:activity_report_application_form) }
+  
   describe '#sum_of_activity_hours' do
     it 'returns the sum of all activity hours' do
-      form = create(:activity_report_application_form)
       create(:activity, hours: 2.5, activity_report_application_form_id: form.id)
       create(:activity, hours: 3.0, activity_report_application_form_id: form.id)
       create(:activity, hours: 1.5, activity_report_application_form_id: form.id)
@@ -13,14 +14,12 @@ RSpec.describe ActivityReportApplicationForm, type: :model do
     end
 
     it 'returns 0 when there are no activities' do
-      form = create(:activity_report_application_form)
       expect(form.sum_of_activity_hours).to eq(0)
     end
   end
 
   describe '#average_of_activity_hours_per_month' do
     it 'returns the average hours per month across all activities' do
-      form = create(:activity_report_application_form)
       # Create activities in different months
       create(:activity, hours: 4.0, month: Date.new(2025, 1, 1), activity_report_application_form_id: form.id)
       create(:activity, hours: 2.0, month: Date.new(2025, 1, 1), activity_report_application_form_id: form.id)
@@ -33,12 +32,10 @@ RSpec.describe ActivityReportApplicationForm, type: :model do
     end
 
     it 'returns 0 when there are no activities' do
-      form = create(:activity_report_application_form)
       expect(form.average_of_activity_hours_per_month).to eq(0)
     end
 
     it 'correctly handles activities in the same month' do
-      form = create(:activity_report_application_form)
       # Create multiple activities in the same month
       create(:activity, hours: 3.0, month: Date.new(2025, 1, 1), activity_report_application_form_id: form.id)
       create(:activity, hours: 2.0, month: Date.new(2025, 1, 15), activity_report_application_form_id: form.id)
