@@ -28,3 +28,6 @@ en:
   tables:
     column: "Column"
     description: "Description"
+  supporting_documents:
+    heading: "Supporting documents"
+    no_documents_text: "No supporting documents"
