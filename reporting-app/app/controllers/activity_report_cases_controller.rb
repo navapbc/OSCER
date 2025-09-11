@@ -14,6 +14,9 @@ class ActivityReportCasesController < StaffController
 
   # GET /activity_report_cases/1 or /activity_report_cases/1.json
   def show
+    activities = @activity_report_application_form.activities || []
+    @summed_activities_hours = activities.sum(&:hours) || 0
+    @averaged_activities_hours = activities.average(:hours) || 0
   end
 
   def tasks

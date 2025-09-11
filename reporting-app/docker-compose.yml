@@ -10,7 +10,7 @@ services:
       timeout: 10s
       retries: 20
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     volumes:
       - reporting-app-database_data:/var/lib/postgresql/data
 
@@ -26,6 +26,7 @@ services:
     env_file: .env
     environment:
       - DB_HOST=reporting-app-database
+      - DB_PORT=5432
       - RAILS_BINDING=0.0.0.0
       - RAILS_ENV=development
     ports:

@@ -1,39 +1,123 @@
 <% content_for :title, t(".title") %>
-
 <% content_for :case_details do %>
   <h2 id="case-details-heading" class="usa-heading-lg margin-bottom-3"><%= t(".title") %></h2>
-  <dl class="grid-row grid-gap margin-0">
-    <div class="grid-col-12 tablet:grid-col-6">
-      <div class="margin-bottom-2">
-        <dt class="text-bold font-sans-sm text-base-dark">Case ID</dt>
-        <dd class="margin-left-0 margin-top-1 font-sans-sm"><%= @case.id %></dd>
+  <% if @activity_report_application_form.present? %>
+    <dl class="grid-row grid-gap margin-0">
+      <div class="grid-col-12 tablet:grid-col-6">
+        <div class="margin-bottom-2">
+          <dt class="text-bold font-sans-sm text-base-dark">Reporting Period</dt>
+          <dd class="margin-left-0 margin-top-1 font-sans-sm">
+            <%= @activity_report_application_form.reporting_period&.strftime("%B, %Y") || "Unknown" %>
+          </dd>
+        </div>
+        <div class="margin-bottom-2">
+          <dt class="text-bold font-sans-sm text-base-dark">Assigned Worker</dt>
+          <dd class="margin-left-0 margin-top-1 font-sans-md">William Worker</dd>
+        </div>
+        <div class="margin-bottom-2">
+          <dt class="text-bold font-sans-sm text-base-dark">Total Hours From Activities</dt>
+          <dd class="margin-left-0 margin-top-1 font-sans-md">
+            <%= number_with_precision(@summed_activities_hours, precision: 2, strip_insignificant_zeros: true) %>
+          </dd>
+        </div>
       </div>
-      <div class="margin-bottom-2">
-        <dt class="text-bold font-sans-sm text-base-dark">Reporting Period</dt>
-        <dd class="margin-left-0 margin-top-1 font-sans-sm">
-          <%= @activity_report_application_form.reporting_period&.strftime("%B, %Y") %>
-        </dd>
+      <div class="grid-col-12 tablet:grid-col-6">
+        <div class="margin-bottom-2">
+          <dt class="text-bold font-sans-sm text-base-dark">Created</dt>
+          <dd class="margin-left-0 margin-top-1 font-sans-md">
+            <time datetime="<%= @case.created_at.strftime("%Y-%m-%d %H:%M:%S %Z") %>">
+              <%= @case.created_at.strftime("%m/%d/%Y %I:%M:%S %p %Z") %>
+            </time>
+          </dd>
+        </div>
+        <div class="margin-bottom-2">
+          <dt class="text-bold font-sans-sm text-base-dark">Last Updated</dt>
+          <dd class="margin-left-0 margin-top-1 font-sans-md">
+            <time datetime="<%= @case.updated_at.strftime("%Y-%m-%d %H:%M:%S %Z") %>">
+              <%= @case.updated_at.strftime("%m/%d/%Y %I:%M:%S %p %Z") %>
+            </time>
+          </dd>
+        </div>
+        <div class="margin-bottom-2">
+          <dt class="text-bold font-sans-sm text-base-dark">Average Hours / Month</dt>
+          <dd class="margin-left-0 margin-top-1 font-sans-md">
+            <%= number_with_precision(@averaged_activities_hours, precision: 2, strip_insignificant_zeros: true) %>
+          </dd>
+        </div>
+      </div>
+      <h2 class="usa-heading-md margin-top-2 margin-bottom-2">Activities</h2>
+      <% if @activity_report_application_form.activities_by_month&.any? %>
+        <div class="usa-accordion usa-accordion--bordered usa-accordion--multiselectable" data-allow-multiple>
+          <% @activity_report_application_form.activities_by_month.each do |month, activities| %>
+            <h4 class="usa-accordion__heading">
+              <button
+                type="button"
+                class="usa-accordion__button"
+                aria-expanded="false"
+                aria-controls="accordion-<%= month.strftime('%Y-%m') %>"
+              >
+                <%= month.strftime("%B, %Y") %> <em><small>(<%= number_with_precision(activities.sum(&:hours), precision: 2, strip_insignificant_zeros: true) %> <%= "hour".pluralize(activities.sum(&:hours)) %>)</small></em>
+              </button>
+            </h4>
+            <div id="accordion-<%= month.strftime('%Y-%m') %>" class="usa-accordion__content usa-prose">
+              <% activities.each_with_index do |activity, activity_index| %>
+                <% if activity_index != 0 %>
+                  <hr class="margin-bottom-3" />
+                <% end %>
+                <dl class="grid-row grid-gap margin-0">
+                  <div class="grid-col-12 tablet:grid-col-6">
+                    <div class="margin-bottom-2">
+                      <dt class="text-bold font-sans-sm text-base-dark">Name</dt>
+                      <dd class="margin-left-0 margin-top-1 font-sans-sm"><%= activity.name %></dd>
+                    </div>
+                    <div class="margin-bottom-2">
+                      <dt class="text-bold font-sans-sm text-base-dark">Hours</dt>
+                      <dd class="margin-left-0 margin-top-1 font-sans-sm">
+                        <%= number_with_precision(activity.hours, precision: 2, strip_insignificant_zeros: true) %>
+                      </dd>
+                    </div>
+                  </div>
+                  <div class="grid-col-12 tablet:grid-col-6">
+                    <div class="margin-bottom-2">
+                      <dt class="text-bold font-sans-sm text-base-dark">Supporting Documentation</dt>
+                      <dd class="margin-left-0 margin-top-1 font-sans-sm">
+                        <% if activity.supporting_documents&.any? %>
+                          <ul>
+                            <% activity.supporting_documents.each do |document| %>
+                              <li class="usa-list-item">
+                                <%= link_to("#{document.filename}", document.blob, target: "_blank") %>
+                              </li>
+                            <% end %>
+                          </ul>
+                        <% else %>
+                          <span class="font-sans-sm">No supporting documents uploaded.</span>
+                        <% end %>
+                      </dd>
+                    </div>
+                  </div>
+                </dl>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="usa-alert usa-alert--warning usa-alert--no-icon">
+          <div class="usa-alert__body">
+            <p class="usa-alert__text">
+              No activities have been added to this activity report submission.
+            </p>
+          </div>
+        </div>
+      <% end %>
+    </dl>
+  <% else %>
+    <div class="usa-alert usa-alert--warning usa-alert--no-icon">
+      <div class="usa-alert__body">
+        <p class="usa-alert__text">
+          No activity report application form has been started for this case.
+        </p>
       </div>
     </div>
-    <div class="grid-col-12 tablet:grid-col-6">
-      <div class="margin-bottom-2">
-        <dt class="text-bold font-sans-sm text-base-dark">Assigned Worker</dt>
-        <dd class="margin-left-0 margin-top-1 font-sans-md">William Worker</dd>
-      </div>
-      <div class="margin-bottom-2">
-        <dt class="text-bold font-sans-sm text-base-dark">Hours</dt>
-        <dd class="margin-left-0 margin-top-1 font-sans-md">TODO</dd>
-      </div>
-      <div class="margin-bottom-2">
-        <dt class="text-bold font-sans-sm text-base-dark">Last Updated</dt>
-        <dd class="margin-left-0 margin-top-1 font-sans-md">
-          <time datetime="<%= @case.updated_at.strftime("%Y-%m-%d") %>">
-            <%= @case.updated_at.strftime("%m/%d/%Y") %>
-          </time>
-        </dd>
-      </div>
-    </div>
-  </dl>
+  <% end %>
 <% end %>
-
 <%= render "case_layout" %>
