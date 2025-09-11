@@ -38,11 +38,12 @@ RSpec.describe ActivityReportApplicationForm, type: :model do
     it 'correctly handles activities in the same month' do
       # Create multiple activities in the same month
       create(:activity, hours: 3.0, month: Date.new(2025, 1, 1), activity_report_application_form_id: form.id)
-      create(:activity, hours: 2.0, month: Date.new(2025, 1, 15), activity_report_application_form_id: form.id)
+      create(:activity, hours: 2.0, month: Date.new(2025, 1, 1), activity_report_application_form_id: form.id)
 
       form.reload
-      # Total hours = 5.0, number of unique months = 2 (since the Date objects are different instances)
-      expect(form.average_of_activity_hours_per_month).to eq(2.5)
+      
+      # Total hours = 5.0, number of unique months = 1
+      expect(form.average_of_activity_hours_per_month).to eq(5.0)
     end
   end
 end
