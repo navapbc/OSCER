@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   resources :activity_report_application_forms do
-    resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ]
+    resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ] do
+      member do
+        get :documents
+        post :upload_documents
+        delete :destroy_document
+      end
+    end
     member do
       get :review
       post :submit

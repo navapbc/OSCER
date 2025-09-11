@@ -29,12 +29,7 @@ RSpec.describe "/activities", type: :request do
     {
       name: "Acme Corp",
       hours: 80.0,
-      month: (Date.today - 1.month).beginning_of_month,
-      supporting_documents: [
-        fixture_file_upload('spec/fixtures/files/test_document_1.pdf', 'application/pdf'),
-        fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain'),
-        fixture_file_upload('spec/fixtures/files/test_document_3.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-      ]
+      month: (Date.today - 1.month).beginning_of_month
     }
   }
 
@@ -82,6 +77,13 @@ RSpec.describe "/activities", type: :request do
     end
   end
 
+  describe "GET /documents" do
+    it "renders a successful response" do
+      get documents_activity_report_application_form_activity_url(activity_report_application_form, existing_activity)
+      expect(response).to be_successful
+    end
+  end
+
   describe "POST /create" do
     context "with valid parameters" do
       it "creates a new Activity" do
@@ -92,7 +94,9 @@ RSpec.describe "/activities", type: :request do
 
       it "redirects to the activity report" do
         post activity_report_application_form_activities_url(activity_report_application_form), params: { activity: valid_attributes }
-        expect(response).to redirect_to(activity_report_application_form_url(activity_report_application_form))
+
+        expect(response).to have_http_status(:redirect)
+        expect(response.location).to match(%r{/activity_report_application_forms/#{activity_report_application_form.id}/activities/[^/]+/documents})
       end
     end
 
@@ -120,10 +124,7 @@ RSpec.describe "/activities", type: :request do
       let(:new_attributes) {
         {
           name: "New Employer Corp",
-          hours: 100.0,
-          supporting_documents: [
-            fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain')
-          ]
+          hours: 100.0
         }
       }
 
@@ -136,12 +137,12 @@ RSpec.describe "/activities", type: :request do
         updated_activity = activity_report_application_form.activities_by_id[existing_activity.id]
         expect(updated_activity.name).to eq("New Employer Corp")
         expect(updated_activity.hours).to eq(100.0)
-        expect(updated_activity.supporting_documents.count).to eq(1)
-        expect(updated_activity.supporting_documents.first.filename.to_s).to eq("test_document_2.txt")
+        # expect(updated_activity.supporting_documents.count).to eq(1)
+        # expect(updated_activity.supporting_documents.first.filename.to_s).to eq("test_document_2.txt")
       end
 
       it "redirects to the activity report" do
-        expect(response).to redirect_to(activity_report_application_form_url(activity_report_application_form))
+        expect(response).to redirect_to(documents_activity_report_application_form_activity_url(activity_report_application_form, existing_activity))
       end
     end
 
@@ -164,6 +165,27 @@ RSpec.describe "/activities", type: :request do
         expect(updated_activity.name).not_to eq("")
         expect(updated_activity.hours).not_to eq("Not a number")
       end
+    end
+  end
+
+  describe "POST /upload_document" do
+    let(:supporting_documents) { [
+      fixture_file_upload('spec/fixtures/files/test_document_1.pdf', 'application/pdf'),
+      fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain')
+    ] }
+
+    before do
+      post upload_documents_activity_report_application_form_activity_url(activity_report_application_form, existing_activity),
+        params: { activity: { supporting_documents: supporting_documents } }
+    end
+
+    it "redirects back to the documents page" do
+      expect(response).to redirect_to(documents_activity_report_application_form_activity_url(activity_report_application_form, existing_activity))
+    end
+
+    it "uploads the documents" do
+      existing_activity.reload
+      expect(existing_activity.supporting_documents.count).to eq(2)
     end
   end
 
