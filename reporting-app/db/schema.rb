@@ -55,10 +55,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_160308) do
   create_table "activity_report_application_forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "reporting_period"
     t.uuid "user_id"
     t.integer "status"
     t.datetime "submitted_at"
-    t.date "reporting_period"
   end
 
   create_table "activity_report_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
