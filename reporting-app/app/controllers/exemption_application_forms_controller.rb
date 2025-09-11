@@ -1,11 +1,6 @@
 class ExemptionApplicationFormsController < ApplicationController
   before_action :set_exemption_application_form, only: %i[ show edit update destroy review submit ]
 
-  # GET /exemption_application_forms or /exemption_application_forms.json
-  def index
-    @exemption_application_forms = ExemptionApplicationForm.all
-  end
-
   # GET /exemption_application_forms/1 or /exemption_application_forms/1.json
   def show
   end
