@@ -5,16 +5,13 @@ RSpec.describe "/certifications", type: :request do
 
   let(:staff_user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
 
-  # This should return the minimal set of attributes required to create a valid
-  # Certification. As you add validations to Certification, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
+  let(:valid_request_attributes) {
     {
       beneficiary_id: "foobar"
     }
   }
 
-  let(:invalid_attributes) {
+  let(:invalid_request_attributes) {
     {
       certification_requirements: "()"
     }
@@ -37,22 +34,28 @@ RSpec.describe "/certifications", type: :request do
   end
 
   describe "GET /index" do
-    it "renders a successful response with Certifications" do
-      Certification.create! valid_attributes
-      get certifications_url, headers: valid_headers
+    it "renders a successful response with a Certification" do
+      create(:certification)
+      get certifications_url
+      expect(response).to be_successful
+    end
+
+    it "renders a successful response with multiple Certifications" do
+      create_list(:certification, 10)
+      get certifications_url
       expect(response).to be_successful
     end
 
     it "renders a successful response without Certifications" do
-      get certifications_url, headers: valid_headers
+      get certifications_url
       expect(response).to be_successful
     end
   end
 
-  # TODO: or search?
+  # TODO: or /search?
   # describe "GET /api/index" do
   #   it "renders a successful response" do
-  #     Certification.create! valid_attributes
+  #     create(:certification)
   #     get certifications_url, headers: valid_headers, as: :json
   #     expect(response).to be_successful
   #   end
@@ -60,7 +63,19 @@ RSpec.describe "/certifications", type: :request do
 
   describe "GET /show" do
     it "renders a successful response" do
-      certification = Certification.create! valid_attributes
+      certification = create(:certification)
+      get certification_url(certification)
+      expect(response).to be_successful
+    end
+
+    it "renders a successful response with invalid data" do
+      certification = create(:certification, :invalid_json_data)
+      get certification_url(certification)
+      expect(response).to be_successful
+    end
+
+    it "renders a successful response with data" do
+      certification = create(:certification, :with_certification_requirements, :with_beneficiary_data)
       get certification_url(certification)
       expect(response).to be_successful
     end
@@ -68,7 +83,19 @@ RSpec.describe "/certifications", type: :request do
 
   describe "GET /api/show" do
     it "renders a successful response" do
-      certification = Certification.create! valid_attributes
+      certification = create(:certification)
+      get api_certification_url(certification)
+      expect(response).to be_successful
+    end
+
+    it "renders a successful response with invalid data" do
+      certification = create(:certification, :invalid_json_data)
+      get api_certification_url(certification)
+      expect(response).to be_successful
+    end
+
+    it "renders a successful response with data" do
+      certification = create(:certification, :with_certification_requirements, :with_beneficiary_data)
       get api_certification_url(certification)
       expect(response).to be_successful
     end
@@ -79,15 +106,14 @@ RSpec.describe "/certifications", type: :request do
       it "creates a new Certification" do
         expect {
           post certifications_url,
-               params: { certification: valid_attributes }, headers: valid_headers
+               params: { certification: valid_request_attributes }, headers: valid_headers
         }.to change(Certification, :count).by(1)
       end
 
       it "renders a HTML response with the new certification" do
         post certifications_url,
-             params: { certification: valid_attributes }, headers: valid_headers
+             params: { certification: valid_request_attributes }, headers: valid_headers
         expect(response).to have_http_status(:created)
-        # expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
 
@@ -95,15 +121,14 @@ RSpec.describe "/certifications", type: :request do
       it "does not create a new Certification" do
         expect {
           post certifications_url,
-               params: { certification: invalid_attributes }
+               params: { certification: invalid_request_attributes }
         }.not_to change(Certification, :count)
       end
 
       it "renders a JSON response with errors for the new certification" do
         post certifications_url,
-             params: { certification: invalid_attributes }, headers: valid_headers
+             params: { certification: invalid_request_attributes }, headers: valid_headers
         expect(response).to be_client_error
-        # expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
   end
@@ -113,13 +138,20 @@ RSpec.describe "/certifications", type: :request do
       it "creates a new Certification" do
         expect {
           post api_certifications_url,
-               params: { certification: valid_attributes }, headers: valid_headers, as: :json
+               params: { certification: valid_request_attributes }, headers: valid_headers, as: :json
         }.to change(Certification, :count).by(1)
+      end
+
+      it "creates a new ActivityReportApplicationForm" do
+        expect {
+          post api_certifications_url,
+               params: { certification: valid_request_attributes }, headers: valid_headers, as: :json
+        }.to change(ActivityReportApplicationForm, :count).by(1)
       end
 
       it "renders a JSON response with the new certification" do
         post api_certifications_url,
-             params: { certification: valid_attributes }, headers: valid_headers, as: :json
+             params: { certification: valid_request_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
@@ -129,13 +161,13 @@ RSpec.describe "/certifications", type: :request do
       it "does not create a new Certification" do
         expect {
           post api_certifications_url,
-               params: { certification: invalid_attributes }, as: :json
+               params: { certification: invalid_request_attributes }, as: :json
         }.not_to change(Certification, :count)
       end
 
       it "renders a JSON response with errors for the new certification" do
         post api_certifications_url,
-             params: { certification: invalid_attributes }, headers: valid_headers, as: :json
+             params: { certification: invalid_request_attributes }, headers: valid_headers, as: :json
         expect(response).to be_client_error
         expect(response.content_type).to match(a_string_including("application/json"))
       end
@@ -151,7 +183,7 @@ RSpec.describe "/certifications", type: :request do
       }
 
       it "updates the requested certification" do
-        certification = Certification.create! valid_attributes
+        certification = create(:certification)
         patch certification_url(certification),
               params: { certification: new_attributes }, headers: valid_headers, as: :json
         certification.reload
@@ -159,7 +191,7 @@ RSpec.describe "/certifications", type: :request do
       end
 
       it "renders a HTML response with the certification" do
-        certification = Certification.create! valid_attributes
+        certification = create(:certification)
         patch certification_url(certification),
               params: { certification: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
@@ -168,9 +200,9 @@ RSpec.describe "/certifications", type: :request do
 
     context "with invalid parameters" do
       it "renders a JSON response with errors for the certification" do
-        certification = Certification.create! valid_attributes
+        certification = create(:certification)
         patch certification_url(certification),
-              params: { certification: invalid_attributes }, headers: valid_headers, as: :json
+              params: { certification: invalid_request_attributes }, headers: valid_headers, as: :json
         expect(response).to be_client_error
       end
     end
@@ -183,7 +215,7 @@ RSpec.describe "/certifications", type: :request do
   #     }
 
   #     it "updates the requested certification" do
-  #       certification = Certification.create! valid_attributes
+  #       certification = create(:certification)
   #       patch certification_url(certification),
   #             params: { certification: new_attributes }, headers: valid_headers, as: :json
   #       certification.reload
@@ -191,7 +223,7 @@ RSpec.describe "/certifications", type: :request do
   #     end
 
   #     it "renders a JSON response with the certification" do
-  #       certification = Certification.create! valid_attributes
+  #       certification = create(:certification)
   #       patch certification_url(certification),
   #             params: { certification: new_attributes }, headers: valid_headers, as: :json
   #       expect(response).to have_http_status(:ok)
@@ -201,9 +233,9 @@ RSpec.describe "/certifications", type: :request do
 
   #   context "with invalid parameters" do
   #     it "renders a JSON response with errors for the certification" do
-  #       certification = Certification.create! valid_attributes
+  #       certification = create(:certification)
   #       patch certification_url(certification),
-  #             params: { certification: invalid_attributes }, headers: valid_headers, as: :json
+  #             params: { certification: invalid_request_attributes }, headers: valid_headers, as: :json
   #       expect(response).to be_client_error
   #       expect(response.content_type).to match(a_string_including("application/json"))
   #     end
@@ -212,7 +244,7 @@ RSpec.describe "/certifications", type: :request do
 
   # describe "DELETE /destroy" do
   #   it "destroys the requested certification" do
-  #     certification = Certification.create! valid_attributes
+  #     certification = create(:certification)
   #     expect {
   #       delete certification_url(certification), headers: valid_headers, as: :json
   #     }.to change(Certification, :count).by(-1)
