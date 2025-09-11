@@ -30,7 +30,7 @@ class ActivitiesController < ApplicationController
 
     supporting_documents = params.require(:activity).permit(:supporting_documents)[:supporting_documents]
     @activity.supporting_documents.attach(supporting_documents)
-    
+
     respond_to do |format|
       if @activity_report_application_form.save
         format.html { redirect_to documents_activity_report_application_form_activity_path(@activity_report_application_form, @activity) }
