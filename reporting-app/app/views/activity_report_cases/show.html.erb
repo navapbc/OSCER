@@ -14,6 +14,12 @@
           <dt class="text-bold font-sans-sm text-base-dark">Assigned Worker</dt>
           <dd class="margin-left-0 margin-top-1 font-sans-md">William Worker</dd>
         </div>
+        <div class="margin-bottom-2">
+          <dt class="text-bold font-sans-sm text-base-dark">Total Hours From Activities</dt>
+          <dd class="margin-left-0 margin-top-1 font-sans-md">
+            <%= number_with_precision(@activity_report_application_form.activities_by_month.values.flatten.sum(&:hours), precision: 2, strip_insignificant_zeros: true) %>
+          </dd>
+        </div>
       </div>
       <div class="grid-col-12 tablet:grid-col-6">
         <div class="margin-bottom-2">
@@ -32,10 +38,16 @@
             </time>
           </dd>
         </div>
+        <div class="margin-bottom-2">
+          <dt class="text-bold font-sans-sm text-base-dark">Average Hours / Month</dt>
+          <dd class="margin-left-0 margin-top-1 font-sans-md">
+            <%= number_with_precision(@activity_report_application_form.activities_by_month.values.flatten.sum(&:hours) / @activity_report_application_form.activities_by_month.size, precision: 2, strip_insignificant_zeros: true) %>
+          </dd>
+        </div>
       </div>
       <h2 class="usa-heading-md margin-top-2 margin-bottom-2">Activities</h2>
       <% if @activity_report_application_form.activities_by_month&.any? %>
-        <div class="usa-accordion usa-accordion--bordered">
+        <div class="usa-accordion usa-accordion--bordered usa-accordion--multiselectable" data-allow-multiple>
           <% @activity_report_application_form.activities_by_month.each do |month, activities| %>
             <h4 class="usa-accordion__heading">
               <button
@@ -44,7 +56,7 @@
                 aria-expanded="false"
                 aria-controls="accordion-<%= month.strftime('%Y-%m') %>"
               >
-                <%= month.strftime("%B, %Y") %>
+                <%= month.strftime("%B, %Y") %> <em><small>(<%= number_with_precision(activities.sum(&:hours), precision: 2, strip_insignificant_zeros: true) %> <%= "hour".pluralize(activities.sum(&:hours)) %>)</small></em>
               </button>
             </h4>
             <div id="accordion-<%= month.strftime('%Y-%m') %>" class="usa-accordion__content usa-prose">
@@ -61,7 +73,7 @@
                     <div class="margin-bottom-2">
                       <dt class="text-bold font-sans-sm text-base-dark">Hours</dt>
                       <dd class="margin-left-0 margin-top-1 font-sans-sm">
-                        <%= activity.hours %>
+                        <%= number_with_precision(activity.hours, precision: 2, strip_insignificant_zeros: true) %>
                       </dd>
                     </div>
                   </div>
