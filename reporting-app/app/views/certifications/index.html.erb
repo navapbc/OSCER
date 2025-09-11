@@ -24,9 +24,6 @@
             <%= certification.id %>
           </td>
           <td>
-              <!-- TODO: local_time defaults to CST? Why? Should at minimum
-              inherit from an app config item. Or probably better to just use
-              https://github.com/basecamp/local_time? -->
             <%= local_time(certification.created_at, format: :long) %>
           </td>
           <td>
