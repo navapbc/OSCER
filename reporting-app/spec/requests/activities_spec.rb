@@ -170,13 +170,22 @@ RSpec.describe "/activities", type: :request do
 
   describe "POST /upload_document" do
     let(:supporting_documents) { [
-      fixture_file_upload('spec/fixtures/files/test_document_1.pdf', 'application/pdf')
+      fixture_file_upload('spec/fixtures/files/test_document_1.pdf', 'application/pdf'),
+      fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain')
     ] }
 
-    it "uploads a document" do
-      post upload_document_activity_report_application_form_activity_url(activity_report_application_form, existing_activity),
+    before do
+      post upload_documents_activity_report_application_form_activity_url(activity_report_application_form, existing_activity),
         params: { activity: { supporting_documents: supporting_documents } }
+    end
+
+    it "redirects back to the documents page" do
       expect(response).to redirect_to(documents_activity_report_application_form_activity_url(activity_report_application_form, existing_activity))
+    end
+
+    it "uploads the documents" do
+      existing_activity.reload
+      expect(existing_activity.supporting_documents.count).to eq(2)
     end
   end
 

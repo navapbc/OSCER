@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_activity_report_application_form
-  before_action :set_activity, only: %i[ show edit update documents upload_document destroy_document destroy ]
+  before_action :set_activity, only: %i[ show edit update documents upload_documents destroy ]
 
   # GET /activities/1 or /activities/1.json
   def show
@@ -24,11 +24,11 @@ class ActivitiesController < ApplicationController
     authorize @activity_report_application_form, :edit?
   end
 
-  # GET /activities/1/upload_document
-  def upload_document
+  # GET /activities/1/upload_documents
+  def upload_documents
     authorize @activity_report_application_form, :edit?
 
-    supporting_documents = params.require(:activity).permit(:supporting_documents)[:supporting_documents]
+    supporting_documents = params.require(:activity).permit(supporting_documents: [])[:supporting_documents]
     @activity.supporting_documents.attach(supporting_documents)
 
     respond_to do |format|

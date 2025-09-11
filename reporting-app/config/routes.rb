@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ] do
       member do
         get :documents
-        post :upload_document
+        post :upload_documents
         delete :destroy_document
       end
     end
