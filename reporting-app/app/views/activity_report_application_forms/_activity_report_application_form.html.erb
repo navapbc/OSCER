@@ -3,11 +3,9 @@
     <h2><%= month.strftime("%B %Y") %></h2>
     <div class="grid-container font-body-md">
       <% for activity in activities %>
-        <%= render "activity_row", activity_report_application_form:, activity: %>
+        <%= render "activity_report_application_forms/activity_row", activity_report_application_form:, activity: %>
       <% end %>
-
-      <%= render "month_total_row", activities: activities %>
-
+      <%= render "activity_report_application_forms/month_total_row", activities: activities %>
       <%# Required hours row %>
       <div class="grid-row">
         <div class="grid-col-8 grid-offset-1">
@@ -17,7 +15,6 @@
           80.0
         </div>
       </div>
-
       <%# Additional hours needed row %>
       <div class="grid-row text-bold">
         <div class="grid-col-8 grid-offset-1">
