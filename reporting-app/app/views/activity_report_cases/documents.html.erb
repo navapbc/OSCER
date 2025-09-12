@@ -5,7 +5,7 @@
     <ul class="usa-alert__text usa-list margin-top-1">
       <% @documents.each do |document| %>
         <li class="usa-list-item">
-          <%= link_to("#{document.filename}", document.blob, target: "_blank") %>
+          <%= link_to("#{document.filename}", document.blob, target: "_blank") %> <small><em>(<%= document.created_at.strftime("%m/%d/%y %I:%M %p %Z") %>)</em></small>
         </li>
       <% end %>
     </ul>
