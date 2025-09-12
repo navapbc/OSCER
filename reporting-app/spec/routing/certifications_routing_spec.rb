@@ -21,10 +21,6 @@ RSpec.describe CertificationsController, type: :routing do
     it "routes to #update via PATCH" do
       expect(patch: "/staff/certifications/1").to route_to("certifications#update", id: "1")
     end
-
-    # it "routes to #destroy" do
-    #   expect(delete: "/certifications/1").to route_to("certifications#destroy", id: "1")
-    # end
   end
 
   describe "API routing" do

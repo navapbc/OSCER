@@ -1,5 +1,5 @@
 class CertificationsController < StaffController
-  before_action :set_certification, only: %i[ show update destroy ]
+  before_action :set_certification, only: %i[ show update ]
 
   # GET /certifications
   # GET /certifications.json
@@ -52,12 +52,6 @@ class CertificationsController < StaffController
       render json: @certification.errors, status: :unprocessable_entity
     end
   end
-
-  # # DELETE /certifications/1
-  # # DELETE /certifications/1.json
-  # def destroy
-  #   @certification.destroy!
-  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -52,7 +52,7 @@ RSpec.describe "/certifications", type: :request do
     end
   end
 
-  # TODO: or /search?
+  # TODO: or POST /search?
   # describe "GET /api/index" do
   #   it "renders a successful response" do
   #     create(:certification)
@@ -207,47 +207,4 @@ RSpec.describe "/certifications", type: :request do
       end
     end
   end
-
-  # describe "PATCH /api/update" do
-  #   context "with valid parameters" do
-  #     let(:new_attributes) {
-  #       skip("Add a hash of attributes valid for your model")
-  #     }
-
-  #     it "updates the requested certification" do
-  #       certification = create(:certification)
-  #       patch certification_url(certification),
-  #             params: { certification: new_attributes }, headers: valid_headers, as: :json
-  #       certification.reload
-  #       skip("Add assertions for updated state")
-  #     end
-
-  #     it "renders a JSON response with the certification" do
-  #       certification = create(:certification)
-  #       patch certification_url(certification),
-  #             params: { certification: new_attributes }, headers: valid_headers, as: :json
-  #       expect(response).to have_http_status(:ok)
-  #       expect(response.content_type).to match(a_string_including("application/json"))
-  #     end
-  #   end
-
-  #   context "with invalid parameters" do
-  #     it "renders a JSON response with errors for the certification" do
-  #       certification = create(:certification)
-  #       patch certification_url(certification),
-  #             params: { certification: invalid_request_attributes }, headers: valid_headers, as: :json
-  #       expect(response).to be_client_error
-  #       expect(response.content_type).to match(a_string_including("application/json"))
-  #     end
-  #   end
-  # end
-
-  # describe "DELETE /destroy" do
-  #   it "destroys the requested certification" do
-  #     certification = create(:certification)
-  #     expect {
-  #       delete certification_url(certification), headers: valid_headers, as: :json
-  #     }.to change(Certification, :count).by(-1)
-  #   end
-  # end
 end
