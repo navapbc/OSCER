@@ -1,0 +1,18 @@
+FactoryBot.define do
+  factory :exemption_application_form do
+    exemption_type { "short_term_hardship" }
+
+    trait :with_supporting_documents do
+      after(:build) do |form|
+        form.supporting_documents.attach([
+          fixture_file_upload('spec/fixtures/files/test_document_1.pdf', 'application/pdf'),
+          fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain')
+        ])
+      end
+    end
+
+    trait :incarceration do
+      exemption_type { "incarceration" }
+    end
+  end
+end

@@ -1,15 +1,23 @@
 Rails.application.routes.draw do
-  resources :activity_report_application_forms do
+  resources :activity_report_application_forms, except: [ :index ] do
     resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ] do
       member do
         get :documents
         post :upload_documents
-        delete :destroy_document
       end
     end
     member do
       get :review
       post :submit
+    end
+  end
+
+  resources :exemption_application_forms, except: [ :index ] do
+    member do
+      get :review
+      post :submit
+      get :documents
+      post :upload_documents
     end
   end
 
