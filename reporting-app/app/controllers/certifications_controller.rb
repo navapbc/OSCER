@@ -4,7 +4,7 @@ class CertificationsController < StaffController
   # GET /certifications
   # GET /certifications.json
   def index
-    @certifications = Certification.all
+    @certifications = policy_scope(Certification.all)
   end
 
   # GET /certifications/1
@@ -14,13 +14,15 @@ class CertificationsController < StaffController
 
   # GET /certifications/new
   def new
-    @certification_form = Certification.new
+    @certification_form = authorize Certification.new
   end
 
   # POST /certifications
   # POST /certifications.json
   def create
     @certification = Certification.new(certification_params)
+
+    authorize @certification
 
     if @certification.save
       # TODO: this logic could/should be moved to an business process/event
@@ -60,7 +62,7 @@ class CertificationsController < StaffController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_certification
-      @certification = Certification.find(params[:id])
+      @certification = authorize Certification.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
