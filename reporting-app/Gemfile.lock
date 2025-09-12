@@ -1,6 +1,6 @@
 GIT
   remote: https://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:x-oauth-basic@github.com/navapbc/flex-sdk.git
-  revision: 4fa4f761cf02bcbd79ed7b45ba7246ba70fd11d5
+  revision: d95f68a2bf19786e81a763d604e818d073ee8a4d
   specs:
     flex (0.1.0)
       pundit (>= 2.5.0)
@@ -333,7 +333,7 @@ GEM
     public_suffix (6.0.2)
     puma (6.6.1)
       nio4r (~> 2.0)
-    pundit (2.5.0)
+    pundit (2.5.1)
       activesupport (>= 3.0.0)
     pundit-matchers (4.0.0)
       rspec-core (~> 3.12)
