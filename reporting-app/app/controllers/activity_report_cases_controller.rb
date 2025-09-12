@@ -20,11 +20,11 @@ class ActivityReportCasesController < StaffController
   end
 
   def tasks
-    @tasks = @case.tasks || []
+    @tasks = @case.tasks
   end
 
   def documents
-    @documents = @activity_report_application_form.activities&.map(&:supporting_documents)&.flatten.sort_by(&:created_at) || []
+    @documents = @activity_report_application_form.activities.map(&:supporting_documents).flatten.sort_by(&:created_at)
   end
 
   def notes
