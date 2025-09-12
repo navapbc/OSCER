@@ -17,5 +17,9 @@ FactoryBot.define do
     trait :with_beneficiary_data do
       beneficiary_data { Faker::Json.shallow_json(width: 3, options: { key: 'Name.first_name', value: 'Name.last_name' }) }
     end
+
+    trait :with_activity_report_application_form do
+      activity_report_application_forms { [ association(:activity_report_application_form) ] }
+    end
   end
 end
