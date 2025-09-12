@@ -1,0 +1,9 @@
+<%= us_form_with(model: certification_form, data: { turbo: false, controller: "certification" }) do |f| %>
+  <%= f.text_field :beneficiary_id, label: "Bene ID" %>
+  <%= f.text_field :case_number %>
+
+  <%= f.text_area :certification_requirements, value: JSON.pretty_generate(certification_form.certification_requirements) %>
+  <%= f.text_area :beneficiary_data, value: JSON.pretty_generate(certification_form.beneficiary_data) %>
+
+  <%= f.submit (submit_text || "Save") %>
+<% end %>

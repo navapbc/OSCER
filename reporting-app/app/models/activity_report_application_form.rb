@@ -1,4 +1,9 @@
 class ActivityReportApplicationForm < Flex::ApplicationForm
+  # TODO: perhaps in the future not optional?
+  belongs_to :certification, optional: true
+  # TODO: not sure about this, but convenience for now
+  has_many :activity_report_cases, foreign_key: "application_form_id"
+
   has_many :activities, strict_loading: true, autosave: true, dependent: :destroy
 
   flex_attribute :reporting_period, :date
@@ -11,7 +16,7 @@ class ActivityReportApplicationForm < Flex::ApplicationForm
     @activities_by_month ||= activities.group_by(&:month)
   end
 
-  default_scope { includes(:activities) }
+  default_scope { includes(:activities, :certification) }
 
   accepts_nested_attributes_for :activities, allow_destroy: true
 end
