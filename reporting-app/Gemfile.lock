@@ -333,7 +333,7 @@ GEM
     public_suffix (6.0.2)
     puma (6.6.1)
       nio4r (~> 2.0)
-    pundit (2.5.1)
+    pundit (2.5.0)
       activesupport (>= 3.0.0)
     pundit-matchers (4.0.0)
       rspec-core (~> 3.12)
@@ -571,7 +571,7 @@ DEPENDENCIES
   pg (~> 1.1)
   pg-aws_rds_iam (~> 0.7.0)
   puma (>= 5.0)
-  pundit
+  pundit (= 2.5.0)
   pundit-matchers
   rails (~> 7.2.0, >= 7.2.2.1)
   rails-erd
