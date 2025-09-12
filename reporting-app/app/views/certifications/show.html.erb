@@ -1,0 +1,37 @@
+<%= render partial: "application/breadcrumbs", locals: { crumbs: [
+  { name: t("certifications.index.title"), url: certifications_path },
+  ], current_name: @certification.id  } %>
+
+<% content_for :title, t(".title") %>
+
+<h1><%= t(".title") %></h1>
+
+<%= render "form", certification_form: @certification, submit_text: t(".submit") %>
+
+<h2><%= t(".activity_reports.header") %></h2>
+
+<table class="usa-table usa-table--borderless width-full">
+    <thead>
+      <tr>
+        <th scope="col">
+          <%= t(".activity_reports.col_activity_report_id") %>
+        </th>
+        <th scope="col">
+          <%= t(".activity_reports.col_cases") %>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for activity_report in @certification.activity_report_application_forms do %>
+          <tr>
+              <td>
+                  <%= link_to activity_report.id, activity_report_application_form_path(activity_report) %>
+              </td>
+              <td>
+                  <!-- TODO: obviously make this better, probably link to a cases search with pre-populated application id -->
+                  <%= activity_report.activity_report_cases.count %>
+              </td>
+          </tr>
+      <% end %>
+    </tbody>
+</table>

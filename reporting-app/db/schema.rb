@@ -59,6 +59,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_160308) do
     t.uuid "user_id"
     t.integer "status"
     t.datetime "submitted_at"
+    t.uuid "certification_id"
+    t.index ["certification_id"], name: "index_activity_report_application_forms_on_certification_id"
   end
 
   create_table "activity_report_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -67,6 +69,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_160308) do
     t.string "business_process_current_step"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "certifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "beneficiary_id"
+    t.text "case_number"
+    t.jsonb "certification_requirements"
+    t.jsonb "beneficiary_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["beneficiary_id"], name: "index_certifications_on_beneficiary_id"
+    t.index ["case_number"], name: "index_certifications_on_case_number"
   end
 
   create_table "flex_tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -98,4 +111,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_160308) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "activity_report_application_forms"
+  add_foreign_key "activity_report_application_forms", "certifications"
 end
