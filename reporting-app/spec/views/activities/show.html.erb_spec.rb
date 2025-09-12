@@ -11,7 +11,7 @@ RSpec.describe "activities/show", type: :view do
 
   it "renders attributes in <p>" do
     render
-    expect(rendered).to match(activity.name.html_safe)
+    expect(rendered).to match(ERB::Util.html_escape(activity.name))
     expect(rendered).to match(activity.hours.to_s)
     expect(rendered).to match(activity.month.strftime("%B %Y"))
   end
