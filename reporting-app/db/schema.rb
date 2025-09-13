@@ -81,7 +81,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_212156) do
     t.index ["beneficiary_id"], name: "index_certifications_on_beneficiary_id"
     t.index ["case_number"], name: "index_certifications_on_case_number"
   end
-  
+
   create_table "exemption_application_forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.integer "status"
