@@ -37,3 +37,5 @@ en:
     upload: "Upload document(s)"
   case_documents:
     title: "Documents"
+  case_tasks:
+    title: "Tasks"
