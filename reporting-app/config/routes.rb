@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       member do
         get :tasks
         get :documents
+        get :notes
       end
     end
 
