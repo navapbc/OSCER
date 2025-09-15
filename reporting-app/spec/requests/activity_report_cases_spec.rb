@@ -4,7 +4,7 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
   include Warden::Test::Helpers
 
   let(:user) { User.create!(email: "staff@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
-  let(:activity_report_case) { create(:activity_report_case, :with_activities_and_documents) }
+  let(:activity_report_case) { create(:activity_report_case, :with_activities) }
 
   before do
     login_as user
