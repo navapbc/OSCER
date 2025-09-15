@@ -52,18 +52,38 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
     end
 
     describe "GET documents" do
-      it "displays documents page content" do
-        get documents_activity_report_case_path(activity_report_case)
+      it "displays documents page content when no documents" do
+        case_without_docs = create(:activity_report_case)
+        get documents_activity_report_case_path(case_without_docs)
         expect(response.body).to include("Documents")
         expect(response.body).to include("No documents available")
+      end
+
+      it "displays supporting documents when available" do
+        application_form = ActivityReportApplicationForm.find(activity_report_case.application_form_id)
+        application_form.activities.first.supporting_documents.attach([
+          fixture_file_upload('spec/fixtures/files/test_document_1.pdf', 'application/pdf'),
+          fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain')
+        ])
+        get documents_activity_report_case_path(activity_report_case)
+        expect(response.body).to include("Documents")
+        expect(response.body).to include("test_document_1.pdf")
+        expect(response.body).to include("test_document_2.txt")
       end
     end
 
     describe "GET tasks" do
-      it "displays tasks page content" do
+      it "displays tasks page content when no tasks" do
         get tasks_activity_report_case_path(activity_report_case)
         expect(response.body).to include("Tasks")
         expect(response.body).to include("No tasks available")
+      end
+
+      it "displays tasks when available" do
+        task = create(:review_activity_report_task, case: activity_report_case)
+        get tasks_activity_report_case_path(activity_report_case)
+        expect(response.body).to include("Tasks")
+        expect(response.body).to include("Review activity report task")
       end
     end
 
