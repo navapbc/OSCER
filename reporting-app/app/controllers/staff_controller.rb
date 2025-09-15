@@ -7,6 +7,6 @@ class StaffController < Flex::StaffController
 
   def case_classes
     # Add case classes in your application
-    [ ActivityReportCase, Certification ]
+    [ ActivityReportCase, Certification, ExemptionCase ]
   end
 end
