@@ -42,6 +42,13 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :exemption_cases do
+      member do
+        get :tasks
+        get :documents
+      end
+    end
+
     resources :tasks, only: [ :index, :show, :update ] do
       collection do
         post :pick_up_next_task
