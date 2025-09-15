@@ -11,6 +11,10 @@ class CMSIncomeVerificationService
   end
 
   class Invitation < Data.define(:tokenized_url, :expiration_date, :language)
+    def self.from_api_response(body)
+      allowed = body.select { |k, _| members.include?(k.to_sym) }
+      new(**allowed)
+    end
   end
 
   def initialize(config: Config.from_env)
@@ -30,7 +34,7 @@ class CMSIncomeVerificationService
       }.to_json
     end
     res.body["expiration_date"] = DateTime.parse(res.body["expiration_date"]) if res.body["expiration_date"]
-    Invitation.new(**res.body)
+    Invitation.from_api_response(res.body)
   end
 
   private
