@@ -11,8 +11,4 @@ class ReviewActivityReportTask < Flex::Task
     self[:status] = :denied
     save!
   end
-
-  def completed?
-    %w[completed approved denied].include?(status)
-  end
 end

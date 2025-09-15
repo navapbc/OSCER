@@ -18,11 +18,11 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
 
   describe "PATCH /update" do
     context "with approve action" do
-      it "marks task as complete" do
+      it "marks task as approved" do
         patch review_activity_report_task_url(task), params: { commit: "approve" }
 
         task.reload
-        expect(task).to be_completed
+        expect(task).to be_approved
       end
 
       it "redirects back to the task" do
@@ -32,11 +32,11 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
     end
 
     context "with deny action" do
-      it "marks task as complete" do
+      it "marks task as denied" do
         patch review_activity_report_task_url(task), params: { commit: "deny" }
 
         task.reload
-        expect(task).to be_completed
+        expect(task).to be_denied
       end
 
       it "redirects back to the task" do
