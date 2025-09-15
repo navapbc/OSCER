@@ -42,7 +42,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :exemption_cases do
+    resources :exemption_cases, except: [ :new ] do
+      collection do
+        get :closed
+      end
+
       member do
         get :tasks
         get :documents
