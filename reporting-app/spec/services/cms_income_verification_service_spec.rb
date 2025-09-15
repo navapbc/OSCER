@@ -81,6 +81,26 @@ RSpec.describe CMSIncomeVerificationService do
       expect(invitation.language).to eq('en')
     end
 
+    context 'when the API returns extra fields' do
+      let(:api_response) do
+        {
+          'tokenized_url' => 'https://ivaas.example.com/invitation/token123',
+          'expiration_date' => '2025-08-30T00:00:00Z',
+          'language' => 'en',
+          'agency_partner_metadata' => { 'extra_key' => 'extra_value' }
+        }
+      end
+
+      it 'ignores the extra fields' do
+        invitation = service.create_invitation(activity_report_application_form, name)
+
+        expect(invitation).to be_an(CMSIncomeVerificationService::Invitation)
+        expect(invitation.tokenized_url).to eq('https://ivaas.example.com/invitation/token123')
+        expect(invitation.expiration_date).to eq(DateTime.parse('2025-08-30T00:00:00Z'))
+        expect(invitation.language).to eq('en')
+      end
+    end
+
     context 'when the API returns an error' do
       before do
         stub_request(:post, "#{config.base_url}/api/v1/invitations")
