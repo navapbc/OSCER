@@ -74,7 +74,12 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
         CMSIncomeVerificationService::Invitation.new(
           tokenized_url: "https://ivaas.gov/en/cbv/entry?token=dummy-token",
           expiration_date: DateTime.now + 7.days,
-          language: "en"
+          language: "en",
+          agency_partner_metadata: {
+            case_number: activity_report_application_form.id,
+            first_name: "Jane",
+            last_name: "Doe"
+          }
         )
       }
       let(:mock_service) { instance_double(CMSIncomeVerificationService) }

@@ -10,7 +10,7 @@ class CMSIncomeVerificationService
     end
   end
 
-  class Invitation < Data.define(:tokenized_url, :expiration_date, :language)
+  class Invitation < Data.define(:tokenized_url, :expiration_date, :language, :agency_partner_metadata)
     def self.from_api_response(body)
       allowed = body.select { |k, _| members.include?(k.to_sym) }
       new(**allowed)
