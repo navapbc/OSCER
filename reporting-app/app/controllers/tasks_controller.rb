@@ -7,10 +7,22 @@ class TasksController < Flex::TasksController
   def set_case
     # TODO: Flex::TasksController should automatically set the case, but can't right now
     # It should be able to after https://linear.app/nava-platform/issue/TSS-276/add-case-type-to-flex-tasks
-    @case = ActivityReportCase.find(@task.case_id)
+    case_class = @task.case_type.constantize
+    @case = case_class.find(@task.case_id)
   end
 
   def set_application_form
-    @application_form = ActivityReportApplicationForm.find(@case.application_form_id)
+    # TODO: Flex::Task should handle this
+    application_form_class =
+      case @case.class.name
+      when "ActivityReportCase"
+        ActivityReportApplicationForm
+      when "ExemptionCase"
+        ExemptionApplicationForm
+      else
+        raise "Unknown case type: #{@case.class.name}"
+      end
+
+    @application_form = application_form_class.find(@case.application_form_id)
   end
 end
