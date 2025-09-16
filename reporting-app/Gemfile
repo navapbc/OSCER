@@ -82,6 +82,8 @@ gem "factory_bot_rails"
 
 gem "lookbook", ">= 2.3.9"
 
+gem "oas_rails"
+
 group :development, :test do
   gem "guard-rspec", require: false
 
