@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   scope path: "/staff" do
     resources :certifications
 
-    resources :activity_report_cases do
+    resources :activity_report_cases, only: [ :index,:show ] do
       collection do
         get :closed
       end
@@ -42,7 +42,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :exemption_cases, except: [ :new ] do
+    resources :exemption_cases, only: [ :index,:show ] do
       collection do
         get :closed
       end
@@ -61,6 +61,7 @@ Rails.application.routes.draw do
     end
 
     resources :review_activity_report_tasks, only: [ :update ]
+    # review exemption tasks
   end
 
   get "/staff", to: "staff#index"
