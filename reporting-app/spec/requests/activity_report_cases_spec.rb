@@ -55,25 +55,27 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
       end
 
       it "displays documents page content when no documents" do
-        case_without_docs = create(:activity_report_case)
-
-        get documents_activity_report_case_path(case_without_docs)
+        get documents_activity_report_case_path(activity_report_case)
 
         expect(response.body).to include("No documents available")
       end
 
-      it "displays supporting documents when available" do
-        application_form = ActivityReportApplicationForm.find(activity_report_case.application_form_id)
-        application_form.activities.first.supporting_documents.attach([
-          fixture_file_upload('spec/fixtures/files/test_document_1.pdf', 'application/pdf'),
-          fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain')
-        ])
-
-        get documents_activity_report_case_path(activity_report_case)
-
-        expect(response.body).to include("Documents")
-        expect(response.body).to include("test_document_1.pdf")
-        expect(response.body).to include("test_document_2.txt")
+      context "when supporting documents are attached to activities" do
+        before do
+          application_form = ActivityReportApplicationForm.find(activity_report_case.application_form_id)
+          application_form.activities.first.supporting_documents.attach([
+            fixture_file_upload('spec/fixtures/files/test_document_1.pdf', 'application/pdf'),
+            fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain')
+          ])
+        end
+        
+        it "displays supporting documents when available" do
+          get documents_activity_report_case_path(activity_report_case)
+  
+          expect(response.body).to include("Documents")
+          expect(response.body).to include("test_document_1.pdf")
+          expect(response.body).to include("test_document_2.txt")
+        end
       end
     end
 
