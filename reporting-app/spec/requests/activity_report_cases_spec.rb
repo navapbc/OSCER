@@ -68,10 +68,10 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
             fixture_file_upload('spec/fixtures/files/test_document_2.txt', 'text/plain')
           ])
         end
-        
+
         it "displays supporting documents when available" do
           get documents_activity_report_case_path(activity_report_case)
-  
+
           expect(response.body).to include("Documents")
           expect(response.body).to include("test_document_1.pdf")
           expect(response.body).to include("test_document_2.txt")
