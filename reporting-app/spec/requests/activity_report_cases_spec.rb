@@ -18,7 +18,7 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
     describe "GET show (details page)" do
       before { get activity_report_case_path(activity_report_case) }
 
-      it "should return a success response" do
+      it "returns a success response" do
         expect(response).to be_successful
       end
 
@@ -36,7 +36,7 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
     end
 
     describe "GET documents" do
-      it "should return a success response" do
+      it "returns a success response" do
         get documents_activity_report_case_path(activity_report_case)
 
         expect(response).to be_successful
@@ -78,7 +78,7 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
     end
 
     describe "GET tasks" do
-      it "should return a success response" do
+      it "returns a success response" do
         get tasks_activity_report_case_path(activity_report_case)
 
         expect(response).to be_successful
@@ -118,7 +118,7 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
     describe "GET notes" do
       before { get notes_activity_report_case_path(activity_report_case) }
 
-      it "should return a success response" do
+      it "returns a success response" do
         expect(response).to be_successful
       end
 
