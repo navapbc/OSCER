@@ -4,8 +4,9 @@ FactoryBot.define do
 
     trait :with_activities do
       after(:create) do |activity_report_application_form|
-        activities = create_list(:activity, 3, activity_report_application_form_id: activity_report_application_form.id)
-        activity_report_application_form.activities = activities
+        activity_report_application_form.activities = create_list(
+          :activity, 3, activity_report_application_form_id: activity_report_application_form.id
+        )
       end
     end
   end

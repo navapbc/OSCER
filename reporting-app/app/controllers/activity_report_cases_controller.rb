@@ -1,5 +1,5 @@
 class ActivityReportCasesController < StaffController
-  before_action :set_activity_report_case, only: %i[ show tasks notes ]
+  before_action :set_activity_report_case, only: %i[ show tasks documents notes ]
   before_action :set_activity_report_application_form, only: %i[ show documents ]
 
   # GET /activity_report_cases or /activity_report_cases.json
@@ -30,10 +30,10 @@ class ActivityReportCasesController < StaffController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_activity_report_case
-      @case = @activity_report_case = ActivityReportCase.find(params[:id])
+      @case = ActivityReportCase.find(params[:id])
     end
 
     def set_activity_report_application_form
-      @activity_report_application_form = ActivityReportApplicationForm.find(@activity_report_case.application_form_id)
+      @activity_report_application_form = ActivityReportApplicationForm.find(@case.application_form_id)
     end
 end

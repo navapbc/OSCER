@@ -4,8 +4,8 @@ RSpec.describe "/staff/tasks", type: :request do
   include Warden::Test::Helpers
 
   let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
-  let(:activity_report_application_form) { create(:activity_report_application_form) }
-  let(:activity_report_case) { create(:activity_report_case, application_form_id: activity_report_application_form.id) }
+  let(:activity_report_case) { create(:activity_report_case) }
+  let(:activity_report_application_form) { ActivityReportApplicationForm.find(activity_report_case.application_form_id) }
   let!(:activity_report_task) { create(:review_activity_report_task, case: activity_report_case) }
 
   let(:exemption_application_form) { create(:exemption_application_form) }
