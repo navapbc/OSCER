@@ -91,6 +91,7 @@ group :development, :test do
   # Testing framework
   gem "factory_bot_rails"
   gem "rspec-rails", "~> 8.0.0"
+  gem "rails-controller-testing"
 
   # Mocking HTTP calls
   gem "webmock"
