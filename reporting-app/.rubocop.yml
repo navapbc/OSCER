@@ -16,3 +16,5 @@ RSpec/NoExpectationExample:
   AllowedPatterns:
     - assert_
     - is_expected_in_block
+RSpec/LetSetup:
+  Enabled: false
