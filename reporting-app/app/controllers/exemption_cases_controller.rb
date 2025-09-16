@@ -14,18 +14,6 @@ class ExemptionCasesController < StaffController
   def show
   end
 
-  def edit
-  end
-
-  def create
-  end
-
-  def update
-  end
-
-  def destroy
-  end
-
   def tasks
     @tasks = @case.tasks
   end

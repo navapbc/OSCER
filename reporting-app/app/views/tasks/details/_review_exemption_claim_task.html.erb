@@ -1,0 +1,9 @@
+<% # TODO move rendering of flash to a shared layout %>
+<%= render partial: 'application/flash' %>
+
+<%= render partial: 'exemption_application_forms/exemption_application_form', locals: { exemption_application_form: application_form } %>
+
+<%= flex_form_with(model: task) do |f| %>
+  <%= f.submit "Approve", value: "approve", class: "usa-button--outline" %>
+  <%= f.submit "Deny", value: "deny", class: "usa-button--outline" %>
+<% end %>
