@@ -1,14 +1,20 @@
 FactoryBot.define do
   factory :activity_report_case do
-    after(:create) do |case_instance|
+    initialize_with {
       application_form = create(:activity_report_application_form)
-      case_instance.update!(application_form_id: application_form.id)
-    end
+      ActivityReportCase.find_or_create_by!(application_form_id: application_form.id)
+    }
 
     trait :with_activities do
-      after(:create) do |case_instance|
+      initialize_with {
         application_form = create(:activity_report_application_form, :with_activities)
-        case_instance.update!(application_form_id: application_form.id)
+        ActivityReportCase.find_or_create_by!(application_form_id: application_form.id)
+      }
+    end
+
+    trait :with_submitted_form do
+      after(:create) do |activity_report_case|
+        activity_report_case.application_form.submit_application
       end
     end
   end
