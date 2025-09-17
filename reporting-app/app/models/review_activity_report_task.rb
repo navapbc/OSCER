@@ -1,5 +1,4 @@
 class ReviewActivityReportTask < Flex::Task
-  belongs_to :case, class_name: "ActivityReportCase"
   # Add custom attributes and behavior here
 
   # Example:

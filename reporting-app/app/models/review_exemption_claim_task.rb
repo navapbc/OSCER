@@ -1,5 +1,4 @@
 class ReviewExemptionClaimTask < Flex::Task
-  belongs_to :case, class_name: "ExemptionCase"
   # Add custom attributes and behavior here
 
   # Example:
