@@ -10,17 +10,6 @@ class TasksController < Flex::TasksController
   end
 
   def set_application_form
-    # TODO: Flex::Task should handle this
-    application_form_class =
-      case @case.class.name
-      when "ActivityReportCase"
-        ActivityReportApplicationForm
-      when "ExemptionCase"
-        ExemptionApplicationForm
-      else
-        raise "Unknown case type: #{@case.class.name}"
-      end
-
-    @application_form = application_form_class.find(@case.application_form_id)
+    @application_form = @case.application_form
   end
 end
