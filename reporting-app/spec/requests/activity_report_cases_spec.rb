@@ -15,20 +15,30 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
   end
 
   describe "case sub-navigation pages" do
-    describe "GET show (details page)" do
-      before { get activity_report_case_path(activity_report_case) }
-
+    [
+      { action: "show", path_method: :activity_report_case_path, label: "Details" },
+      { action: "tasks", path_method: :tasks_activity_report_case_path, label: "Tasks" },
+      { action: "documents", path_method: :documents_activity_report_case_path, label: "Documents" },
+      { action: "notes", path_method: :notes_activity_report_case_path, label: "Notes" }
+    ].each do |test_case|
       it "returns a success response" do
+        get send(test_case[:path_method], activity_report_case)
         expect(response).to be_successful
       end
 
-      it "displays case details page header" do
-        assert_select "#case-details-heading", text: "Details", count: 1
+      it "displays case #{test_case[:action]} page header" do
+        get send(test_case[:path_method], activity_report_case)
+        assert_select "#case-details-heading", text: test_case[:label], count: 1
       end
 
-      it "sets the active sidenav to details" do
-        assert_select ".usa-sidenav>.usa-sidenav__item>.usa-current", text: "Details", count: 1
+      it "sets the active sidenav to #{test_case[:action]}" do
+        get send(test_case[:path_method], activity_report_case)
+        assert_select "ul.usa-sidenav>li.usa-sidenav__item>a.usa-current", text: test_case[:label], count: 1
       end
+    end
+    
+    describe "GET show (details page)" do
+      before { get activity_report_case_path(activity_report_case) }
 
       it "displays activities information when case has activities" do
         expect(response.body).to include("Reporting Period")
@@ -36,24 +46,6 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
     end
 
     describe "GET documents" do
-      it "returns a success response" do
-        get documents_activity_report_case_path(activity_report_case)
-
-        expect(response).to be_successful
-      end
-
-      it "displays case details page header" do
-        get documents_activity_report_case_path(activity_report_case)
-
-        assert_select "#case-details-heading", text: "Documents", count: 1
-      end
-
-      it "sets the active sidenav to documents" do
-        get documents_activity_report_case_path(activity_report_case)
-
-        assert_select "ul.usa-sidenav>li.usa-sidenav__item>a.usa-current", text: "Documents", count: 1
-      end
-
       it "displays documents page content when no documents" do
         get documents_activity_report_case_path(activity_report_case)
 
@@ -80,24 +72,6 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
     end
 
     describe "GET tasks" do
-      it "returns a success response" do
-        get tasks_activity_report_case_path(activity_report_case)
-
-        expect(response).to be_successful
-      end
-
-      it "displays case details page header" do
-        get tasks_activity_report_case_path(activity_report_case)
-
-        assert_select "#case-details-heading", text: "Tasks", count: 1
-      end
-
-      it "sets the active sidenav to tasks" do
-        get tasks_activity_report_case_path(activity_report_case)
-
-        assert_select "ul.usa-sidenav>li.usa-sidenav__item>a.usa-current", text: "Tasks", count: 1
-      end
-
       it "displays tasks page content when no tasks" do
         activity_report_case.tasks.destroy_all
 
@@ -119,18 +93,6 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
 
     describe "GET notes" do
       before { get notes_activity_report_case_path(activity_report_case) }
-
-      it "returns a success response" do
-        expect(response).to be_successful
-      end
-
-      it "displays notes page header" do
-        assert_select "#case-notes-heading", text: "Notes", count: 1
-      end
-
-      it "sets the active sidenav to notes" do
-        assert_select "ul.usa-sidenav>li.usa-sidenav__item>a.usa-current", text: "Notes", count: 1
-      end
 
       it "displays the notes textarea" do
         expect(response.body).to include("textarea")
