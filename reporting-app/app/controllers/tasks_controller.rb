@@ -5,8 +5,6 @@ class TasksController < Flex::TasksController
   private
 
   def set_case
-    # TODO: Flex::TasksController should automatically set the case, but can't right now
-    # It should be able to after https://linear.app/nava-platform/issue/TSS-276/add-case-type-to-flex-tasks
     case_class = @task.case_type.constantize
     @case = case_class.find(@task.case_id)
   end
