@@ -27,7 +27,7 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
       end
 
       it "sets the active sidenav to details" do
-        assert_select "ul.usa-sidenav>li.usa-sidenav__item>a.usa-current", text: "Details", count: 1
+        assert_select ".usa-sidenav>.usa-sidenav__item>.usa-current", text: "Details", count: 1
       end
 
       it "displays activities information when case has activities" do
