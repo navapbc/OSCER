@@ -9,13 +9,12 @@ RSpec.describe "/staff/exemption_cases", type: :request do
   let!(:exemption_task) { create(:review_exemption_claim_task, case: exemption_case) }
 
   let(:closed_exemption_case) { create(:exemption_case, application_form_id: exemption_application_form.id) }
-  let!(:closed_exemption_task) { create(:review_exemption_claim_task, case: closed_exemption_case) }
+  let!(:closed_exemption_task) { create(:review_exemption_claim_task, case: closed_exemption_case, status: :completed) }
 
   before do
     login_as user
 
     closed_exemption_case.close
-    closed_exemption_task.mark_completed
   end
 
   after do
