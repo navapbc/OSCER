@@ -4,14 +4,19 @@ class CertificationsController < StaffController
   before_action :set_certification, only: %i[ show update ]
   before_action :set_activity_report_application_forms, only: %i[ show create update ]
 
+  # for API endpoints
+  skip_before_action :authenticate_user!, only: %i[ create show]
+
   # GET /certifications
   # GET /certifications.json
   def index
     @certifications = policy_scope(Certification.all)
   end
 
-  # GET /certifications/1
-  # GET /certifications/1.json
+  # @summary Retrieve a Certification record
+  # @tags certifications
+  #
+  # @response A Certification(200) [Reference:#/components/schemas/CertificationResponseBody]
   def show
   end
 
@@ -20,8 +25,12 @@ class CertificationsController < StaffController
     @certification_form = authorize Certification.new
   end
 
-  # POST /certifications
-  # POST /certifications.json
+  # @summary Create a Certification record
+  # @tags certifications
+  #
+  # @request_body The Certification data. [Reference:#/components/schemas/CertificationCreateRequestBody]
+  # @response Created Certification.(201) [Reference:#/components/schemas/CertificationResponseBody]
+  # @response User error.(400) [Reference:#/components/schemas/ErrorResponseBody]
   def create
     @certification = Certification.new(certification_params)
 

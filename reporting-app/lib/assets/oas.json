@@ -1,0 +1,123 @@
+{
+  "components": {
+    "schemas": {
+      "CertificationCreateRequestBody": {
+        "type": "object",
+        "properties": {
+          "beneficiary_id": {
+            "type": "string",
+            "description": "An identifier for the person receiving benefits"
+          },
+          "case_number": {
+            "type": ["string", "null"],
+            "description": "An identifier for the case associated with the certification"
+          },
+          "certification_requirements": {
+            "type": ["object", "null"],
+            "description": "Description of certification needs",
+            "properties": {}
+          },
+          "beneficiary_data": {
+            "type": ["object", "null"],
+            "description": "Description of beneficiary",
+            "properties": {}
+          }
+        },
+        "required": [
+          "beneficiary_id"
+        ],
+        "example": {
+          "beneficiary_id": "123",
+          "case_number": "C-111",
+          "certification_requirements": {
+            "lookback_period": "3m"
+          },
+          "beneficiary_data": {
+            "contact": {
+              "email": "john@doe.com",
+              "phone": "+123456789"
+            }
+          }
+        }
+      },
+      "CertificationResponseBody": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Identifier for the certification record"
+          },
+          "beneficiary_id": {
+            "type": "string",
+            "description": "An identifier for the person receiving benefits"
+          },
+          "case_number": {
+            "type": ["string", "null"],
+            "description": "An identifier for the case associated with the certification"
+          },
+          "certification_requirements": {
+            "type": ["object", "null"],
+            "description": "Description of certification needs",
+            "properties": {}
+          },
+          "beneficiary_data": {
+            "type": ["object", "null"],
+            "description": "Description of beneficiary",
+            "properties": {}
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "beneficiary_id",
+          "created_at",
+          "updated_at"
+        ],
+        "example": {
+          "id": "63680317-0e33-40a7-8e1a-249a2f5855d9",
+          "beneficiary_id": "123",
+          "case_number": "C-111",
+          "certification_requirements": {
+            "lookback_period": "3m"
+          },
+          "beneficiary_data": {
+            "contact": {
+              "email": "john@doe.com",
+              "phone": "+123456789"
+            }
+          },
+          "created_at": "1970-01-01T00:00:00.000Z",
+          "updated_at": "1970-01-01T00:00:00.000Z"
+        }
+      },
+      "ErrorResponseBody": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "example": {
+          "status": 400
+        }
+      }
+    }
+  }
+}

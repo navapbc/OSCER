@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   get "/dashboard", to: "dashboard#index"
 
   scope path: "/api", as: :api, defaults: { format: :json } do
+    mount OasRails::Engine, at: "/docs", defaults: { format: :html }
+
     resources :certifications, only: [ :create, :show ]
   end
 
