@@ -1,6 +1,6 @@
 class ReviewActivityReportTasksController < TasksController
   def update
-    @task.mark_completed
+    @task.completed!
 
     if params[:commit] == "approve"
       puts "Approving activity report case:"
