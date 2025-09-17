@@ -33,7 +33,7 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
 
       it "sets the active sidenav to #{test_case[:action]}" do
         get send(test_case[:path_method], activity_report_case)
-        assert_select "ul.usa-sidenav>li.usa-sidenav__item>a.usa-current", text: test_case[:label], count: 1
+        assert_select ".usa-sidenav>.usa-sidenav__item>.usa-current", text: test_case[:label], count: 1
       end
     end
     
@@ -53,6 +53,8 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
       end
 
       context "when supporting documents are attached to activities" do
+        let(:activity_report_case) { create(:activity_report_case, :with_activities) }
+
         before do
           application_form = ActivityReportApplicationForm.find(activity_report_case.application_form_id)
           application_form.activities.first.supporting_documents.attach([
