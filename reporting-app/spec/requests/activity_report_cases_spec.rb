@@ -36,7 +36,7 @@ RSpec.describe "/staff/activity_report_cases", type: :request do
         assert_select ".usa-sidenav>.usa-sidenav__item>.usa-current", text: test_case[:label], count: 1
       end
     end
-    
+
     describe "GET show (details page)" do
       before { get activity_report_case_path(activity_report_case) }
 
