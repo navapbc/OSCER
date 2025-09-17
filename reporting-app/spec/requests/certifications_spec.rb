@@ -99,18 +99,23 @@ RSpec.describe "/certifications", type: :request do
       certification = create(:certification)
       get api_certification_url(certification)
       expect(response).to be_successful
+      expect(response).to match_openapi_doc(OPENAPI_DOC)
     end
 
     it "renders a successful response with invalid data" do
       certification = create(:certification, :invalid_json_data)
       get api_certification_url(certification)
       expect(response).to be_successful
+      # it won't necessarily match all of the spec, as the spec expects valid
+      # data, so be more lenient here
+      # expect(response).to match_openapi_doc(OPENAPI_DOC)
     end
 
     it "renders a successful response with data" do
       certification = create(:certification, :with_certification_requirements)
       get api_certification_url(certification)
       expect(response).to be_successful
+      expect(response).to match_openapi_doc(OPENAPI_DOC)
     end
   end
 
@@ -175,6 +180,7 @@ RSpec.describe "/certifications", type: :request do
              params: { certification: valid_json_request_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including("application/json"))
+        expect(response).to match_openapi_doc(OPENAPI_DOC)
       end
     end
 
@@ -209,6 +215,7 @@ RSpec.describe "/certifications", type: :request do
              params: { certification: invalid_request_attributes }, headers: valid_headers, as: :json
         expect(response).to be_client_error
         expect(response.content_type).to match(a_string_including("application/json"))
+        expect(response).to match_openapi_doc(OPENAPI_DOC)
       end
     end
   end

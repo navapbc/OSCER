@@ -1,0 +1,316 @@
+{
+  "components": {
+    "schemas": {
+      "CertificationCreateRequestBody": {
+        "type": "object",
+        "properties": {
+          "beneficiary_id": {
+            "type": "string",
+            "description": "An identifier for the person receiving benefits"
+          },
+          "case_number": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "An identifier for the case associated with the certification"
+          },
+          "certification_requirements": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Description of certification needs",
+            "properties": {}
+          },
+          "beneficiary_data": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Description of beneficiary",
+            "properties": {}
+          }
+        },
+        "required": [
+          "beneficiary_id"
+        ],
+        "example": {
+          "beneficiary_id": "123",
+          "case_number": "C-111",
+          "certification_requirements": {
+            "lookback_period": "3m"
+          },
+          "beneficiary_data": {
+            "contact": {
+              "email": "john@doe.com",
+              "phone": "+123456789"
+            }
+          }
+        }
+      },
+      "CertificationResponseBody": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Identifier for the certification record"
+          },
+          "beneficiary_id": {
+            "type": "string",
+            "description": "An identifier for the person receiving benefits"
+          },
+          "case_number": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "An identifier for the case associated with the certification"
+          },
+          "certification_requirements": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Description of certification needs",
+            "properties": {}
+          },
+          "beneficiary_data": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Description of beneficiary",
+            "properties": {}
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "beneficiary_id",
+          "created_at",
+          "updated_at"
+        ],
+        "example": {
+          "id": "63680317-0e33-40a7-8e1a-249a2f5855d9",
+          "beneficiary_id": "123",
+          "case_number": "C-111",
+          "certification_requirements": {
+            "lookback_period": "3m"
+          },
+          "beneficiary_data": {
+            "contact": {
+              "email": "john@doe.com",
+              "phone": "+123456789"
+            }
+          },
+          "created_at": "1970-01-01T00:00:00.000Z",
+          "updated_at": "1970-01-01T00:00:00.000Z"
+        }
+      },
+      "ErrorResponseBody": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "example": {
+          "status": 400
+        }
+      },
+      "bf2b49f733c3ee403393efcf6916e8be": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "status"
+        ]
+      }
+    },
+    "responses": {
+      "279b22fab83236e381700bd1cffa55cf": {
+        "description": "Created Certification.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CertificationResponseBody"
+            }
+          }
+        }
+      },
+      "2f794de607fd981138ed76a90013c763": {
+        "description": "User error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseBody"
+            }
+          }
+        }
+      },
+      "4aecda910357190532ee31007cf0339f": {
+        "description": "The server could not process the request due to semantic errors. Please check your input and try again.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/bf2b49f733c3ee403393efcf6916e8be"
+            }
+          }
+        }
+      },
+      "2efde0e66bb1d288897b6facc75f5f32": {
+        "description": "A Certification",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CertificationResponseBody"
+            }
+          }
+        }
+      },
+      "f59e27cae929e44509da26c904235536": {
+        "description": "The requested resource could not be found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/bf2b49f733c3ee403393efcf6916e8be"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "49e46dd8af57e26752938ebb0d0ec979": {
+        "name": "id",
+        "in": "path",
+        "description": "Id of existing certification.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "style": "simple"
+      }
+    },
+    "requestBodies": {
+      "f60034abfe5f736e863755d69d30d5db": {
+        "description": "The Certification data.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CertificationCreateRequestBody"
+            }
+          }
+        },
+        "required": false
+      }
+    },
+    "securitySchemes": {},
+    "headers": {},
+    "examples": {},
+    "links": {},
+    "callbacks": {}
+  },
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Community Engagement Medicaid",
+    "summary": "OasRails: Automatic Interactive API Documentation for Rails",
+    "description": "# Welcome to the Community Engagement Medicaid API\n\nThis is the OpenAPI spec for interacting with the Community Engagement Medicaid API.\n\n## Getting Started\n\nYou will need credentials generated for you by the operations team.\n",
+    "termsOfService": "",
+    "contact": {
+      "name": "Nava PBC",
+      "url": "https://github.com/navapbc/community-engagement-medicaid",
+      "email": "medicaid@navapbc.com"
+    },
+    "license": {
+      "name": "TODO",
+      "url": "TODO"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local"
+    },
+    {
+      "url": "http://medicaid.navateam.com",
+      "description": "Dev"
+    }
+  ],
+  "paths": {
+    "/api/certifications": {
+      "post": {
+        "tags": [
+          "Certifications"
+        ],
+        "summary": "Create a Certification record",
+        "description": "#",
+        "operationId": "POST__api_certifications",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/f60034abfe5f736e863755d69d30d5db"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/279b22fab83236e381700bd1cffa55cf"
+          },
+          "400": {
+            "$ref": "#/components/responses/2f794de607fd981138ed76a90013c763"
+          },
+          "422": {
+            "$ref": "#/components/responses/4aecda910357190532ee31007cf0339f"
+          }
+        }
+      }
+    },
+    "/api/certifications/{id}": {
+      "get": {
+        "tags": [
+          "Certifications"
+        ],
+        "summary": "Retrieve a Certification record",
+        "description": "#",
+        "operationId": "GET__api_certifications_{id}",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/49e46dd8af57e26752938ebb0d0ec979"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/2efde0e66bb1d288897b6facc75f5f32"
+          },
+          "404": {
+            "$ref": "#/components/responses/f59e27cae929e44509da26c904235536"
+          }
+        }
+      }
+    }
+  }
+}
