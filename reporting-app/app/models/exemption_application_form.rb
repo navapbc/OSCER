@@ -5,6 +5,8 @@ class ExemptionApplicationForm < Flex::ApplicationForm
   }
   validates :exemption_type, inclusion: { in: exemption_types.values }
 
+  belongs_to :certification
+
   has_many_attached :supporting_documents
 
   default_scope { with_attached_supporting_documents }

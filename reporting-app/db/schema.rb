@@ -90,6 +90,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_19_133512) do
     t.string "exemption_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "certification_id"
+    t.index ["certification_id"], name: "index_exemption_application_forms_on_certification_id"
   end
 
   create_table "exemption_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -131,4 +133,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_19_133512) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "activity_report_application_forms"
   add_foreign_key "activity_report_application_forms", "certifications"
+  add_foreign_key "exemption_application_forms", "certifications"
 end
