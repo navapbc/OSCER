@@ -1,5 +1,7 @@
 class ReviewActivityReportTasksController < TasksController
   def update
+    @task.completed!
+
     if params[:commit] == "approve"
       @task.approve
     elsif params[:commit] == "deny"
