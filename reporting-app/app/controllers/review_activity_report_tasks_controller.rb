@@ -3,9 +3,9 @@ class ReviewActivityReportTasksController < TasksController
     @task.completed!
 
     if params[:commit] == "approve"
-      @task.approve
+      @task.approved!
     elsif params[:commit] == "deny"
-      @task.deny
+      @task.denied!
     end
 
     respond_to do |format|
