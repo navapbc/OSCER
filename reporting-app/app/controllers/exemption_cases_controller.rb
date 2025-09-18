@@ -7,7 +7,7 @@ class ExemptionCasesController < StaffController
   end
 
   def closed
-    @cases = ExemptionCase.where(status: "closed").order(created_at: :desc)
+    @cases = ExemptionCase.closed
     render :index
   end
 

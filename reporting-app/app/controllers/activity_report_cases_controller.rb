@@ -8,7 +8,7 @@ class ActivityReportCasesController < StaffController
   end
 
   def closed
-    @cases = ActivityReportCase.where(status: "closed").order(created_at: :desc)
+    @cases = ActivityReportCase.closed
     render :index
   end
 
