@@ -2,3 +2,8 @@ en:
   tasks:
     types:
       review_activity_report_task: "Review activity report"
+    statuses:
+      pending: "Pending"
+      completed: "Completed"
+      approved: "Approved"
+      denied: "Denied"
