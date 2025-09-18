@@ -1,6 +1,6 @@
 <%= render partial: 'application/flash' %>
 
-<%= render partial: 'activity_report_application_forms/activity_report_application_form', locals: { activity_report_application_form: application_form } %>
+<%= render partial: 'exemption_application_forms/exemption_application_form', locals: { exemption_application_form: application_form } %>
 
 <%= flex_form_with(model: task) do |f| %>
   <%= f.submit "Approve", value: "approve", class: "usa-button--outline" %>

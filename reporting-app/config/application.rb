@@ -59,6 +59,7 @@ module TemplateApplicationRails
 
     config.after_initialize do
       ActivityReportBusinessProcess.start_listening_for_events
+      ExemptionBusinessProcess.start_listening_for_events
     end
 
     # Support UUID generation. This was a callout in the ActiveStorage guide
