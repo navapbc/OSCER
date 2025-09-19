@@ -1,13 +1,13 @@
 class ActivityReportBusinessProcess < Flex::BusinessProcess
   applicant_task("submit_report")
   staff_task("review_report", ReviewActivityReportTask)
-  system_process("activity_report_task_approved", -> (kase) {
+  system_process("activity_report_task_approved", ->(kase) {
     kase.handle_review_task_completed("approved")
   })
-  system_process("activity_report_task_denied", -> (kase) {
+  system_process("activity_report_task_denied", ->(kase) {
     kase.handle_review_task_completed("denied")
   })
-  system_process("activity_report_notification", -> (kase) {
+  system_process("activity_report_notification", ->(kase) {
     # Send notification to user
     Flex::EventManager.publish("ActivityReportNotificationSent", { case_id: kase.id })
   })
