@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_09_212156) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_19_133512) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -69,6 +69,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_212156) do
     t.string "business_process_current_step"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "facts", default: {}
   end
 
   create_table "certifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
