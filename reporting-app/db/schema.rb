@@ -92,6 +92,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_19_133512) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "exemption_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "application_form_id"
+    t.integer "status"
+    t.string "business_process_current_step"
+    t.jsonb "facts"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "flex_tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type"
     t.text "description"

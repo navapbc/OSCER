@@ -35,3 +35,7 @@ en:
     no_documents_text: "No supporting documents"
     upload_document_label: "Upload supporting document(s)"
     upload: "Upload document(s)"
+  case_documents:
+    title: "Documents"
+  case_tasks:
+    title: "Tasks"

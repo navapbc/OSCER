@@ -2,6 +2,7 @@ en:
   tasks:
     types:
       review_activity_report_task: "Review activity report"
+      review_exemption_claim_task: "Review exemption claim"
     statuses:
       pending: "Pending"
       completed: "Completed"
