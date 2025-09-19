@@ -8,7 +8,11 @@ en:
       intro:
         in_progress: "Complete and submit your activity report"
         submitted: "Your activity report is being reviewed"
+        approved: "Your activity report has been approved"
+        denied: "Your activity report has been denied"
       next_step:
         status:
           in_progress: "Complete and submit your activity report"
           submitted: "Your activity report is being reviewed"
+          approved: "Your activity report has been approved"
+          denied: "Your activity report has been denied"
