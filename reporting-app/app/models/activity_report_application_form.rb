@@ -1,8 +1,7 @@
 class ActivityReportApplicationForm < Flex::ApplicationForm
   # TODO: perhaps in the future not optional?
   belongs_to :certification, optional: true
-  # TODO: not sure about this, but convenience for now
-  has_many :activity_report_cases, foreign_key: "application_form_id"
+  belongs_to :activity_report_case, foreign_key: "application_form_id", optional: true
 
   has_many :activities, strict_loading: true, autosave: true, dependent: :destroy
 
