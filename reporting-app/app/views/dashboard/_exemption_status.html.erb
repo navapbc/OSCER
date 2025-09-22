@@ -1,12 +1,36 @@
-<%= render template: "flex/application_forms/index", locals: {
-  title: t(".title"),
-  intro: t(".intro"),
-  new_button_text: t(".new_button"),
-  new_path: new_exemption_application_form_path,
-  in_progress_applications_heading: t(".in_progress_applications.heading"),
-  application_forms: @exemption_application_forms.map { |form| {
-    created_at: form.created_at.strftime("%B %d, %Y at %I:%M %p"),
-    path: exemption_application_form_path(form),
-    status: form.status
-  }}
-} %>
+<% content_for :title, t(".title") %>
+
+<h1>
+  <%= t(".title") %>  
+</h1>
+
+<% if @exemption_application_form.nil? %>
+  <p class="usa-intro">
+    <%= t(".intro.default") %>
+  </p>
+
+  <div class="margin-bottom-4">
+    <p class="usa-alert__text bold">Exemption Status: </p><p><%= t(".status.no_current_exemption") %></p>
+  </div>
+
+  <%= link_to t(".buttons.new_exemption"), new_exemption_application_form_path, class: class_names("usa-button") %>
+
+<% elsif @exemption_application_form.in_progress? %>
+  <p class="usa-intro">
+    <%= t(".intro.default") %>
+  </p>
+
+  <p class="usa-alert__text bold">Exemption Status: </p><p><%= t(".status.in_progress") %></p>
+
+  <%= link_to t(".buttons.continue_exemption"), review_exemption_application_form_path(@exemption_application_form), class: class_names("usa-button") %>
+
+<% elsif @exemption_application_form.submitted? %>
+  <p class="usa-intro">
+    <%= t(".intro.submitted") %>
+  </p>
+
+  <p class="usa-alert__text bold">Exemption Status: </p><p><%= t(".status.submitted") %></p>
+
+  <%= link_to t(".buttons.view_exemption"), exemption_application_form_path(@exemption_application_form), class: class_names("usa-button") %>
+
+<% end %>
