@@ -8,6 +8,7 @@ class DashboardController < ApplicationController
 
     # Create a certification on /staff/certifications to reset the exemption application form lfecycle
     # not scoped to the current user
-    @exemption_application_form = ExemptionApplicationForm.find_by(certification_id: Certification.last&.id)
+    @certification = Certification.order(created_at: :desc).first
+    @exemption_application_form = ExemptionApplicationForm.find_by(certification_id: @certification&.id)
   end
 end
