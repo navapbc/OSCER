@@ -13,7 +13,7 @@
     <p class="usa-alert__text bold">Exemption Status: </p><p><%= t(".status.no_current_exemption") %></p>
   </div>
 
-  <%= link_to t(".buttons.new_exemption"), new_exemption_application_form_path, class: class_names("usa-button") %>
+  <%= link_to t(".buttons.new_exemption"), new_exemption_application_form_path(certification_id: @certification&.id), class: class_names("usa-button") %>
 
 <% elsif @exemption_application_form.in_progress? %>
   <p class="usa-intro">

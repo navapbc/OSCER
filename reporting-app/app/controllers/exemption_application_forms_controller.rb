@@ -7,7 +7,9 @@ class ExemptionApplicationFormsController < ApplicationController
 
   # GET /exemption_application_forms/new
   def new
-    @exemption_application_form = authorize ExemptionApplicationForm.new
+    @exemption_application_form = authorize ExemptionApplicationForm.new(
+      certification_id: params[:certification_id]
+    )
   end
 
   # GET /exemption_application_forms/1/edit
@@ -102,7 +104,8 @@ class ExemptionApplicationFormsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def exemption_application_form_params
       params.require(:exemption_application_form).permit(
-        :exemption_type
+        :exemption_type,
+        :certification_id
         )
     end
 end
