@@ -2,6 +2,7 @@
 <p class="usa-intro">
   Certify your community engagement requirements using the Centers for Medicare and Medicaid Service's income reporting app.
 </p>
+
 <section class="d-flex flex-column flex-md-row gap-4 align-items-start justify-content-between">
   <table class="usa-table usa-table--borderless width-full">
     <thead>
@@ -33,47 +34,22 @@
     </tbody>
   </table>
 </section>
-<!-- Activity reports section -->
-<div class="tablet:grid-col-6 margin-top-6">
-  <h1 class="site-preview-heading">Activity Reports</h1>
-  <%= link_to "New Activity Report", new_activity_report_application_form_path, class: "usa-button" %>
-  <ul class="usa-collection usa-collection--condensed">
-    <% @activity_report_application_forms.each do |form| %>
-      <% kase = @activity_report_cases[form.id] %>
-      <% status = kase&.activity_report_approval_status || "pending" %>
-      <li class="usa-collection__item">
-        <div class="usa-collection__body">
-          <h4 class="usa-collection__heading">
-            <%= link_to form.reporting_period.strftime("%B, %Y"), activity_report_application_form_path(form), class: "usa-link" %>
-          </h4>
-          <ul class="usa-collection__meta" aria-label="More information">
-            <li class="usa-collection__meta-item position-relative">
-              <%= render "dashboard/report_status_display", status: status %>
-              &nbsp;|&nbsp;
-              <svg
-                class="usa-icon position-relative bottom-neg-2px"
-                aria-hidden="true"
-                role="img"
-              >
-                <use href="/assets/img/sprite.svg#calendar_today"></use>
-              </svg>
-              <% if form.submitted_at %>
-                <span class="text-base">
-                  Submitted <%= form.submitted_at.strftime("%B %d, %Y at %I:%M %p") %>
-                </span>
-              <% else %>
-                <span class="text-base">
-                  Created <%= form.created_at.strftime("%B %d, %Y at %I:%M %p") %>
-                </span>
-              <% end %>
-            </li>
-          </ul>
-        </div>
-      </li>
-    <% end %>
-  </ul>
-</div>
-<!-- Exemption reports section -->
+
+
+<%= render template: "flex/application_forms/index", locals: {
+  title: t(".activity_report.title"),
+  intro: t(".activity_report.intro"),
+  new_button_text: t(".activity_report.new_button"),
+  new_path: new_activity_report_application_form_path,
+  in_progress_applications_heading: t(".activity_report.in_progress_applications.heading"),
+  application_forms: @activity_report_application_forms.map { |form| {
+    created_at: form.created_at.strftime("%B %d, %Y at %I:%M %p"),
+    path: activity_report_application_form_path(form),
+    status: form.status
+  }}
+} %>
+
+
 <% unless @has_current_exemption %>
   <%= render template: "flex/application_forms/index", locals: {
     title: t(".exemption_report.title"),
@@ -89,5 +65,5 @@
   } %>
 <% else %>
   <p>TODO: You have a current exemption.
-    This code is unreachable unless the @has_current_exemption flag is set to true in the dashboard controller.</p>
+  This code is unreachable unless the @has_current_exemption flag is set to true in the dashboard controller.</p>
 <% end %>
