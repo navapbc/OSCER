@@ -24,9 +24,7 @@ class CertificationsController < StaffController
 
     authorize @certification
 
-    if @certification.save
-      # due to strict loading
-      @certification.activity_report_application_forms = []
+    if certification_service.save_new(@certification, current_user)
       render :show, status: :created, location: @certification
     else
       render json: @certification.errors, status: :unprocessable_entity
@@ -47,6 +45,10 @@ class CertificationsController < StaffController
     # Use callbacks to share common setup or constraints between actions.
     def set_certification
       @certification = authorize Certification.find(params[:id])
+    end
+
+    def certification_service
+      CertificationService.new
     end
 
     # Only allow a list of trusted parameters through.
