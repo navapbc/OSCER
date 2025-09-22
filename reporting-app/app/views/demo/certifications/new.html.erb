@@ -1,0 +1,20 @@
+<% content_for :title, "Certification Request" %>
+
+<h1><%= "Certification Request" %></h1>
+
+<%= us_form_with(model: false) do |f| %>
+  <%= f.text_field :beneficiary_email %>
+  <%= f.text_field :case_number %>
+
+  <%= f.select :certification_type, ["New application", "Recertification"] %>
+  <%= f.date_picker :certification_date %>
+
+  <%= f.select :lookback_period, 3.times.map { |i| ["#{i + 1} months"] } %>
+  <%= f.select :recertification_frequency, 6.times.map { |i| ["#{i + 1} months"] }, selected: "6 months" %>
+  <%= f.select :number_of_months_to_certify, 6.times.map { |i| ["#{i + 1} months"] } %>
+  <%= f.select :due_period, ["15 days", "30 days", "60 days"], selected: "30 days" %>
+
+  <%= f.select :ex_parte_scenario, ["No data"] %>
+
+  <%= f.submit "Request Certification" %>
+<% end %>
