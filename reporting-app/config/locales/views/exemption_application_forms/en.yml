@@ -2,7 +2,7 @@ en:
   exemption_application_forms:
     show:
       title: "Exemption"
-      back: "Back to exemptions"
+      back: "Back to dashboard"
       edit: "Edit exemption"
       submitted_on: "Submitted on"
       intro:

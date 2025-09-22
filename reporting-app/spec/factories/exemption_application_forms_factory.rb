@@ -14,5 +14,9 @@ FactoryBot.define do
     trait :incarceration do
       exemption_type { "incarceration" }
     end
+
+    trait :with_certification do
+      certification { create(:certification, :with_beneficiary_data) }
+    end
   end
 end
