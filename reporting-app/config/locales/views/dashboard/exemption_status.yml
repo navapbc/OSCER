@@ -3,15 +3,12 @@ en:
     exemption_status:
       title: "Community Engagement Exemption Requests"
       intro:
-        default: "You may request an exemption from the community engagement requirements. Learn more at [LINK HERE]."
-        submitted: "You may be exempt from community engagement requirements if you have met certain conditions."
+        default: "If you have certain conditions, you may not need to report activites"
       status:
         no_current_exemption: "No current exemption"
-        in_progress: "In progress"
-        submitted: "Your exemption is being reviewed"
+        in_progress: "You have an exemption application in progress"
+        submitted: "Your exemption application is being reviewed"
       buttons:
-        new_exemption: "Request an exemption"
+        new_exemption: "Apply for an exemption"
         continue_exemption: "Continue request"
-        view_exemption: "View request"
-      in_progress_applications:
-        heading: "In-progress exemption applications"
+        view_exemption: "View exemption application"
