@@ -49,21 +49,4 @@
   }}
 } %>
 
-
-<% unless @has_current_exemption %>
-  <%= render template: "flex/application_forms/index", locals: {
-    title: t(".exemption_report.title"),
-    intro: t(".exemption_report.intro"),
-    new_button_text: t(".exemption_report.new_button"),
-    new_path: new_exemption_application_form_path,
-    in_progress_applications_heading: t(".exemption_report.in_progress_applications.heading"),
-    application_forms: @exemption_application_forms.map { |form| {
-      created_at: form.created_at.strftime("%B %d, %Y at %I:%M %p"),
-      path: exemption_application_form_path(form),
-      status: form.status
-    }}
-  } %>
-<% else %>
-  <p>TODO: You have a current exemption.
-  This code is unreachable unless the @has_current_exemption flag is set to true in the dashboard controller.</p>
-<% end %>
+<%= render "exemption_status" %>
