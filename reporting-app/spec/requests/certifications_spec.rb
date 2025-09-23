@@ -75,7 +75,7 @@ RSpec.describe "/certifications", type: :request do
     end
 
     it "renders a successful response with data" do
-      certification = create(:certification, :with_certification_requirements, :with_beneficiary_data)
+      certification = create(:certification, :with_certification_requirements)
       get certification_url(certification)
       expect(response).to be_successful
     end
@@ -95,7 +95,7 @@ RSpec.describe "/certifications", type: :request do
     end
 
     it "renders a successful response with data" do
-      certification = create(:certification, :with_certification_requirements, :with_beneficiary_data)
+      certification = create(:certification, :with_certification_requirements)
       get api_certification_url(certification)
       expect(response).to be_successful
     end

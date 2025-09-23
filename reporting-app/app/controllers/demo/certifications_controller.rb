@@ -23,25 +23,28 @@ class Demo::CertificationsController < ApplicationController
       "due_date": @form.certification_date + @form.due_period_days.days
     }
 
-    beneficiary_data = {
-      "account_email": @form.beneficiary_email,
-      "contact": {
-        "email": @form.beneficiary_email
-      }
-    }
+    beneficiary_data = {}
 
-    certification_params = {
-      beneficiary_id: "123",
+    case @form.ex_parte_scenario
+    when "Partially Exempt"
+      beneficiary_data.merge!(FactoryBot.build(:certification_beneficiary_data, :partially_exempt, cert_date: @form.certification_date))
+    when "Fully Exempt"
+      beneficiary_data.merge!(FactoryBot.build(:certification_beneficiary_data, :fully_exempt, cert_date: @form.certification_date, num_months: @form.number_of_months_to_certify))
+    else
+      # nothing
+    end
+
+    @certification = FactoryBot.build(
+      :certification,
+      :with_beneficiary_data_base,
+      :connected_to_email,
+      beneficiary_data_base: beneficiary_data,
+      email: @form.beneficiary_email,
       case_number: @form.case_number,
       certification_requirements: certification_requirements,
-      beneficiary_data: beneficiary_data
-    }
-
-    @certification = Certification.new(certification_params)
+    )
 
     if certification_service.save_new(@certification, current_user)
-      # TODO: redirect to cert page? or staff dashboard?
-      # render :show, status: :created, location: @certification
       redirect_to certification_path(@certification)
     else
       flash.now[:errors] = @certification.errors.full_messages
