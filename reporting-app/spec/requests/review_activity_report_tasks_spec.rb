@@ -17,29 +17,29 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
 
   describe "PATCH /update" do
     context "with approve action" do
-      it "marks task as complete" do
-        patch review_activity_report_task_url(task), params: { commit: "approve" }
+      before { patch review_activity_report_task_url(task), params: { commit: I18n.t("tasks.details.review_activity_report_task.approve_button") } }
 
+      it "marks task as approved" do
         task.reload
-        expect(task).to be_completed
+
+        expect(task).to be_approved
       end
 
       it "redirects back to the task" do
-        patch review_activity_report_task_url(task), params: { commit: "approve" }
         expect(response).to redirect_to(task_path(task))
       end
     end
 
     context "with deny action" do
-      it "marks task as complete" do
-        patch review_activity_report_task_url(task), params: { commit: "deny" }
+      before { patch review_activity_report_task_url(task), params: { commit: I18n.t("tasks.details.review_activity_report_task.deny_button") } }
 
+      it "marks task as denied" do
         task.reload
-        expect(task).to be_completed
+
+        expect(task).to be_denied
       end
 
       it "redirects back to the task" do
-        patch review_activity_report_task_url(task), params: { commit: "deny" }
         expect(response).to redirect_to(task_path(task))
       end
     end

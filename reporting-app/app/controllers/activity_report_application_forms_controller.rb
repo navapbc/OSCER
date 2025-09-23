@@ -7,6 +7,7 @@ class ActivityReportApplicationFormsController < ApplicationController
     submit
     destroy
   ]
+  before_action :set_activity_report_case, only: %i[ show ]
   before_action :authenticate_user!
 
   # GET /activity_report_application_forms/1 or /activity_report_application_forms/1.json
@@ -99,6 +100,10 @@ class ActivityReportApplicationFormsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_activity_report_application_form
     @activity_report_application_form = authorize ActivityReportApplicationForm.find(params[:id])
+  end
+
+  def set_activity_report_case
+    @activity_report_case = ActivityReportCase.find_by(application_form_id: @activity_report_application_form.id) if @activity_report_application_form.present?
   end
 
   # Only allow a list of trusted parameters through.

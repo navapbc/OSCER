@@ -1,8 +1,8 @@
 <%= render partial: 'application/flash' %>
-
 <%= render partial: 'activity_report_application_forms/activity_report_application_form', locals: { activity_report_application_form: application_form } %>
-
-<%= flex_form_with(model: task) do |f| %>
-  <%= f.submit "Approve", value: "approve", class: "usa-button--outline" %>
-  <%= f.submit "Deny", value: "deny", class: "usa-button--outline" %>
+<% if task.pending? %>
+  <%= flex_form_with(model: task) do |f| %>
+    <%= f.submit t("tasks.details.review_activity_report_task.approve_button"), class: "usa-button--outline" %>
+    <%= f.submit t("tasks.details.review_activity_report_task.deny_button"), class: "usa-button--outline" %>
+  <% end %>
 <% end %>

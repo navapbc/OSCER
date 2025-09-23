@@ -3,3 +3,14 @@ en:
     types:
       review_activity_report_task: "Review activity report"
       review_exemption_claim_task: "Review exemption claim"
+    statuses:
+      pending: "Pending"
+      completed: "Completed"
+      approved: "Approved"
+      denied: "Denied"
+    details:
+      review_activity_report_task:
+        approve_button: "Approve"
+        deny_button: "Deny"
+        approved_message: "Task approved!"
+        denied_message: "Task denied!"
