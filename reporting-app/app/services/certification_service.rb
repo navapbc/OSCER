@@ -1,5 +1,5 @@
 class CertificationService
-  def save_new(certification, current_user)
+  def save_new(certification, current_user = nil)
     if !certification.save
       return false
     end
@@ -10,10 +10,25 @@ class CertificationService
     if not is_exempt
         # TODO: for demo purposes, create an activity report associated with the
         # current user for this Certification
-        bene_user = current_user
-        activity_report = ActivityReportApplicationForm.create!(user_id: bene_user.id, certification: certification)
-        # due to strict loading
-        certification.activity_report_application_forms = [ activity_report ]
+        b_user = bene_user(certification) || current_user
+        if b_user
+            activity_report = ActivityReportApplicationForm.create!(user_id: b_user.id, certification: certification)
+            # due to strict loading
+            certification.activity_report_application_forms = [ activity_report ]
+        end
     end
+  end
+
+  def bene_user(certification)
+    if certification&.beneficiary_data&.has_key?("account_email")
+      email = certification.beneficiary_data["account_email"]
+    elsif certification&.beneficiary_data&.dig(:contact, :email)
+      email = certification.beneficiary_data["contact"]["email"]
+    else
+      return
+    end
+
+    # TODO: filter to only verified emails and/or mfa enabled ones, etc
+    User.find_by(email: email)
   end
 end

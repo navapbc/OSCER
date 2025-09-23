@@ -2,17 +2,17 @@
 
 <h1><%= "Certification Request" %></h1>
 
-<%= us_form_with(model: false) do |f| %>
+<%= us_form_with model: @form, url: demo_certifications_path do |f| %>
   <%= f.text_field :beneficiary_email %>
   <%= f.text_field :case_number %>
 
   <%= f.select :certification_type, ["New application", "Recertification"] %>
   <%= f.date_picker :certification_date %>
 
-  <%= f.select :lookback_period, 3.times.map { |i| ["#{i + 1} months"] } %>
-  <%= f.select :recertification_frequency, 6.times.map { |i| ["#{i + 1} months"] }, selected: "6 months" %>
-  <%= f.select :number_of_months_to_certify, 6.times.map { |i| ["#{i + 1} months"] } %>
-  <%= f.select :due_period, ["15 days", "30 days", "60 days"], selected: "30 days" %>
+  <%= f.select :lookback_period, Demo::Certifications::CreateForm::LOOKBACK_PERIOD_OPTIONS %>
+  <%= f.select :recertification_frequency, Demo::Certifications::CreateForm::RECERTIFICATION_FREQUENCY_OPTIONS, selected: "6" %>
+  <%= f.select :number_of_months_to_certify, Demo::Certifications::CreateForm::NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS %>
+  <%= f.select :due_period_days, Demo::Certifications::CreateForm::DUE_PERIOD_OPTIONS, selected: "30" %>
 
   <%= f.select :ex_parte_scenario, ["No data"] %>
 
