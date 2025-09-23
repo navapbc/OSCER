@@ -24,6 +24,8 @@ class CertificationsController < StaffController
 
     authorize @certification
 
+    # TODO: remove current user from here, the "real" endpoint should never fall
+    # back to the current user
     if certification_service.save_new(@certification, current_user)
       render :show, status: :created, location: @certification
     else
