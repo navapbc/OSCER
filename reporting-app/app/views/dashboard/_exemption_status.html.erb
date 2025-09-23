@@ -1,0 +1,35 @@
+<% content_for :title, t(".title") %>
+
+<h1>
+  <%= t(".title") %>  
+</h1>
+
+<p class="usa-intro">
+  <%= t(".intro.default") %>
+</p>
+
+<% if @exemption_application_form.nil? %>
+  <div class="margin-bottom-4">
+    <p class="usa-alert__text"><strong>Exemption Status:</strong></p>
+    <p><%= t(".status.no_current_exemption") %></p>
+  </div>
+
+  <%= link_to t(".buttons.new_exemption"), new_exemption_application_form_path(certification_id: @certification&.id), class: class_names("usa-button") %>
+
+<% elsif @exemption_application_form.in_progress? %>
+  <div class="margin-bottom-4">
+    <p class="usa-alert__text"><strong>Exemption Status:</strong></p>
+    <p><%= t(".status.in_progress") %></p>
+  </div>
+
+  <%= link_to t(".buttons.continue_exemption"), review_exemption_application_form_path(@exemption_application_form), class: class_names("usa-button") %>
+
+<% elsif @exemption_application_form.submitted? %>
+  <div class="margin-bottom-4">
+    <p class="usa-alert__text"><strong>Exemption Status:</strong></p>
+    <p><%= t(".status.submitted") %></p>
+  </div>
+
+  <%= link_to t(".buttons.view_exemption"), exemption_application_form_path(@exemption_application_form), class: class_names("usa-button") %>
+
+<% end %>

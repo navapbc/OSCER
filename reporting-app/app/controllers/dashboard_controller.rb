@@ -4,8 +4,11 @@ class DashboardController < ApplicationController
   # GET /dashboard or /dashboard.json
   def index
     @activity_report_application_forms = policy_scope(ActivityReportApplicationForm).order(created_at: :desc)
-    @exemption_application_forms = policy_scope(ExemptionApplicationForm).order(created_at: :desc)
     @in_progress_activity_reports = @activity_report_application_forms.in_progress
-    @has_current_exemption = false # TODO: Exemptions will need to be retrieved from another source in the future
+
+    # Create a certification on /staff/certifications to reset the exemption application form lfecycle
+    # not scoped to the current user
+    @certification = Certification.order(created_at: :desc).first
+    @exemption_application_form = ExemptionApplicationForm.find_by(certification_id: @certification&.id)
   end
 end
