@@ -17,18 +17,18 @@ class ReviewActivityReportTasksController < TasksController
   private
 
   def is_approving
-    params[:commit] == t("tasks.details.review_activity_report_task.approve_button")
+    params[:commit] == t("tasks.details.approve_button")
   end
 
   def is_denying
-    params[:commit] == t("tasks.details.review_activity_report_task.deny_button")
+    params[:commit] == t("tasks.details.deny_button")
   end
 
   def task_complete_notice_text
     if @task.approved?
-      t("tasks.details.review_activity_report_task.approved_message")
+      t("tasks.details.approved_message")
     elsif @task.denied?
-      t("tasks.details.review_activity_report_task.denied_message")
+      t("tasks.details.denied_message")
     end
   end
 end

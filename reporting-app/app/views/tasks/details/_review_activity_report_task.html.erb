@@ -2,7 +2,7 @@
 <%= render partial: 'activity_report_application_forms/activity_report_application_form', locals: { activity_report_application_form: application_form } %>
 <% if task.pending? %>
   <%= flex_form_with(model: task) do |f| %>
-    <%= f.submit t("tasks.details.review_activity_report_task.approve_button"), class: "usa-button--outline" %>
-    <%= f.submit t("tasks.details.review_activity_report_task.deny_button"), class: "usa-button--outline" %>
+    <%= f.submit t("tasks.details.approve_button"), class: "usa-button--outline" %>
+    <%= f.submit t("tasks.details.deny_button"), class: "usa-button--outline" %>
   <% end %>
 <% end %>
