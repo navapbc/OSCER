@@ -25,6 +25,9 @@ class ExemptionApplicationFormsController < ApplicationController
     @exemption_application_form = ExemptionApplicationForm.new(exemption_application_form_params)
     @exemption_application_form.user_id = current_user.id
 
+    # for demo purposes, create a case here
+    ExemptionCase.create!(application_form_id: @exemption_application_form.id)
+
     authorize @exemption_application_form
 
     respond_to do |format|
