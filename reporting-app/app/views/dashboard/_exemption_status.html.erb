@@ -4,9 +4,19 @@
   <%= t(".title") %>  
 </h1>
 
-<p class="usa-intro">
-  <%= t(".intro.default") %>
-</p>
+<% if @exemption_case&.exemption_request_approval_status == "approved" %>
+  <p class="usa-intro">
+    <%= t(".intro.approved") %>
+  </p>
+<% elsif @exemption_case&.exemption_request_approval_status == "denied" %>
+  <p class="usa-intro">
+    <%= t(".intro.denied") %>
+  </p>
+<% else %>
+  <p class="usa-intro">
+    <%= t(".intro.default") %>
+  </p>
+<% end %>
 
 <% if @exemption_application_form.nil? %>
   <div class="margin-bottom-4">
@@ -23,7 +33,10 @@
   </div>
 
   <%= link_to t(".buttons.continue_exemption"), review_exemption_application_form_path(@exemption_application_form), class: class_names("usa-button") %>
+<% elsif @exemption_case&.exemption_request_approval_status == "approved" || @exemption_case&.exemption_request_approval_status == "denied" %>
+  <div class="margin-bottom-4"></div>
 
+  <%= link_to t(".buttons.view_exemption"), exemption_application_form_path(@exemption_application_form), class: class_names("usa-button") %>
 <% elsif @exemption_application_form.submitted? %>
   <div class="margin-bottom-4">
     <p class="usa-alert__text"><strong>Exemption Status:</strong></p>
@@ -31,5 +44,4 @@
   </div>
 
   <%= link_to t(".buttons.view_exemption"), exemption_application_form_path(@exemption_application_form), class: class_names("usa-button") %>
-
 <% end %>

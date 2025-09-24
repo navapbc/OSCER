@@ -8,6 +8,8 @@
   <p class="usa-intro"><%= t(".intro.in_progress") %></p>
   <%= link_to "Review and submit", review_exemption_application_form_path(@exemption_application_form), class: class_names("usa-button") %>
   <%= link_to t(".edit"), edit_exemption_application_form_path(@exemption_application_form), class: class_names("usa-button") %>
+<% elsif @exemption_case&.exemption_request_approval_status == "approved" || @exemption_case&.exemption_request_approval_status == "denied" %>
+  <p class="usa-intro"><%= t(".intro.#{@exemption_case.exemption_request_approval_status}") %></p>
 <% else %>
   <p class="usa-intro"><%= t(".intro.submitted") %></p>
 <% end %>

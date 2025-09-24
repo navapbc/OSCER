@@ -1,5 +1,6 @@
 class ReviewExemptionClaimTasksController < TasksController
   def update
+    # for demo purposes, otherwise this approval should be handled by business processes
     @task.completed!
 
     exemption_case = ExemptionCase.find(@task.case.id)

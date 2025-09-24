@@ -8,6 +8,8 @@ en:
       intro:
         in_progress: "Complete and submit your exemption"
         submitted: "Your exemption is being reviewed"
+        approved: "Your exemption has been approved"
+        denied: "Your exemption has been denied"
       next_step:
         status:
           in_progress: "Complete and submit your exemption"
