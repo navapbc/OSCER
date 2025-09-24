@@ -4,44 +4,30 @@
   <%= t(".title") %>  
 </h1>
 
-<% if @exemption_case&.exemption_request_approval_status == "approved" %>
-  <p class="usa-intro">
-    <%= t(".intro.approved") %>
-  </p>
-<% elsif @exemption_case&.exemption_request_approval_status == "denied" %>
-  <p class="usa-intro">
-    <%= t(".intro.denied") %>
-  </p>
-<% else %>
-  <p class="usa-intro">
-    <%= t(".intro.default") %>
-  </p>
-<% end %>
+<p class="usa-intro">
+  <%= t(".intro.#{exemption_dashboard_intro_key(@exemption_case)}") %>
+</p>
 
-<% if @exemption_application_form.nil? %>
+<% case exemption_dashboard_state(@exemption_application_form, @exemption_case) %>
+<% when :no_form %>
   <div class="margin-bottom-4">
     <p class="usa-alert__text"><strong>Exemption Status:</strong></p>
     <p><%= t(".status.no_current_exemption") %></p>
   </div>
-
   <%= link_to t(".buttons.new_exemption"), new_exemption_application_form_path(certification_id: @certification&.id), class: class_names("usa-button") %>
-
-<% elsif @exemption_application_form.in_progress? %>
+<% when :in_progress %>
   <div class="margin-bottom-4">
     <p class="usa-alert__text"><strong>Exemption Status:</strong></p>
     <p><%= t(".status.in_progress") %></p>
   </div>
-
   <%= link_to t(".buttons.continue_exemption"), review_exemption_application_form_path(@exemption_application_form), class: class_names("usa-button") %>
-<% elsif @exemption_case&.exemption_request_approval_status == "approved" || @exemption_case&.exemption_request_approval_status == "denied" %>
+<% when :case_decided %>
   <div class="margin-bottom-4"></div>
-
   <%= link_to t(".buttons.view_exemption"), exemption_application_form_path(@exemption_application_form), class: class_names("usa-button") %>
-<% elsif @exemption_application_form.submitted? %>
+<% when :submitted %>
   <div class="margin-bottom-4">
     <p class="usa-alert__text"><strong>Exemption Status:</strong></p>
     <p><%= t(".status.submitted") %></p>
   </div>
-
   <%= link_to t(".buttons.view_exemption"), exemption_application_form_path(@exemption_application_form), class: class_names("usa-button") %>
 <% end %>
