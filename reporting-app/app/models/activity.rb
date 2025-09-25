@@ -1,5 +1,5 @@
 class Activity < ApplicationRecord
-  include Flex::Attributes
+  include Strata::Attributes
 
   has_many_attached :supporting_documents
 
