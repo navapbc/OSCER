@@ -9,7 +9,10 @@
     <thead>
       <tr>
         <th scope="col">
-          <%= t(".columns.col_case_id") %>
+          <%= t(".columns.col_certification_id") %>
+        </th>
+        <th scope="col">
+          <%= t(".columns.col_case_number") %>
         </th>
         <th scope="col">
           <%= t(".columns.col_created") %>
@@ -24,6 +27,9 @@
         <tr>
           <td>
             <%= certification.id %>
+          </td>
+          <td>
+            <%= certification.case_number %>
           </td>
           <td>
             <%= local_time(certification.created_at, format: :long) %>
