@@ -26,10 +26,10 @@ class Demo::CertificationsController < ApplicationController
     beneficiary_data = {}
 
     case @form.ex_parte_scenario
-    when "Partially Exempt"
-      beneficiary_data.merge!(FactoryBot.build(:certification_beneficiary_data, :partially_exempt, cert_date: @form.certification_date))
-    when "Fully Exempt"
-      beneficiary_data.merge!(FactoryBot.build(:certification_beneficiary_data, :fully_exempt, cert_date: @form.certification_date, num_months: @form.number_of_months_to_certify))
+    when "Partially met work hours requirement"
+      beneficiary_data.merge!(FactoryBot.build(:certification_beneficiary_data, :partially_met_work_hours_requirement, cert_date: @form.certification_date))
+    when "Fully met work hours requirement"
+      beneficiary_data.merge!(FactoryBot.build(:certification_beneficiary_data, :fully_met_work_hours_requirement, cert_date: @form.certification_date, num_months: @form.number_of_months_to_certify))
     else
       # nothing
     end

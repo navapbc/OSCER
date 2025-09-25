@@ -8,7 +8,7 @@ FactoryBot.define do
       num_months { 1 }
     end
 
-    trait :partially_exempt do
+    trait :partially_met_work_hours_requirement do
       payroll_accounts {
         [
           {
@@ -28,7 +28,7 @@ FactoryBot.define do
       }
     end
 
-    trait :fully_exempt do
+    trait :fully_met_work_hours_requirement do
       payroll_accounts {
         [
           {

@@ -17,7 +17,7 @@
   <%= f.select :number_of_months_to_certify, Demo::Certifications::CreateForm::NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS %>
   <%= f.select :due_period_days, Demo::Certifications::CreateForm::DUE_PERIOD_OPTIONS, selected: "30" %>
 
-  <%= f.select :ex_parte_scenario, ["No data", "Partially Exempt", "Fully Exempt"] %>
+  <%= f.select :ex_parte_scenario, ["No data", "Partially met work hours requirement", "Fully met work hours requirement"] %>
 
   <%= f.submit "Request Certification" %>
 <% end %>
