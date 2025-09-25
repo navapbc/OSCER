@@ -4,7 +4,8 @@ en:
       title: "Certifications"
       create: "Create Certification"
       columns:
-        col_case_id: "Case ID"
+        col_certification_id: "Certification ID"
+        col_case_number: "Case number"
         col_created: "Created"
         col_actions: "Actions"
       actions:
