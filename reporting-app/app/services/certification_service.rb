@@ -20,11 +20,8 @@ class CertificationService
   end
 
   def bene_user(certification)
-    if certification&.beneficiary_data&.has_key?("account_email")
-      email = certification.beneficiary_data["account_email"]
-    elsif certification&.beneficiary_data&.dig(:contact, :email)
-      email = certification.beneficiary_data["contact"]["email"]
-    else
+    email = certification.beneficiary_email
+    if not email
       return
     end
 
