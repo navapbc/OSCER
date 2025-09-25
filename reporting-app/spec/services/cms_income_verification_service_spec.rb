@@ -34,7 +34,7 @@ RSpec.describe CMSIncomeVerificationService do
 
   describe '#create_invitation' do
     let(:activity_report_application_form) { create(:activity_report_application_form) }
-    let(:name) { Flex::Name.new(first: 'Cassian', last: 'Andor') }
+    let(:name) { Strata::Name.new(first: 'Cassian', last: 'Andor') }
 
     let(:expected_request_body) do
       {

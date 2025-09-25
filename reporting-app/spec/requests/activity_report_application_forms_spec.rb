@@ -88,7 +88,7 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
         allow(Rails.application.config).to receive(:reporting_source).and_return("income_verification_service")
         allow(CMSIncomeVerificationService).to receive(:new).and_return(mock_service)
         allow(mock_service).to receive(:create_invitation)
-          .with(activity_report_application_form, instance_of(Flex::Name))
+          .with(activity_report_application_form, instance_of(Strata::Name))
           .and_return(invitation)
       end
 
