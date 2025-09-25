@@ -1,4 +1,4 @@
-class StaffController < Flex::StaffController
+class StaffController < Strata::StaffController
   before_action :authenticate_user!
 
   # TODO implement staff policy
