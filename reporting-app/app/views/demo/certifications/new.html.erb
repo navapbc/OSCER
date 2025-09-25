@@ -4,7 +4,7 @@
 
 <%= us_form_with model: @form, url: demo_certifications_path do |f| %>
   <%= f.text_field :beneficiary_email %>
-  <%= f.text_field :case_number %>
+  <%= f.text_field :case_number, label: "Medicaid case number" %>
 
   <!-- TODO: doesn't do anything -->
   <%= f.select :certification_type, ["New application", "Recertification"] %>
