@@ -9,7 +9,7 @@ class Demo::CertificationsController < ApplicationController
   end
 
   def create
-    form_params = params.require(:demo_certifications_create_form).permit(:beneficiary_email, :case_number, :certification_type, :certification_date, :number_of_months_to_certify, :due_period_days, :ex_parte_scenario)
+    form_params = params.require(:demo_certifications_create_form).permit(:beneficiary_email, :case_number, :certification_type, :certification_date, :lookback_period, :number_of_months_to_certify, :due_period_days, :ex_parte_scenario)
     @form = Demo::Certifications::CreateForm.new(form_params)
 
     if @form.invalid?
@@ -17,9 +17,19 @@ class Demo::CertificationsController < ApplicationController
       return render :new, status: :unprocessable_entity
     end
 
+    # TODO: debatable if we should store the parameters of the calculation or
+    # just the outcome. Could do both. Keeping the parameters does offer more
+    # future flexibility.
     certification_requirements = {
       "certification_date": @form.certification_date,
-      "months_to_certify": @form.number_of_months_to_certify.times.map { |i| @form.certification_date.beginning_of_month << i },
+      # TODO: could do something like
+      # "lookback": {
+      #   "start": @form.certification_date.beginning_of_month << @form.lookback_period,
+      #   "end": @form.certification_date.beginning_of_month << 1
+      # },
+      # but a list of the months feels potentially more usable, alt name "months_to_consider"?
+      "months_that_can_be_certified": @form.lookback_period.times.map { |i| @form.certification_date.beginning_of_month << i },
+      "number_of_months_to_certify": @form.number_of_months_to_certify,
       "due_date": @form.certification_date + @form.due_period_days.days
     }
 
