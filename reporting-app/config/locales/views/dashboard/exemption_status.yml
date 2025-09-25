@@ -4,6 +4,8 @@ en:
       title: "Community Engagement Exemption Requests"
       intro:
         default: "If you have certain conditions, you may not need to report activites"
+        approved: "Your exemption request has been approved. You do not need to report activities at this time."
+        denied: "Your exemption request has been denied. You need to report activities at this time."
       status:
         no_current_exemption: "No current exemption"
         in_progress: "You have an exemption application in progress"

@@ -1,5 +1,6 @@
 class ExemptionApplicationFormsController < ApplicationController
   before_action :set_exemption_application_form, only: %i[ show edit update destroy review submit documents upload_documents ]
+  before_action :set_exemption_case, only: %i[ show ]
 
   # GET /exemption_application_forms/1 or /exemption_application_forms/1.json
   def show
@@ -107,5 +108,9 @@ class ExemptionApplicationFormsController < ApplicationController
         :exemption_type,
         :certification_id
         )
+    end
+
+    def set_exemption_case
+      @exemption_case = ExemptionCase.find_by(application_form_id: @exemption_application_form.id)
     end
 end

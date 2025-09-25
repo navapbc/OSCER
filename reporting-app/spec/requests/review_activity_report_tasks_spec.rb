@@ -17,7 +17,7 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
 
   describe "PATCH /update" do
     context "with approve action" do
-      before { patch review_activity_report_task_url(task), params: { commit: I18n.t("tasks.details.review_activity_report_task.approve_button") } }
+      before { patch review_activity_report_task_url(task), params: { commit: I18n.t("tasks.details.approve_button") } }
 
       it "marks task as approved" do
         task.reload
@@ -31,7 +31,7 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
     end
 
     context "with deny action" do
-      before { patch review_activity_report_task_url(task), params: { commit: I18n.t("tasks.details.review_activity_report_task.deny_button") } }
+      before { patch review_activity_report_task_url(task), params: { commit: I18n.t("tasks.details.deny_button") } }
 
       it "marks task as denied" do
         task.reload
