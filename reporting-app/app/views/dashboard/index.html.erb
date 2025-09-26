@@ -12,9 +12,9 @@
 <% end %>
 <!-- Previous Certifications -->
 <% if @all_certifications.length > 1 %>
-  <h2>Previous completed requirements</h2>
+  <h2><%= t(".previous_certifications.title") %></h2>
   <p class="font-serif-md">
-    Review previously-completed certifications.
+    <%= t(".previous_certifications.intro") %>
   </p>
-  <%= link_to "Review previous certifications", certifications_path, class: "usa-button usa-button--outline" %>
+  <%= link_to t(".previous_certifications.review_previous_certifications_button"), certifications_path, class: "usa-button usa-button--outline" %>
 <% end %>
