@@ -1,0 +1,27 @@
+<h2>
+  <%= t(".title") %>
+</h2>
+<p class="usa-intro">
+  <% case activity_report_status(@activity_report_application_form) %>
+  <% when :no_form %>
+    <div class="margin-bottom-4">
+      <%= t(".intro.new") %>
+    </div>
+    <%= link_to t(".buttons.new_activity_report"), new_activity_report_application_form_path(certification_id: @certification&.id), class: class_names("usa-button") %>
+  <% when :in_progress %>
+    <div class="margin-bottom-4">
+      <%= t(".intro.in_progress") %>
+    </div>
+    <%= link_to t(".buttons.continue_activity_report"), edit_activity_report_application_form_path(@activity_report_application_form), class: class_names("usa-button") %>
+  <% when :submitted %>
+    <div class="margin-bottom-4">
+      <%= t(".intro.submitted") %>
+    </div>
+    <%= link_to t(".buttons.view_activity_report"), activity_report_application_form_path(@activity_report_application_form), class: class_names("usa-button") %>
+  <% when :approved %>
+    <div class="margin-bottom-4">
+      <%= t(".intro.approved") %>
+    </div>
+    <%= link_to t(".buttons.view_activity_report"), activity_report_application_form_path(@activity_report_application_form), class: class_names("usa-button") %>
+  <% end %>
+</p>

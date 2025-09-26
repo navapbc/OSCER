@@ -1,0 +1,13 @@
+en:
+  dashboard:
+    activity_report_status:
+      title: "Report Activities"
+      intro:
+        new: "Report your activities for the current reporting period."
+        in_progress: "Please complete your activity report."
+        submitted: "Your activity report is being reviewed."
+        approved: "Your have met your community engagement requirements."
+      buttons:
+        new_activity_report: "Report activities"
+        continue_activity_report: "Continue report"
+        view_activity_report: "View activity report"
