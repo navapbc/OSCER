@@ -7,13 +7,6 @@ RSpec.describe "dashboard/index", type: :view do
       certification
     ])
     assign(:certification, certification)
-    # assign(:activity_report_application_forms, [
-    #   create(:activity_report_application_form),
-    #   create(:activity_report_application_form)
-    # ])
-    # assign(:in_progress_activity_reports, [
-    #   create(:activity_report_application_form)
-    # ])
   end
 
   context 'with no current exemption or activity report' do
@@ -59,6 +52,46 @@ RSpec.describe "dashboard/index", type: :view do
     it 'renders a button to continue the exemption request' do
       render
       expect(rendered).to have_selector('a', text: I18n.t('dashboard.new_certification.exemption_request.continue_request_button'))
+    end
+  end
+
+  context "with a submitted activity report" do
+    let (:activity_report_application_form) { create(:activity_report_application_form, :with_submitted_status, certification: certification) }
+    let (:activity_report_case) { create(:activity_report_case, application_form_id: activity_report_application_form.id) }
+
+    before do
+      assign(:activity_report_application_form, activity_report_application_form)
+      assign(:activity_report_case, activity_report_case)
+    end
+    
+    it 'renders a message that the activity report is under review' do
+      render
+      expect(rendered).to have_selector('p', text: I18n.t('dashboard.activity_report_submitted.intro'))
+    end
+
+    it 'has a button to view the submitted activity report' do
+      render
+      expect(rendered).to have_selector('a', text: I18n.t('dashboard.activity_report_submitted.view_activity_report_button'))
+    end
+  end
+
+  context "with a submitted exemption request" do
+    let (:exemption_application_form) { create(:exemption_application_form, :with_submitted_status, certification_id: certification.id) }
+    let (:exemption_case) { create(:exemption_case, application_form_id: exemption_application_form.id) }
+
+    before do
+      assign(:exemption_application_form, exemption_application_form)
+      assign(:exemption_case, exemption_case)
+    end
+
+    it 'renders a message that the exemption request is under review' do
+      render
+      expect(rendered).to have_selector('p', text: I18n.t('dashboard.exemption_submitted.intro'))
+    end
+
+    it 'has a button to view the submitted exemption request' do
+      render
+      expect(rendered).to have_selector('a', text: I18n.t('dashboard.exemption_submitted.view_exemption_button'))
     end
   end
 
