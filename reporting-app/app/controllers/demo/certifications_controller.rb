@@ -5,11 +5,12 @@ class Demo::CertificationsController < ApplicationController
   skip_after_action :verify_policy_scoped
 
   def new
-    @form = Demo::Certifications::CreateForm.new
+    certification_type = params.fetch(:certification_type, nil)
+    @form = Demo::Certifications::CreateForm.new(certification_type: certification_type)
   end
 
   def create
-    form_params = params.require(:demo_certifications_create_form).permit(:beneficiary_email, :case_number, :certification_date, :lookback_period, :number_of_months_to_certify, :due_period_days, :ex_parte_scenario)
+    form_params = params.require(:demo_certifications_create_form).permit(:beneficiary_email, :case_number, :certification_type, :certification_date, :lookback_period, :number_of_months_to_certify, :due_period_days, :ex_parte_scenario)
     @form = Demo::Certifications::CreateForm.new(form_params)
 
     if @form.invalid?
