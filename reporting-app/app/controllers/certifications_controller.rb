@@ -26,7 +26,7 @@ class CertificationsController < StaffController
 
     if @certification.save
       # due to strict loading
-      @certification.activity_report_application_forms = [ ]
+      @certification.activity_report_application_forms = []
       render :show, status: :created, location: @certification
     else
       render json: @certification.errors, status: :unprocessable_entity
