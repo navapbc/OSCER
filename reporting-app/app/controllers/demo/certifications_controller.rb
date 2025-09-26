@@ -17,22 +17,7 @@ class Demo::CertificationsController < ApplicationController
       return render :new, status: :unprocessable_entity
     end
 
-    # TODO: debatable if we should store the parameters of the calculation or
-    # just the outcome. Could do both. Keeping the parameters does offer more
-    # future flexibility.
-    certification_requirements = {
-      "certification_date": @form.certification_date,
-      # TODO: could do something like
-      # "lookback": {
-      #   "start": @form.certification_date.beginning_of_month << @form.lookback_period,
-      #   "end": @form.certification_date.beginning_of_month << 1
-      # },
-      # but a list of the months feels potentially more usable, alt name "months_to_consider"?
-      "months_that_can_be_certified": @form.lookback_period.times.map { |i| @form.certification_date.beginning_of_month << i },
-      "number_of_months_to_certify": @form.number_of_months_to_certify,
-      "due_date": @form.certification_date + @form.due_period_days.days
-    }
-
+    certification_requirements = certification_service.calculate_certification_requirements(@form)
     beneficiary_data = {}
 
     case @form.ex_parte_scenario

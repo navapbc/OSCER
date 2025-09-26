@@ -28,4 +28,25 @@ class CertificationService
     # TODO: filter to only verified emails and/or mfa enabled ones, etc
     User.find_by(email: email)
   end
+
+  # sig { params(requirement_params: Demo::Certifications::CreateForm).returns(Hash) }
+  def calculate_certification_requirements(requirement_params)
+    raise TypeError, "requirement_params should be a CreateForm instance" unless requirement_params.kind_of?(Demo::Certifications::CreateForm)
+
+    # TODO: debatable if we should store the parameters of the calculation or
+    # just the outcome. Could do both. Keeping the parameters does offer more
+    # future flexibility.
+    {
+      "certification_date": requirement_params.certification_date,
+      # TODO: could do something like
+      # "lookback": {
+      #   "start": requirement_params.certification_date.beginning_of_month << requirement_params.lookback_period,
+      #   "end": requirement_params.certification_date.beginning_of_month << 1
+      # },
+      # but a list of the months feels potentially more usable, alt name "months_to_consider"?
+      "months_that_can_be_certified": requirement_params.lookback_period.times.map { |i| requirement_params.certification_date.beginning_of_month << i },
+      "number_of_months_to_certify": requirement_params.number_of_months_to_certify,
+      "due_date": requirement_params.certification_date + requirement_params.due_period_days.days
+    }
+  end
 end
