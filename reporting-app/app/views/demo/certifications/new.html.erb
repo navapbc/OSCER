@@ -6,13 +6,9 @@
   <%= f.text_field :beneficiary_email %>
   <%= f.text_field :case_number, label: t("certifications.case_number") %>
 
-  <!-- TODO: doesn't do anything -->
-  <%#= f.select :certification_type, ["New application", "Recertification"] %>
   <%= f.date_picker :certification_date %>
 
   <%= f.select :lookback_period, Demo::Certifications::CreateForm::LOOKBACK_PERIOD_OPTIONS.map { |i| [ t("certifications.demo_create.lookback_period_options.#{i}"), i ] } %>
-  <!-- TODO: doesn't do anything -->
-  <%#= f.select :recertification_frequency, Demo::Certifications::CreateForm::RECERTIFICATION_FREQUENCY_OPTIONS %>
   <%= f.select :number_of_months_to_certify, Demo::Certifications::CreateForm::NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS.map { |i| [ t("certifications.demo_create.number_of_months_to_certify_options.#{i}"), i ] } %>
   <%= f.select :due_period_days, Demo::Certifications::CreateForm::DUE_PERIOD_OPTIONS.map { |i| [ t("certifications.demo_create.due_period_options.#{i}"), i ] } %>
 

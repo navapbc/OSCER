@@ -6,7 +6,6 @@ module Demo
         include Flex::Attributes
 
         LOOKBACK_PERIOD_OPTIONS = (1..6).to_a
-        # RECERTIFICATION_FREQUENCY_OPTIONS = (1..6).to_a
         NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS = (1..6).to_a
         DUE_PERIOD_OPTIONS = [ 15, 30, 60 ] # in days
 
@@ -15,7 +14,6 @@ module Demo
         attribute :beneficiary_email, :string
         attribute :case_number, :string
 
-        attribute :certification_type, :string
         flex_attribute :certification_date, :us_date
 
         # TODO: would maybe prefer to use ISO8601 duration values here instead of integers of months
