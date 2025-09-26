@@ -1,38 +1,3 @@
-<h1>Report your community engagement (IVaaS)</h1>
-<p class="usa-intro">
-  Certify your community engagement requirements using the Centers for Medicare and Medicaid Service's income reporting app.
-</p>
-<section class="d-flex flex-column flex-md-row gap-4 align-items-start justify-content-between">
-  <table class="usa-table usa-table--borderless width-full">
-    <thead>
-      <tr>
-        <th scope="col">
-          Case number
-        </th>
-        <th scope="col">
-          Actions
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for activity_report in @in_progress_activity_reports do %>
-        <tr>
-          <td>
-            <%= activity_report.id %>
-          </td>
-          <td>
-            <%= link_to "Certify",
-                        edit_activity_report_application_form_path(
-                          activity_report,
-                          reporting_source: "income_verification_service"
-                        ),
-                        class: "usa-button" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</section>
 <h1><%= t(".title") %></h1>
 <% if @activity_report_application_form.nil? && @exemption_application_form.nil? %>
   <%= render "new_certification" %>
@@ -45,5 +10,7 @@
 <% elsif @exemption_application_form&.in_progress? %>
   <%= render "exemption_in_progress", exemption_application: @exemption_application_form %>
 <% elsif @exemption_application_form&.submitted? && @exemption_case&.exemption_request_approval_status.nil? %>
-  <%= render "exemption_submitted", exemption_application: @exemption_application_form %
+  <%= render "exemption_submitted", exemption_application: @exemption_application_form %>
+<% elsif @exemption_application_form&.submitted? && @exemption_case&.exemption_request_approval_status == "approved" %>
+  <%= render "exemption_approved", certification: @certification %>
 <% end %>
