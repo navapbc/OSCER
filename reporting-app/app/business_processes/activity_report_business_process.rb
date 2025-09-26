@@ -9,7 +9,7 @@ class ActivityReportBusinessProcess < Flex::BusinessProcess
   })
   system_process("activity_report_notification", ->(kase) {
     # Send notification to user
-    Flex::EventManager.publish("ActivityReportNotificationSent", { case_id: kase.id })
+    Strata::EventManager.publish("ActivityReportNotificationSent", { case_id: kase.id })
   })
 
   start_on_application_form_created("submit_report")
