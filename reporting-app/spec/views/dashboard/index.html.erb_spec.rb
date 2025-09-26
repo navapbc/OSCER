@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "dashboard/index", type: :view do
   let(:certification) { create(:certification) }
+
   before do
     assign(:all_certifications, [
       certification
@@ -63,7 +64,7 @@ RSpec.describe "dashboard/index", type: :view do
       assign(:activity_report_application_form, activity_report_application_form)
       assign(:activity_report_case, activity_report_case)
     end
-    
+
     it 'renders a message that the activity report is under review' do
       render
       expect(rendered).to have_selector('p', text: I18n.t('dashboard.activity_report_submitted.intro'))
@@ -137,6 +138,7 @@ RSpec.describe "dashboard/index", type: :view do
 
   context "with previous certifications" do
     let(:older_certification) { create(:certification) }
+
     before do
       assign(:all_certifications, [
         certification,
