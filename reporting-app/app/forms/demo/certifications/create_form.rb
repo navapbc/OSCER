@@ -16,8 +16,10 @@ module Demo
         attribute :certification_type, :string
         flex_attribute :certification_date, :us_date
 
+        # TODO: would maybe prefer to use ISO8601 duration values here instead of integers of months
         attribute :lookback_period, :integer, default: LOOKBACK_PERIOD_OPTIONS[0][1]
         attribute :number_of_months_to_certify, :integer, default: NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS[0][1]
+        # TODO: would maybe prefer to use ISO8601 duration values here instead of integers of days
         attribute :due_period_days, :integer, default: DUE_PERIOD_OPTIONS[1][1]
 
         attribute :ex_parte_scenario, :string
