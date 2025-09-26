@@ -1,4 +1,4 @@
-<%= flex_form_with(model: [activity_report_application_form, activity]) do |f| %>
+<%= strata_form_with(model: [activity_report_application_form, activity]) do |f| %>
   <%= f.text_field :name, label: t(".name") %>
 
   <%= f.select :month,

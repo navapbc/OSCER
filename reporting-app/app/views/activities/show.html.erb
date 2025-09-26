@@ -11,7 +11,7 @@
     <%= link_to t(".edit"), edit_activity_report_application_form_activity_path(@activity_report_application_form, @activity), class: class_names("usa-button") %>
   </li>
   <li class="usa-button-group__item">
-    <%= flex_form_with(model: [@activity_report_application_form, @activity], method: :delete, html: { class: "display-inline-block" }) do |f| %>
+    <%= strata_form_with(model: [@activity_report_application_form, @activity], method: :delete, html: { class: "display-inline-block" }) do |f| %>
       <%= f.submit t(".destroy"), class: "usa-button--outline" %>
     <% end %>
   </li>
