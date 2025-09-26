@@ -18,5 +18,11 @@ FactoryBot.define do
     trait :with_certification do
       certification { create(:certification, :with_beneficiary_data) }
     end
+
+    trait :with_submitted_status do
+      after(:create) do |exemption_application_form|
+        exemption_application_form.submit_application
+      end
+    end
   end
 end
