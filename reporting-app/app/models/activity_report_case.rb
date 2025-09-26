@@ -8,6 +8,6 @@ class ActivityReportCase < Flex::Case
     self.activity_report_approval_status_updated_at = Time.current
     save!
 
-    Flex::EventManager.publish("ActivityReportStatusUpdated", { case_id: id })
+    Strata::EventManager.publish("ActivityReportStatusUpdated", { case_id: id })
   end
 end
