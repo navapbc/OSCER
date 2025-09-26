@@ -1,4 +1,4 @@
 <p class="usa-intro">
-  Your exemption application was approved. You do not need to report activities at this time.
+  <%= t(".intro") %>
 </p>
-<%= link_to "View completed certification", certification_path(certification), class: "usa-button" %>
+<%= link_to t(".view_certification_button"), certification_path(certification), class: "usa-button" %>

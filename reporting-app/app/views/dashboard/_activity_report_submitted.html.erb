@@ -1,4 +1,4 @@
 <p class="usa-intro">
-  Your activity report is being reviewed.
+  <%= t(".intro") %>
 </p>
-<%= link_to "View activity report", activity_report_application_form_path(activity_report), class: "usa-button" %>
+<%= link_to t(".view_activity_report_button"), activity_report_application_form_path(activity_report), class: "usa-button" %>

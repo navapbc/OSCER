@@ -1,4 +1,4 @@
 <p class="usa-intro">
-  Your exemption application is being reviewed.
+  <%= t(".intro") %>
 </p>
-<%= link_to "View exemption application", exemption_application_form_path(exemption_application), class: "usa-button" %>
+<%= link_to t(".view_exemption_button"), exemption_application_form_path(exemption_application), class: "usa-button" %>
