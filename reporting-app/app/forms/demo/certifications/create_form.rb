@@ -5,22 +5,22 @@ module Demo
         include ActiveModel::Attributes
         include Flex::Attributes
 
+        LOOKBACK_PERIOD_OPTIONS = 6.times.map { |i| [ "#{i + 1} months", i + 1 ] }
+        RECERTIFICATION_FREQUENCY_OPTIONS = 6.times.map { |i| [ "#{i + 1} months", i + 1 ] }
+        NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS = 6.times.map { |i| [ "#{i + 1} months", i + 1 ] }
+        DUE_PERIOD_OPTIONS = [ [ "15 days", 15 ], [ "30 days", 30 ], [ "60 days", 60 ] ]
+
         attribute :beneficiary_email, :string
         attribute :case_number, :string
 
         attribute :certification_type, :string
         flex_attribute :certification_date, :us_date
 
-        attribute :lookback_period, :integer
-        attribute :number_of_months_to_certify, :integer
-        attribute :due_period_days, :integer
+        attribute :lookback_period, :integer, default: LOOKBACK_PERIOD_OPTIONS[0][1]
+        attribute :number_of_months_to_certify, :integer, default: NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS[0][1]
+        attribute :due_period_days, :integer, default: DUE_PERIOD_OPTIONS[1][1]
 
         attribute :ex_parte_scenario, :string
-
-        LOOKBACK_PERIOD_OPTIONS = 6.times.map { |i| [ "#{i + 1} months", i + 1 ] }
-        RECERTIFICATION_FREQUENCY_OPTIONS = 6.times.map { |i| [ "#{i + 1} months", i + 1 ] }
-        NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS = 6.times.map { |i| [ "#{i + 1} months", i + 1 ] }
-        DUE_PERIOD_OPTIONS = [ [ "15 days", 15 ], [ "30 days", 30 ], [ "60 days", 60 ] ]
 
         validates :certification_date, presence: true
 

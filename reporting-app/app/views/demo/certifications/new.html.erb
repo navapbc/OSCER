@@ -12,9 +12,9 @@
 
   <%= f.select :lookback_period, Demo::Certifications::CreateForm::LOOKBACK_PERIOD_OPTIONS %>
   <!-- TODO: doesn't do anything -->
-  <%#= f.select :recertification_frequency, Demo::Certifications::CreateForm::RECERTIFICATION_FREQUENCY_OPTIONS, selected: "6" %>
+  <%#= f.select :recertification_frequency, Demo::Certifications::CreateForm::RECERTIFICATION_FREQUENCY_OPTIONS %>
   <%= f.select :number_of_months_to_certify, Demo::Certifications::CreateForm::NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS %>
-  <%= f.select :due_period_days, Demo::Certifications::CreateForm::DUE_PERIOD_OPTIONS, selected: "30" %>
+  <%= f.select :due_period_days, Demo::Certifications::CreateForm::DUE_PERIOD_OPTIONS %>
 
   <%= f.select :ex_parte_scenario, ["No data", "Partially met work hours requirement", "Fully met work hours requirement"] %>
 
