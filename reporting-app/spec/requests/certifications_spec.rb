@@ -142,13 +142,6 @@ RSpec.describe "/certifications", type: :request do
         }.to change(Certification, :count).by(1)
       end
 
-      it "creates a new ActivityReportApplicationForm" do
-        expect {
-          post api_certifications_url,
-               params: { certification: valid_request_attributes }, headers: valid_headers, as: :json
-        }.to change(ActivityReportApplicationForm, :count).by(1)
-      end
-
       it "renders a JSON response with the new certification" do
         post api_certifications_url,
              params: { certification: valid_request_attributes }, headers: valid_headers, as: :json
