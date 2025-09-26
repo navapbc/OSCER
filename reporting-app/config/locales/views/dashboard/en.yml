@@ -1,6 +1,7 @@
 en:
   dashboard:
     index:
+      title: "Home"
       activity_report:
         title: "Report your community engagement (OSCER)"
         intro: "Certify your community engagement requirements through OSCER."
