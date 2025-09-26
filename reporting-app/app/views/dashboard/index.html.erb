@@ -10,3 +10,11 @@
 <% elsif @exemption_application_form&.submitted? && @exemption_case&.exemption_request_approval_status == "approved" %>
   <%= render "exemption_approved", certification: @certification %>
 <% end %>
+<!-- Previous Certifications -->
+<% if @all_certifications.length > 1 %>
+  <h2>Previous completed requirements</h2>
+  <p class="font-serif-md">
+    Review previously-completed certifications.
+  </p>
+  <%= link_to "Review previous certifications", certifications_path, class: "usa-button usa-button--outline" %>
+<% end %>
