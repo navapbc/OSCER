@@ -24,3 +24,26 @@ en:
     new:
       title: "New Certification"
       submit: "Create"
+    demo_create:
+      title: "Certification Request"
+      submit: "Request Certification"
+      # could use pluralize stuff for these options, but at the moment these are
+      # fixed values and could potentially have mixed units, so be explicit for now
+      lookback_period_options:
+        1: "1 month"
+        2: "2 months"
+        3: "3 months"
+        4: "4 months"
+        5: "5 months"
+        6: "6 months"
+      number_of_months_to_certify_options:
+        1: "1 month"
+        2: "2 months"
+        3: "3 months"
+        4: "4 months"
+        5: "5 months"
+        6: "6 months"
+      due_period_options:
+        15: "15 days"
+        30: "30 days"
+        60: "60 days"

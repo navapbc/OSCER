@@ -1,22 +1,22 @@
-<% content_for :title, "Certification Request" %>
+<% content_for :title, t("certifications.demo_create.title") %>
 
-<h1><%= "Certification Request" %></h1>
+<h1><%= t("certifications.demo_create.title") %></h1>
 
 <%= us_form_with model: @form, url: demo_certifications_path do |f| %>
   <%= f.text_field :beneficiary_email %>
-  <%= f.text_field :case_number, label: "Medicaid case number" %>
+  <%= f.text_field :case_number, label: t("certifications.case_number") %>
 
   <!-- TODO: doesn't do anything -->
   <%#= f.select :certification_type, ["New application", "Recertification"] %>
   <%= f.date_picker :certification_date %>
 
-  <%= f.select :lookback_period, Demo::Certifications::CreateForm::LOOKBACK_PERIOD_OPTIONS %>
+  <%= f.select :lookback_period, Demo::Certifications::CreateForm::LOOKBACK_PERIOD_OPTIONS.map { |i| [ t("certifications.demo_create.lookback_period_options.#{i}"), i ] } %>
   <!-- TODO: doesn't do anything -->
   <%#= f.select :recertification_frequency, Demo::Certifications::CreateForm::RECERTIFICATION_FREQUENCY_OPTIONS %>
-  <%= f.select :number_of_months_to_certify, Demo::Certifications::CreateForm::NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS %>
-  <%= f.select :due_period_days, Demo::Certifications::CreateForm::DUE_PERIOD_OPTIONS %>
+  <%= f.select :number_of_months_to_certify, Demo::Certifications::CreateForm::NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS.map { |i| [ t("certifications.demo_create.number_of_months_to_certify_options.#{i}"), i ] } %>
+  <%= f.select :due_period_days, Demo::Certifications::CreateForm::DUE_PERIOD_OPTIONS.map { |i| [ t("certifications.demo_create.due_period_options.#{i}"), i ] } %>
 
-  <%= f.select :ex_parte_scenario, ["No data", "Partially met work hours requirement", "Fully met work hours requirement"] %>
+  <%= f.select :ex_parte_scenario, Demo::Certifications::CreateForm::EX_PARTE_SCENARIO_OPTIONS %>
 
-  <%= f.submit "Request Certification" %>
+  <%= f.submit t("certifications.demo_create.submit") %>
 <% end %>

@@ -5,10 +5,12 @@ module Demo
         include ActiveModel::Attributes
         include Flex::Attributes
 
-        LOOKBACK_PERIOD_OPTIONS = 6.times.map { |i| [ "#{i + 1} months", i + 1 ] }
-        RECERTIFICATION_FREQUENCY_OPTIONS = 6.times.map { |i| [ "#{i + 1} months", i + 1 ] }
-        NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS = 6.times.map { |i| [ "#{i + 1} months", i + 1 ] }
-        DUE_PERIOD_OPTIONS = [ [ "15 days", 15 ], [ "30 days", 30 ], [ "60 days", 60 ] ]
+        LOOKBACK_PERIOD_OPTIONS = (1..6).to_a
+        # RECERTIFICATION_FREQUENCY_OPTIONS = (1..6).to_a
+        NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS = (1..6).to_a
+        DUE_PERIOD_OPTIONS = [ 15, 30, 60 ] # in days
+
+        EX_PARTE_SCENARIO_OPTIONS = [ "No data", "Partially met work hours requirement", "Fully met work hours requirement" ]
 
         attribute :beneficiary_email, :string
         attribute :case_number, :string
@@ -17,10 +19,10 @@ module Demo
         flex_attribute :certification_date, :us_date
 
         # TODO: would maybe prefer to use ISO8601 duration values here instead of integers of months
-        attribute :lookback_period, :integer, default: LOOKBACK_PERIOD_OPTIONS[0][1]
-        attribute :number_of_months_to_certify, :integer, default: NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS[0][1]
+        attribute :lookback_period, :integer, default: LOOKBACK_PERIOD_OPTIONS[0]
+        attribute :number_of_months_to_certify, :integer, default: NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS[0]
         # TODO: would maybe prefer to use ISO8601 duration values here instead of integers of days
-        attribute :due_period_days, :integer, default: DUE_PERIOD_OPTIONS[1][1]
+        attribute :due_period_days, :integer, default: DUE_PERIOD_OPTIONS[1]
 
         attribute :ex_parte_scenario, :string
 
