@@ -22,7 +22,15 @@
       <p class="font-serif-md">
         If you have certain conditions, you may not need to report activities.
       </p>
-      <%= link_to "Request exemption", new_exemption_application_form_path, class: "usa-button" %>
+      <% if exemption_application&.in_progress? %>
+        <p class="font-serif-md">
+          <strong>Exemption status</strong><br />
+          You have an exemption request in progress.
+        </p>
+        <%= link_to "Continue request", edit_exemption_application_form_path(exemption_application), class: "usa-button" %>
+      <% else %>
+        <%= link_to "Request exemption", new_exemption_application_form_path, class: "usa-button" %>
+      <% end %>
     </div>
   </div>
 </div>
