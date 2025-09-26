@@ -6,7 +6,8 @@ class Demo::CertificationsController < ApplicationController
 
   def new
     certification_type = params.fetch(:certification_type, nil)
-    @form = Demo::Certifications::CreateForm.new(certification_type: certification_type)
+    certification_requirement_params = certification_service.certification_type_requirement_params(certification_type) || {}
+    @form = Demo::Certifications::CreateForm.new({ certification_type: certification_type }.merge(certification_requirement_params))
   end
 
   def create
@@ -18,7 +19,7 @@ class Demo::CertificationsController < ApplicationController
       return render :new, status: :unprocessable_entity
     end
 
-    certification_requirements = certification_service.calculate_certification_requirements(@form)
+    certification_requirements = certification_service.calculate_certification_requirements(@form.attributes.with_indifferent_access)
     beneficiary_data = {}
 
     case @form.ex_parte_scenario
