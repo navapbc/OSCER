@@ -1,35 +1,35 @@
 <div class="grid-row grid-gap">
   <div class="grid-col-6">
     <div class="border-2px padding-2">
-      <h2>Report Activities</h2>
+      <h2><%= t(".activity_report.title") %></h2>
       <p class="font-serif-md">
-        Report your activities for the current reporting period.
+        <%= t(".activity_report.intro") %>
       </p>
       <% if activity_report&.in_progress? %>
         <p class="font-serif-md">
-          <strong>Report Status</strong><br />
-          You have an activity report in progress.
+          <strong><%= t(".activity_report.in_progress_status") %></strong><br />
+          <%= t(".activity_report.in_progress_message") %>
         </p>
-        <%= link_to "Continue report", activity_report_application_form_path(activity_report), class: "usa-button" %>
+        <%= link_to t(".activity_report.continue_report_button"), activity_report_application_form_path(activity_report), class: "usa-button" %>
       <% else %>
-        <%= link_to "Report activities", new_activity_report_application_form_path, class: "usa-button" %>
+        <%= link_to t(".activity_report.report_activities_button"), new_activity_report_application_form_path, class: "usa-button" %>
       <% end %>
     </div>
   </div>
   <div class="grid-col-6">
     <div class="border-2px padding-2">
-      <h2>Apply for an exemption</h2>
+      <h2><%= t(".exemption_request.title") %></h2>
       <p class="font-serif-md">
-        If you have certain conditions, you may not need to report activities.
+        <%= t(".exemption_request.intro") %>
       </p>
       <% if exemption_application&.in_progress? %>
         <p class="font-serif-md">
-          <strong>Exemption status</strong><br />
-          You have an exemption request in progress.
+          <strong><%= t(".exemption_request.in_progress_status") %></strong><br />
+          <%= t(".exemption_request.in_progress_message") %>
         </p>
-        <%= link_to "Continue request", exemption_application_form_path(exemption_application), class: "usa-button" %>
+        <%= link_to t(".exemption_request.continue_request_button"), exemption_application_form_path(exemption_application), class: "usa-button" %>
       <% else %>
-        <%= link_to "Request exemption", new_exemption_application_form_path(certification_id: certification.id), class: "usa-button usa-button--outline" %>
+        <%= link_to t(".exemption_request.request_exemption_button"), new_exemption_application_form_path(certification_id: certification.id), class: "usa-button usa-button--outline" %>
       <% end %>
     </div>
   </div>
