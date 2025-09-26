@@ -30,7 +30,7 @@ FactoryBot.define do
       end
 
       after(:build) do |cert, context|
-        if not context.email.nil?
+        if not context.email.blank?
           cert.beneficiary_data.deep_merge!({
             "account_email": context.email,
             "contact": {
