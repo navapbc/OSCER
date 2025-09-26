@@ -1,8 +1,7 @@
-<h1>Report your community engagement (IVaaS)</h2>
+<h1>Report your community engagement (IVaaS)</h1>
 <p class="usa-intro">
   Certify your community engagement requirements using the Centers for Medicare and Medicaid Service's income reporting app.
 </p>
-
 <section class="d-flex flex-column flex-md-row gap-4 align-items-start justify-content-between">
   <table class="usa-table usa-table--borderless width-full">
     <thead>
@@ -34,9 +33,7 @@
     </tbody>
   </table>
 </section>
-
-
-<%= render template: "flex/application_forms/index", locals: {
+<%# render template: "flex/application_forms/index", locals: {
   title: t(".activity_report.title"),
   intro: t(".activity_report.intro"),
   new_button_text: t(".activity_report.new_button"),
@@ -48,5 +45,6 @@
     status: form.status
   }}
 } %>
-
+<h1><%= t(".title") %></h1>
+<%= render "activity_report_status" %>
 <%= render "exemption_status" %>
