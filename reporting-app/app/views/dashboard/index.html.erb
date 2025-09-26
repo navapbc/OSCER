@@ -46,4 +46,12 @@
   }}
 } %>
 <h1><%= t(".title") %></h1>
-<%= render "new_certification" %>
+<% if @activity_report_application_form.nil? && @exemption_application_form.nil? %>
+  <%= render "new_certification" %>
+<% elsif @activity_report_application_form&.in_progress? %>
+  <%= render "activity_report_in_progress", activity_report: @activity_report_application_form %>
+<% elsif @activity_report_application_form&.submitted? && @activity_report_case&.activity_report_approval_status.nil? %>
+  <%= render "activity_report_submitted", activity_report: @activity_report_application_form %>
+<% elsif @activity_report_application_form&.submitted? && @activity_report_case&.activity_report_approval_status == "approved" %>
+  <%= render "activity_report_approved", certification: @certification %>
+<% end %>
