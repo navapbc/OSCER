@@ -3,7 +3,7 @@ module Demo
     class BaseCreateForm
       include ActiveModel::Model
       include ActiveModel::Attributes
-      include Flex::Attributes
+      include Strata::Attributes
 
       CERTIFICATION_TYPE_OPTIONS = [ "new_application", "recertification" ]
 
