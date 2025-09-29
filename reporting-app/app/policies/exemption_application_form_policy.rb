@@ -1,5 +1,5 @@
 class ExemptionApplicationFormPolicy < ApplicationPolicy
-  include Flex::ApplicationFormPolicy
+  include Strata::ApplicationFormPolicy
 
   alias_method :documents?, :edit?
   alias_method :upload_documents?, :edit?
