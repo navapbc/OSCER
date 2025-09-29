@@ -4,6 +4,10 @@ class CertificationService
       return false
     end
 
+    # TODO: not sure how else to get Rails to stop complaining about
+    # :activity_report_application_forms strict loading on newly created record
+    certification.strict_loading! false
+
     # TODO: this logic could/should be moved to an business process/event
     # processing step
     is_exempt = false
@@ -13,8 +17,6 @@ class CertificationService
         b_user = bene_user(certification) || current_user
         if b_user
             activity_report = ActivityReportApplicationForm.create!(user_id: b_user.id, certification: certification)
-            # due to strict loading
-            certification.activity_report_application_forms = [ activity_report ]
         end
     end
 

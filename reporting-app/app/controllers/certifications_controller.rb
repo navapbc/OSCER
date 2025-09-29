@@ -24,9 +24,7 @@ class CertificationsController < StaffController
 
     authorize @certification
 
-    # TODO: remove current user from here, the "real" endpoint should never fall
-    # back to the current user
-    if certification_service.save_new(@certification, current_user)
+    if certification_service.save_new(@certification)
       render :show, status: :created, location: @certification
     else
       render json: @certification.errors, status: :unprocessable_entity
@@ -55,14 +53,30 @@ class CertificationsController < StaffController
 
     # Only allow a list of trusted parameters through.
     def certification_params
-      params.require(:certification).permit(:beneficiary_id, :case_number, :certification_requirements, :beneficiary_data).tap do |params|
+      # support both top-level params and under a "certification" key (for HTML form)
+      if params&.has_key?(:certification)
+        cert_params = params.fetch(:certification)
+      else
+        cert_params = params
+      end
+
+      cert_params.permit(
+        :beneficiary_id,
+        :case_number,
+        :certification_requirements,
+        :beneficiary_data,
+        certification_requirements: {},
+        beneficiary_data: {}
+      ).tap do |cert_params|
         begin
-          if params[:certification_requirements].present?
-              params[:certification_requirements] = JSON.parse(params[:certification_requirements])
+          # handle HTML form input of the JSON blob as a string
+          if cert_params[:certification_requirements].present? && cert_params[:certification_requirements].is_a?(String)
+            cert_params[:certification_requirements] = JSON.parse(cert_params[:certification_requirements])
           end
 
-          if params[:beneficiary_data].present?
-              params[:beneficiary_data] = JSON.parse(params[:beneficiary_data])
+          # handle HTML form input of the JSON blob as a string
+          if cert_params[:beneficiary_data].present? && cert_params[:beneficiary_data].is_a?(String)
+            cert_params[:beneficiary_data] = JSON.parse(cert_params[:beneficiary_data])
           end
         rescue JSON::ParserError => e
           raise ActionController::BadRequest.new(e.message)
