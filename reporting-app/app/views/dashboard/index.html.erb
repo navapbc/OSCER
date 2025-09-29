@@ -1,52 +1,10 @@
-<h1>Report your community engagement (IVaaS)</h2>
-<p class="usa-intro">
-  Certify your community engagement requirements using the Centers for Medicare and Medicaid Service's income reporting app.
-</p>
-
-<section class="d-flex flex-column flex-md-row gap-4 align-items-start justify-content-between">
-  <table class="usa-table usa-table--borderless width-full">
-    <thead>
-      <tr>
-        <th scope="col">
-          Case number
-        </th>
-        <th scope="col">
-          Actions
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for activity_report in @in_progress_activity_reports do %>
-        <tr>
-          <td>
-            <%= activity_report.id %>
-          </td>
-          <td>
-            <%= link_to "Certify",
-                        edit_activity_report_application_form_path(
-                          activity_report,
-                          reporting_source: "income_verification_service"
-                        ),
-                        class: "usa-button" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</section>
-
-
-<%= render template: "flex/application_forms/index", locals: {
-  title: t(".activity_report.title"),
-  intro: t(".activity_report.intro"),
-  new_button_text: t(".activity_report.new_button"),
-  new_path: new_activity_report_application_form_path,
-  in_progress_applications_heading: t(".activity_report.in_progress_applications.heading"),
-  application_forms: @activity_report_application_forms.map { |form| {
-    created_at: form.created_at.strftime("%B %d, %Y at %I:%M %p"),
-    path: activity_report_application_form_path(form),
-    status: form.status
-  }}
-} %>
-
-<%= render "exemption_status" %>
+<h1><%= t(".title") %></h1>
+<%= render determine_dashboard_view, activity_report: @activity_report_application_form, exemption_application: @exemption_application_form, certification: @certification %>
+<!-- Previous Certifications -->
+<% if @all_certifications.length > 1 %>
+  <h2><%= t(".previous_certifications.title") %></h2>
+  <p class="font-serif-md">
+    <%= t(".previous_certifications.intro") %>
+  </p>
+  <%= link_to t(".previous_certifications.review_previous_certifications_button"), certifications_path, class: "usa-button usa-button--outline" %>
+<% end %>

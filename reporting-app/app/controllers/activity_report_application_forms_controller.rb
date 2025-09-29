@@ -48,6 +48,7 @@ class ActivityReportApplicationFormsController < ApplicationController
   def create
     @activity_report_application_form = ActivityReportApplicationForm.new(activity_report_application_form_params)
     @activity_report_application_form.user_id = current_user.id
+    @activity_report_application_form.certification = Certification.order(created_at: :desc).first
 
     authorize @activity_report_application_form
 

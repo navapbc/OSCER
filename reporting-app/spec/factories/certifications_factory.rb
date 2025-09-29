@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :certification do
+    id { SecureRandom.uuid }
     beneficiary_id { Faker::NationalHealthService.british_number }
     case_number { "C-%d" % Faker::Number.within(range: 1..10000) }
     certification_requirements { nil }
