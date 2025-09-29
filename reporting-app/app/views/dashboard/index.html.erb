@@ -1,15 +1,5 @@
 <h1><%= t(".title") %></h1>
-<% if (@activity_report_application_form.nil? || @activity_report_application_form.in_progress?) && (@exemption_application_form.nil? || @exemption_application_form.in_progress?) %>
-  <%= render "new_certification", activity_report: @activity_report_application_form, exemption_application: @exemption_application_form, certification: @certification %>
-<% elsif @activity_report_application_form&.submitted? && @activity_report_case&.activity_report_approval_status.nil? %>
-  <%= render "activity_report_submitted", activity_report: @activity_report_application_form %>
-<% elsif @activity_report_application_form&.submitted? && @activity_report_case&.activity_report_approval_status == "approved" %>
-  <%= render "activity_report_approved", certification: @certification %>
-<% elsif @exemption_application_form&.submitted? && @exemption_case&.exemption_request_approval_status.nil? %>
-  <%= render "exemption_submitted", exemption_application: @exemption_application_form %>
-<% elsif @exemption_application_form&.submitted? && @exemption_case&.exemption_request_approval_status == "approved" %>
-  <%= render "exemption_approved", certification: @certification %>
-<% end %>
+<%= render determine_dashboard_view, activity_report: @activity_report_application_form, exemption_application: @exemption_application_form, certification: @certification %>
 <!-- Previous Certifications -->
 <% if @all_certifications.length > 1 %>
   <h2><%= t(".previous_certifications.title") %></h2>
