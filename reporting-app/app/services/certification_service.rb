@@ -17,6 +17,8 @@ class CertificationService
             certification.activity_report_application_forms = [ activity_report ]
         end
     end
+
+    true
   end
 
   def bene_user(certification)
