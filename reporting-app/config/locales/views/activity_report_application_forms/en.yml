@@ -2,7 +2,7 @@ en:
   activity_report_application_forms:
     show:
       title: "Activity Report"
-      back: "Back to activity reports"
+      back: "Back to dashboard"
       edit: "Edit activity report"
       submitted_on: "Submitted on"
       intro:
