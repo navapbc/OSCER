@@ -36,6 +36,14 @@ class CertificationsController < StaffController
 
     authorize @certification
 
+    requirement_params = @certification&.certification_requirements
+
+    if requirement_params&.type
+      requirement_params.deep_merge!(certification_service.certification_type_requirement_params(requirement_params.type))
+    end
+
+    @certification.certification_requirements = certification_service.calculate_certification_requirements(requirement_params)
+
     if certification_service.save_new(@certification)
       render :show, status: :created, location: @certification
     else
