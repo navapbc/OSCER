@@ -12,10 +12,12 @@ class Certification < ApplicationRecord
   # TODO: some of this should be required, but leaving it open at the moment
   # validates :beneficiary_id, presence: true
 
+  # TODO: add validation for JSON columns (they should be hashes, etc)
+
   def beneficiary_account_email
-    if self&.beneficiary_data&.has_key?("account_email")
-      self.beneficiary_data["account_email"]
-    end
+    return unless self.beneficiary_data
+
+    self.beneficiary_data.dig("account_email")
   end
 
   def self.find_by_beneficiary_account_email(email)
@@ -23,9 +25,9 @@ class Certification < ApplicationRecord
   end
 
   def beneficiary_contact_email
-    if self&.beneficiary_data&.dig("contact", "email")
-      self.beneficiary_data["contact"]["email"]
-    end
+    return unless self.beneficiary_data
+
+    self.beneficiary_data.dig("contact", "email")
   end
 
   def self.find_by_beneficiary_contact_email(email)
