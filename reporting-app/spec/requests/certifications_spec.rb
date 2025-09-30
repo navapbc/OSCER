@@ -171,13 +171,13 @@ RSpec.describe "/certifications", type: :request do
       it "creates a new Certification" do
         expect {
           post api_certifications_url,
-               params: { certification: valid_json_request_attributes }, headers: valid_headers, as: :json
+               params: valid_json_request_attributes, headers: valid_headers, as: :json
         }.to change(Certification, :count).by(1)
       end
 
       it "renders a JSON response with the new certification" do
         post api_certifications_url,
-             params: { certification: valid_json_request_attributes }, headers: valid_headers, as: :json
+             params: valid_json_request_attributes, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including("application/json"))
         expect(response).to match_openapi_doc(OPENAPI_DOC)
