@@ -117,4 +117,10 @@ Rails.application.routes.draw do
       post "send_email"
     end
   end
+
+  # Demo tools
+  get "/demo", to: "demo#index"
+  namespace :demo do
+    resources :certifications, only: [ :new, :create ]
+  end
 end

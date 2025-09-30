@@ -3,11 +3,22 @@ require 'rails_helper'
 RSpec.describe "/certifications", type: :request do
   include Warden::Test::Helpers
 
-  let(:staff_user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
+  let(:staff_user) { User.create!(email: "staff@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
+  let(:bene_user) { User.create!(email: "bene@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
 
-  let(:valid_request_attributes) {
+  let(:valid_html_request_attributes) {
     {
-      beneficiary_id: "foobar"
+      beneficiary_id: "foobar",
+      beneficiary_data: "{\"account_email\": \"#{bene_user.email}\"}"
+    }
+  }
+
+  let(:valid_json_request_attributes) {
+    {
+      beneficiary_id: "foobar",
+      beneficiary_data: {
+        account_email: bene_user.email
+      }
     }
   }
 
@@ -75,7 +86,7 @@ RSpec.describe "/certifications", type: :request do
     end
 
     it "renders a successful response with data" do
-      certification = create(:certification, :with_certification_requirements, :with_beneficiary_data)
+      certification = create(:certification, :with_certification_requirements)
       get certification_url(certification)
       expect(response).to be_successful
     end
@@ -95,7 +106,7 @@ RSpec.describe "/certifications", type: :request do
     end
 
     it "renders a successful response with data" do
-      certification = create(:certification, :with_certification_requirements, :with_beneficiary_data)
+      certification = create(:certification, :with_certification_requirements)
       get api_certification_url(certification)
       expect(response).to be_successful
     end
@@ -106,13 +117,28 @@ RSpec.describe "/certifications", type: :request do
       it "creates a new Certification" do
         expect {
           post certifications_url,
-               params: { certification: valid_request_attributes }, headers: valid_headers
+               params: { certification: valid_html_request_attributes }, headers: valid_headers
         }.to change(Certification, :count).by(1)
       end
 
       it "renders a HTML response with the new certification" do
         post certifications_url,
-             params: { certification: valid_request_attributes }, headers: valid_headers
+             params: { certification: valid_html_request_attributes }, headers: valid_headers
+        expect(response).to have_http_status(:created)
+      end
+    end
+
+    context "with no bene info" do
+      it "creates a new Certification" do
+        expect {
+          post certifications_url,
+               params: { certification: { beneficiary_id: "no_user" } }, headers: valid_headers
+        }.to change(Certification, :count).by(1)
+      end
+
+      it "renders a HTML response with the new certification" do
+        post certifications_url,
+             params: { certification: { beneficiary_id: "no_user" } }, headers: valid_headers
         expect(response).to have_http_status(:created)
       end
     end
@@ -138,15 +164,33 @@ RSpec.describe "/certifications", type: :request do
       it "creates a new Certification" do
         expect {
           post api_certifications_url,
-               params: { certification: valid_request_attributes }, headers: valid_headers, as: :json
+               params: { certification: valid_json_request_attributes }, headers: valid_headers, as: :json
         }.to change(Certification, :count).by(1)
       end
 
       it "renders a JSON response with the new certification" do
         post api_certifications_url,
-             params: { certification: valid_request_attributes }, headers: valid_headers, as: :json
+             params: { certification: valid_json_request_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including("application/json"))
+      end
+    end
+
+    context "with no bene info" do
+      it "creates a new Certification" do
+        expect {
+          post certifications_url,
+              params: { certification: { beneficiary_id: "no_user" } }, headers: valid_headers
+        }.to change(Certification, :count).by(1)
+      end
+    end
+
+    context "with no matching bene info" do
+      it "creates a new Certification" do
+        expect {
+          post certifications_url,
+              params: { certification: { beneficiary_id: "no_user", beneficiary_data: { account_email: "neverfound@foo.com" } } }, headers: valid_headers
+        }.to change(Certification, :count).by(1)
       end
     end
 

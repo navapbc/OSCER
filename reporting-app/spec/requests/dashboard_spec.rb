@@ -5,7 +5,6 @@ RSpec.describe "/dashboard", type: :request do
 
   let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
   let(:other_user) { User.create!(email: "test-other@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
-  let!(:certification) { create(:certification) }
 
   before do
     login_as user
@@ -16,7 +15,14 @@ RSpec.describe "/dashboard", type: :request do
   end
 
   describe "GET /index" do
-    it "renders a successful response with no forms" do
+    it "renders a successful response with no certification" do
+      get dashboard_path
+      expect(response).to be_successful
+    end
+
+    it "renders a successful response with no forms, but certification" do
+      create(:certification, :connected_to_email, email: user.email)
+
       get dashboard_path
       expect(response).to be_successful
     end
