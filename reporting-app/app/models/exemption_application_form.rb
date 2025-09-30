@@ -1,4 +1,4 @@
-class ExemptionApplicationForm < Flex::ApplicationForm
+class ExemptionApplicationForm < Strata::ApplicationForm
   enum :exemption_type, {
     short_term_hardship: "short_term_hardship",
     incarceration: "incarceration"
@@ -9,5 +9,5 @@ class ExemptionApplicationForm < Flex::ApplicationForm
 
   default_scope { with_attached_supporting_documents }
 
-  flex_attribute :exemption_type, :string
+  strata_attribute :exemption_type, :string
 end

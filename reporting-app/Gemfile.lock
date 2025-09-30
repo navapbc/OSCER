@@ -1,8 +1,8 @@
 GIT
   remote: https://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:x-oauth-basic@github.com/navapbc/flex-sdk.git
-  revision: df995add017906a8231419db1bfd18fa1caf9fb3
+  revision: b55822e0194dfb89f7456fe557b3836cd6265b43
   specs:
-    flex (0.1.0)
+    strata (0.1.0)
       pundit (>= 2.5.0)
       rails (>= 7.1.5.1)
       validates_timeliness (>= 7.0.0)
@@ -564,7 +564,6 @@ DEPENDENCIES
   factory_bot_rails
   faker (~> 3.2)
   faraday
-  flex!
   guard-rspec
   importmap-rails
   jbuilder
@@ -589,6 +588,7 @@ DEPENDENCIES
   simplecov
   sprockets-rails
   stimulus-rails
+  strata!
   turbo-rails (>= 2.0)
   tzinfo-data
   web-console
