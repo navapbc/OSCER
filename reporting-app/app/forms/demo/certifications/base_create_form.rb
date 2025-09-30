@@ -17,7 +17,7 @@ module Demo
       # TODO: add validation you can't set both certification_type and the other params?
       attribute :certification_type, :string
 
-      flex_attribute :certification_date, :us_date
+      strata_attribute :certification_date, :us_date
 
       # TODO: would maybe prefer to use ISO8601 duration values here instead of integers of months
       attribute :lookback_period, :integer, default: LOOKBACK_PERIOD_OPTIONS[0]

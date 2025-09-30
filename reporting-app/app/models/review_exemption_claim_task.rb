@@ -1,4 +1,4 @@
-class ReviewExemptionClaimTask < Flex::Task
+class ReviewExemptionClaimTask < Strata::Task
   # Add custom attributes and behavior here
 
   # Example:
