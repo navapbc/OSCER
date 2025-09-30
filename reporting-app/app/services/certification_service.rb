@@ -6,7 +6,7 @@ class CertificationService
 
     # TODO: not sure how else to get Rails to stop complaining about
     # :activity_report_application_forms strict loading on newly created record
-    certification.strict_loading! false
+    certification.activity_report_application_forms = []
 
     # TODO: this logic could/should be moved to an business process/event
     # processing step
