@@ -31,8 +31,8 @@ module Demo
       # message about relationship to number_of_months_to_certify
       validates :lookback_period, numericality: { greater_than_or_equal_to: Proc.new { |record| record.number_of_months_to_certify } }
 
-      def locked_params?
-        not certification_type.nil?
+      def locked_type_params?
+        certification_type.present?
       end
     end
   end
