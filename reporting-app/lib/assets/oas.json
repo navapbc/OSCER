@@ -26,16 +26,39 @@
         "required": [
           "beneficiary_id"
         ],
-        "example": {
-          "beneficiary_id": "123",
-          "case_number": "C-111",
-          "certification_requirements": {
-            "lookback_period": "3m"
+        "examples": {
+          "fully_specified_certification_requirements": {
+            "value": {
+              "beneficiary_id": "123",
+              "case_number": "C-111",
+              "certification_requirements": {
+                "certification_date": "2025-09-26",
+                "lookback_period": 3,
+                "number_of_months_to_certify": 1,
+                "due_period_days": 30
+              },
+              "beneficiary_data": {
+                "contact": {
+                  "email": "john@doe.com",
+                  "phone": "+123456789"
+                }
+              }
+            }
           },
-          "beneficiary_data": {
-            "contact": {
-              "email": "john@doe.com",
-              "phone": "+123456789"
+          "certification_type": {
+            "value": {
+              "beneficiary_id": "123",
+              "case_number": "C-111",
+              "certification_requirements": {
+                "certification_date": "2025-09-26",
+                "certification_type": "new_application"
+              },
+              "beneficiary_data": {
+                "contact": {
+                  "email": "john@doe.com",
+                  "phone": "+123456789"
+                }
+              }
             }
           }
         }
@@ -86,7 +109,14 @@
           "beneficiary_id": "123",
           "case_number": "C-111",
           "certification_requirements": {
-            "lookback_period": "3m"
+            "certification_date": "2025-09-26",
+            "number_of_months_to_certify": 1,
+            "due_date": "2025-10-36",
+            "params": {
+              "lookback_period": 3,
+              "number_of_months_to_certify": 1,
+              "due_period_days": 30
+            }
           },
           "beneficiary_data": {
             "contact": {

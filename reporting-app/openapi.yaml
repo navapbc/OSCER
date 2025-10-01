@@ -35,16 +35,39 @@
         "required": [
           "beneficiary_id"
         ],
-        "example": {
-          "beneficiary_id": "123",
-          "case_number": "C-111",
-          "certification_requirements": {
-            "lookback_period": "3m"
+        "examples": {
+          "fully_specified_certification_requirements": {
+            "value": {
+              "beneficiary_id": "123",
+              "case_number": "C-111",
+              "certification_requirements": {
+                "certification_date": "2025-09-26",
+                "lookback_period": 3,
+                "number_of_months_to_certify": 1,
+                "due_period_days": 30
+              },
+              "beneficiary_data": {
+                "contact": {
+                  "email": "john@doe.com",
+                  "phone": "+123456789"
+                }
+              }
+            }
           },
-          "beneficiary_data": {
-            "contact": {
-              "email": "john@doe.com",
-              "phone": "+123456789"
+          "certification_type": {
+            "value": {
+              "beneficiary_id": "123",
+              "case_number": "C-111",
+              "certification_requirements": {
+                "certification_date": "2025-09-26",
+                "certification_type": "new_application"
+              },
+              "beneficiary_data": {
+                "contact": {
+                  "email": "john@doe.com",
+                  "phone": "+123456789"
+                }
+              }
             }
           }
         }
@@ -104,7 +127,14 @@
           "beneficiary_id": "123",
           "case_number": "C-111",
           "certification_requirements": {
-            "lookback_period": "3m"
+            "certification_date": "2025-09-26",
+            "number_of_months_to_certify": 1,
+            "due_date": "2025-10-36",
+            "params": {
+              "lookback_period": 3,
+              "number_of_months_to_certify": 1,
+              "due_period_days": 30
+            }
           },
           "beneficiary_data": {
             "contact": {
@@ -155,7 +185,7 @@
       }
     },
     "responses": {
-      "279b22fab83236e381700bd1cffa55cf": {
+      "58ae59e39c574fd14309743e3c46492b": {
         "description": "Created Certification.",
         "content": {
           "application/json": {
@@ -165,7 +195,7 @@
           }
         }
       },
-      "2f794de607fd981138ed76a90013c763": {
+      "4a3cab8f9ba0f57c08a866899dd6e789": {
         "description": "User error.",
         "content": {
           "application/json": {
@@ -175,7 +205,7 @@
           }
         }
       },
-      "4aecda910357190532ee31007cf0339f": {
+      "910814026b3de90da9ae04c6218bc108": {
         "description": "The server could not process the request due to semantic errors. Please check your input and try again.",
         "content": {
           "application/json": {
@@ -185,7 +215,7 @@
           }
         }
       },
-      "2efde0e66bb1d288897b6facc75f5f32": {
+      "4ea72e06b9c060810f40d21224c41577": {
         "description": "A Certification",
         "content": {
           "application/json": {
@@ -195,7 +225,7 @@
           }
         }
       },
-      "f59e27cae929e44509da26c904235536": {
+      "18d0937c43a07787b30baf785797d4ac": {
         "description": "The requested resource could not be found.",
         "content": {
           "application/json": {
@@ -219,7 +249,7 @@
       }
     },
     "requestBodies": {
-      "f60034abfe5f736e863755d69d30d5db": {
+      "6c9c8ea88e42961e41e7f24bb500d5e5": {
         "description": "The Certification data.",
         "content": {
           "application/json": {
@@ -274,17 +304,17 @@
         "description": "#",
         "operationId": "POST__api_certifications",
         "requestBody": {
-          "$ref": "#/components/requestBodies/f60034abfe5f736e863755d69d30d5db"
+          "$ref": "#/components/requestBodies/6c9c8ea88e42961e41e7f24bb500d5e5"
         },
         "responses": {
           "201": {
-            "$ref": "#/components/responses/279b22fab83236e381700bd1cffa55cf"
+            "$ref": "#/components/responses/58ae59e39c574fd14309743e3c46492b"
           },
           "400": {
-            "$ref": "#/components/responses/2f794de607fd981138ed76a90013c763"
+            "$ref": "#/components/responses/4a3cab8f9ba0f57c08a866899dd6e789"
           },
           "422": {
-            "$ref": "#/components/responses/4aecda910357190532ee31007cf0339f"
+            "$ref": "#/components/responses/910814026b3de90da9ae04c6218bc108"
           }
         }
       }
@@ -304,10 +334,10 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/2efde0e66bb1d288897b6facc75f5f32"
+            "$ref": "#/components/responses/4ea72e06b9c060810f40d21224c41577"
           },
           "404": {
-            "$ref": "#/components/responses/f59e27cae929e44509da26c904235536"
+            "$ref": "#/components/responses/18d0937c43a07787b30baf785797d4ac"
           }
         }
       }

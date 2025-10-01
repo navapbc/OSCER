@@ -29,6 +29,8 @@ class CertificationsController < StaffController
   # @tags certifications
   #
   # @request_body The Certification data. [Reference:#/components/schemas/CertificationCreateRequestBody]
+  # @request_body_example Fully specified certification requirements [Reference:#/components/schemas/CertificationCreateRequestBody/examples/fully_specified_certification_requirements]
+  # @request_body_example Certification type [Reference:#/components/schemas/CertificationCreateRequestBody/examples/certification_type]
   # @response Created Certification.(201) [Reference:#/components/schemas/CertificationResponseBody]
   # @response User error.(400) [Reference:#/components/schemas/ErrorResponseBody]
   def create
@@ -38,8 +40,8 @@ class CertificationsController < StaffController
 
     requirement_params = @certification&.certification_requirements
 
-    if requirement_params&.type
-      requirement_params.deep_merge!(certification_service.certification_type_requirement_params(requirement_params.type))
+    if requirement_params&.has_key?(:type)
+      requirement_params.deep_merge!(certification_service.certification_type_requirement_params(requirement_params[:type]))
     end
 
     @certification.certification_requirements = certification_service.calculate_certification_requirements(requirement_params)
