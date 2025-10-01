@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   get "/dashboard", to: "dashboard#index"
 
   scope path: "/api", as: :api, defaults: { format: :json } do
-    resources :certifications, only: [ :create, :show ]
+    resources :certification_requests, only: [ :create, :show ]
   end
 
   scope path: "/staff" do
@@ -121,6 +121,6 @@ Rails.application.routes.draw do
   # Demo tools
   get "/demo", to: "demo#index"
   namespace :demo do
-    resources :certifications, only: [ :new, :create ]
+    resources :certification_requests, only: [ :new, :create ]
   end
 end

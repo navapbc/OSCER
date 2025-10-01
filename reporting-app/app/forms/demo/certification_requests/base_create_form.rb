@@ -1,5 +1,5 @@
 module Demo
-  module Certifications
+  module CertificationRequests
     class BaseCreateForm
       include ActiveModel::Model
       include ActiveModel::Attributes

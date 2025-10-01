@@ -1,12 +1,12 @@
-class CertificationService
-  def save_new(certification, current_user = nil)
-    if !certification.save
+class CertificationRequestService
+  def save_new(certification_request, current_user = nil)
+    if !certification_request.save
       return false
     end
 
     # TODO: not sure how else to get Rails to stop complaining about
     # :activity_report_application_forms strict loading on newly created record
-    certification.activity_report_application_forms = []
+    certification_request.activity_report_application_forms = []
 
     # TODO: this logic could/should be moved to an business process/event
     # processing step
@@ -18,8 +18,8 @@ class CertificationService
     true
   end
 
-  def bene_user(certification)
-    email = certification.beneficiary_email
+  def bene_user(certification_request)
+    email = certification_request.beneficiary_email
     if not email
       return
     end

@@ -28,7 +28,7 @@ class ActivityReportApplicationFormsController < ApplicationController
 
     if reporting_source == "income_verification_service"
       puts "Redirecting user to CMS Income Verification Service"
-      # We should get the name from the certification request. For now, we'll use a placeholder name
+      # We should get the name from the certification_request. For now, we'll use a placeholder name
       name = Strata::Name.new(first: "Jane", last: "Doe")
       invitation = CMSIncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
       redirect_to invitation.tokenized_url, allow_other_host: true
@@ -48,7 +48,7 @@ class ActivityReportApplicationFormsController < ApplicationController
   def create
     @activity_report_application_form = ActivityReportApplicationForm.new(activity_report_application_form_params)
     @activity_report_application_form.user_id = current_user.id
-    @activity_report_application_form.certification = Certification.order(created_at: :desc).first
+    @activity_report_application_form.certification_request = CertificationRequest.order(created_at: :desc).first
 
     authorize @activity_report_application_form
 

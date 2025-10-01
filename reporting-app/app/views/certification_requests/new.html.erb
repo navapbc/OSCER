@@ -1,0 +1,9 @@
+<%= render partial: "application/breadcrumbs", locals: { crumbs: [
+  { name: t("certification_requests.index.title"), url: certification_requests_path },
+  ], current_name: t(".title")  } %>
+
+<% content_for :title, t(".title") %>
+
+<h1><%= t(".title") %></h1>
+
+<%= render "form", certification_request_form: @certification_request_form, submit_text: t(".submit") %>

@@ -1,4 +1,4 @@
-class Certification < ApplicationRecord
+class CertificationRequest < ApplicationRecord
   attribute :beneficiary_id, :string
   attribute :case_number, :string
 

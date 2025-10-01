@@ -1,9 +1,9 @@
 module DashboardHelper
   def determine_dashboard_view
-    if @certification.nil?
-      "no_certification"
+    if @certification_request.nil?
+      "no_certification_request"
     elsif are_activity_report_or_exemption_incomplete?
-      "new_certification"
+      "new_certification_request"
     elsif is_activity_report_submitted?
       "activity_report_submitted"
     elsif is_activity_report_approved?

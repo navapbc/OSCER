@@ -1,9 +1,9 @@
 <%= render partial: "application/breadcrumbs", locals: { crumbs: [
-  { name: t("certifications.index.title"), url: certifications_path },
-  ], current_name: @certification.id  } %>
+  { name: t("certification_requests.index.title"), url: certification_requests_path },
+  ], current_name: @certification_request.id  } %>
 <% content_for :title, t(".title") %>
 <h1><%= t(".title") %></h1>
-<%= render "form", certification_form: @certification, submit_text: t(".submit") %>
+<%= render "form", certification_request_form: @certification_request, submit_text: t(".submit") %>
 <h2><%= t(".activity_reports.header") %></h2>
 <table class="usa-table usa-table--borderless width-full">
   <thead>
@@ -17,7 +17,7 @@
     </tr>
   </thead>
   <tbody>
-    <% for activity_report in @certification.activity_report_application_forms do %>
+    <% for activity_report in @certification_request.activity_report_application_forms do %>
       <tr>
         <td>
           <%= link_to activity_report.id, activity_report_application_form_path(activity_report) %>

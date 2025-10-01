@@ -1,28 +1,28 @@
 en:
-  certifications:
+  certification_requests:
     beneficiary_id: "Bene ID"
     case_number: "Medicaid case number"
     certification_requirements: "Certification requirements"
     beneficiary_data: "Beneficiary data"
     index:
-      title: "Certifications"
-      create: "Create Certification"
+      title: "Certification Requests"
+      create: "Create Certification Request"
       columns:
-        col_certification_id: "Certification ID"
+        col_certification_request_id: "Certification Request ID"
         col_case_number: "Medicaid case number"
         col_created: "Created"
         col_actions: "Actions"
       actions:
         show: "Show"
     show:
-      title: "Certification"
+      title: "Certification Request"
       submit: "Update"
       activity_reports:
         header: "Associated reports"
         col_activity_report_id: "Activity Report ID"
         col_cases: "Activity Report Cases"
     new:
-      title: "New Certification"
+      title: "New Certification Request"
       submit: "Create"
     demo_create:
       title: "Certification Request"

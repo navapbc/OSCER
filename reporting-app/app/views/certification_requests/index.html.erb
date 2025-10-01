@@ -2,14 +2,14 @@
 
 <h1><%= t(".title") %></h1>
 
-<%= link_to t(".create"), new_certification_path(), class: "usa-button" %>
+<%= link_to t(".create"), new_certification_request_path(), class: "usa-button" %>
 
 <section class="d-flex flex-column flex-md-row gap-4 align-items-start justify-content-between">
   <table class="usa-table usa-table--borderless width-full">
     <thead>
       <tr>
         <th scope="col">
-          <%= t(".columns.col_certification_id") %>
+          <%= t(".columns.col_certification_request_id") %>
         </th>
         <th scope="col">
           <%= t(".columns.col_case_number") %>
@@ -23,19 +23,19 @@
       </tr>
     </thead>
     <tbody>
-      <% for certification in @certifications do %>
+      <% for certification_request in @certification_requests do %>
         <tr>
           <td>
-            <%= certification.id %>
+            <%= certification_request.id %>
           </td>
           <td>
-            <%= certification.case_number %>
+            <%= certification_request.case_number %>
           </td>
           <td>
-            <%= local_time(certification.created_at, format: :long) %>
+            <%= local_time(certification_request.created_at, format: :long) %>
           </td>
           <td>
-              <%= link_to t(".actions.show"), certification_path(certification), class: "usa-button" %>
+              <%= link_to t(".actions.show"), certification_request_path(certification_request), class: "usa-button" %>
           </td>
         </tr>
       <% end %>

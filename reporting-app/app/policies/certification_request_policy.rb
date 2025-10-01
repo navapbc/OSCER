@@ -1,4 +1,4 @@
-class CertificationPolicy < ApplicationPolicy
+class CertificationRequestPolicy < ApplicationPolicy
   def initialize(user, record)
     # TODO: for demo purposes at the moment allow unauthenticated, but at some
     # point that will change
