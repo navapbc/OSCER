@@ -4,7 +4,7 @@ import { SignInPage } from './SignInPage';
 
 export class VerifyAccountPage extends BasePage {
   get pagePath() {
-    return '/users/verify_account';
+    return '/users/verify-account';
   }
 
   readonly verificationCodeField: Locator;
