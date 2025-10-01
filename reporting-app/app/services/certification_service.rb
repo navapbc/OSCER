@@ -19,7 +19,7 @@ class CertificationService
   end
 
   def bene_user(certification)
-    email = certification.beneficiary_email
+    email = certification.member_email
     if not email
       return
     end

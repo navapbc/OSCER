@@ -16,7 +16,7 @@ FactoryBot.define do
     end
 
     trait :with_certification do
-      certification { create(:certification, :with_beneficiary_data) }
+      certification { create(:certification, :with_member_data) }
     end
 
     trait :with_submitted_status do
