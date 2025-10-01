@@ -117,14 +117,6 @@ class ActivityReportApplicationFormsController < ApplicationController
     activity_report_application_form
   end
 
-  def redirect_to_ivass
-    Rails.logger.debug("Redirecting user with id #{current_user.id} to CMS Income Verification Service")
-    name = Strata::Name.new(first: "Jane", last: "Doe")
-    @activity_report_application_form = authorize create_activity_report
-    invitation = CMSIncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
-    redirect_to invitation.tokenized_url, allow_other_host: true
-  end
-
   # Only allow a list of trusted parameters through.
   def activity_report_application_form_params
     params.require(:activity_report_application_form).permit(
