@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_30_205618) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_01_171819) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -72,15 +72,25 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_30_205618) do
     t.jsonb "facts", default: {}
   end
 
-  create_table "certifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "certification_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "certification_request_id", null: false
+    t.integer "status"
+    t.string "business_process_current_step"
+    t.jsonb "facts"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["certification_request_id"], name: "index_certification_cases_on_certification_request_id"
+  end
+
+  create_table "certification_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "beneficiary_id"
     t.text "case_number"
     t.jsonb "certification_requirements"
     t.jsonb "beneficiary_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["beneficiary_id"], name: "index_certifications_on_beneficiary_id"
-    t.index ["case_number"], name: "index_certifications_on_case_number"
+    t.index ["beneficiary_id"], name: "index_certification_requests_on_beneficiary_id"
+    t.index ["case_number"], name: "index_certification_requests_on_case_number"
   end
 
   create_table "exemption_application_forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -132,6 +142,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_30_205618) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "activity_report_application_forms"
-  add_foreign_key "activity_report_application_forms", "certifications"
-  add_foreign_key "exemption_application_forms", "certifications"
+  add_foreign_key "activity_report_application_forms", "certification_requests", column: "certification_id"
+  add_foreign_key "certification_cases", "certification_requests"
+  add_foreign_key "exemption_application_forms", "certification_requests", column: "certification_id"
 end
