@@ -4,7 +4,7 @@ import { VerifyAccountPage } from './VerifyAccountPage';
 
 export class RegistrationPage extends BasePage {
   get pagePath() {
-    return '/users/registrations/claimant';
+    return '/users/registrations';
   }
 
   readonly emailField: Locator;
