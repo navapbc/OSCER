@@ -1,0 +1,12 @@
+export { BasePage } from './BasePage';
+export { CertificationRequestPage } from './CertificationRequestPage';
+export { RegistrationPage } from './RegistrationPage';
+export { VerifyAccountPage } from './VerifyAccountPage';
+export { SignInPage } from './SignInPage';
+export { DashboardPage } from './DashboardPage';
+export { ChooseMonthsPage } from './ChooseMonthsPage';
+export { ReportActivitiesPage } from './ReportActivitiesPage';
+export { ActivityDetailsPage } from './ActivityDetailsPage';
+export { UploadSupportingDocumentationPage } from './UploadSupportingDocumentationPage';
+export { ReviewAndSubmitPage } from './ReviewAndSubmitPage';
+export { StaffDashboardPage } from './StaffDashboardPage';
