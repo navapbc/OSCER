@@ -60,50 +60,19 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
   end
 
   describe "GET /new" do
-    it "renders a successful response" do
-      get new_activity_report_application_form_url
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /edit" do
-    let(:activity_report_application_form) { ActivityReportApplicationForm.create! valid_db_attributes }
-
-    context "with reporting source set to 'income_verification_service'" do
-      let(:invitation) {
-        CMSIncomeVerificationService::Invitation.new(
-          tokenized_url: "https://ivaas.gov/en/cbv/entry?token=dummy-token",
-          expiration_date: DateTime.now + 7.days,
-          language: "en",
-          agency_partner_metadata: {
-            case_number: activity_report_application_form.id,
-            first_name: "Jane",
-            last_name: "Doe"
-          }
-        )
-      }
-      let(:mock_service) { instance_double(CMSIncomeVerificationService) }
-
-      before do
-        allow(Rails.application.config).to receive(:reporting_source).and_return("income_verification_service")
-        allow(CMSIncomeVerificationService).to receive(:new).and_return(mock_service)
-        allow(mock_service).to receive(:create_invitation)
-          .with(activity_report_application_form, instance_of(Strata::Name))
-          .and_return(invitation)
-      end
-
-      it "redirects to the income verification service" do
-        get edit_activity_report_application_form_url(activity_report_application_form)
-        expect(response).to redirect_to("https://ivaas.gov/en/cbv/entry?token=dummy-token")
-      end
-
-      it "renders an error response for non-owning user" do
-        login_as other_user
-
-        get edit_activity_report_application_form_url(activity_report_application_form)
-        expect(response).to be_client_error
-      end
-    end
+    let(:invitation) {
+      CMSIncomeVerificationService::Invitation.new(
+        tokenized_url: "https://ivaas.gov/en/cbv/entry?token=dummy-token",
+        expiration_date: DateTime.now + 7.days,
+        language: "en",
+        agency_partner_metadata: {
+          case_number: rand(1..1_000_000).to_s,
+          first_name: "Jane",
+          last_name: "Doe"
+        }
+      )
+    }
+    let(:mock_service) { instance_double(CMSIncomeVerificationService) }
 
     context "with reporting source set to 'reporting_app'" do
       before do
@@ -111,16 +80,40 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
       end
 
       it "renders a successful response" do
-        get edit_activity_report_application_form_url(activity_report_application_form)
+        get new_activity_report_application_form_url
         expect(response).to be_successful
       end
+    end
 
-      it "renders an error response for non-owning user" do
-        login_as other_user
-
-        get edit_activity_report_application_form_url(activity_report_application_form)
-        expect(response).to be_client_error
+    context "with reporting source set to 'income_verification_service'" do
+      before do
+        allow(Rails.application.config).to receive(:reporting_source).and_return("income_verification_service")
+        allow(CMSIncomeVerificationService).to receive(:new).and_return(mock_service)
+        allow(mock_service).to receive(:create_invitation)
+          .with(instance_of(ActivityReportApplicationForm), instance_of(Strata::Name))
+          .and_return(invitation)
       end
+
+      it "redirects to the income verification service" do
+        get new_activity_report_application_form_url
+        expect(response).to redirect_to("https://ivaas.gov/en/cbv/entry?token=dummy-token")
+      end
+    end
+  end
+
+  describe "GET /edit" do
+    let(:activity_report_application_form) { ActivityReportApplicationForm.create! valid_db_attributes }
+
+    it "renders a successful response" do
+      get edit_activity_report_application_form_url(activity_report_application_form)
+      expect(response).to be_successful
+    end
+
+    it "renders an error response for non-owning user" do
+      login_as other_user
+
+      get edit_activity_report_application_form_url(activity_report_application_form)
+      expect(response).to be_client_error
     end
   end
 

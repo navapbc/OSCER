@@ -20,11 +20,14 @@ class ActivityReportApplicationFormsController < ApplicationController
     if reporting_source == "income_verification_service"
       Rails.logger.debug("Redirecting user with id #{current_user.id} to CMS Income Verification Service")
       name = Strata::Name.new(first: "Jane", last: "Doe")
-      @activity_report_application_form = create_activity_report
+      @activity_report_application_form = authorize create_activity_report
       invitation = CMSIncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
       redirect_to invitation.tokenized_url, allow_other_host: true
     else
-      @activity_report_application_form = authorize ActivityReportApplicationForm.new
+      @activity_report_application_form = authorize ActivityReportApplicationForm.new(
+        user_id: current_user.id,
+        certification: Certification.order(created_at: :desc).first
+      )
     end
   end
 
@@ -107,9 +110,19 @@ class ActivityReportApplicationFormsController < ApplicationController
   end
 
   def create_activity_report(params = {})
-    @activity_report_application_form = ActivityReportApplicationForm.new(params)
-    @activity_report_application_form.user_id = current_user.id
-    @activity_report_application_form.certification = Certification.order(created_at: :desc).first
+    activity_report_application_form = ActivityReportApplicationForm.new(params)
+    activity_report_application_form.user_id = current_user.id
+    activity_report_application_form.certification = Certification.order(created_at: :desc).first
+
+    activity_report_application_form
+  end
+
+  def redirect_to_ivass
+    Rails.logger.debug("Redirecting user with id #{current_user.id} to CMS Income Verification Service")
+    name = Strata::Name.new(first: "Jane", last: "Doe")
+    @activity_report_application_form = authorize create_activity_report
+    invitation = CMSIncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
+    redirect_to invitation.tokenized_url, allow_other_host: true
   end
 
   # Only allow a list of trusted parameters through.
