@@ -4,12 +4,12 @@ RSpec.describe "/certifications", type: :request do
   include Warden::Test::Helpers
 
   let(:staff_user) { User.create!(email: "staff@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
-  let(:bene_user) { User.create!(email: "bene@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
+  let(:member_user) { User.create!(email: "member@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
 
   let(:valid_html_request_attributes) {
     {
       member_id: "foobar",
-      member_data: "{\"account_email\": \"#{bene_user.email}\"}"
+      member_data: "{\"account_email\": \"#{member_user.email}\"}"
     }
   }
 
@@ -17,7 +17,7 @@ RSpec.describe "/certifications", type: :request do
     {
       member_id: "foobar",
       member_data: {
-        account_email: bene_user.email
+        account_email: member_user.email
       }
     }
   }
@@ -128,7 +128,7 @@ RSpec.describe "/certifications", type: :request do
       end
     end
 
-    context "with no bene info" do
+    context "with no member info" do
       it "creates a new Certification" do
         expect {
           post certifications_url,
@@ -176,7 +176,7 @@ RSpec.describe "/certifications", type: :request do
       end
     end
 
-    context "with no bene info" do
+    context "with no member info" do
       it "creates a new Certification" do
         expect {
           post certifications_url,
@@ -185,7 +185,7 @@ RSpec.describe "/certifications", type: :request do
       end
     end
 
-    context "with no matching bene info" do
+    context "with no matching member info" do
       it "creates a new Certification" do
         expect {
           post certifications_url,

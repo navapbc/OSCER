@@ -18,7 +18,7 @@ class CertificationService
     true
   end
 
-  def bene_user(certification)
+  def member_user(certification)
     email = certification.member_email
     if not email
       return
