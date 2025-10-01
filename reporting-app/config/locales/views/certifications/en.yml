@@ -1,9 +1,9 @@
 en:
   certifications:
-    beneficiary_id: "Bene ID"
+    member_id: "Bene ID"
     case_number: "Medicaid case number"
     certification_requirements: "Certification requirements"
-    beneficiary_data: "Beneficiary data"
+    member_data: "Member data"
     index:
       title: "Certifications"
       create: "Create Certification"

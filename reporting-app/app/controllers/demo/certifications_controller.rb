@@ -11,7 +11,7 @@ class Demo::CertificationsController < ApplicationController
   end
 
   def create
-    form_params = params.require(:demo_certifications_create_form).permit(:beneficiary_email, :case_number, :certification_type, :certification_date, :lookback_period, :number_of_months_to_certify, :due_period_days, :ex_parte_scenario)
+    form_params = params.require(:demo_certifications_create_form).permit(:member_email, :case_number, :certification_type, :certification_date, :lookback_period, :number_of_months_to_certify, :due_period_days, :ex_parte_scenario)
     @form = Demo::Certifications::CreateForm.new(form_params)
 
     if @form.invalid?
@@ -20,23 +20,23 @@ class Demo::CertificationsController < ApplicationController
     end
 
     certification_requirements = certification_service.calculate_certification_requirements(@form.attributes.with_indifferent_access)
-    beneficiary_data = {}
+    member_data = {}
 
     case @form.ex_parte_scenario
     when "Partially met work hours requirement"
-      beneficiary_data.merge!(FactoryBot.build(:certification_beneficiary_data, :partially_met_work_hours_requirement, cert_date: @form.certification_date))
+      member_data.merge!(FactoryBot.build(:certification_member_data, :partially_met_work_hours_requirement, cert_date: @form.certification_date))
     when "Fully met work hours requirement"
-      beneficiary_data.merge!(FactoryBot.build(:certification_beneficiary_data, :fully_met_work_hours_requirement, cert_date: @form.certification_date, num_months: @form.number_of_months_to_certify))
+      member_data.merge!(FactoryBot.build(:certification_member_data, :fully_met_work_hours_requirement, cert_date: @form.certification_date, num_months: @form.number_of_months_to_certify))
     else
       # nothing
     end
 
     @certification = FactoryBot.build(
       :certification,
-      :with_beneficiary_data_base,
+      :with_member_data_base,
       :connected_to_email,
-      beneficiary_data_base: beneficiary_data,
-      email: @form.beneficiary_email,
+      member_data_base: member_data,
+      email: @form.member_email,
       case_number: @form.case_number,
       certification_requirements: certification_requirements,
     )

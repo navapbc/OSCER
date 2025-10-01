@@ -61,12 +61,12 @@ class CertificationsController < StaffController
       end
 
       cert_params.permit(
-        :beneficiary_id,
+        :member_id,
         :case_number,
         :certification_requirements,
-        :beneficiary_data,
+        :member_data,
         certification_requirements: {},
-        beneficiary_data: {}
+        member_data: {}
       ).tap do |cert_params|
         begin
           # handle HTML form input of the JSON blob as a string
@@ -75,8 +75,8 @@ class CertificationsController < StaffController
           end
 
           # handle HTML form input of the JSON blob as a string
-          if cert_params[:beneficiary_data].present? && cert_params[:beneficiary_data].is_a?(String)
-            cert_params[:beneficiary_data] = JSON.parse(cert_params[:beneficiary_data])
+          if cert_params[:member_data].present? && cert_params[:member_data].is_a?(String)
+            cert_params[:member_data] = JSON.parse(cert_params[:member_data])
           end
         rescue JSON::ParserError => e
           raise ActionController::BadRequest.new(e.message)
