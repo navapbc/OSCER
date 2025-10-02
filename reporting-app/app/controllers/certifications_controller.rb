@@ -39,12 +39,7 @@ class CertificationsController < StaffController
     authorize @certification
 
     requirement_params = certification_params.fetch(:certification_requirements, {})
-
-    if requirement_params&.has_key?(:type)
-      requirement_params.deep_merge!(certification_service.certification_type_requirement_params(requirement_params[:type]))
-    end
-
-    @certification.certification_requirements = certification_service.calculate_certification_requirements(requirement_params)
+    @certification.certification_requirements = certification_service.certification_requirements_from_input(requirement_params)
 
     if certification_service.save_new(@certification)
       render :show, status: :created, location: @certification
@@ -96,7 +91,10 @@ class CertificationsController < StaffController
         begin
           # handle HTML form input of the JSON blob as a string
           if cert_params[:certification_requirements].present? && cert_params[:certification_requirements].is_a?(String)
-            cert_params[:certification_requirements] = JSON.parse(cert_params[:certification_requirements])
+            cert_params[:certification_requirements] =
+              ActionController::Parameters.new(
+                JSON.parse(cert_params[:certification_requirements])
+              ).permit(Certifications::RequirementParams.attribute_names.map(&:to_sym))
           end
 
           # handle HTML form input of the JSON blob as a string

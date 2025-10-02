@@ -139,13 +139,13 @@ RSpec.describe "/certifications", type: :request do
       it "creates a new Certification" do
         expect {
           post certifications_url,
-               params: { certification: { member_id: "no_user" } }, headers: valid_headers
+               params: { certification: valid_html_request_attributes.deep_merge({ member_id: "no_user" }) }, headers: valid_headers
         }.to change(Certification, :count).by(1)
       end
 
       it "renders a HTML response with the new certification" do
         post certifications_url,
-             params: { certification: { member_id: "no_user" } }, headers: valid_headers
+             params: { certification: valid_html_request_attributes.deep_merge({ member_id: "no_user" }) }, headers: valid_headers
         expect(response).to have_http_status(:created)
       end
     end
@@ -188,7 +188,7 @@ RSpec.describe "/certifications", type: :request do
       it "creates a new Certification" do
         expect {
           post certifications_url,
-              params: { certification: { member_id: "no_user" } }, headers: valid_headers
+              params: { certification: valid_html_request_attributes.deep_merge({ member_id: "no_user" }) }, headers: valid_headers
         }.to change(Certification, :count).by(1)
       end
     end
@@ -197,7 +197,7 @@ RSpec.describe "/certifications", type: :request do
       it "creates a new Certification" do
         expect {
           post certifications_url,
-              params: { certification: { member_id: "no_user", member_data: { account_email: "neverfound@foo.com" } } }, headers: valid_headers
+              params: { certification: valid_html_request_attributes.deep_merge({ member_id: "no_user", member_data: { account_email: "neverfound@foo.com" } }) }, headers: valid_headers
         }.to change(Certification, :count).by(1)
       end
     end

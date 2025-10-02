@@ -32,18 +32,46 @@ class CertificationService
     User.find_by(email: email)
   end
 
+  def certification_requirements_from_input(requirements_input)
+    # if they've directly provided in a valid Certifications::Requirements, use it
+    requirements = Certifications::Requirements.new_filtered(requirements_input)
+    if requirements.valid?
+      return requirements
+    end
+
+    # otherwise they've specified some combo of parameters we need to derive the
+    # final Certification requirements from
+    requirement_params = Certifications::RequirementParams.new_filtered(requirements_input)
+
+    # if !requirement_params.valid?(:input)
+    #   # TODO: what do?
+    # end
+
+    if requirement_params.certification_type.present?
+      requirement_params.with_type_params(
+        self.certification_type_requirement_params(requirement_params.certification_type)
+      )
+    end
+
+    self.calculate_certification_requirements(requirement_params)
+  end
+
   def calculate_certification_requirements(requirement_params)
     return unless requirement_params.present?
+    raise TypeError, "Expected instance of Certifications::RequirementParams" unless requirement_params.is_a?(Certifications::RequirementParams)
 
-    possible_param_names = (Certifications::RequirementParams.attribute_names | Certifications::RequirementTypeParams.attribute_names).map(&:to_sym)
-    filtered_params = Certifications::RequirementParams.new(requirement_params.slice(*possible_param_names))
+    if !requirement_params.valid?(:use)
+      puts requirement_params.errors.full_messages
+      # TODO: handle this better
+      # raise Error, "Invalid params: #{requirement_params.errors.full_messages}"
+    end
 
     Certifications::Requirements.new({
-      "certification_date": filtered_params.certification_date,
-      "months_that_can_be_certified": filtered_params.lookback_period.times.map { |i| filtered_params.certification_date.beginning_of_month << i },
-      "number_of_months_to_certify": filtered_params.number_of_months_to_certify,
-      "due_date": filtered_params.due_date.present? ? filterd_params.due_date : filtered_params.certification_date + filtered_params.due_period_days.days,
-      "params": filtered_params.as_json
+      "certification_date": requirement_params.certification_date,
+      "months_that_can_be_certified": requirement_params.lookback_period.times.map { |i| requirement_params.certification_date.beginning_of_month << i },
+      "number_of_months_to_certify": requirement_params.number_of_months_to_certify,
+      "due_date": requirement_params.due_date.present? ? requirement_params.due_date : requirement_params.certification_date + requirement_params.due_period_days.days,
+      "params": requirement_params.as_json
     })
   end
 
