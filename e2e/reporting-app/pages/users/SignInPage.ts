@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
-import { BasePage } from './BasePage';
-import { DashboardPage } from './DashboardPage';
+import { BasePage } from '../BasePage';
+import { MFAPreferencePage } from './mfa/MFAPreferencePage';
 
 export class SignInPage extends BasePage {
   get pagePath() {
@@ -22,6 +22,10 @@ export class SignInPage extends BasePage {
     await this.emailField.fill(emailAddress);
     await this.passwordField.fill(password);
     await this.submitButton.click();
-    return new DashboardPage(this.page).waitForURLtoMatchPagePath();
+
+    // First login will always go to the MFA Preference page.
+    // TODO: check if this.page is the MFAPreferencePage or the LeaveRequestsPage
+    // since subsequent signins go directly to LeaveRequestsPage
+    return new MFAPreferencePage(this.page).waitForURLtoMatchPagePath();
   }
 }

@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { SignInPage } from '../pages/SignInPage';
+import { SignInPage } from '../pages/users/SignInPage';
 
 export class ActivityReportFlow {
   page: Page;

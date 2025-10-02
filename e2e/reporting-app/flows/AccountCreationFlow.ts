@@ -1,7 +1,7 @@
 import { EmailAddress, EmailService } from '../../lib/services/email/EmailService';
 
 import { Page } from '@playwright/test';
-import { RegistrationPage } from '../pages/RegistrationPage';
+import { RegistrationPage } from '../pages/users/RegistrationPage';
 
 export class AccountCreationFlow {
   page: Page;
