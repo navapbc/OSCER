@@ -1,5 +1,6 @@
 class CertificationCasesController < StaffController
   before_action :set_certification_case, only: %i[ show tasks documents notes ]
+  before_action :set_certification, only: %i[ show ]
 
   def index
     @certification_cases = CertificationCase.all
@@ -14,7 +15,7 @@ class CertificationCasesController < StaffController
   end
 
   def tasks
-    @tasks = @certification_case.tasks
+    @tasks = @case.tasks
   end
 
   def documents
@@ -26,6 +27,10 @@ class CertificationCasesController < StaffController
   private
 
   def set_certification_case
-    @certification_case = CertificationCase.find(params[:id])
+    @case = CertificationCase.find(params[:id])
+  end
+
+  def set_certification
+    @certification = Certification.find(@case.certification_id)
   end
 end

@@ -7,6 +7,7 @@ class StaffController < Strata::StaffController
 
   def case_classes
     # Add case classes in your application
-    [ CertificationCase ]
+    # TODO: remove ActivityReportCase and ExemptionCase when CertificationBuisinessProcess is implemented
+    [ CertificationCase, ActivityReportCase, ExemptionCase ]
   end
 end
