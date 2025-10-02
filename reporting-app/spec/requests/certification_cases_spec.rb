@@ -14,6 +14,30 @@ RSpec.describe "/staff/certification_cases", type: :request do
     Warden.test_reset!
   end
 
+  describe "GET /show" do
+    it "returns http success" do
+      get "/staff/certification_cases/#{certification_case.id}"
+      expect(response).to have_http_status(:success)
+    end
+
+    it "assigns the requested certification case to @case" do
+      get "/staff/certification_cases/#{certification_case.id}"
+      expect(assigns(:case)).to eq(certification_case)
+    end
+
+    it "renders the show template" do
+      get "/staff/certification_cases/#{certification_case.id}"
+      expect(response).to render_template(:show)
+    end
+
+    context "when certification case does not exist" do
+      it "renders the show template with a warning" do
+        get "/staff/certification_cases/#{SecureRandom.uuid}"
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
   describe "case sub-navigation pages" do
     [
       [ "show", :certification_case_path, "Details" ],
@@ -24,11 +48,6 @@ RSpec.describe "/staff/certification_cases", type: :request do
       it "returns a success response" do
         get send(path_method, certification_case)
         expect(response).to be_successful
-      end
-
-      xit "displays case #{action} page header" do
-        get send(path_method, certification_case)
-        assert_select "#case-details-heading", text: label, count: 1
       end
 
       it "sets the active sidenav to #{action}" do
