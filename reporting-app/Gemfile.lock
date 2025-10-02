@@ -1,11 +1,12 @@
 GIT
   remote: https://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:x-oauth-basic@github.com/navapbc/flex-sdk.git
-  revision: 39e3803b4ec1faa72c13eaf72b314f65f9be02ad
+  revision: 6fcda1c476b888926eeb8495e4efc052e518796b
   specs:
     strata (0.1.0)
       pundit (>= 2.5.0)
       rails (>= 7.1.5.1)
       validates_timeliness (>= 7.0.0)
+      view_component (>= 4.0.2)
 
 GEM
   remote: https://rubygems.org/
@@ -273,7 +274,7 @@ GEM
     nenv (0.3.0)
     net-http (0.6.0)
       uri
-    net-imap (0.5.10)
+    net-imap (0.5.11)
       date
       net-protocol
     net-pop (0.1.2)
