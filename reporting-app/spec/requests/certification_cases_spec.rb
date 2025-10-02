@@ -31,7 +31,7 @@ RSpec.describe "/staff/certification_cases", type: :request do
         assert_select "#case-details-heading", text: label, count: 1
       end
 
-      xit "sets the active sidenav to #{action}" do
+      it "sets the active sidenav to #{action}" do
         get send(path_method, certification_case)
         assert_select ".usa-sidenav>.usa-sidenav__item>.usa-current", text: label, count: 1
       end
