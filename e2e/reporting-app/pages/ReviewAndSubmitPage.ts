@@ -1,10 +1,10 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
-import { DashboardPage } from './DashboardPage';
+import { ActivityReportPage } from './ActivityReportPage';
 
 export class ReviewAndSubmitPage extends BasePage {
   get pagePath() {
-    return '/activity_reports/review_and_submit';
+    return '/activity_report_application_forms/*/review';
   }
 
   readonly submitButton: Locator;
@@ -16,6 +16,6 @@ export class ReviewAndSubmitPage extends BasePage {
 
   async clickSubmit() {
     await this.submitButton.click();
-    return new DashboardPage(this.page).waitForURLtoMatchPagePath();
+    return new ActivityReportPage(this.page).waitForURLtoMatchPagePath();
   }
 }
