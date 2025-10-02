@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { SignInPage } from '../pages/users/SignInPage';
+import { DashboardPage } from '../pages/members';
 
 export class ActivityReportFlow {
   page: Page;
@@ -9,8 +9,7 @@ export class ActivityReportFlow {
   }
 
   async run(email: string, password: string, employerName: string = 'Acme Inc', hours: string = '80') {
-    const signInPage = await new SignInPage(this.page).go();
-    const dashboardPage = await signInPage.signIn(email, password);
+    const dashboardPage = await new DashboardPage(this.page).go();
     const chooseMonthsPage = await dashboardPage.clickReportActivities();
     const activityReportPage = await chooseMonthsPage.selectFirstReportingPeriodAndSave();
     const activityDetailsPage = await activityReportPage.clickAddActivity();

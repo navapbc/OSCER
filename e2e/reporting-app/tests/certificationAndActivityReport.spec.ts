@@ -20,6 +20,8 @@ test('Certification request and activity report flow', async ({ page, emailServi
 
   const accountCreationFlow = new AccountCreationFlow(page, emailService);
   const signInPage = await accountCreationFlow.run(email, password);
+  const mfaPreferencePage = await signInPage.signIn(email, password);
+  const dashboardPage = await mfaPreferencePage.skipMFA();
 
   const activityReportFlow = new ActivityReportFlow(page);
   await activityReportFlow.run(email, password, 'Acme Inc', '80');
