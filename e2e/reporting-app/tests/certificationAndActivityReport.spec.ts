@@ -17,7 +17,7 @@ test('Certification request and activity report flow', async ({ page, emailServi
 
   const certificationRequestPage = await new CertificationRequestPage(page).go();
   await certificationRequestPage.fillEmailAndSubmit(email);
-  // Step 2: Create account with the email address
+
   const accountCreationFlow = new AccountCreationFlow(page, emailService);
   const signInPage = await accountCreationFlow.run(email, password);
 
