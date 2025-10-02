@@ -1,5 +1,5 @@
 import { Locator, Page } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { BasePage } from '../BasePage';
 import { ChooseMonthsPage } from './ChooseMonthsPage';
 
 export class DashboardPage extends BasePage {

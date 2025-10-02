@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from '../../BasePage';
-import { LeaveRequestsPage } from '../../claimants/LeaveRequestsPage';
+import { DashboardPage } from '../../members';
 
 export class MFAPreferencePage extends BasePage {
   get pagePath() {
@@ -24,6 +24,6 @@ export class MFAPreferencePage extends BasePage {
   async skipMFA() {
     await this.skipMFAOption.click();
     await this.submitButton.click();
-    return new LeaveRequestsPage(this.page).waitForURLtoMatchPagePath();
+    return new DashboardPage(this.page).waitForURLtoMatchPagePath();
   }
 }

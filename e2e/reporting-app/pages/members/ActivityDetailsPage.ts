@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
-import { BasePage } from './BasePage';
-import { SupportingDocumentsPage } from './SupportingDocumentsPage';
+import { BasePage } from '../BasePage';
+import { SupportingDocumentsPage } from './SupportingDocumentsPage'
 
 export class ActivityDetailsPage extends BasePage {
   get pagePath() {

@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from '../BasePage';
-import { VerifyAccountPage } from './VerifyAccountPage';
+import { VerifyAccountPage } from './VerifyAccountPage'
 
 export class RegistrationPage extends BasePage {
   get pagePath() {
