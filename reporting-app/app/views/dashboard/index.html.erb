@@ -1,10 +1,10 @@
 <h1><%= t(".title") %></h1>
-<%= render determine_dashboard_view, activity_report: @activity_report_application_form, exemption_application: @exemption_application_form, certification: @certification %>
-<!-- Previous Certifications -->
+<%= render determine_dashboard_view, activity_report: @activity_report_application_form, exemption_application: @exemption_application_form, certification_request: @certification_request %>
+<!-- Previous Certification Requests -->
 <% if @all_certifications.length > 1 %>
-  <h2><%= t(".previous_certifications.title") %></h2>
+  <h2><%= t(".previous_certification_requests.title") %></h2>
   <p class="font-serif-md">
-    <%= t(".previous_certifications.intro") %>
+    <%= t(".previous_certification_requests.intro") %>
   </p>
-  <%= link_to t(".previous_certifications.review_previous_certifications_button"), certifications_path, class: "usa-button usa-button--outline" %>
+  <%= link_to t(".previous_certification_requests.review_previous_certification_requests_button"), certification_requests_path, class: "usa-button usa-button--outline" %>
 <% end %>

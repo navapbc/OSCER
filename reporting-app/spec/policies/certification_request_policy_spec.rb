@@ -1,16 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe CertificationPolicy, type: :policy do
+RSpec.describe CertificationRequestPolicy, type: :policy do
   subject { described_class.new(current_user, record) }
 
   let(:current_user) { create(:user) }
   let(:staff_user) { create(:user) }
   let(:state_system_user) { create(:user) }
 
-  let(:record) { create(:certification) }
+  let(:record) { create(:certification_request) }
 
   let(:resolved_scope) do
-    described_class::Scope.new(current_user, Certification.all).resolve
+    described_class::Scope.new(current_user, CertificationRequest.all).resolve
   end
 
   context "when unauthenticated" do

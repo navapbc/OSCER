@@ -1,6 +1,6 @@
 en:
   dashboard:
-    new_certification:
+    new_certification_request:
       activity_report:
         title: "Report activities"
         intro: "Report your activities for the current reporting period."

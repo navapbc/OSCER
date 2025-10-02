@@ -1,63 +1,63 @@
 require 'rails_helper'
 
 RSpec.describe "dashboard/index", type: :view do
-  let(:certification) { create(:certification) }
+  let(:certification_request) { create(:certification_request) }
 
   before do
     assign(:all_certifications, [
-      certification
+      certification_request
     ])
-    assign(:certification, certification)
+    assign(:certification_request, certification_request)
   end
 
   context 'with no current exemption or activity report' do
     it 'renders views to start an activity report or start an exemption request' do
       render
-      expect(rendered).to have_selector('h2', text: I18n.t('dashboard.new_certification.activity_report.title'))
-      expect(rendered).to have_selector('h2', text: I18n.t('dashboard.new_certification.exemption_request.title'))
+      expect(rendered).to have_selector('h2', text: I18n.t('dashboard.new_certification_request.activity_report.title'))
+      expect(rendered).to have_selector('h2', text: I18n.t('dashboard.new_certification_request.exemption_request.title'))
     end
 
     it 'renders buttons to start a new activity report or exemption request' do
       render
-      expect(rendered).to have_selector('a', text: I18n.t('dashboard.new_certification.activity_report.report_activities_button'))
-      expect(rendered).to have_selector('a', text: I18n.t('dashboard.new_certification.exemption_request.request_exemption_button'))
+      expect(rendered).to have_selector('a', text: I18n.t('dashboard.new_certification_request.activity_report.report_activities_button'))
+      expect(rendered).to have_selector('a', text: I18n.t('dashboard.new_certification_request.exemption_request.request_exemption_button'))
     end
   end
 
   context "with an in-progress activity report" do
     before do
-      assign(:activity_report_application_form, create(:activity_report_application_form, certification: certification))
+      assign(:activity_report_application_form, create(:activity_report_application_form, certification_request: certification_request))
     end
 
     it 'renders a message to continue the activity report' do
       render
-      expect(rendered).to have_selector('strong', text: I18n.t('dashboard.new_certification.activity_report.in_progress_status'))
+      expect(rendered).to have_selector('strong', text: I18n.t('dashboard.new_certification_request.activity_report.in_progress_status'))
     end
 
     it 'renders a button to continue the activity report' do
       render
-      expect(rendered).to have_selector('a', text: I18n.t('dashboard.new_certification.activity_report.continue_report_button'))
+      expect(rendered).to have_selector('a', text: I18n.t('dashboard.new_certification_request.activity_report.continue_report_button'))
     end
   end
 
   context "with an in-progress exemption request" do
     before do
-      assign(:exemption_application_form, create(:exemption_application_form, certification_id: certification.id))
+      assign(:exemption_application_form, create(:exemption_application_form, certification_request_id: certification_request.id))
     end
 
     it 'renders a message to continue the exemption request' do
       render
-      expect(rendered).to have_selector('strong', text: I18n.t('dashboard.new_certification.exemption_request.in_progress_status'))
+      expect(rendered).to have_selector('strong', text: I18n.t('dashboard.new_certification_request.exemption_request.in_progress_status'))
     end
 
     it 'renders a button to continue the exemption request' do
       render
-      expect(rendered).to have_selector('a', text: I18n.t('dashboard.new_certification.exemption_request.continue_request_button'))
+      expect(rendered).to have_selector('a', text: I18n.t('dashboard.new_certification_request.exemption_request.continue_request_button'))
     end
   end
 
   context "with a submitted activity report" do
-    let (:activity_report_application_form) { create(:activity_report_application_form, :with_submitted_status, certification: certification) }
+    let (:activity_report_application_form) { create(:activity_report_application_form, :with_submitted_status, certification_request: certification_request) }
     let (:activity_report_case) { create(:activity_report_case, application_form_id: activity_report_application_form.id) }
 
     before do
@@ -77,7 +77,7 @@ RSpec.describe "dashboard/index", type: :view do
   end
 
   context "with a submitted exemption request" do
-    let (:exemption_application_form) { create(:exemption_application_form, :with_submitted_status, certification_id: certification.id) }
+    let (:exemption_application_form) { create(:exemption_application_form, :with_submitted_status, certification_request_id: certification_request.id) }
     let (:exemption_case) { create(:exemption_case, application_form_id: exemption_application_form.id) }
 
     before do
@@ -97,7 +97,7 @@ RSpec.describe "dashboard/index", type: :view do
   end
 
   context "with an approved activity report" do
-    let (:activity_report_application_form) { create(:activity_report_application_form, :with_submitted_status, certification: certification) }
+    let (:activity_report_application_form) { create(:activity_report_application_form, :with_submitted_status, certification_request: certification_request) }
     let (:activity_report_case) { create(:activity_report_case, application_form_id: activity_report_application_form.id, activity_report_approval_status: "approved") }
 
     before do
@@ -110,14 +110,14 @@ RSpec.describe "dashboard/index", type: :view do
       expect(rendered).to have_selector('p', text: I18n.t('dashboard.activity_report_approved.intro'))
     end
 
-    it 'has a button to view the certification' do
+    it 'has a button to view the certification_request' do
       render
-      expect(rendered).to have_selector('a', text: I18n.t('dashboard.activity_report_approved.view_completed_certification_button'))
+      expect(rendered).to have_selector('a', text: I18n.t('dashboard.activity_report_approved.view_completed_certification_request_button'))
     end
   end
 
   context "with an approved exemption request" do
-    let (:exemption_application_form) { create(:exemption_application_form, :with_submitted_status, certification_id: certification.id) }
+    let (:exemption_application_form) { create(:exemption_application_form, :with_submitted_status, certification_request_id: certification_request.id) }
     let (:exemption_case) { create(:exemption_case, application_form_id: exemption_application_form.id, exemption_request_approval_status: "approved") }
 
     before do
@@ -130,42 +130,42 @@ RSpec.describe "dashboard/index", type: :view do
       expect(rendered).to have_selector('p', text: I18n.t('dashboard.exemption_approved.intro'))
     end
 
-    it 'has a button to view the certification' do
+    it 'has a button to view the certification_request' do
       render
-      expect(rendered).to have_selector('a', text: I18n.t('dashboard.exemption_approved.view_certification_button'))
+      expect(rendered).to have_selector('a', text: I18n.t('dashboard.exemption_approved.view_certification_request_button'))
     end
   end
 
-  context "with previous certifications" do
-    let(:older_certification) { create(:certification) }
+  context "with previous certification_requests" do
+    let(:older_certification_request) { create(:certification_request) }
 
     before do
       assign(:all_certifications, [
-        certification,
-        older_certification
+        certification_request,
+        older_certification_request
       ])
     end
 
-    it 'renders a section for previous certifications' do
+    it 'renders a section for previous certification_requests' do
       render
-      expect(rendered).to have_selector('h2', text: I18n.t('dashboard.index.previous_certifications.title'))
+      expect(rendered).to have_selector('h2', text: I18n.t('dashboard.index.previous_certification_requests.title'))
     end
 
-    it 'renders a button to review previous certifications' do
+    it 'renders a button to review previous certification_requests' do
       render
-      expect(rendered).to have_selector('a', text: I18n.t('dashboard.index.previous_certifications.review_previous_certifications_button'))
+      expect(rendered).to have_selector('a', text: I18n.t('dashboard.index.previous_certification_requests.review_previous_certification_requests_button'))
     end
   end
 
-  context "without previous certifications" do
-    it 'does not render a section for previous certifications' do
+  context "without previous certification_requests" do
+    it 'does not render a section for previous certification_requests' do
       render
-      expect(rendered).not_to have_selector('h2', text: I18n.t('dashboard.index.previous_certifications.title'))
+      expect(rendered).not_to have_selector('h2', text: I18n.t('dashboard.index.previous_certification_requests.title'))
     end
 
-    it 'does not render a button to review previous certifications' do
+    it 'does not render a button to review previous certification_requests' do
       render
-      expect(rendered).not_to have_selector('a', text: I18n.t('dashboard.index.previous_certifications.review_previous_certifications_button'))
+      expect(rendered).not_to have_selector('a', text: I18n.t('dashboard.index.previous_certification_requests.review_previous_certification_requests_button'))
     end
   end
 end

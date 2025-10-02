@@ -2,4 +2,4 @@ en:
   dashboard:
     exemption_approved:
       intro: "Your exemption application was approved. You do not need to report activities at this time."
-      view_certification_button: "View completed certification"
+      view_certification_request_button: "View completed certification request"

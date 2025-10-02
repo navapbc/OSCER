@@ -14,7 +14,7 @@ en:
         new_button: "Request an exemption"
         in_progress_applications:
           heading: "In-progress exemption applications"
-      previous_certifications:
+      previous_certification_requests:
         title: "Previous completed requirements"
-        intro: "Review previously-completed certifications."
-        review_previous_certifications_button: "Review previous certifications"
+        intro: "Review previously-completed certification requests"
+        review_previous_certification_requests_button: "Review previous certification requests"

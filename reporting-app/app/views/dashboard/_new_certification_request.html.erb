@@ -29,7 +29,7 @@
         </p>
         <%= link_to t(".exemption_request.continue_request_button"), exemption_application_form_path(exemption_application), class: "usa-button" %>
       <% else %>
-        <%= link_to t(".exemption_request.request_exemption_button"), new_exemption_application_form_path(certification_id: certification.id), class: "usa-button usa-button--outline" %>
+        <%= link_to t(".exemption_request.request_exemption_button"), new_exemption_application_form_path(certification_request_id: certification_request.id), class: "usa-button usa-button--outline" %>
       <% end %>
     </div>
   </div>
