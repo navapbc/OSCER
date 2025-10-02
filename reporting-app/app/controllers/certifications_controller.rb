@@ -34,11 +34,11 @@ class CertificationsController < StaffController
   # @response Created Certification.(201) [Reference:#/components/schemas/CertificationResponseBody]
   # @response User error.(400) [Reference:#/components/schemas/ErrorResponseBody]
   def create
-    @certification = Certification.new(certification_params)
+    @certification = Certification.new(certification_params.except(:certification_requirements))
 
     authorize @certification
 
-    requirement_params = @certification&.certification_requirements
+    requirement_params = certification_params.fetch(:certification_requirements, {})
 
     if requirement_params&.has_key?(:type)
       requirement_params.deep_merge!(certification_service.certification_type_requirement_params(requirement_params[:type]))
