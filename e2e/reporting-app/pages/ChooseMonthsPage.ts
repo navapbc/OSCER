@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
-import { ReportActivitiesPage } from './ReportActivitiesPage';
+import { ActivityReportPage } from './ActivityReportPage';
 
 export class ChooseMonthsPage extends BasePage {
   get pagePath() {
@@ -19,6 +19,6 @@ export class ChooseMonthsPage extends BasePage {
   async selectFirstReportingPeriodAndSave() {
     await this.reportingPeriodDropdown.selectOption({ index: 1 });
     await this.saveButton.click();
-    return new ReportActivitiesPage(this.page).waitForURLtoMatchPagePath();
+    return new ActivityReportPage(this.page).waitForURLtoMatchPagePath();
   }
 }

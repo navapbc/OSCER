@@ -5,7 +5,7 @@ export { VerifyAccountPage } from './VerifyAccountPage';
 export { SignInPage } from './SignInPage';
 export { DashboardPage } from './DashboardPage';
 export { ChooseMonthsPage } from './ChooseMonthsPage';
-export { ReportActivitiesPage } from './ReportActivitiesPage';
+export { ActivityReportPage } from './ActivityReportPage';
 export { ActivityDetailsPage } from './ActivityDetailsPage';
 export { SupportingDocumentsPage } from './SupportingDocumentsPage';
 export { ReviewAndSubmitPage } from './ReviewAndSubmitPage';

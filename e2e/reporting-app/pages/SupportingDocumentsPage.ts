@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
-import { ReportActivitiesPage } from './ReportActivitiesPage';
+import { ActivityReportPage } from './ActivityReportPage';
 
 export class SupportingDocumentsPage extends BasePage {
   get pagePath() {
@@ -16,6 +16,6 @@ export class SupportingDocumentsPage extends BasePage {
 
   async clickContinue() {
     await this.continueButton.click();
-    return new ReportActivitiesPage(this.page).waitForURLtoMatchPagePath();
+    return new ActivityReportPage(this.page).waitForURLtoMatchPagePath();
   }
 }

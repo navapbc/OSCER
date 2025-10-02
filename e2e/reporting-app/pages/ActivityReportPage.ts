@@ -3,7 +3,7 @@ import { BasePage } from './BasePage';
 import { ActivityDetailsPage } from './ActivityDetailsPage';
 import { ReviewAndSubmitPage } from './ReviewAndSubmitPage';
 
-export class ReportActivitiesPage extends BasePage {
+export class ActivityReportPage extends BasePage {
   get pagePath() {
     return '/activity_report_application_forms/*';
   }
