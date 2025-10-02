@@ -1,12 +1,5 @@
 export { BasePage } from './BasePage';
 export { CertificationRequestPage } from './CertificationRequestPage';
-export { RegistrationPage } from './users/RegistrationPage';
-export { VerifyAccountPage } from './users/VerifyAccountPage';
-export { SignInPage } from './users/SignInPage';
-export { DashboardPage } from './members/DashboardPage';
-export { ChooseMonthsPage } from './members/ChooseMonthsPage';
-export { ActivityReportPage } from './members/ActivityReportPage';
-export { ActivityDetailsPage } from './members/ActivityDetailsPage';
-export { SupportingDocumentsPage } from './members/SupportingDocumentsPage';
-export { ReviewAndSubmitPage } from './members/ReviewAndSubmitPage';
-export { StaffDashboardPage } from './staff/StaffDashboardPage';
+export * from './users';
+export * from './members';
+export * from './staff';
