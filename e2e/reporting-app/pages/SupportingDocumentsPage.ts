@@ -4,14 +4,14 @@ import { ReportActivitiesPage } from './ReportActivitiesPage';
 
 export class SupportingDocumentsPage extends BasePage {
   get pagePath() {
-    return '/activity_reports/upload_supporting_documentation';
+    return 'activity_report_application_forms/*/activities/*/documents';
   }
 
   readonly continueButton: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.continueButton = page.getByRole('button', { name: /Continue/i });
+    this.continueButton = page.getByRole('link', { name: /continue/i });
   }
 
   async clickContinue() {
