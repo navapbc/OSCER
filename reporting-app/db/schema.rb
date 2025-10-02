@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_30_205618) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_02_153955) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -70,6 +70,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_30_205618) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "facts", default: {}
+  end
+
+  create_table "certification_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "certification_id", null: false
+    t.integer "status"
+    t.string "business_process_current_step"
+    t.jsonb "facts"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["certification_id"], name: "index_certification_cases_on_certification_id"
   end
 
   create_table "certifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -133,5 +143,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_30_205618) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "activity_report_application_forms"
   add_foreign_key "activity_report_application_forms", "certifications"
+  add_foreign_key "certification_cases", "certifications"
   add_foreign_key "exemption_application_forms", "certifications"
 end
