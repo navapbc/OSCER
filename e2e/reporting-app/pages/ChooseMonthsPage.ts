@@ -4,7 +4,7 @@ import { ReportActivitiesPage } from './ReportActivitiesPage';
 
 export class ChooseMonthsPage extends BasePage {
   get pagePath() {
-    return '/activity_reports/choose_months';
+    return '/activity_report_application_forms/new';
   }
 
   readonly reportingPeriodDropdown: Locator;
@@ -17,7 +17,7 @@ export class ChooseMonthsPage extends BasePage {
   }
 
   async selectFirstReportingPeriodAndSave() {
-    await this.reportingPeriodDropdown.selectOption({ index: 0 });
+    await this.reportingPeriodDropdown.selectOption({ index: 1 });
     await this.saveButton.click();
     return new ReportActivitiesPage(this.page).waitForURLtoMatchPagePath();
   }

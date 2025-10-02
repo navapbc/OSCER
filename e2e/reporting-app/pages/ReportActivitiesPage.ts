@@ -5,7 +5,7 @@ import { ReviewAndSubmitPage } from './ReviewAndSubmitPage';
 
 export class ReportActivitiesPage extends BasePage {
   get pagePath() {
-    return '/activity_reports';
+    return '/activity_report_application_forms/*';
   }
 
   readonly addActivityButton: Locator;
@@ -13,8 +13,8 @@ export class ReportActivitiesPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.addActivityButton = page.getByRole('button', { name: /add activity/i });
-    this.reviewAndSubmitButton = page.getByRole('button', { name: /review and submit/i });
+    this.addActivityButton = page.getByRole('link', { name: /add activity/i });
+    this.reviewAndSubmitButton = page.getByRole('link', { name: /review and submit/i });
   }
 
   async clickAddActivity() {
