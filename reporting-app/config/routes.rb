@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   end
 
   scope path: "/staff" do
-    resources :certifications
+    resources :certification_requests
 
     resources :activity_report_cases, only: [ :index, :show ] do
       collection do
