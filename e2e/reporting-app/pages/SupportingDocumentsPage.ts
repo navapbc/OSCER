@@ -2,7 +2,7 @@ import { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { ReportActivitiesPage } from './ReportActivitiesPage';
 
-export class UploadSupportingDocumentationPage extends BasePage {
+export class SupportingDocumentsPage extends BasePage {
   get pagePath() {
     return '/activity_reports/upload_supporting_documentation';
   }

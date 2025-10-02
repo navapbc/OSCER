@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
-import { UploadSupportingDocumentationPage } from './UploadSupportingDocumentationPage';
+import { SupportingDocumentsPage } from './SupportingDocumentsPage';
 
 export class ActivityDetailsPage extends BasePage {
   get pagePath() {
@@ -25,6 +25,6 @@ export class ActivityDetailsPage extends BasePage {
     await this.monthField.selectOption({ index: 1 });
     await this.hoursField.fill(hours);
     await this.submitButton.click();
-    return new UploadSupportingDocumentationPage(this.page).waitForURLtoMatchPagePath();
+    return new SupportingDocumentsPage(this.page).waitForURLtoMatchPagePath();
   }
 }

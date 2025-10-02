@@ -7,6 +7,6 @@ export { DashboardPage } from './DashboardPage';
 export { ChooseMonthsPage } from './ChooseMonthsPage';
 export { ReportActivitiesPage } from './ReportActivitiesPage';
 export { ActivityDetailsPage } from './ActivityDetailsPage';
-export { UploadSupportingDocumentationPage } from './UploadSupportingDocumentationPage';
+export { SupportingDocumentsPage } from './SupportingDocumentsPage';
 export { ReviewAndSubmitPage } from './ReviewAndSubmitPage';
 export { StaffDashboardPage } from './StaffDashboardPage';
