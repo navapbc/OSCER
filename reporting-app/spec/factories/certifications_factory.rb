@@ -13,7 +13,6 @@ FactoryBot.define do
       member_data { "()" }
     end
 
-
     trait :with_member_data_base do
       transient do
         member_data_base { {} }
