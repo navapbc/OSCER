@@ -12,9 +12,8 @@ class DashboardController < ApplicationController
     @certification = @all_certifications.first
     if @certification
       @exemption_application_form = ExemptionApplicationForm.find_by(certification_id: @certification&.id)
-      @exemption_case = ExemptionCase.find_by(application_form_id: @exemption_application_form&.id)
       @activity_report_application_form = policy_scope(ActivityReportApplicationForm).find_by(certification_id: @certification&.id)
-      @activity_report_case = ActivityReportCase.find_by(application_form_id: @activity_report_application_form&.id)
+      @certification_case = CertificationCase.find_by(certification_id: @certification&.id)
     end
   end
 end

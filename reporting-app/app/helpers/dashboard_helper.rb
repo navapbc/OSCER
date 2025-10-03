@@ -22,18 +22,18 @@ module DashboardHelper
   end
 
   def is_activity_report_submitted?
-    @activity_report_application_form&.submitted? && @activity_report_case&.activity_report_approval_status.nil?
+    @activity_report_application_form&.submitted? && @certification_case&.activity_report_approval_status.nil?
   end
 
   def is_exemption_request_submitted?
-    @exemption_application_form&.submitted? && @exemption_case&.exemption_request_approval_status.nil?
+    @exemption_application_form&.submitted? && @certification_case&.exemption_request_approval_status.nil?
   end
 
   def is_activity_report_approved?
-    @activity_report_application_form&.submitted? && @activity_report_case&.activity_report_approval_status == "approved"
+    @activity_report_application_form&.submitted? && @certification_case&.activity_report_approval_status == "approved"
   end
 
   def is_exemption_request_approved?
-    @exemption_application_form&.submitted? && @exemption_case&.exemption_request_approval_status == "approved"
+    @exemption_application_form&.submitted? && @certification_case&.exemption_request_approval_status == "approved"
   end
 end

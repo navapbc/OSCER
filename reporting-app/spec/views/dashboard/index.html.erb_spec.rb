@@ -60,11 +60,11 @@ RSpec.describe "dashboard/index", type: :view do
 
   context "with a submitted activity report" do
     let (:activity_report_application_form) { create(:activity_report_application_form, :with_submitted_status, certification: certification) }
-    let (:activity_report_case) { create(:activity_report_case, application_form_id: activity_report_application_form.id) }
+    let (:certification_case) { create(:certification_case, certification_id: certification.id) }
 
     before do
       assign(:activity_report_application_form, activity_report_application_form)
-      assign(:activity_report_case, activity_report_case)
+      assign(:certification_case, certification_case)
     end
 
     it 'renders a message that the activity report is under review' do
@@ -80,11 +80,11 @@ RSpec.describe "dashboard/index", type: :view do
 
   context "with a submitted exemption request" do
     let (:exemption_application_form) { create(:exemption_application_form, :with_submitted_status, certification_id: certification.id) }
-    let (:exemption_case) { create(:exemption_case, application_form_id: exemption_application_form.id) }
+    let (:certification_case) { create(:certification_case, certification_id: certification.id) }
 
     before do
       assign(:exemption_application_form, exemption_application_form)
-      assign(:exemption_case, exemption_case)
+      assign(:certification_case, certification_case)
     end
 
     it 'renders a message that the exemption request is under review' do
@@ -100,11 +100,11 @@ RSpec.describe "dashboard/index", type: :view do
 
   context "with an approved activity report" do
     let (:activity_report_application_form) { create(:activity_report_application_form, :with_submitted_status, certification: certification) }
-    let (:activity_report_case) { create(:activity_report_case, application_form_id: activity_report_application_form.id, activity_report_approval_status: "approved") }
+    let (:certification_case) { create(:certification_case, certification_id: certification.id, activity_report_approval_status: "approved") }
 
     before do
       assign(:activity_report_application_form, activity_report_application_form)
-      assign(:activity_report_case, activity_report_case)
+      assign(:certification_case, certification_case)
     end
 
     it 'renders a message that the activity report is approved' do
@@ -120,11 +120,11 @@ RSpec.describe "dashboard/index", type: :view do
 
   context "with an approved exemption request" do
     let (:exemption_application_form) { create(:exemption_application_form, :with_submitted_status, certification_id: certification.id) }
-    let (:exemption_case) { create(:exemption_case, application_form_id: exemption_application_form.id, exemption_request_approval_status: "approved") }
+    let (:certification_case) { create(:certification_case, certification_id: certification.id, exemption_request_approval_status: "approved") }
 
     before do
       assign(:exemption_application_form, exemption_application_form)
-      assign(:exemption_case, exemption_case)
+      assign(:certification_case, certification_case)
     end
 
     it 'renders a message that the exemption request is approved' do
