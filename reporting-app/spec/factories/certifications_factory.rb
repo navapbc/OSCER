@@ -5,6 +5,7 @@ FactoryBot.define do
     id { SecureRandom.uuid }
     member_id { Faker::NationalHealthService.british_number }
     case_number { "C-%d" % Faker::Number.within(range: 1..10000) }
+    certification_requirements { build(:certification_certification_requirements) }
     member_data { {} }
 
     trait :invalid_json_data do
@@ -12,9 +13,6 @@ FactoryBot.define do
       member_data { "()" }
     end
 
-    trait :with_certification_requirements do
-      certification_requirements { JSON.parse(Faker::Json.shallow_json(width: 3, options: { key: 'Name.first_name', value: 'Name.last_name' })) }
-    end
 
     trait :with_member_data_base do
       transient do

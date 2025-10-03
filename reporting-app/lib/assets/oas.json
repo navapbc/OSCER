@@ -13,9 +13,11 @@
             "description": "An identifier for the case associated with the certification"
           },
           "certification_requirements": {
-            "type": ["object", "null"],
-            "description": "Description of certification needs",
-            "properties": {}
+            "oneOf": [
+              { "$ref": "#/components/schemas/CertificationRequirements" },
+              { "$ref": "#/components/schemas/CertificationRequirementParameters" },
+              { "$ref": "#/components/schemas/CertificationRequirementTypeParameters" }
+            ]
           },
           "beneficiary_data": {
             "type": ["object", "null"],
@@ -24,7 +26,8 @@
           }
         },
         "required": [
-          "beneficiary_id"
+          "beneficiary_id",
+          "certification_requirements"
         ],
         "examples": {
           "fully_specified_certification_requirements": {
@@ -63,6 +66,94 @@
           }
         }
       },
+      "CertificationRequirements": {
+        "type": "object",
+        "description": "Description of certification needs",
+        "properties": {
+          "certification_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date of the certification"
+          },
+          "certification_type": {
+            "type": ["string", "null"],
+            "description": "The type of certification"
+          },
+          "months_that_can_be_certified": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "The list of months the Member can choose from"
+          },
+          "number_of_months_to_certify": {
+            "type": "integer",
+            "description": "The number of months the Member needs to certify"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date by which the Member must have submitted their evidence"
+          },
+          "params": {
+            "type": ["object", "null"],
+            "description": "Input parameters, if any.",
+            "properties": {}
+          }
+        },
+        "required": [
+          "certification_date",
+          "months_that_can_be_certified",
+          "number_of_months_to_certify",
+          "due_date"
+        ]
+      },
+      "CertificationRequirementParameters": {
+        "type": "object",
+        "properties": {
+          "certification_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date of the certification"
+          },
+          "lookback_period": {
+            "type": "integer",
+            "description": "The number of months before `certification_date` the Member can choose from"
+          },
+          "number_of_months_to_certify": {
+            "type": "integer",
+            "description": "The number of months the Member needs to certify"
+          },
+          "due_period_days": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "certification_date",
+          "lookback_period",
+          "number_of_months_to_certify",
+          "due_period_days"
+        ]
+      },
+      "CertificationRequirementTypeParameters": {
+        "type": "object",
+        "properties": {
+          "certification_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date of the certification"
+          },
+          "certification_type": {
+            "type": "string",
+            "description": "The type of certification"
+          }
+        },
+        "required": [
+          "certification_date",
+          "certification_type"
+        ]
+      },
       "CertificationResponseBody": {
         "type": "object",
         "properties": {
@@ -80,9 +171,7 @@
             "description": "An identifier for the case associated with the certification"
           },
           "certification_requirements": {
-            "type": ["object", "null"],
-            "description": "Description of certification needs",
-            "properties": {}
+            "$ref": "#/components/schemas/CertificationRequirements"
           },
           "beneficiary_data": {
             "type": ["object", "null"],

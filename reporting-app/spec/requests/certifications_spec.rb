@@ -11,7 +11,8 @@ RSpec.describe "/certifications", type: :request do
   let(:valid_html_request_attributes) {
     {
       member_id: "foobar",
-      member_data: "{\"account_email\": \"#{member_user.email}\"}"
+      member_data: "{\"account_email\": \"#{member_user.email}\"}",
+      certification_requirements: build(:certification_certification_requirement_params).attributes.to_json
     }
   }
 
@@ -20,7 +21,8 @@ RSpec.describe "/certifications", type: :request do
       member_id: "foobar",
       member_data: {
         account_email: member_user.email
-      }
+      },
+      certification_requirements: build(:certification_certification_requirement_params).attributes
     }
   }
 
@@ -88,7 +90,7 @@ RSpec.describe "/certifications", type: :request do
     end
 
     it "renders a successful response with data" do
-      certification = create(:certification, :with_certification_requirements)
+      certification = create(:certification)
       get certification_url(certification)
       expect(response).to be_successful
     end
@@ -112,7 +114,7 @@ RSpec.describe "/certifications", type: :request do
     end
 
     it "renders a successful response with data" do
-      certification = create(:certification, :with_certification_requirements)
+      certification = create(:certification)
       get api_certification_url(certification)
       expect(response).to be_successful
       expect(response).to match_openapi_doc(OPENAPI_DOC)

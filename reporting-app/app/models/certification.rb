@@ -11,6 +11,7 @@ class Certification < ApplicationRecord
 
   # TODO: some of this should be required, but leaving it open at the moment
   # validates :member_id, presence: true
+  validates :certification_requirements, presence: true, on: :save
 
   # TODO: add validation for JSON columns (they should be hashes, etc)
 

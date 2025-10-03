@@ -94,7 +94,7 @@ class CertificationsController < StaffController
             cert_params[:certification_requirements] =
               ActionController::Parameters.new(
                 JSON.parse(cert_params[:certification_requirements])
-              ).permit(Certifications::RequirementParams.attribute_names.map(&:to_sym))
+              ).permit((Certifications::Requirements.attribute_names | Certifications::RequirementParams.attribute_names).map(&:to_sym))
           end
 
           # handle HTML form input of the JSON blob as a string
