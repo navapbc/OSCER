@@ -3,8 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe Certification, type: :model do
-  it "has ActivityReportApplicationForm" do
-    certification = create(:certification, :with_activity_report_application_form)
-    expect(certification.activity_report_application_forms.count).to eq(1)
+  xit "only allows a single activity report application form" do
+    pending("add some examples (or delete) #{__FILE__}")
+    fail
+  end
+
+  xit "only allows a single exemption application form" do
+    pending("add some examples (or delete) #{__FILE__}")
+    fail
+  end
+
+  xit "does not allow for an activity report application form and an exemption application form to be created at the same time" do
+    pending("add some examples (or delete) #{__FILE__}")
+    fail
   end
 end

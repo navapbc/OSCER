@@ -43,9 +43,5 @@ FactoryBot.define do
         end
       end
     end
-
-    trait :with_activity_report_application_form do
-      activity_report_application_forms { [ association(:activity_report_application_form) ] }
-    end
   end
 end

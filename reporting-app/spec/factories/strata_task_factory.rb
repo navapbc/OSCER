@@ -8,11 +8,11 @@ FactoryBot.define do
     case_type { "CertificationCase" }
   end
 
-  factory :review_exemption_claim_task, parent: :task do
+  factory :review_exemption_claim_task, parent: :task, class: ReviewExemptionClaimTask do
     type { "ReviewExemptionClaimTask" }
   end
 
-  factory :review_activity_report_task, parent: :task do
+  factory :review_activity_report_task, parent: :task, class: ReviewActivityReportTask do
     type { "ReviewActivityReportTask" }
   end
 end
