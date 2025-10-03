@@ -5,4 +5,10 @@ class CertificationCase < Strata::Case
   attribute :status, :integer
   attribute :business_process_current_step, :string
   attribute :facts, :jsonb
+
+  scope :active, -> {
+    joins(:tasks)
+      .where(strata_tasks: { status: Strata::Task.statuses[:pending] })
+      .distinct
+  }
 end
