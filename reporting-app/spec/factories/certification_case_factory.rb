@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :certification_case do
     business_process_current_step { "review_certification" }

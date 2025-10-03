@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActivityReportCase < Strata::Case
   store_accessor :facts, :activity_report_approval_status, :activity_report_approval_status_updated_at
 

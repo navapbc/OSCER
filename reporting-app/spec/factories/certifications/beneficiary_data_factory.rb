@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :certification_beneficiary_data, class: Hash do
     skip_create

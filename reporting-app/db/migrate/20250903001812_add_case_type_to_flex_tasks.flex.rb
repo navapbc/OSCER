@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This migration comes from flex (originally 20250826000000)
 class AddCaseTypeToFlexTasks < ActiveRecord::Migration[7.2]
   def change

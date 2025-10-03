@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateActivityReportCases < ActiveRecord::Migration[7.2]
   def change
     create_table :activity_report_cases, id: :uuid do |t|

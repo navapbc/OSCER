@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CertificationService
   def save_new(certification, current_user = nil)
     if !certification.save

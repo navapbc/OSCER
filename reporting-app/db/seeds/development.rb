@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 5.times do |index|
   app_form = ActivityReportApplicationForm.create!(
     reporting_period: Date.today.prev_month.beginning_of_month
