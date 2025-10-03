@@ -21,12 +21,14 @@ export class CertificationRequestPage extends BasePage {
 
   async fillAndSubmit(email: string) {
     // Generate a random 9-digit case number
-    const caseNumber = String(Math.floor(Math.random() * (1_000_000_000 - 100_000_000)) + 100_000_000);
-    
+    const caseNumber = String(
+      Math.floor(Math.random() * (1_000_000_000 - 100_000_000)) + 100_000_000
+    );
+
     // Get today's date in MM-DD-YYYY format
     const today = new Date();
-    const certificationDate = today.toLocaleDateString('en-US')
-    
+    const certificationDate = today.toLocaleDateString('en-US');
+
     await this.emailField.fill(email);
     await this.caseNumberField.fill(caseNumber);
     await this.certificationDateField.fill(certificationDate);

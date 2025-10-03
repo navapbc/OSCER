@@ -2,10 +2,7 @@ import { expect } from '@playwright/test';
 
 import { test } from '../../fixtures';
 import { AccountCreationFlow, ActivityReportFlow } from '../flows';
-import {
-  CertificationRequestPage,
-  StaffDashboardPage
-} from '../pages';
+import { CertificationRequestPage, StaffDashboardPage } from '../pages';
 
 test('Certification request and activity report flow', async ({ page, emailService }) => {
   // Triple the default timeout for this test due
