@@ -9,6 +9,6 @@ class StaffController < Strata::StaffController
 
   def case_classes
     # Add case classes in your application
-    [ CertificationCase]
+    [ CertificationCase ]
   end
 end
