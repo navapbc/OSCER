@@ -6,9 +6,10 @@ RSpec.describe "/review_exemption_claim_tasks", type: :request do
   include Warden::Test::Helpers
 
   let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
-  let(:exemption_application_form) { create(:exemption_application_form) }
-  let(:exemption_case) { create(:exemption_case, application_form_id: exemption_application_form.id) }
-  let(:task) { create(:review_exemption_claim_task, case: exemption_case) }
+  let(:certification) { create(:certification) }
+  let(:certification_case) { create(:certification_case, certification_id: certification.id) }
+  let(:exemption_application_form) { create(:exemption_application_form, certification_id: certification.id) }
+  let(:task) { create(:review_exemption_claim_task, case: certification_case) }
 
   before do
     login_as user
@@ -28,8 +29,8 @@ RSpec.describe "/review_exemption_claim_tasks", type: :request do
       end
 
       it "marks application case as approved" do
-        exemption_case.reload
-        expect(exemption_case.exemption_request_approval_status).to eq("approved")
+        certification_case.reload
+        expect(certification_case.exemption_request_approval_status).to eq("approved")
       end
 
       it "redirects back to the task" do
@@ -46,8 +47,8 @@ RSpec.describe "/review_exemption_claim_tasks", type: :request do
       end
 
       it "marks application form as denied" do
-        exemption_case.reload
-        expect(exemption_case.exemption_request_approval_status).to eq("denied")
+        certification_case.reload
+        expect(certification_case.exemption_request_approval_status).to eq("denied")
       end
 
       it "redirects back to the task" do

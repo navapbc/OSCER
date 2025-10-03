@@ -5,17 +5,17 @@ class ReviewExemptionClaimTasksController < TasksController
     # for demo purposes, otherwise this approval should be handled by business processes
     @task.completed!
 
-    exemption_case = ExemptionCase.find(@task.case.id)
+    certification_case = CertificationCase.find(@task.case.id)
 
     if approving_action?
-      exemption_case.exemption_request_approval_status = "approved"
+      certification_case.exemption_request_approval_status = "approved"
     elsif denying_action?
-      exemption_case.exemption_request_approval_status = "denied"
+      certification_case.exemption_request_approval_status = "denied"
     end
 
     task_complete_notice_text = approving_action? ? t("tasks.details.approved_message") : t("tasks.details.denied_message")
 
-    exemption_case.save!
+    certification_case.save!
 
     respond_to do |format|
       format.html { redirect_to task_path(@task), notice: task_complete_notice_text }
