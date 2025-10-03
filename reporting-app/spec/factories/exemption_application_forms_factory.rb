@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :exemption_application_form do
     exemption_type { "short_term_hardship" }

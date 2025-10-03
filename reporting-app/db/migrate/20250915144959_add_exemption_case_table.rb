@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddExemptionCaseTable < ActiveRecord::Migration[7.2]
   def change
     create_table :exemption_cases, id: :uuid do |t|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ReviewExemptionClaimTask < Strata::Task
   # Add custom attributes and behavior here
 

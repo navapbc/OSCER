@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CertificationCase < Strata::Case
   attribute :certification_id, :uuid
   attribute :status, :integer

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources :activity_report_application_forms, except: [ :index ] do
     resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ] do

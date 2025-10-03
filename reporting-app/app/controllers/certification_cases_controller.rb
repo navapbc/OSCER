@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CertificationCasesController < StaffController
   before_action :set_certification_elements, only: %i[ show tasks documents notes ]
 

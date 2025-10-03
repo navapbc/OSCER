@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PunditSpecViewHelper
   def stub_pundit_for(obj, *perms)
     without_partial_double_verification do
