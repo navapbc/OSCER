@@ -9,7 +9,7 @@ class ActivityReportApplicationFormsController < ApplicationController
     submit
     destroy
   ]
-  before_action :set_activity_report_case, only: %i[ show ]
+  before_action :set_certification_case, only: %i[ show ]
   before_action :authenticate_user!
 
   # GET /activity_report_application_forms/1 or /activity_report_application_forms/1.json
@@ -50,7 +50,7 @@ class ActivityReportApplicationFormsController < ApplicationController
   def create
     @activity_report_application_form = ActivityReportApplicationForm.new(activity_report_application_form_params)
     @activity_report_application_form.user_id = current_user.id
-    @activity_report_application_form.certification = Certification.order(created_at: :desc).first
+    @activity_report_application_form.certification = Certification.order(created_at: :desc).first # TODO: get certification tied to user
 
     authorize @activity_report_application_form
 
@@ -105,8 +105,8 @@ class ActivityReportApplicationFormsController < ApplicationController
     @activity_report_application_form = authorize ActivityReportApplicationForm.find(params[:id])
   end
 
-  def set_activity_report_case
-    @activity_report_case = ActivityReportCase.find_by(application_form_id: @activity_report_application_form.id) if @activity_report_application_form.present?
+  def set_certification_case
+    @certification_case = CertificationCase.find_by(certification_id: @activity_report_application_form.certification_id) if @activity_report_application_form.present?
   end
 
   # Only allow a list of trusted parameters through.
