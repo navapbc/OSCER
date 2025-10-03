@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :oas do
   desc "Print the OpenAPI spec"
   task generate: :environment do

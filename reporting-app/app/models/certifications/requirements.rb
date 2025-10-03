@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "requirement_params"
 
 class Certifications::Requirements

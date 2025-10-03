@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Certifications::RequirementParams < Certifications::RequirementTypeParams
   attribute :certification_date, :date
   attribute :certification_type, :string, default: nil

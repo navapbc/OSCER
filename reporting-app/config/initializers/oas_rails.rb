@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # config/initializers/oas_rails.rb
 OasRails.configure do |config|
   # Basic Information about the API

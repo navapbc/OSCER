@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :certification_certification_requirement_params, class: Certifications::RequirementParams do
     certification_date { Faker::Date.forward(days: 30) }
