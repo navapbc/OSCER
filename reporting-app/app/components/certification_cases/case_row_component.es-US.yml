@@ -1,0 +1,10 @@
+---
+es-US:
+  name: Nombre
+  case_number: Número de caso
+  assignee: Asignado a
+  step: Paso
+  due_on: Fecha de vencimiento
+  created_at: Creado el
+  actions: Acciones
+  view: Ver

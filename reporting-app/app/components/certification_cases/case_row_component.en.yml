@@ -1,0 +1,10 @@
+---
+en:
+  name: Name
+  case_number: Case No.
+  assignee: Assigned to
+  step: Step
+  due_on: Due On
+  created_at: Created At
+  actions: Actions
+  view: View

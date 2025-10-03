@@ -5,6 +5,8 @@ en:
       tasks: "Tasks"
       documents: "Documents"
       notes: "Notes"
+    index:
+      title: "Certification Cases"
     show:
       title: "Details"
     notes:
