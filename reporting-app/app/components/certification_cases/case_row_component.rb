@@ -1,20 +1,8 @@
 # frozen_string_literal: true
 
 class CertificationCases::CaseRowComponent < Strata::Cases::CaseRowComponent
-  def initialize(kase:, path_func:)
-    @case = kase
-    @path_func = path_func
-  end
-
   def self.columns
-    [
-      :name,
-      :case_no,
-      :assigned_to,
-      :step,
-      :due_on,
-      :created_at
-    ]
+    [:name] + super
   end
 
   protected
@@ -24,7 +12,9 @@ class CertificationCases::CaseRowComponent < Strata::Cases::CaseRowComponent
     @case.certification.beneficiary_account_email
   end
 
+  # Override default behavior to show the case number from the
+  # certification request rather than the case.id UUID
   def case_no
-    link_to @case.certification.case_number, certification_case_path(@case)
+    link_to @case.certification.case_number, @path_func.call(@case)
   end
 end
