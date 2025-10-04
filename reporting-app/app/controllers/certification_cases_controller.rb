@@ -4,16 +4,11 @@ class CertificationCasesController < StaffController
   before_action :set_certification_elements, only: %i[ show tasks documents notes ]
 
   def index
-    cases = CertificationCase.all
-    certification_ids = cases.map(&:certification_id)
+    @cases = CertificationCase.all
+    certification_ids = @cases.map(&:certification_id)
     certifications_by_id = Certification.where(id: certification_ids).index_by(&:id)
-    @cases = cases.map do |kase|
-      certification = certifications_by_id[kase.certification_id]
-      CertificationCases::CaseRowComponent::Case.new(
-        certification_case: kase,
-        certification: certification,
-        path: certification_case_path(kase)
-      )
+    @cases.each do |kase|
+      kase.certification = certifications_by_id[kase.certification_id]
     end
   end
 
