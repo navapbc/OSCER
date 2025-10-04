@@ -2,7 +2,7 @@
 
 class CertificationCases::CaseRowComponent < Strata::Cases::CaseRowComponent
   def self.columns
-    [:name] + super
+    [ :name ] + super
   end
 
   protected
