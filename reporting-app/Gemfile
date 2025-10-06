@@ -107,7 +107,7 @@ group :development do
   # Language Server Protocol for Ruby/Rails
   gem "ruby-lsp", require: false
   gem "ruby-lsp-rails", require: false
-  
+
   # Linting
   gem "rubocop-rails-omakase", require: false
   gem "rubocop-rspec", require: false
