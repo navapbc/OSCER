@@ -99,7 +99,8 @@ class ActivityReportApplicationFormsController < ApplicationController
   end
 
   def is_reporting_source_ivaas?
-    (params[:reporting_source] || default_reporting_source) == "income_verification_service"
+    reporting_source = params[:reporting_source] || default_reporting_source
+    reporting_source == "income_verification_service"
   end
 
   def create_authorized_activity_report(params = {})
@@ -107,15 +108,13 @@ class ActivityReportApplicationFormsController < ApplicationController
     activity_report_application_form.user_id = current_user.id
     activity_report_application_form.certification = Certification.order(created_at: :desc).first
     activity_report_application_form.save!
-    authorize activity_report_application_form
-
-    activity_report_application_form
+    @activity_report_application_form = authorize activity_report_application_form
   end
 
-  def redirect_to_ivaas(activity_report)
+  def redirect_to_ivaas
     Rails.logger.debug("Redirecting user with id #{current_user.id} to CMS Income Verification Service")
     name = Strata::Name.new(first: "Jane", last: "Doe")
-    invitation = CMSIncomeVerificationService.new.create_invitation(activity_report, name)
+    invitation = CMSIncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
     redirect_to invitation.tokenized_url, allow_other_host: true
   end
 
