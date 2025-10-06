@@ -16,10 +16,5 @@ sed -i 's/DB_HOST=127.0.0.1/DB_HOST=reporting-app-database/g' "$ENV_FILE" 2>/dev
 sed -i '' 's/DB_HOST=127.0.0.1/DB_HOST=reporting-app-database/g' "$ENV_FILE"
 
 echo "✅ Environment file configured for dev container"
-echo "📁 Project structure:"
-echo "   /workspace                    - Full project root"
-echo "   /workspace/reporting-app      - Rails application"
-echo "   /workspace/infra              - Infrastructure code"
-echo "   /workspace/docs               - Documentation"
-echo "   /workspace/e2e                - E2E tests"
+
 
