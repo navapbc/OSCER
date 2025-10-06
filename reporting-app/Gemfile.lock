@@ -1,6 +1,6 @@
 GIT
   remote: https://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:x-oauth-basic@github.com/navapbc/flex-sdk.git
-  revision: 99413c3048c85b466ffba5f70bbfd52624d8be22
+  revision: 0a1737ff1107ec58ae221f019706b042e21bb48d
   specs:
     strata (0.1.0)
       pundit (>= 2.5.0)
@@ -322,7 +322,7 @@ GEM
     pg-aws_rds_iam (0.7.0)
       aws-sdk-rds (~> 1.0)
       pg (~> 1.1)
-    pp (0.6.2)
+    pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
     prism (1.4.0)
