@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActivityReportCasesController < StaffController
   before_action :set_activity_report_case, only: %i[ show tasks documents notes ]
   before_action :set_activity_report_application_form, only: %i[ show documents ]

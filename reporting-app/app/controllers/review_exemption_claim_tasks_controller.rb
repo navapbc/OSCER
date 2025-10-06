@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ReviewExemptionClaimTasksController < TasksController
   def update
     # for demo purposes, otherwise this approval should be handled by business processes

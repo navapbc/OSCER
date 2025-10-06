@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DashboardHelper
   def determine_dashboard_view
     if @certification.nil?

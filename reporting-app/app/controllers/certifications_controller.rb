@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CertificationsController < StaffController
   before_action :set_certification, only: %i[ show update ]
 

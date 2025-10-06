@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateExemptionApplicationForms < ActiveRecord::Migration[7.2]
   def change
     create_table :exemption_application_forms, id: :uuid do |t|
