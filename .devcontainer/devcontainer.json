@@ -1,0 +1,325 @@
+{
+  "name": "Community Engagement Medicaid - Reporting App",
+  "dockerComposeFile": ["../reporting-app/docker-compose.yml", "docker-compose.override.yml"],
+  "service": "reporting-app",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+
+  // Features - 2025 best practices
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest",
+      "ppa": false
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts",
+      "nodeGypDependencies": true
+    },
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true
+    }
+  },
+
+  // Cursor IDE optimized configuration
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Ruby/Rails - Use Ruby LSP (2025 standard, replaces Solargraph)
+        "shopify.ruby-lsp",
+        "misogi.ruby-rubocop",
+        "kaiwood.endwise",
+        "hridoy.rails-snippets",
+        "vortizhe.simple-ruby-erb",
+
+        // File Icons
+        "vscode-icons-team.vscode-icons",
+
+        // JavaScript/TypeScript
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+
+        // CSS/Styling
+        "bradlc.vscode-tailwindcss",
+
+        // Data formats
+        "redhat.vscode-yaml",
+        "tamasfe.even-better-toml",
+
+        // Docker & Containers
+        "ms-azuretools.vscode-docker",
+
+        // Database
+        "ckolkman.vscode-postgres",
+
+        // Git & GitHub
+        "eamodio.gitlens",
+        "github.vscode-pull-request-github",
+
+        // Testing
+        "connorshea.vscode-test-explorer-status-bar",
+
+        // Utilities
+        "usernamehw.errorlens",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        // Terminal - Modern defaults
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.fontSize": 14,
+        "terminal.integrated.cursorBlinking": true,
+
+        // Ruby LSP configuration (2025 standard)
+        "rubyLsp.rubyVersionManager": {
+          "identifier": "auto"
+        },
+        "rubyLsp.bundleGemfile": "/workspace/reporting-app/Gemfile",
+        "rubyLsp.formatter": "rubocop",
+        "rubyLsp.enableExperimentalFeatures": true,
+        "rubyLsp.featuresConfiguration": {
+          "inlayHint": {
+            "enableAll": true
+          },
+          "codeActions": {
+            "enableAll": true
+          },
+          "diagnostics": {
+            "enableAll": true
+          }
+        },
+
+        // RuboCop extension configuration
+        "ruby.rubocop.onSave": true,
+        "ruby.rubocop.lintOnChange": true,
+        "ruby.rubocop.executePath": "/workspace/reporting-app/",
+        "ruby.rubocop.configFilePath": "/workspace/reporting-app/.rubocop.yml",
+
+        // Editor - Optimized for Cursor AI
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": false,
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit",
+          "source.organizeImports": "never"
+        },
+        "editor.inlineSuggest.enabled": true,
+        "editor.suggestSelection": "first",
+        "editor.acceptSuggestionOnCommitCharacter": true,
+        "editor.tabCompletion": "on",
+        "editor.quickSuggestions": {
+          "other": "on",
+          "comments": "off",
+          "strings": "on"
+        },
+        "editor.suggest.preview": true,
+        "editor.suggest.showStatusBar": true,
+        "editor.parameterHints.enabled": true,
+        "editor.bracketPairColorization.enabled": true,
+        "editor.guides.bracketPairs": true,
+        "editor.stickyScroll.enabled": true,
+        "editor.unicodeHighlight.ambiguousCharacters": true,
+        "editor.linkedEditing": true,
+
+        // Language-specific settings
+        "[ruby]": {
+          "editor.defaultFormatter": "shopify.ruby-lsp",
+          "editor.formatOnSave": true,
+          "editor.tabSize": 2,
+          "editor.insertSpaces": true,
+          "editor.rulers": [120],
+          "editor.semanticHighlighting.enabled": true
+        },
+        "[erb]": {
+          "editor.defaultFormatter": "shopify.ruby-lsp",
+          "editor.tabSize": 2,
+          "editor.insertSpaces": true
+        },
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.tabSize": 2,
+          "editor.formatOnSave": true
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.tabSize": 2,
+          "editor.formatOnSave": true
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.tabSize": 2,
+          "editor.formatOnSave": true
+        },
+        "[jsonc]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.tabSize": 2
+        },
+        "[yaml]": {
+          "editor.defaultFormatter": "redhat.vscode-yaml",
+          "editor.tabSize": 2,
+          "editor.insertSpaces": true
+        },
+        "[markdown]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.wordWrap": "on",
+          "editor.quickSuggestions": {
+            "other": "on",
+            "comments": "on",
+            "strings": "on"
+          }
+        },
+
+        // File associations
+        "files.associations": {
+          "*.html.erb": "erb",
+          "*.jbuilder": "ruby",
+          "Procfile*": "procfile",
+          "Guardfile": "ruby",
+          "Gemfile": "ruby",
+          "Gemfile.lock": "ruby",
+          "Rakefile": "ruby",
+          "config.ru": "ruby",
+          ".env*": "dotenv"
+        },
+
+        // Files to exclude from search/file tree
+        "search.exclude": {
+          "**/node_modules": true,
+          "**/vendor": true,
+          "**/tmp": true,
+          "**/log": true,
+          "**/storage": true,
+          "**/.git": true,
+          "**/coverage": true,
+          "**/.bundle": true
+        },
+        "files.exclude": {
+          "**/.git": true,
+          "**/.DS_Store": true,
+          "**/tmp": true,
+          "**/log": true
+        },
+        "files.watcherExclude": {
+          "**/node_modules": true,
+          "**/vendor": true,
+          "**/tmp": true,
+          "**/log": true,
+          "**/storage": true,
+          "**/.git/objects/**": true,
+          "**/.git/subtree-cache/**": true
+        },
+
+        // Git configuration
+        "git.enableSmartCommit": true,
+        "git.confirmSync": false,
+        "git.autofetch": true,
+        "git.openRepositoryInParentFolders": "always",
+        "gitlens.codeLens.enabled": true,
+        "gitlens.currentLine.enabled": true,
+
+        // Prettier configuration
+        "prettier.singleQuote": false,
+        "prettier.trailingComma": "es5",
+        "prettier.semi": true,
+        "prettier.printWidth": 100,
+
+        // ESLint configuration
+        "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+        "eslint.format.enable": true,
+
+        // Error Lens (inline error display)
+        "errorLens.enabled": true,
+        "errorLens.enabledDiagnosticLevels": ["error", "warning"],
+
+        // Code Spell Checker
+        "cSpell.enabled": true,
+        "cSpell.language": "en",
+        "cSpell.words": ["medicaid", "ivaas", "cognito", "postgresql", "rubocop", "jbuilder"],
+
+        // PostgreSQL extension
+        "pgsql.connections": [
+          {
+            "host": "reporting-app-database",
+            "dbname": "app",
+            "user": "app",
+            "password": "secret123",
+            "port": "5432",
+            "ssl": false
+          }
+        ],
+
+        // Workbench settings
+        "workbench.colorTheme": "Default Dark Modern",
+        "workbench.iconTheme": "vscode-icons",
+        "workbench.tree.indent": 20,
+        "workbench.editor.highlightModifiedTabs": true,
+        "workbench.editor.enablePreview": false
+      }
+    }
+  },
+
+  // Port forwarding
+  "forwardPorts": [3000, 5432],
+  "portsAttributes": {
+    "3000": {
+      "label": "Rails Server",
+      "onAutoForward": "notify",
+      "protocol": "http"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "silent"
+    }
+  },
+
+  // Lifecycle hooks - 2025 best practices
+  "initializeCommand": "bash -c 'test -f ${localWorkspaceFolder}/reporting-app/.env || cp ${localWorkspaceFolder}/reporting-app/local.env.example ${localWorkspaceFolder}/reporting-app/.env' && echo '🚀 Initializing Cursor dev container for Rails app...'",
+
+  "onCreateCommand": {
+    "setup-env": "bash /workspace/.devcontainer/setup-env.sh",
+    "install-gems": "cd /workspace/reporting-app && bundle install",
+    "install-npm": "cd /workspace/reporting-app && npm install",
+    "setup-db": "cd /workspace/reporting-app && bundle exec rails db:create db:migrate || true"
+  },
+
+  "updateContentCommand": "cd /workspace/reporting-app && bundle install && npm install",
+
+  "postStartCommand": "echo '✅ Container ready! Rails app: http://localhost:3000' && echo '📁 Full project available at /workspace'",
+
+  "postAttachCommand": {
+    "server-info": "echo '📝 To start Rails server: cd reporting-app && bundle exec rails server'",
+    "db-info": "echo '🗄️  PostgreSQL available at: reporting-app-database:5432'",
+    "structure-info": "echo '📂 Project structure: /workspace (root), /workspace/reporting-app (Rails app)'"
+  },
+
+  // Environment variables
+  "containerEnv": {
+    "RAILS_ENV": "development",
+    "DB_HOST": "reporting-app-database",
+    "DB_PORT": "5432",
+    "DB_NAME": "app",
+    "DB_USER": "app",
+    "DB_PASSWORD": "secret123",
+    "RAILS_BINDING": "0.0.0.0",
+    "BUNDLE_PATH": "/usr/local/bundle",
+    "GEM_HOME": "/usr/local/bundle",
+    "NODE_ENV": "development",
+    "PROJECT_ROOT": "/workspace"
+  },
+
+  // Mount Cursor settings for persistence
+  "mounts": [
+    "source=${localWorkspaceFolder}/.cursor,target=/root/.cursor,type=bind,consistency=cached"
+  ],
+
+  // Run as root for development ease
+  "remoteUser": "root",
+
+  // Better isolation and caching
+  "updateRemoteUserUID": false,
+
+  // Wait for services
+  "waitFor": "onCreateCommand"
+}
