@@ -76,6 +76,12 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
     }
     let(:mock_service) { instance_double(CMSIncomeVerificationService) }
 
+    it "creates a new ActivityReportApplicationForm" do
+      expect {
+        get new_activity_report_application_form_url
+      }.to change(ActivityReportApplicationForm, :count).by(1)
+    end
+
     context "with reporting source set to 'reporting_app'" do
       before do
         allow(Rails.application.config).to receive(:reporting_source).and_return("reporting_app")
@@ -164,7 +170,7 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
         activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
         patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
         activity_report_application_form.reload
-        expect(response).to redirect_to(review_activity_report_application_form_url(activity_report_application_form))
+        expect(response).to redirect_to(activity_report_application_form_url(activity_report_application_form))
       end
     end
   end
