@@ -1,0 +1,30 @@
+<div class="usa-header padding-bottom-3">
+  <h1>[Member Name]</h1>
+  <p>
+    Member ID: <%= @member.member_id %>
+  </p>
+  <p>
+    Email: <%= @member.email %>
+  </p>
+</div>
+<div class="usa-section">
+  <h2>Certification Cases</h2>
+  <table class="usa-table usa-table--borderless width-full">
+    <thead>
+      <tr>
+        <th>Case No.</th>
+        <th>Certification date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @certification_cases.each do |kase| %>
+        <tr>
+          <td><%= link_to kase.certification.case_number, certification_case_path(kase) %></td>
+          <td><%= kase.certification.certification_requirements.dig("certification_date") %></td>
+          <td><%= kase.status.titleize %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
