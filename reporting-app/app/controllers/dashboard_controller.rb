@@ -10,10 +10,11 @@ class DashboardController < ApplicationController
   def index
     @all_certifications = Certification.find_by_member_email(current_user.email).order(created_at: :desc).all
     @certification = @all_certifications.first
-    if @certification
-      @exemption_application_form = ExemptionApplicationForm.find_by(certification_id: @certification&.id)
+    @certification_case = CertificationCase.find_by(certification_id: @certification&.id)
+    if @certification_case
+      @exemption_application_form = ExemptionApplicationForm.find_by(certification_case_id: @certification_case.id)
       @exemption_case = ExemptionCase.find_by(application_form_id: @exemption_application_form&.id)
-      @activity_report_application_form = policy_scope(ActivityReportApplicationForm).find_by(certification_id: @certification&.id)
+      @activity_report_application_form = policy_scope(ActivityReportApplicationForm).find_by(certification_case_id: @certification_case.id)
       @activity_report_case = ActivityReportCase.find_by(application_form_id: @activity_report_application_form&.id)
     end
   end
