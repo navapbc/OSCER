@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     mount OasRails::Engine, at: "/docs", defaults: { format: :html }
 
     resources :certifications, only: [ :create, :show ]
+
+    get "health" => "api/healthcheck#index"
   end
 
   scope path: "/staff" do

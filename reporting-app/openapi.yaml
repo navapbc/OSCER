@@ -282,6 +282,17 @@
         "required": [
           "status"
         ]
+      },
+      "ece4f2c15f241af4536e1132d15a279a": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ]
       }
     },
     "responses": {
@@ -331,6 +342,16 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/bf2b49f733c3ee403393efcf6916e8be"
+            }
+          }
+        }
+      },
+      "02d6f9bea66374050a4c73f23ca002bf": {
+        "description": "Response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ece4f2c15f241af4536e1132d15a279a"
             }
           }
         }
@@ -446,6 +467,21 @@
           },
           "404": {
             "$ref": "#/components/responses/ae1201882ef101840191a87bd51e7982"
+          }
+        }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "tags": [
+          "Healthcheck"
+        ],
+        "summary": "Check service health",
+        "description": "#",
+        "operationId": "GET__api_health",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/02d6f9bea66374050a4c73f23ca002bf"
           }
         }
       }
