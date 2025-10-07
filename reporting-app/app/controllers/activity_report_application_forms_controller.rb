@@ -56,7 +56,7 @@ class ActivityReportApplicationFormsController < ApplicationController
   def update
     respond_to do |format|
       if @activity_report_application_form.update(activity_report_application_form_params)
-        format.html { redirect_to review_activity_report_application_form_path(@activity_report_application_form), notice: "Activity report application form was successfully updated." }
+        format.html { redirect_to @activity_report_application_form, notice: "Activity report application form was successfully updated." }
         format.json { render :show, status: :ok, location: review_activity_report_application_form_path(@activity_report_application_form) }
       else
         format.html { render :edit, status: :unprocessable_entity }
