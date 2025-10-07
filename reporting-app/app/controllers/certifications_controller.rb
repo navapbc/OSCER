@@ -6,6 +6,7 @@ class CertificationsController < StaffController
 
   # for API endpoints
   skip_before_action :authenticate_user!, only: %i[ create show]
+  protect_from_forgery unless: -> { request.format.json? }
 
   # GET /certifications
   # GET /certifications.json
