@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-# config/initializers/oas_rails.rb
 OasRails.configure do |config|
   # Basic Information about the API
   config.info.title = "Community Engagement Medicaid"
   config.info.version = "1.0.0"
-  config.info.summary = "OasRails: Automatic Interactive API Documentation for Rails"
+  config.info.summary = "System for tracking and certifying community engagement requirements for Medicaid"
   config.info.description = <<~HEREDOC
     # Welcome to the Community Engagement Medicaid API
 
@@ -13,19 +12,20 @@ OasRails.configure do |config|
 
     ## Getting Started
 
-    You will need credentials generated for you by the operations team.
+    This demo API has no required authentication at the moment.
   HEREDOC
   config.info.contact.name = "Nava PBC"
   config.info.contact.email = "medicaid@navapbc.com"
   config.info.contact.url = "https://github.com/navapbc/community-engagement-medicaid"
 
-  # TODO: decide license
-  config.info.license.name = "TODO"
-  config.info.license.url = "TODO"
+  # the license of the project is not necessarily the license of the API, but as
+  # a starting place
+  config.info.license.name = "Apache-2.0"
+  config.info.license.url = "https://opensource.org/license/apache-2-0"
 
   # Servers Information. For more details follow: https://spec.openapis.org/oas/latest.html#server-object
   config.servers = [
-    { url: "http://localhost:3000", description: "Local" },
+    { url: "", description: "Current server" },
     { url: "http://medicaid.navateam.com", description: "Dev" }
   ]
 
