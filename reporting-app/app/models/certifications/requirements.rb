@@ -52,10 +52,4 @@ class Certifications::RequirementsType < ActiveRecord::Type::Json
       nil
     end
   end
-
-  # private
-
-  # def cast_value(value)
-  #   Certifications::Requirements.new(value)
-  # end
 end

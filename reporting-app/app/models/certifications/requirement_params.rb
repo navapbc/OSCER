@@ -8,12 +8,12 @@ class Certifications::RequirementParams < Certifications::RequirementTypeParams
 
   validates :certification_date, presence: true
 
-  # TODO: require either :certification_type or all type params are required
+  # either :certification_type or all type params are required
   validates :certification_type, presence: true, on: :input, if: Proc.new { |params| params.has_missing_type_params? }
   validates :lookback_period, presence: true, on: :input, if: Proc.new { |params| params.certification_type.blank? }
   validates :number_of_months_to_certify, presence: true, on: :input, if: Proc.new { |params| params.certification_type.blank? }
 
-  # TODO: either :due_date or :due_period_days is required, if :certification_type not specified
+  # either :due_date or :due_period_days is required, if :certification_type not specified
   validates :due_period_days, presence: true, on: :input, if: Proc.new { |params| params.certification_type.blank? && params.due_date.blank? }
   validates :due_date, presence: true, on: :input, if: Proc.new { |params| params.certification_type.blank? && params.due_period_days.blank? }
 
@@ -53,8 +53,7 @@ class Certifications::RequirementParamsType < ActiveRecord::Type::Json
     case value
     when Hash
       hash = value.with_indifferent_access
-      possible_param_names = Certifications::RequirementParams.attribute_names.map(&:to_sym)
-      Certifications::RequirementParams.new(hash.slice(*possible_param_names))
+      Certifications::RequirementParams.new_filtered(hash)
     else
       nil
     end
