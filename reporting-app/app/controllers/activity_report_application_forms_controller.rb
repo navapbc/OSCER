@@ -12,7 +12,7 @@ class ActivityReportApplicationFormsController < ApplicationController
   before_action :set_activity_report_case, only: %i[ show ]
   before_action :authenticate_user!
   before_action :create_activity_report, only: %i[ new ]
-  before_action :redirect_to_ivaas, only: %i[ new show edit ], if: :is_reporting_source_ivaas?
+  before_action :redirect_to_ivaas, only: %i[ new show edit ], if: :reporting_source_ivaas?
 
   # GET /activity_report_application_forms/1 or /activity_report_application_forms/1.json
   def show
@@ -84,7 +84,7 @@ class ActivityReportApplicationFormsController < ApplicationController
     Rails.application.config.reporting_source
   end
 
-  def is_reporting_source_ivaas?
+  def reporting_source_ivaas?
     reporting_source = params[:reporting_source] || default_reporting_source
     reporting_source == "income_verification_service"
   end
