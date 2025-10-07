@@ -1,6 +1,10 @@
 <div id="<%= dom_id activity %>" class="grid-row">
   <div class="grid-col-8 grid-offset-1">
-    <%= link_to "Work for #{activity.name}", [certification, activity_report_application_form, activity] %>
+    <% if policy(@activity_report_application_form).edit? %>
+      <%= link_to "Work for #{activity.name}", [@certification, activity_report_application_form, activity] %>
+    <% else %>
+      <%= "Work for #{activity.name}" %>
+    <% end %>
   </div>
   <div class="grid-col-3 text-right">
     <%= activity.hours %>
