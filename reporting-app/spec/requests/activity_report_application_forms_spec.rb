@@ -127,44 +127,6 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new ActivityReportApplicationForm" do
-        expect {
-          post activity_report_application_forms_url, params: { activity_report_application_form: valid_request_attributes }
-        }.to change(ActivityReportApplicationForm, :count).by(1)
-
-        created_form = ActivityReportApplicationForm.last
-        expect(created_form.user_id).to eq(user.id)
-      end
-
-      it "creates a new ActivityReportApplicationForm, with only approved attributes" do
-        expect {
-          post activity_report_application_forms_url, params: { activity_report_application_form: valid_request_attributes.merge!({ user_id: other_user.id, submitted_at: Time.now }) }
-        }.to change(ActivityReportApplicationForm, :count).by(1)
-
-        created_form = ActivityReportApplicationForm.last
-        expect(created_form.user_id).to eq(user.id)
-      end
-
-      it "redirects to the created activity_report_application_form" do
-        post activity_report_application_forms_url, params: { activity_report_application_form: valid_request_attributes }
-        expect(response).to redirect_to(activity_report_application_form_url(ActivityReportApplicationForm.last))
-      end
-
-      it "creates an activity report case" do
-        expect {
-          post activity_report_application_forms_url, params: { activity_report_application_form: valid_request_attributes }
-        }.to change(ActivityReportCase, :count).by(1)
-
-        created_form = ActivityReportApplicationForm.last
-        kase = ActivityReportCase.find_by(application_form_id: created_form.id)
-        expect(kase).not_to be_nil
-        expect(kase.business_process_instance.current_step).to eq("submit_report")
-      end
-    end
-  end
-
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {

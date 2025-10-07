@@ -36,22 +36,6 @@ class ActivityReportApplicationFormsController < ApplicationController
   def review
   end
 
-  # POST /activity_report_application_forms or /activity_report_application_forms.json
-  # def create
-  #   @activity_report_application_form = create_activity_report(activity_report_application_form_params)
-  #   authorize @activity_report_application_form
-
-  #   respond_to do |format|
-  #     if @activity_report_application_form.save
-  #       format.html { redirect_to @activity_report_application_form, notice: "Activity report application form was successfully created." }
-  #       format.json { render :show, status: :created, location: review_activity_report_application_form_path(@activity_report_application_form) }
-  #     else
-  #       format.html { render :new, status: :unprocessable_entity }
-  #       format.json { render json: @activity_report_application_form.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
   # PATCH/PUT /activity_report_application_forms/1 or /activity_report_application_forms/1.json
   def update
     respond_to do |format|
