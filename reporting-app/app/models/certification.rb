@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Certification < ApplicationRecord
   attribute :beneficiary_id, :string
   attribute :case_number, :string

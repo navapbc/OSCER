@@ -1,11 +1,12 @@
 GIT
   remote: https://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:x-oauth-basic@github.com/navapbc/flex-sdk.git
-  revision: df995add017906a8231419db1bfd18fa1caf9fb3
+  revision: 0a1737ff1107ec58ae221f019706b042e21bb48d
   specs:
-    flex (0.1.0)
+    strata (0.1.0)
       pundit (>= 2.5.0)
       rails (>= 7.1.5.1)
       validates_timeliness (>= 7.0.0)
+      view_component (>= 4.0.2)
 
 GEM
   remote: https://rubygems.org/
@@ -273,7 +274,7 @@ GEM
     nenv (0.3.0)
     net-http (0.6.0)
       uri
-    net-imap (0.5.10)
+    net-imap (0.5.11)
       date
       net-protocol
     net-pop (0.1.2)
@@ -321,7 +322,7 @@ GEM
     pg-aws_rds_iam (0.7.0)
       aws-sdk-rds (~> 1.0)
       pg (~> 1.1)
-    pp (0.6.2)
+    pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
     prism (1.4.0)
@@ -393,9 +394,10 @@ GEM
     rb-fsevent (0.11.2)
     rb-inotify (0.11.1)
       ffi (~> 1.0)
-    rdoc (6.14.2)
+    rdoc (6.15.0)
       erb
       psych (>= 4.0.0)
+      tsort
     redcarpet (3.6.1)
     regexp_parser (2.11.2)
     reline (0.6.2)
@@ -496,6 +498,7 @@ GEM
     thor (1.4.0)
     timeliness (0.5.3)
     timeout (0.4.3)
+    tsort (0.2.0)
     turbo-rails (2.0.16)
       actionpack (>= 7.1.0)
       railties (>= 7.1.0)
@@ -564,7 +567,6 @@ DEPENDENCIES
   factory_bot_rails
   faker (~> 3.2)
   faraday
-  flex!
   guard-rspec
   importmap-rails
   jbuilder
@@ -589,13 +591,14 @@ DEPENDENCIES
   simplecov
   sprockets-rails
   stimulus-rails
+  strata!
   turbo-rails (>= 2.0)
   tzinfo-data
   web-console
   webmock
 
 RUBY VERSION
-   ruby 3.4.5p51
+   ruby 3.4.6p54
 
 BUNDLED WITH
    2.6.9

@@ -1,4 +1,6 @@
-class ActivityReportBusinessProcess < Flex::BusinessProcess
+# frozen_string_literal: true
+
+class ActivityReportBusinessProcess < Strata::BusinessProcess
   applicant_task("submit_report")
   staff_task("review_report", ReviewActivityReportTask)
   system_process("activity_report_task_approved", ->(kase) {

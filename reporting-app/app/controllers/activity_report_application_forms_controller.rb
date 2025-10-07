@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActivityReportApplicationFormsController < ApplicationController
   before_action :set_activity_report_application_form, only: %i[
     show

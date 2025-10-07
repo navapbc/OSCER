@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources :activity_report_application_forms, except: [ :index ] do
     resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ] do
@@ -29,6 +31,18 @@ Rails.application.routes.draw do
 
   scope path: "/staff" do
     resources :certifications
+
+    resources :certification_cases, only: [ :index, :show ] do
+      collection do
+        get :closed
+      end
+
+      member do
+        get :tasks
+        get :documents
+        get :notes
+      end
+    end
 
     resources :activity_report_cases, only: [ :index, :show ] do
       collection do

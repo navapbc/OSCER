@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This migration comes from flex (originally 20250430160812)
 class CreateFlexTasks < ActiveRecord::Migration[7.2]
   def change

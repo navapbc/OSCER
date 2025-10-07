@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActivitiesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_activity_report_application_form

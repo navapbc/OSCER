@@ -1,4 +1,6 @@
-class ExemptionBusinessProcess < Flex::BusinessProcess
+# frozen_string_literal: true
+
+class ExemptionBusinessProcess < Strata::BusinessProcess
   applicant_task("submit_application")
   staff_task("review_exemption_claim", ReviewExemptionClaimTask)
 
