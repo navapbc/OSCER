@@ -18,7 +18,7 @@ class Member < ApplicationRecord
   end
 
   scope :by_name, ->(name) { 
-    return all if name.blank?
+    return none if name.blank?
 
     relation = all
     relation = relation.where("LOWER(name_first) = ?", name.first.downcase) if name.first.present?
