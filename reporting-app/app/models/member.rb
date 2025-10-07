@@ -10,14 +10,14 @@ class Member < ApplicationRecord
   strata_attribute :email, :string
 
   def self.find_by_member_id(member_id)
-    find_by('UPPER(member_id) = ?', member_id.to_s.upcase)
+    find_by("UPPER(member_id) = ?", member_id.to_s.upcase)
   end
 
   def self.find_by_email(email)
-    find_by('LOWER(email) = ?', email.to_s.downcase)
+    find_by("LOWER(email) = ?", email.to_s.downcase)
   end
 
-  scope :by_name, ->(name) { 
+  scope :by_name, ->(name) {
     return none if name.blank?
 
     relation = all
