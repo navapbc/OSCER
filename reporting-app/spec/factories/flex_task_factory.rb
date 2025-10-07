@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   # This is possible because Strata::Task is not abstract
   factory :task, class: Strata::Task do

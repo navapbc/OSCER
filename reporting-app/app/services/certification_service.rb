@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CertificationService
   def save_new(certification, current_user = nil)
     if !certification.save
@@ -7,6 +9,9 @@ class CertificationService
     # TODO: not sure how else to get Rails to stop complaining about
     # :activity_report_application_forms strict loading on newly created record
     certification.activity_report_application_forms = []
+    # temporarily create a certification case for the certification here.
+    # TODO: move to business process/event processing step
+    CertificationCase.create(certification_id: certification.id)
 
     # TODO: this logic could/should be moved to an business process/event
     # processing step

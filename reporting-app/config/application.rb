@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails/all"
@@ -8,6 +10,8 @@ Bundler.require(*Rails.groups)
 
 module TemplateApplicationRails
   class Application < Rails::Application
+    config.generators.test_framework = :rspec
+
     # Internationalization
     I18n.available_locales = [ :"en", :"es-US" ]
     I18n.default_locale = :"en"
@@ -20,6 +24,11 @@ module TemplateApplicationRails
     config.load_defaults 7.2
 
     config.time_zone = ENV["TIME_ZONE"] || "Eastern Time (US & Canada)" # Convenient for time display in local development
+
+    config.view_component.previews.paths = [ "app/previews" ]
+    config.view_component.generate.preview = true
+    config.view_component.generate.locale = true
+    config.view_component.generate.distinct_locale_files = true
 
     # Fetch authentication flow; default to cognito
     Rails.application.config.auth_adapter = ENV.fetch("AUTH_ADAPTER", "cognito")

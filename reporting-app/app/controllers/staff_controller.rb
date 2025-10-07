@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StaffController < Strata::StaffController
   before_action :authenticate_user!
 
@@ -7,6 +9,7 @@ class StaffController < Strata::StaffController
 
   def case_classes
     # Add case classes in your application
-    [ ActivityReportCase, Certification, ExemptionCase ]
+    # TODO: remove ActivityReportCase and ExemptionCase when CertificationBuisinessProcess is implemented
+    [ CertificationCase, ActivityReportCase, ExemptionCase ]
   end
 end

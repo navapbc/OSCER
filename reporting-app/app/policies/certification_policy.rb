@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CertificationPolicy < ApplicationPolicy
   def initialize(user, record)
     # TODO: for demo purposes at the moment allow unauthenticated, but at some

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActivityReportApplicationForm < Strata::ApplicationForm
   # TODO: perhaps in the future not optional?
   belongs_to :certification, optional: true

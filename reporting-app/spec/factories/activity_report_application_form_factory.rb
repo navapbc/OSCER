@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :activity_report_application_form do
     id { SecureRandom.uuid }

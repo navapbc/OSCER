@@ -1,7 +1,7 @@
 <% content_for :title, t("certifications.demo_create.title") %>
 <h1><%= t("certifications.demo_create.title") %></h1>
 <% tabs = [
-  { name: "Generic", path: new_demo_certification_path, active: not @form.certification_type },
+  { name: "Generic", path: new_demo_certification_path, active: !@form.certification_type },
 ] + Demo::Certifications::CreateForm::CERTIFICATION_TYPE_OPTIONS.map { |ct| { name: t("certifications.demo_create.certification_type_options.#{ct}"), path: new_demo_certification_path(certification_type: ct), active: @form.certification_type == ct } }
 %>
 <nav class="display-flex border-bottom-1px border-base-light">
