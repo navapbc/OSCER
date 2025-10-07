@@ -2,10 +2,6 @@
 
 <%= form_with url: search_members_path, method: :post, class: "usa-form" do |form| %>
   <div class="usa-form-group">
-    <%= form.label :member_id, "By Member ID", class: "usa-label" %>
-    <%= form.text_field :member_id, class: "usa-input" %>
-  </div>
-  <div class="usa-form-group">
     <%= form.label :email, "By Email", class: "usa-label" %>
     <%= form.text_field :email, class: "usa-input" %>
   </div>
