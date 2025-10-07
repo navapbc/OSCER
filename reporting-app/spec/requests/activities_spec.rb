@@ -21,8 +21,10 @@ RSpec.describe "/activities", type: :request do
 
   let(:other_user) { User.create!(email: "test-other@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
 
-  let!(:activity_report_application_form) { create(:activity_report_application_form, :with_activities, user_id: user.id) }
-  let!(:existing_activity) { activity_report_application_form.activities.first }
+  let(:certification) { Certification.create! }
+
+  let(:activity_report_application_form) { create(:activity_report_application_form, :with_activities, user_id: user.id, certification_id: certification.id) }
+  let(:existing_activity) { activity_report_application_form.activities.first }
 
   # This should return the minimal set of attributes required to create a valid
   # Activity. As you add validations to Activity, be sure to
@@ -51,6 +53,8 @@ RSpec.describe "/activities", type: :request do
   }
 
   before do
+    # create activities before testing
+    existing_activity
     login_as user
   end
 
@@ -60,28 +64,28 @@ RSpec.describe "/activities", type: :request do
 
   describe "GET /show" do
     it "renders a successful response" do
-      get activity_report_application_form_activity_url(activity_report_application_form, existing_activity)
+      get certification_activity_report_application_form_activity_url(certification, activity_report_application_form, existing_activity)
       expect(response).to be_successful
     end
   end
 
   describe "GET /new" do
     it "renders a successful response" do
-      get new_activity_report_application_form_activity_url(activity_report_application_form)
+      get new_certification_activity_report_application_form_activity_url(certification, activity_report_application_form)
       expect(response).to be_successful
     end
   end
 
   describe "GET /edit" do
     it "renders a successful response" do
-      get edit_activity_report_application_form_activity_url(activity_report_application_form, existing_activity)
+      get edit_certification_activity_report_application_form_activity_url(certification, activity_report_application_form, existing_activity)
       expect(response).to be_successful
     end
   end
 
   describe "GET /documents" do
     it "renders a successful response" do
-      get documents_activity_report_application_form_activity_url(activity_report_application_form, existing_activity)
+      get documents_certification_activity_report_application_form_activity_url(certification, activity_report_application_form, existing_activity)
       expect(response).to be_successful
     end
   end
@@ -89,13 +93,14 @@ RSpec.describe "/activities", type: :request do
   describe "POST /create" do
     context "with valid parameters" do
       it "creates a new Activity" do
+        # binding.break
         expect {
-          post activity_report_application_form_activities_url(activity_report_application_form), params: { activity: valid_attributes }
+          post certification_activity_report_application_form_activities_url(certification, activity_report_application_form), params: { activity: valid_attributes }
         }.to change(Activity, :count).by(1)
       end
 
       it "redirects to the activity report" do
-        post activity_report_application_form_activities_url(activity_report_application_form), params: { activity: valid_attributes }
+        post certification_activity_report_application_form_activities_url(certification, activity_report_application_form), params: { activity: valid_attributes }
 
         expect(response).to have_http_status(:redirect)
         expect(response.location).to match(%r{/activity_report_application_forms/#{activity_report_application_form.id}/activities/[^/]+/documents})
@@ -105,17 +110,17 @@ RSpec.describe "/activities", type: :request do
     context "with invalid parameters" do
       it "does not create a new Activity" do
         expect {
-          post activity_report_application_form_activities_url(activity_report_application_form), params: { activity: invalid_attributes }
+          post certification_activity_report_application_form_activities_url(certification, activity_report_application_form), params: { activity: invalid_attributes }
         }.not_to change(Activity, :count)
       end
 
       it "renders a response with 422 status (unprocessable entity)" do
-        post activity_report_application_form_activities_url(activity_report_application_form), params: { activity: invalid_attributes }
+        post certification_activity_report_application_form_activities_url(certification, activity_report_application_form), params: { activity: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it "renders error messages" do
-        post activity_report_application_form_activities_url(activity_report_application_form), params: { activity: invalid_attributes }
+        post certification_activity_report_application_form_activities_url(certification, activity_report_application_form), params: { activity: invalid_attributes }
         expect(response.body).to include("Hours is not a number")
       end
     end
@@ -131,7 +136,7 @@ RSpec.describe "/activities", type: :request do
       }
 
       before do
-        patch activity_report_application_form_activity_url(activity_report_application_form, existing_activity), params: { activity: new_attributes }
+        patch certification_activity_report_application_form_activity_url(certification, activity_report_application_form, existing_activity), params: { activity: new_attributes }
       end
 
       it "updates the requested activity" do
@@ -144,13 +149,13 @@ RSpec.describe "/activities", type: :request do
       end
 
       it "redirects to the activity report" do
-        expect(response).to redirect_to(documents_activity_report_application_form_activity_url(activity_report_application_form, existing_activity))
+        expect(response).to redirect_to(documents_certification_activity_report_application_form_activity_url(certification, activity_report_application_form, existing_activity))
       end
     end
 
     context "with invalid parameters" do
       before do
-        patch activity_report_application_form_activity_url(activity_report_application_form, existing_activity), params: { activity: invalid_attributes }
+        patch certification_activity_report_application_form_activity_url(certification, activity_report_application_form, existing_activity), params: { activity: invalid_attributes }
       end
 
       it "renders a response with 422 status (unprocessable entity)" do
@@ -177,12 +182,12 @@ RSpec.describe "/activities", type: :request do
     ] }
 
     before do
-      post upload_documents_activity_report_application_form_activity_url(activity_report_application_form, existing_activity),
+      post upload_documents_certification_activity_report_application_form_activity_url(certification, activity_report_application_form, existing_activity),
         params: { activity: { supporting_documents: supporting_documents } }
     end
 
     it "redirects back to the documents page" do
-      expect(response).to redirect_to(documents_activity_report_application_form_activity_url(activity_report_application_form, existing_activity))
+      expect(response).to redirect_to(documents_certification_activity_report_application_form_activity_url(certification, activity_report_application_form, existing_activity))
     end
 
     it "uploads the documents" do
@@ -194,13 +199,13 @@ RSpec.describe "/activities", type: :request do
   describe "DELETE /destroy" do
     it "destroys the requested activity" do
       expect {
-        delete activity_report_application_form_activity_url(activity_report_application_form, existing_activity)
+        delete certification_activity_report_application_form_activity_url(certification, activity_report_application_form, existing_activity)
       }.to change(Activity, :count).by(-1)
     end
 
     it "redirects to the activities list" do
-      delete activity_report_application_form_activity_url(activity_report_application_form, existing_activity)
-      expect(response).to redirect_to(activity_report_application_form_url(activity_report_application_form))
+      delete certification_activity_report_application_form_activity_url(certification, activity_report_application_form, existing_activity)
+      expect(response).to redirect_to(certification_activity_report_application_form_url(certification, activity_report_application_form))
     end
   end
 end

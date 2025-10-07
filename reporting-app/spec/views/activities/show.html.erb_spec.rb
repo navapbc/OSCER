@@ -3,10 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe "activities/show", type: :view do
-  let(:activity_report_application_form) { create(:activity_report_application_form, :with_activities) }
+  let(:certification) { create(:certification) }
+  let(:activity_report_application_form) { create(:activity_report_application_form, :with_activities, certification: certification) }
   let(:activity) { activity_report_application_form.activities.first }
 
   before do
+    assign(:certification, certification)
     assign(:activity_report_application_form, activity_report_application_form)
     assign(:activity, activity)
   end

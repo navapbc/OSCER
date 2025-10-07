@@ -21,6 +21,8 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
 
   let(:other_user) { User.create!(email: "test-other@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
 
+  let(:certification) { Certification.create! }
+
   # This should return the minimal set of attributes required to create a valid
   # ActivityReportApplicationForm. As you add validations to ActivityReportApplicationForm, be sure to
   # adjust the attributes here as well.
@@ -33,7 +35,8 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
   let(:valid_db_attributes) do
     valid_request_attributes.merge!(
       {
-        user_id: user.id
+        user_id: user.id,
+        certification_id: certification.id
       }
     )
   end
@@ -49,21 +52,21 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
   describe "GET /show" do
     it "renders a successful response" do
       activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
-      get activity_report_application_form_url(activity_report_application_form)
+      get certification_activity_report_application_form_url(certification, activity_report_application_form)
       expect(response).to be_successful
     end
 
     it "errors if not owning user" do
       login_as other_user
       activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
-      get activity_report_application_form_url(activity_report_application_form)
+      get certification_activity_report_application_form_url(certification, activity_report_application_form)
       expect(response).to be_client_error
     end
   end
 
   describe "GET /new" do
     it "renders a successful response" do
-      get new_activity_report_application_form_url
+      get new_certification_activity_report_application_form_url(certification)
       expect(response).to be_successful
     end
   end
@@ -95,14 +98,14 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
       end
 
       it "redirects to the income verification service" do
-        get edit_activity_report_application_form_url(activity_report_application_form)
+        get edit_certification_activity_report_application_form_url(certification, activity_report_application_form)
         expect(response).to redirect_to("https://ivaas.gov/en/cbv/entry?token=dummy-token")
       end
 
       it "renders an error response for non-owning user" do
         login_as other_user
 
-        get edit_activity_report_application_form_url(activity_report_application_form)
+        get edit_certification_activity_report_application_form_url(certification, activity_report_application_form)
         expect(response).to be_client_error
       end
     end
@@ -113,14 +116,14 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
       end
 
       it "renders a successful response" do
-        get edit_activity_report_application_form_url(activity_report_application_form)
+        get edit_certification_activity_report_application_form_url(certification, activity_report_application_form)
         expect(response).to be_successful
       end
 
       it "renders an error response for non-owning user" do
         login_as other_user
 
-        get edit_activity_report_application_form_url(activity_report_application_form)
+        get edit_certification_activity_report_application_form_url(certification, activity_report_application_form)
         expect(response).to be_client_error
       end
     end
@@ -129,7 +132,7 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
   describe "GET /review" do
     it "renders a successful response" do
       activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
-      get review_activity_report_application_form_url(activity_report_application_form)
+      get review_certification_activity_report_application_form_url(certification, activity_report_application_form)
       expect(response).to be_successful
     end
   end
@@ -138,25 +141,27 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
     context "with valid parameters" do
       it "creates a new ActivityReportApplicationForm" do
         expect {
-          post activity_report_application_forms_url, params: { activity_report_application_form: valid_request_attributes }
+          post certification_activity_report_application_forms_url(certification), params: { activity_report_application_form: valid_request_attributes }
         }.to change(ActivityReportApplicationForm, :count).by(1)
 
         created_form = ActivityReportApplicationForm.last
         expect(created_form.user_id).to eq(user.id)
+        expect(created_form.certification_id).to eq(certification.id)
       end
 
       it "creates a new ActivityReportApplicationForm, with only approved attributes" do
         expect {
-          post activity_report_application_forms_url, params: { activity_report_application_form: valid_request_attributes.merge!({ user_id: other_user.id, submitted_at: Time.now }) }
+          post certification_activity_report_application_forms_url(certification), params: { activity_report_application_form: valid_request_attributes.merge!({ user_id: other_user.id, submitted_at: Time.now }) }
         }.to change(ActivityReportApplicationForm, :count).by(1)
 
         created_form = ActivityReportApplicationForm.last
         expect(created_form.user_id).to eq(user.id)
+        expect(created_form.certification_id).to eq(certification.id)
       end
 
       it "redirects to the created activity_report_application_form" do
-        post activity_report_application_forms_url, params: { activity_report_application_form: valid_request_attributes }
-        expect(response).to redirect_to(activity_report_application_form_url(ActivityReportApplicationForm.last))
+        post certification_activity_report_application_forms_url(certification), params: { activity_report_application_form: valid_request_attributes }
+        expect(response).to redirect_to(certification_activity_report_application_form_url(certification, ActivityReportApplicationForm.last))
       end
     end
   end
@@ -171,7 +176,7 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
 
       it "updates the requested activity_report_application_form" do
         activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
-        patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
+        patch certification_activity_report_application_form_url(certification, activity_report_application_form), params: { activity_report_application_form: new_attributes }
         activity_report_application_form.reload
         expect(activity_report_application_form.reporting_period).to eq((Date.today - 3.month).beginning_of_month)
       end
@@ -182,7 +187,7 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
         activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
         activity_report_application_form_original = activity_report_application_form.dup
 
-        patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
+        patch certification_activity_report_application_form_url(certification, activity_report_application_form), params: { activity_report_application_form: new_attributes }
 
         # assert DB state is still in the previous state
         activity_report_application_form.reload
@@ -196,9 +201,9 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
 
       it "redirects to the activity_report_application_form" do
         activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
-        patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
+        patch certification_activity_report_application_form_url(certification, activity_report_application_form), params: { activity_report_application_form: new_attributes }
         activity_report_application_form.reload
-        expect(response).to redirect_to(review_activity_report_application_form_url(activity_report_application_form))
+        expect(response).to redirect_to(review_certification_activity_report_application_form_url(certification, activity_report_application_form))
       end
     end
   end
@@ -207,20 +212,20 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
     let(:application_form) { ActivityReportApplicationForm.create! valid_db_attributes }
 
     it "marks the activity report as submitted" do
-      post submit_activity_report_application_form_url(application_form)
+      post submit_certification_activity_report_application_form_url(certification, application_form)
 
       application_form.reload
       expect(application_form).to be_submitted
     end
 
     it "redirects to GET /show on success" do
-      post submit_activity_report_application_form_url(application_form)
+      post submit_certification_activity_report_application_form_url(certification, application_form)
 
-      expect(response).to redirect_to(activity_report_application_form_url(application_form))
+      expect(response).to redirect_to(certification_activity_report_application_form_url(certification, application_form))
     end
 
     xit "sets the current step of the case to 'review_report'" do
-      post submit_activity_report_application_form_url(application_form)
+      post submit_certification_activity_report_application_form_url(certification, application_form)
 
       kase = CertificationCase.find_by(certification_id: application_form.certification_id)
       expect(kase.business_process_instance.current_step).to eq("review_report")
@@ -229,7 +234,7 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
     it "errors if not owning user" do
       login_as other_user
 
-      post submit_activity_report_application_form_url(application_form)
+      post submit_certification_activity_report_application_form_url(certification, application_form)
 
       expect(response).to be_client_error
     end
@@ -239,7 +244,7 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
     it "destroys the requested activity_report_application_form" do
       activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
       expect {
-        delete activity_report_application_form_url(activity_report_application_form)
+        delete certification_activity_report_application_form_url(certification, activity_report_application_form)
       }.to change(ActivityReportApplicationForm, :count).by(-1)
     end
 
@@ -248,13 +253,13 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
 
       activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
       expect {
-        delete activity_report_application_form_url(activity_report_application_form)
+        delete certification_activity_report_application_form_url(certification, activity_report_application_form)
       }.not_to change(ActivityReportApplicationForm, :count)
     end
 
     it "redirects to the dashboard" do
       activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
-      delete activity_report_application_form_url(activity_report_application_form)
+      delete certification_activity_report_application_form_url(certification, activity_report_application_form)
       expect(response).to redirect_to(dashboard_path)
     end
   end
