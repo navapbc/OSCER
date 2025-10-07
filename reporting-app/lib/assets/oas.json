@@ -4,7 +4,7 @@
       "CertificationCreateRequestBody": {
         "type": "object",
         "properties": {
-          "beneficiary_id": {
+          "member_id": {
             "type": "string",
             "description": "An identifier for the person receiving benefits"
           },
@@ -19,20 +19,20 @@
               { "$ref": "#/components/schemas/CertificationRequirementTypeParameters" }
             ]
           },
-          "beneficiary_data": {
+          "member_data": {
             "type": ["object", "null"],
             "description": "Description of beneficiary",
             "properties": {}
           }
         },
         "required": [
-          "beneficiary_id",
+          "member_id",
           "certification_requirements"
         ],
         "examples": {
           "fully_specified_certification_requirements": {
             "value": {
-              "beneficiary_id": "123",
+              "member_id": "123",
               "case_number": "C-111",
               "certification_requirements": {
                 "certification_date": "2025-09-26",
@@ -40,7 +40,7 @@
                 "number_of_months_to_certify": 1,
                 "due_period_days": 30
               },
-              "beneficiary_data": {
+              "member_data": {
                 "contact": {
                   "email": "john@doe.com",
                   "phone": "+123456789"
@@ -50,13 +50,13 @@
           },
           "certification_type": {
             "value": {
-              "beneficiary_id": "123",
+              "member_id": "123",
               "case_number": "C-111",
               "certification_requirements": {
                 "certification_date": "2025-09-26",
                 "certification_type": "new_application"
               },
-              "beneficiary_data": {
+              "member_data": {
                 "contact": {
                   "email": "john@doe.com",
                   "phone": "+123456789"
@@ -162,7 +162,7 @@
             "format": "uuid",
             "description": "Identifier for the certification record"
           },
-          "beneficiary_id": {
+          "member_id": {
             "type": "string",
             "description": "An identifier for the person receiving benefits"
           },
@@ -173,7 +173,7 @@
           "certification_requirements": {
             "$ref": "#/components/schemas/CertificationRequirements"
           },
-          "beneficiary_data": {
+          "member_data": {
             "type": ["object", "null"],
             "description": "Description of beneficiary",
             "properties": {}
@@ -189,13 +189,13 @@
         },
         "required": [
           "id",
-          "beneficiary_id",
+          "member_id",
           "created_at",
           "updated_at"
         ],
         "example": {
           "id": "63680317-0e33-40a7-8e1a-249a2f5855d9",
-          "beneficiary_id": "123",
+          "member_id": "123",
           "case_number": "C-111",
           "certification_requirements": {
             "certification_date": "2025-09-26",
@@ -207,7 +207,7 @@
               "due_period_days": 30
             }
           },
-          "beneficiary_data": {
+          "member_data": {
             "contact": {
               "email": "john@doe.com",
               "phone": "+123456789"

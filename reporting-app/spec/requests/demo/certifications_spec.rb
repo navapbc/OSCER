@@ -9,7 +9,7 @@ RSpec.describe "/demo/certifications", type: :request do
 
   let(:valid_request_attributes) {
     {
-      beneficiary_email: "foo@example.com",
+      member_email: "foo@example.com",
       case_number: "C-123",
       certification_date: "09/25/2025",
       certification_type: "new_application"
