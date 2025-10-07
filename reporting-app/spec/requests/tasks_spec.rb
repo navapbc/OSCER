@@ -19,8 +19,13 @@ RSpec.describe "/staff/tasks", type: :request do
 
   describe "GET /show" do
     context "with CertificationCase for ActivityReportApplicationForm" do
-      let!(:activity_report_application_form) { create(:activity_report_application_form, certification_id: certification.id) }
-      let!(:activity_report_task) { create(:review_activity_report_task, case: certification_case) }
+      let(:activity_report_application_form) { create(:activity_report_application_form, certification_id: certification.id) }
+      let(:activity_report_task) { create(:review_activity_report_task, case: certification_case) }
+
+      before do
+        activity_report_application_form
+        activity_report_task
+      end
 
       it "renders a successful response and sets the correct case and application form" do
         get "/staff/tasks/#{activity_report_task.id}"
@@ -32,8 +37,13 @@ RSpec.describe "/staff/tasks", type: :request do
     end
 
     context "with CertificationCase for ExemptionApplicationForm" do
-      let!(:exemption_application_form) { create(:exemption_application_form, certification_id: certification.id) }
-      let!(:exemption_task) { create(:review_exemption_claim_task, case: certification_case) }
+      let(:exemption_application_form) { create(:exemption_application_form, certification_id: certification.id) }
+      let(:exemption_task) { create(:review_exemption_claim_task, case: certification_case) }
+
+      before do
+        exemption_application_form
+        exemption_task
+      end
 
       it "renders a successful response and sets the correct case and application form" do
         get "/staff/tasks/#{exemption_task.id}"

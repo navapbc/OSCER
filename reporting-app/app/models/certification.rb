@@ -16,6 +16,10 @@ class Certification < ApplicationRecord
 
   # TODO: add validation for JSON columns (they should be hashes, etc)
 
+  after_create_commit do
+    Strata::EventManager.publish("CertificationCreated", { certification_id: id })
+  end
+
   def beneficiary_account_email
     return unless self.beneficiary_data
 
