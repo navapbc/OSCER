@@ -3,6 +3,11 @@
 class CertificationCase < Strata::Case
   attribute :certification_id, :uuid
 
+  # Don't add an ActiveRecord association since Certification
+  # is a separate aggregate root and we don't want to add
+  # dependencies between the aggregates at the database layer
+  attr_accessor :certification
+
   store_accessor :facts, :certification_approval_status, :certification_approval_status_updated_at,
                  :activity_report_approval_status, :activity_report_approval_status_updated_at,
                  :exemption_request_approval_status, :exemption_request_approval_status_updated_at

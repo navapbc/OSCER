@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CertificationBusinessProcess < Strata::BusinessProcess
   # define steps on certification created
   #

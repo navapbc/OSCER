@@ -6,7 +6,8 @@ RSpec.describe ActivityReportApplicationFormPolicy, type: :policy do
   subject { described_class.new(current_user, record) }
 
   let(:owning_user) { create(:user) }
-  let(:base_record) { create(:activity_report_application_form, user_id: owning_user.id) }
+  let(:certification) { create(:certification) }
+  let(:base_record) { create(:activity_report_application_form, user_id: owning_user.id, certification_id: certification.id) }
 
   let(:record) { base_record }
 

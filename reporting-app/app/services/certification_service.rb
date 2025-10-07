@@ -6,8 +6,8 @@ class CertificationService
     certification.save
   end
 
-  def bene_user(certification)
-    email = certification.beneficiary_email
+  def member_user(certification)
+    email = certification.member_email
     if not email
       return
     end

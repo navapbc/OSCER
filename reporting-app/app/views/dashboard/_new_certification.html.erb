@@ -15,9 +15,11 @@
             <strong><%= t(".activity_report.in_progress_status") %></strong><br />
             <%= t(".activity_report.in_progress_message") %>
           </p>
-          <%= link_to t(".activity_report.continue_report_button"), certification_activity_report_application_form_path(certification, activity_report), class: "usa-button" %>
+          <%= link_to t(".activity_report.continue_report_button"), certification_activity_report_application_form_path(certification, activity_report), class: "usa-button" %><br />
+          <%= link_to t(".activity_report.continue_report_ivaas_button"), certification_activity_report_application_form_path(certification, activity_report, reporting_source: "income_verification_service"), class: "usa-button margin-top-1" %>
         <% else %>
-          <%= link_to t(".activity_report.report_activities_button"), new_certification_activity_report_application_form_path(certification), class: "usa-button" %>
+          <%= link_to t(".activity_report.report_activities_button"), new_certification_activity_report_application_form_path(certification), class: "usa-button" %><br />
+          <%= link_to t(".activity_report.report_activities_ivaas_button"), new_certification_activity_report_application_form_path(certification, reporting_source: "income_verification_service"), class: "usa-button margin-top-1" %>
         <% end %>
       </div>
     </div>

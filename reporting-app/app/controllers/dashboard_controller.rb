@@ -8,7 +8,7 @@ class DashboardController < ApplicationController
 
   # GET /dashboard or /dashboard.json
   def index
-    @all_certifications = Certification.find_by_beneficiary_email(current_user.email).order(created_at: :desc).all
+    @all_certifications = Certification.find_by_member_email(current_user.email).order(created_at: :desc).all
     @certification = @all_certifications.first
     if @certification
       @exemption_application_form = ExemptionApplicationForm.find_by(certification_id: @certification&.id)
