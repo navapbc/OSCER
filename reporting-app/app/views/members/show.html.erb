@@ -18,13 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @certification_cases.each do |kase| %>
-        <tr>
-          <td><%= link_to kase.certification.case_number, certification_case_path(kase) %></td>
-          <td><%= kase.certification.certification_requirements.dig("certification_date") %></td>
-          <td><%= kase.status.titleize %></td>
-        </tr>
-      <% end %>
+      <%= render partial: 'certification_case_row', collection: @certification_cases %>
     </tbody>
   </table>
 </div>
