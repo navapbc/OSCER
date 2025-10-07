@@ -11,7 +11,7 @@ class ActivityReportApplicationFormsController < ApplicationController
   ]
   before_action :set_activity_report_case, only: %i[ show ]
   before_action :authenticate_user!
-  before_action :create_authorized_activity_report, only: %i[ new ]
+  before_action :create_activity_report, only: %i[ new ]
   before_action :redirect_to_ivaas, only: %i[ new show edit ], if: :is_reporting_source_ivaas?
 
   # GET /activity_report_application_forms/1 or /activity_report_application_forms/1.json
@@ -89,7 +89,7 @@ class ActivityReportApplicationFormsController < ApplicationController
     reporting_source == "income_verification_service"
   end
 
-  def create_authorized_activity_report(params = {})
+  def create_activity_report(params = {})
     activity_report_application_form = ActivityReportApplicationForm.new(params)
     activity_report_application_form.user_id = current_user.id
     activity_report_application_form.certification = Certification.order(created_at: :desc).first
