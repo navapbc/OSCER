@@ -12,6 +12,7 @@
 # Ignore developer-specific IDE settings files
 .vscode
 .cursor
+.devcontainer
 
 # Ignore local environment variables which can contain environment secrets
 .env
