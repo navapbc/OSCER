@@ -85,14 +85,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_02_153955) do
   end
 
   create_table "certifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "beneficiary_id"
+    t.text "member_id"
     t.text "case_number"
     t.jsonb "certification_requirements"
-    t.jsonb "beneficiary_data"
+    t.jsonb "member_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["beneficiary_id"], name: "index_certifications_on_beneficiary_id"
     t.index ["case_number"], name: "index_certifications_on_case_number"
+    t.index ["member_id"], name: "index_certifications_on_member_id"
   end
 
   create_table "exemption_application_forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

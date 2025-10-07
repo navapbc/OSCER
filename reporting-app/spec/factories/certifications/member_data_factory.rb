@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :certification_beneficiary_data, class: Hash do
+  factory :certification_member_data, class: Hash do
     skip_create
     initialize_with { attributes }
 

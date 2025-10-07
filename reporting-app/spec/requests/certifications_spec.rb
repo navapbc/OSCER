@@ -6,20 +6,20 @@ RSpec.describe "/certifications", type: :request do
   include Warden::Test::Helpers
 
   let(:staff_user) { User.create!(email: "staff@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
-  let(:bene_user) { User.create!(email: "bene@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
+  let(:member_user) { User.create!(email: "member@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
 
   let(:valid_html_request_attributes) {
     {
-      beneficiary_id: "foobar",
-      beneficiary_data: "{\"account_email\": \"#{bene_user.email}\"}"
+      member_id: "foobar",
+      member_data: "{\"account_email\": \"#{member_user.email}\"}"
     }
   }
 
   let(:valid_json_request_attributes) {
     {
-      beneficiary_id: "foobar",
-      beneficiary_data: {
-        account_email: bene_user.email
+      member_id: "foobar",
+      member_data: {
+        account_email: member_user.email
       }
     }
   }
@@ -130,17 +130,17 @@ RSpec.describe "/certifications", type: :request do
       end
     end
 
-    context "with no bene info" do
+    context "with no member info" do
       it "creates a new Certification" do
         expect {
           post certifications_url,
-               params: { certification: { beneficiary_id: "no_user" } }, headers: valid_headers
+               params: { certification: { member_id: "no_user" } }, headers: valid_headers
         }.to change(Certification, :count).by(1)
       end
 
       it "renders a HTML response with the new certification" do
         post certifications_url,
-             params: { certification: { beneficiary_id: "no_user" } }, headers: valid_headers
+             params: { certification: { member_id: "no_user" } }, headers: valid_headers
         expect(response).to have_http_status(:created)
       end
     end
@@ -178,20 +178,20 @@ RSpec.describe "/certifications", type: :request do
       end
     end
 
-    context "with no bene info" do
+    context "with no member info" do
       it "creates a new Certification" do
         expect {
           post certifications_url,
-              params: { certification: { beneficiary_id: "no_user" } }, headers: valid_headers
+              params: { certification: { member_id: "no_user" } }, headers: valid_headers
         }.to change(Certification, :count).by(1)
       end
     end
 
-    context "with no matching bene info" do
+    context "with no matching member info" do
       it "creates a new Certification" do
         expect {
           post certifications_url,
-              params: { certification: { beneficiary_id: "no_user", beneficiary_data: { account_email: "neverfound@foo.com" } } }, headers: valid_headers
+              params: { certification: { member_id: "no_user", member_data: { account_email: "neverfound@foo.com" } } }, headers: valid_headers
         }.to change(Certification, :count).by(1)
       end
     end
@@ -217,7 +217,7 @@ RSpec.describe "/certifications", type: :request do
     context "with valid parameters" do
       let(:new_attributes) {
         {
-          beneficiary_id: "updated"
+          member_id: "updated"
         }
       }
 
@@ -226,7 +226,7 @@ RSpec.describe "/certifications", type: :request do
         patch certification_url(certification),
               params: { certification: new_attributes }, headers: valid_headers, as: :json
         certification.reload
-        expect(certification.beneficiary_id).to eq("updated")
+        expect(certification.member_id).to eq("updated")
       end
 
       it "renders a HTML response with the certification" do
