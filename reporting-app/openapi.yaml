@@ -257,6 +257,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "error": {
+            "type": "string"
           }
         },
         "required": [
@@ -296,7 +299,7 @@
       }
     },
     "responses": {
-      "73efd46b3f08c46ad3f47be4a97a4406": {
+      "7e78019a27db774a95ea789dba0efe4b": {
         "description": "Created Certification.",
         "content": {
           "application/json": {
@@ -306,7 +309,7 @@
           }
         }
       },
-      "d2c2831d2d2d8f154ad165fbff12ef6e": {
+      "50d4fec76a026b01b2fcfefb2e703e74": {
         "description": "User error.",
         "content": {
           "application/json": {
@@ -316,7 +319,7 @@
           }
         }
       },
-      "116e75e14466bf0e90f58a9cf5337fa2": {
+      "0e8dfc9ecb50e3ec154f0283cf9f58ef": {
         "description": "The server could not process the request due to semantic errors. Please check your input and try again.",
         "content": {
           "application/json": {
@@ -326,7 +329,7 @@
           }
         }
       },
-      "c4d359d92bf99a939649da13fee87fe3": {
+      "f8938e9848581236da18b4fdfb7871b7": {
         "description": "A Certification",
         "content": {
           "application/json": {
@@ -336,7 +339,7 @@
           }
         }
       },
-      "ae1201882ef101840191a87bd51e7982": {
+      "43a16a549873e7acf22d9737a99134db": {
         "description": "The requested resource could not be found.",
         "content": {
           "application/json": {
@@ -346,7 +349,7 @@
           }
         }
       },
-      "02d6f9bea66374050a4c73f23ca002bf": {
+      "d990e9bac2aee71c737d5088dc8329a7": {
         "description": "Response",
         "content": {
           "application/json": {
@@ -370,7 +373,7 @@
       }
     },
     "requestBodies": {
-      "9d3b104b3ba1d5344e984fed6556907f": {
+      "f91480f6745e3c4a1db134349900e0bc": {
         "description": "The Certification data.",
         "content": {
           "application/json": {
@@ -415,8 +418,8 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000",
-      "description": "Local"
+      "url": "",
+      "description": "Current server"
     },
     {
       "url": "http://medicaid.navateam.com",
@@ -433,17 +436,17 @@
         "description": "#",
         "operationId": "POST__api_certifications",
         "requestBody": {
-          "$ref": "#/components/requestBodies/9d3b104b3ba1d5344e984fed6556907f"
+          "$ref": "#/components/requestBodies/f91480f6745e3c4a1db134349900e0bc"
         },
         "responses": {
           "201": {
-            "$ref": "#/components/responses/73efd46b3f08c46ad3f47be4a97a4406"
+            "$ref": "#/components/responses/7e78019a27db774a95ea789dba0efe4b"
           },
           "400": {
-            "$ref": "#/components/responses/d2c2831d2d2d8f154ad165fbff12ef6e"
+            "$ref": "#/components/responses/50d4fec76a026b01b2fcfefb2e703e74"
           },
           "422": {
-            "$ref": "#/components/responses/116e75e14466bf0e90f58a9cf5337fa2"
+            "$ref": "#/components/responses/0e8dfc9ecb50e3ec154f0283cf9f58ef"
           }
         }
       }
@@ -463,10 +466,10 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/c4d359d92bf99a939649da13fee87fe3"
+            "$ref": "#/components/responses/f8938e9848581236da18b4fdfb7871b7"
           },
           "404": {
-            "$ref": "#/components/responses/ae1201882ef101840191a87bd51e7982"
+            "$ref": "#/components/responses/43a16a549873e7acf22d9737a99134db"
           }
         }
       }
@@ -481,7 +484,7 @@
         "operationId": "GET__api_health",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/02d6f9bea66374050a4c73f23ca002bf"
+            "$ref": "#/components/responses/d990e9bac2aee71c737d5088dc8329a7"
           }
         }
       }
