@@ -16,12 +16,17 @@
             "description": "An identifier for the case associated with the certification"
           },
           "certification_requirements": {
-            "type": [
-              "object",
-              "null"
-            ],
-            "description": "Description of certification needs",
-            "properties": {}
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CertificationRequirements"
+              },
+              {
+                "$ref": "#/components/schemas/CertificationRequirementParameters"
+              },
+              {
+                "$ref": "#/components/schemas/CertificationRequirementTypeParameters"
+              }
+            ]
           },
           "member_data": {
             "type": [
@@ -34,6 +39,7 @@
         },
         "required": [
           "member_id",
+          "certification_requirements"
         ],
         "examples": {
           "fully_specified_certification_requirements": {
@@ -72,6 +78,100 @@
           }
         }
       },
+      "CertificationRequirements": {
+        "type": "object",
+        "description": "Description of certification needs",
+        "properties": {
+          "certification_date": {
+            "type": "string",
+            "format": "date",
+            "description": "The date of the certification"
+          },
+          "certification_type": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The type of certification"
+          },
+          "months_that_can_be_certified": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "The list of months the Member can choose from"
+          },
+          "number_of_months_to_certify": {
+            "type": "integer",
+            "description": "The number of months the Member needs to certify"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date by which the Member must have submitted their evidence"
+          },
+          "params": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Input parameters, if any.",
+            "properties": {}
+          }
+        },
+        "required": [
+          "certification_date",
+          "months_that_can_be_certified",
+          "number_of_months_to_certify",
+          "due_date"
+        ]
+      },
+      "CertificationRequirementParameters": {
+        "type": "object",
+        "properties": {
+          "certification_date": {
+            "type": "string",
+            "format": "date",
+            "description": "The date of the certification"
+          },
+          "lookback_period": {
+            "type": "integer",
+            "description": "The number of months before `certification_date` the Member can choose from"
+          },
+          "number_of_months_to_certify": {
+            "type": "integer",
+            "description": "The number of months the Member needs to certify"
+          },
+          "due_period_days": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "certification_date",
+          "lookback_period",
+          "number_of_months_to_certify",
+          "due_period_days"
+        ]
+      },
+      "CertificationRequirementTypeParameters": {
+        "type": "object",
+        "properties": {
+          "certification_date": {
+            "type": "string",
+            "format": "date",
+            "description": "The date of the certification"
+          },
+          "certification_type": {
+            "type": "string",
+            "description": "The type of certification"
+          }
+        },
+        "required": [
+          "certification_date",
+          "certification_type"
+        ]
+      },
       "CertificationResponseBody": {
         "type": "object",
         "properties": {
@@ -92,12 +192,7 @@
             "description": "An identifier for the case associated with the certification"
           },
           "certification_requirements": {
-            "type": [
-              "object",
-              "null"
-            ],
-            "description": "Description of certification needs",
-            "properties": {}
+            "$ref": "#/components/schemas/CertificationRequirements"
           },
           "member_data": {
             "type": [
@@ -185,7 +280,7 @@
       }
     },
     "responses": {
-      "58ae59e39c574fd14309743e3c46492b": {
+      "695fcb0c4182127d82f4e9feca6c3107": {
         "description": "Created Certification.",
         "content": {
           "application/json": {
@@ -195,7 +290,7 @@
           }
         }
       },
-      "4a3cab8f9ba0f57c08a866899dd6e789": {
+      "5230f591420b11a3e6a1b73574262bb5": {
         "description": "User error.",
         "content": {
           "application/json": {
@@ -205,7 +300,7 @@
           }
         }
       },
-      "910814026b3de90da9ae04c6218bc108": {
+      "66e42391a76944e2fc8bad47d01d4c48": {
         "description": "The server could not process the request due to semantic errors. Please check your input and try again.",
         "content": {
           "application/json": {
@@ -215,7 +310,7 @@
           }
         }
       },
-      "4ea72e06b9c060810f40d21224c41577": {
+      "ba1b34eb2492ad585b4fe0377d889e5b": {
         "description": "A Certification",
         "content": {
           "application/json": {
@@ -225,7 +320,7 @@
           }
         }
       },
-      "18d0937c43a07787b30baf785797d4ac": {
+      "b0b402a94452e7d59e0e4417da868c06": {
         "description": "The requested resource could not be found.",
         "content": {
           "application/json": {
@@ -249,12 +344,20 @@
       }
     },
     "requestBodies": {
-      "6c9c8ea88e42961e41e7f24bb500d5e5": {
+      "90c3f9f1ee6ac4ddeb67e63d771ff499": {
         "description": "The Certification data.",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/CertificationCreateRequestBody"
+            },
+            "examples": {
+              "fully_specified_certification_requirements": {
+                "$ref": "#/components/schemas/CertificationCreateRequestBody/examples/fully_specified_certification_requirements"
+              },
+              "certification_type": {
+                "$ref": "#/components/schemas/CertificationCreateRequestBody/examples/certification_type"
+              }
             }
           }
         },
@@ -304,17 +407,17 @@
         "description": "#",
         "operationId": "POST__api_certifications",
         "requestBody": {
-          "$ref": "#/components/requestBodies/6c9c8ea88e42961e41e7f24bb500d5e5"
+          "$ref": "#/components/requestBodies/90c3f9f1ee6ac4ddeb67e63d771ff499"
         },
         "responses": {
           "201": {
-            "$ref": "#/components/responses/58ae59e39c574fd14309743e3c46492b"
+            "$ref": "#/components/responses/695fcb0c4182127d82f4e9feca6c3107"
           },
           "400": {
-            "$ref": "#/components/responses/4a3cab8f9ba0f57c08a866899dd6e789"
+            "$ref": "#/components/responses/5230f591420b11a3e6a1b73574262bb5"
           },
           "422": {
-            "$ref": "#/components/responses/910814026b3de90da9ae04c6218bc108"
+            "$ref": "#/components/responses/66e42391a76944e2fc8bad47d01d4c48"
           }
         }
       }
@@ -334,10 +437,10 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/4ea72e06b9c060810f40d21224c41577"
+            "$ref": "#/components/responses/ba1b34eb2492ad585b4fe0377d889e5b"
           },
           "404": {
-            "$ref": "#/components/responses/18d0937c43a07787b30baf785797d4ac"
+            "$ref": "#/components/responses/b0b402a94452e7d59e0e4417da868c06"
           }
         }
       }

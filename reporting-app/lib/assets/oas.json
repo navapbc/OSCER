@@ -72,7 +72,7 @@
         "properties": {
           "certification_date": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "description": "The date of the certification"
           },
           "certification_type": {
@@ -83,7 +83,7 @@
             "type": "array",
             "items": {
               "type": "string",
-              "format": "date-time"
+              "format": "date"
             },
             "description": "The list of months the Member can choose from"
           },
@@ -93,7 +93,7 @@
           },
           "due_date": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "description": "Date by which the Member must have submitted their evidence"
           },
           "params": {
@@ -114,7 +114,7 @@
         "properties": {
           "certification_date": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "description": "The date of the certification"
           },
           "lookback_period": {
@@ -141,7 +141,7 @@
         "properties": {
           "certification_date": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "description": "The date of the certification"
           },
           "certification_type": {

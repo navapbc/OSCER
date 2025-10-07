@@ -5,6 +5,7 @@ require_relative "requirement_params"
 class Certifications::Requirements
   include ActiveModel::Model
   include ActiveModel::Attributes
+  include ActiveModel::Serializers::JSON
 
   CERTIFICATION_TYPE_OPTIONS = [ "new_application", "recertification" ].freeze
 
