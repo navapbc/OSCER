@@ -26,12 +26,7 @@ module TemplateApplicationRails
     # Fetch authentication flow; default to cognito
     Rails.application.config.auth_adapter = ENV.fetch("AUTH_ADAPTER", "cognito")
 
-    # Which reporting service to use. Valid values are:
-    # "income_verification_service" - CMS's income verification as a service.
-    #    Requires IVAAS_API_KEY, IVAAS_BASE_URL, and IVAAS_CLIENT_AGENCY_ID env
-    #    variables to be set.
-    # "reporting_app" - Built in application
-    config.reporting_source = "income_verification_service"
+    config.reporting_source = ENV.fetch("REPORTING_SOURCE", "reporting_app")
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
