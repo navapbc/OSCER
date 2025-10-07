@@ -18,14 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @members.each do |member| %>
-        <tr>
-          <td>
-            <%= link_to member.member_id, member_path(member.member_id) %>
-          </td>
-          <td><%= member.email %></td>
-        </tr>
-      <% end %>
+      <%= render partial: 'member_row', collection: @members %>
     </tbody>
   </table>
 <% end %>
