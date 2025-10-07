@@ -10,10 +10,17 @@ module DashboardHelper
       "activity_report_submitted"
     elsif is_activity_report_approved?
       "activity_report_approved"
+    elsif is_activity_report_denied?
+      "activity_report_denied"
     elsif is_exemption_request_submitted?
       "exemption_submitted"
     elsif is_exemption_request_approved?
       "exemption_approved"
+    elsif is_exemption_request_denied?
+      "exemption_denied"
+    else
+      # Fallback for unexpected states
+      "new_certification"
     end
   end
 
@@ -35,5 +42,13 @@ module DashboardHelper
 
   def is_exemption_request_approved?
     @exemption_application_form&.submitted? && @exemption_case&.exemption_request_approval_status == "approved"
+  end
+
+  def is_activity_report_denied?
+    @activity_report_application_form&.submitted? && @activity_report_case&.activity_report_approval_status == "denied"
+  end
+
+  def is_exemption_request_denied?
+    @exemption_application_form&.submitted? && @exemption_case&.exemption_request_approval_status == "denied"
   end
 end

@@ -13,7 +13,7 @@ module Demo
       NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS = (1..6).to_a
       DUE_PERIOD_OPTIONS = [ 15, 30, 60 ] # in days
 
-      attribute :beneficiary_email, :string
+      attribute :member_email, :string
       attribute :case_number, :string
 
       # TODO: add validation you can't set both certification_type and the other params?

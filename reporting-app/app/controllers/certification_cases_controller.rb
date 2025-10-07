@@ -5,6 +5,11 @@ class CertificationCasesController < StaffController
 
   def index
     @cases = CertificationCase.all
+    certification_ids = @cases.map(&:certification_id)
+    certifications_by_id = Certification.where(id: certification_ids).index_by(&:id)
+    @cases.each do |kase|
+      kase.certification = certifications_by_id[kase.certification_id]
+    end
   end
 
   def closed
