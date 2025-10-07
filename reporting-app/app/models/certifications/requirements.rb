@@ -6,8 +6,10 @@ class Certifications::Requirements
   include ActiveModel::Model
   include ActiveModel::Attributes
 
+  CERTIFICATION_TYPE_OPTIONS = [ "new_application", "recertification" ].freeze
+
   attribute :certification_date, :date
-  attribute :certification_type, :string, default: nil
+  attribute :certification_type, :enum, options: CERTIFICATION_TYPE_OPTIONS, default: nil
 
   # TODO: could do something like
   # "lookback": {

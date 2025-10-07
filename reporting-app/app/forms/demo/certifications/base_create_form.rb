@@ -7,8 +7,6 @@ module Demo
       include ActiveModel::Attributes
       include Strata::Attributes
 
-      CERTIFICATION_TYPE_OPTIONS = [ "new_application", "recertification" ]
-
       LOOKBACK_PERIOD_OPTIONS = (1..6).to_a
       NUMBER_OF_MONTHS_TO_CERTIFY_OPTIONS = (1..6).to_a
       DUE_PERIOD_OPTIONS = [ 15, 30, 60 ] # in days
@@ -17,7 +15,7 @@ module Demo
       attribute :case_number, :string
 
       # TODO: add validation you can't set both certification_type and the other params?
-      attribute :certification_type, :string
+      attribute :certification_type, :enum, options: ::Certifications::Requirements::CERTIFICATION_TYPE_OPTIONS
 
       strata_attribute :certification_date, :us_date
 
