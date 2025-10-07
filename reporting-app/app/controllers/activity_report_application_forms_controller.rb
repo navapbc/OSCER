@@ -11,6 +11,8 @@ class ActivityReportApplicationFormsController < ApplicationController
   ]
   before_action :set_activity_report_case, only: %i[ show ]
   before_action :authenticate_user!
+  before_action :create_activity_report, only: %i[ new ]
+  before_action :redirect_to_ivaas, only: %i[ new show edit ], if: :reporting_source_ivaas?
 
   # GET /activity_report_application_forms/1 or /activity_report_application_forms/1.json
   def show
@@ -18,27 +20,15 @@ class ActivityReportApplicationFormsController < ApplicationController
 
   # GET /activity_report_application_forms/new
   def new
-    @activity_report_application_form = authorize ActivityReportApplicationForm.new
   end
 
   # GET /activity_report_application_forms/1/edit
   #
   # @param reporting_source [String] Override which reporting service to use ("income_verification_service", "reporting_app")
   def edit
-    default_reporting_source = Rails.application.config.reporting_source
-    reporting_source = params[:reporting_source] || default_reporting_source
-
-    if reporting_source == "income_verification_service"
-      puts "Redirecting user to CMS Income Verification Service"
-      # We should get the name from the certification request. For now, we'll use a placeholder name
-      name = Strata::Name.new(first: "Jane", last: "Doe")
-      invitation = CMSIncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
-      redirect_to invitation.tokenized_url, allow_other_host: true
-    else
-      respond_to do |format|
-        format.html
-        format.json { render json: @activity_report_application_form.as_json }
-      end
+    respond_to do |format|
+      format.html
+      format.json { render json: @activity_report_application_form.as_json }
     end
   end
 
@@ -46,30 +36,11 @@ class ActivityReportApplicationFormsController < ApplicationController
   def review
   end
 
-  # POST /activity_report_application_forms or /activity_report_application_forms.json
-  def create
-    @activity_report_application_form = ActivityReportApplicationForm.new(activity_report_application_form_params)
-    @activity_report_application_form.user_id = current_user.id
-    @activity_report_application_form.certification = Certification.order(created_at: :desc).first
-
-    authorize @activity_report_application_form
-
-    respond_to do |format|
-      if @activity_report_application_form.save
-        format.html { redirect_to @activity_report_application_form, notice: "Activity report application form was successfully created." }
-        format.json { render :show, status: :created, location: review_activity_report_application_form_path(@activity_report_application_form) }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @activity_report_application_form.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # PATCH/PUT /activity_report_application_forms/1 or /activity_report_application_forms/1.json
   def update
     respond_to do |format|
       if @activity_report_application_form.update(activity_report_application_form_params)
-        format.html { redirect_to review_activity_report_application_form_path(@activity_report_application_form), notice: "Activity report application form was successfully updated." }
+        format.html { redirect_to @activity_report_application_form, notice: "Activity report application form was successfully updated." }
         format.json { render :show, status: :ok, location: review_activity_report_application_form_path(@activity_report_application_form) }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -107,6 +78,30 @@ class ActivityReportApplicationFormsController < ApplicationController
 
   def set_activity_report_case
     @activity_report_case = ActivityReportCase.find_by(application_form_id: @activity_report_application_form.id) if @activity_report_application_form.present?
+  end
+
+  def default_reporting_source
+    Rails.application.config.reporting_source
+  end
+
+  def reporting_source_ivaas?
+    reporting_source = params[:reporting_source] || default_reporting_source
+    reporting_source == "income_verification_service"
+  end
+
+  def create_activity_report(params = {})
+    activity_report_application_form = ActivityReportApplicationForm.new(params)
+    activity_report_application_form.user_id = current_user.id
+    activity_report_application_form.certification = Certification.order(created_at: :desc).first
+    activity_report_application_form.save!
+    @activity_report_application_form = authorize activity_report_application_form
+  end
+
+  def redirect_to_ivaas
+    Rails.logger.debug("Redirecting user with id #{current_user.id} to CMS Income Verification Service")
+    name = Strata::Name.new(first: "Jane", last: "Doe") # TODO: get real name and remove this
+    invitation = CMSIncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
+    redirect_to invitation.tokenized_url, allow_other_host: true
   end
 
   # Only allow a list of trusted parameters through.
