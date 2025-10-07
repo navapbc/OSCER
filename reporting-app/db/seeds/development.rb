@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 5.times do |index|
+  certification = Certification.create!(
+    member_id: "1234567890",
+    case_number: "1234567890"
+  )
   app_form = ActivityReportApplicationForm.create!(
+    certification_id: certification.id,
     reporting_period: Date.today.prev_month.beginning_of_month
   )
   app_form.save!
