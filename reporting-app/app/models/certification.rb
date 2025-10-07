@@ -18,6 +18,10 @@ class Certification < ApplicationRecord
 
   scope :by_member_id, ->(member_id) { where(member_id:) }
 
+  after_create_commit do
+    Strata::EventManager.publish("CertificationCreated", { certification_id: id })
+  end
+
   def member_account_email
     return unless self.member_data
 
