@@ -8,3 +8,24 @@
   <%= form.submit "Search", class: "usa-button" %>
 <% end %>
 
+<% if @members.any? %>
+  <h2>Results</h2>
+  <table class="usa-table usa-table--borderless width-full">
+    <thead>
+      <tr>
+        <th>Member ID</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @members.each do |member| %>
+        <tr>
+          <td>
+            <%= link_to member.member_id, member_path(member.member_id) %>
+          </td>
+          <td><%= member.email %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
