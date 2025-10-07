@@ -1,4 +1,4 @@
-<%= strata_form_with(model: activity_report,
+<%= strata_form_with(model: [certification, activity_report],
                    url: verify_activity_report_application_form_path(activity_report),
                    method: :post,
                    data: { turbo: false },

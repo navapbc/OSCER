@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :activity_report_application_forms, except: [ :index ] do
-    resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ] do
-      member do
-        get :documents
-        post :upload_documents
+  resources :certifications, only: [] do
+    resources :activity_report_application_forms, except: [ :index ] do
+      resources :activities, only: [ :show, :new, :create, :edit, :update, :destroy ] do
+        member do
+          get :documents
+          post :upload_documents
+        end
       end
-    end
-    member do
-      get :review
-      post :submit
+      member do
+        get :review
+        post :submit
+      end
     end
   end
 
