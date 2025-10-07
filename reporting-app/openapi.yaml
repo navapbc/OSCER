@@ -223,8 +223,13 @@
           "case_number": "C-111",
           "certification_requirements": {
             "certification_date": "2025-09-26",
+            "months_that_can_be_certified": [
+              "2025-07-01",
+              "2025-08-01",
+              "2025-09-01"
+            ],
             "number_of_months_to_certify": 1,
-            "due_date": "2025-10-36",
+            "due_date": "2025-10-26",
             "params": {
               "lookback_period": 3,
               "number_of_months_to_certify": 1,
@@ -280,7 +285,7 @@
       }
     },
     "responses": {
-      "695fcb0c4182127d82f4e9feca6c3107": {
+      "73efd46b3f08c46ad3f47be4a97a4406": {
         "description": "Created Certification.",
         "content": {
           "application/json": {
@@ -290,7 +295,7 @@
           }
         }
       },
-      "5230f591420b11a3e6a1b73574262bb5": {
+      "d2c2831d2d2d8f154ad165fbff12ef6e": {
         "description": "User error.",
         "content": {
           "application/json": {
@@ -300,7 +305,7 @@
           }
         }
       },
-      "66e42391a76944e2fc8bad47d01d4c48": {
+      "116e75e14466bf0e90f58a9cf5337fa2": {
         "description": "The server could not process the request due to semantic errors. Please check your input and try again.",
         "content": {
           "application/json": {
@@ -310,7 +315,7 @@
           }
         }
       },
-      "ba1b34eb2492ad585b4fe0377d889e5b": {
+      "c4d359d92bf99a939649da13fee87fe3": {
         "description": "A Certification",
         "content": {
           "application/json": {
@@ -320,7 +325,7 @@
           }
         }
       },
-      "b0b402a94452e7d59e0e4417da868c06": {
+      "ae1201882ef101840191a87bd51e7982": {
         "description": "The requested resource could not be found.",
         "content": {
           "application/json": {
@@ -344,7 +349,7 @@
       }
     },
     "requestBodies": {
-      "90c3f9f1ee6ac4ddeb67e63d771ff499": {
+      "9d3b104b3ba1d5344e984fed6556907f": {
         "description": "The Certification data.",
         "content": {
           "application/json": {
@@ -373,8 +378,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Community Engagement Medicaid",
-    "summary": "OasRails: Automatic Interactive API Documentation for Rails",
-    "description": "# Welcome to the Community Engagement Medicaid API\n\nThis is the OpenAPI spec for interacting with the Community Engagement Medicaid API.\n\n## Getting Started\n\nYou will need credentials generated for you by the operations team.\n",
+    "summary": "System for tracking and certifying community engagement requirements for Medicaid",
+    "description": "# Welcome to the Community Engagement Medicaid API\n\nThis is the OpenAPI spec for interacting with the Community Engagement Medicaid API.\n\n## Getting Started\n\nThis demo API has no required authentication at the moment.\n",
     "termsOfService": "",
     "contact": {
       "name": "Nava PBC",
@@ -382,8 +387,8 @@
       "email": "medicaid@navapbc.com"
     },
     "license": {
-      "name": "TODO",
-      "url": "TODO"
+      "name": "Apache-2.0",
+      "url": "https://opensource.org/license/apache-2-0"
     },
     "version": "1.0.0"
   },
@@ -407,17 +412,17 @@
         "description": "#",
         "operationId": "POST__api_certifications",
         "requestBody": {
-          "$ref": "#/components/requestBodies/90c3f9f1ee6ac4ddeb67e63d771ff499"
+          "$ref": "#/components/requestBodies/9d3b104b3ba1d5344e984fed6556907f"
         },
         "responses": {
           "201": {
-            "$ref": "#/components/responses/695fcb0c4182127d82f4e9feca6c3107"
+            "$ref": "#/components/responses/73efd46b3f08c46ad3f47be4a97a4406"
           },
           "400": {
-            "$ref": "#/components/responses/5230f591420b11a3e6a1b73574262bb5"
+            "$ref": "#/components/responses/d2c2831d2d2d8f154ad165fbff12ef6e"
           },
           "422": {
-            "$ref": "#/components/responses/66e42391a76944e2fc8bad47d01d4c48"
+            "$ref": "#/components/responses/116e75e14466bf0e90f58a9cf5337fa2"
           }
         }
       }
@@ -437,10 +442,10 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/ba1b34eb2492ad585b4fe0377d889e5b"
+            "$ref": "#/components/responses/c4d359d92bf99a939649da13fee87fe3"
           },
           "404": {
-            "$ref": "#/components/responses/b0b402a94452e7d59e0e4417da868c06"
+            "$ref": "#/components/responses/ae1201882ef101840191a87bd51e7982"
           }
         }
       }
