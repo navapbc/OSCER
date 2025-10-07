@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   scope path: "/staff" do
     resources :members, only: [ :index, :show ] do
       collection do
+        get :search
         post :search
       end
     end
