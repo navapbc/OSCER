@@ -6,10 +6,12 @@ RSpec.describe "/exemption_application_forms", type: :request do
   include Warden::Test::Helpers
 
   let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
-
+  let(:certification) { create(:certification) }
+  let(:certification_case) { create(:certification_case, certification: certification) }
   let(:valid_attributes) {
     {
-      exemption_type: "short_term_hardship"
+      exemption_type: "short_term_hardship",
+      certification_case_id: certification_case.id
     }
   }
 

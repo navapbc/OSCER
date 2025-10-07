@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class ActivityReportApplicationForm < Strata::ApplicationForm
-  # TODO: perhaps in the future not optional?
   belongs_to :certification, optional: true
-
+  belongs_to :certification_case
   has_many :activities, strict_loading: true, autosave: true, dependent: :destroy
 
   strata_attribute :reporting_period, :date
