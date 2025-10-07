@@ -15,7 +15,7 @@ class Member < ApplicationRecord
 
   def self.find_by_email(email)
     find_by('LOWER(email) = ?', email.to_s.downcase)
-  }
+  end
 
   scope :by_name, ->(name) { 
     return all if name.blank?
