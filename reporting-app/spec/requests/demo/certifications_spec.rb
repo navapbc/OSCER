@@ -11,8 +11,7 @@ RSpec.describe "/demo/certifications", type: :request do
     {
       member_email: "foo@example.com",
       case_number: "C-123",
-      certification_date: "09/25/2025",
-      certification_type: "new_application"
+      certification_date: "09/25/2025"
     }
   }
 
@@ -43,8 +42,8 @@ RSpec.describe "/demo/certifications", type: :request do
           post demo_certifications_url,
                params: {
                  demo_certifications_create_form:
-                   valid_request_attributes.deep_merge!(
-                     build(:certification_certification_requirement_params).attributes.except(:due_date)
+                   valid_request_attributes.deep_merge(
+                     build(:certification_certification_requirement_params, :with_direct_params).attributes.compact
                    )
                }
         }.to change(Certification, :count).by(1)
@@ -53,14 +52,14 @@ RSpec.describe "/demo/certifications", type: :request do
       it "creates a new 'new_application' Certification" do
         expect {
           post demo_certifications_url,
-               params: { demo_certifications_create_form: valid_request_attributes }
+               params: { demo_certifications_create_form: valid_request_attributes.merge({ certification_type: "new_application" }) }
         }.to change(Certification, :count).by(1)
       end
 
       it "creates a new 'recertification' Certification" do
         expect {
           post demo_certifications_url,
-               params: { demo_certifications_create_form: valid_request_attributes.merge!({ certification_type: "recertification" }) }
+               params: { demo_certifications_create_form: valid_request_attributes.merge({ certification_type: "recertification" }) }
         }.to change(Certification, :count).by(1)
       end
   end

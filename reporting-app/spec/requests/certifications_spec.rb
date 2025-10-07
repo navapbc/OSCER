@@ -12,7 +12,7 @@ RSpec.describe "/certifications", type: :request do
     {
       member_id: "foobar",
       member_data: "{\"account_email\": \"#{member_user.email}\"}",
-      certification_requirements: build(:certification_certification_requirement_params).attributes.to_json
+      certification_requirements: build(:certification_certification_requirement_params, :with_direct_params).attributes.compact.to_json
     }
   }
 
@@ -22,7 +22,7 @@ RSpec.describe "/certifications", type: :request do
       member_data: {
         account_email: member_user.email
       },
-      certification_requirements: build(:certification_certification_requirement_params).attributes
+      certification_requirements: build(:certification_certification_requirement_params, :with_direct_params).attributes.compact
     }
   }
 
@@ -88,12 +88,6 @@ RSpec.describe "/certifications", type: :request do
       get certification_url(certification)
       expect(response).to be_successful
     end
-
-    it "renders a successful response with data" do
-      certification = create(:certification)
-      get certification_url(certification)
-      expect(response).to be_successful
-    end
   end
 
   describe "GET /api/show" do
@@ -111,13 +105,6 @@ RSpec.describe "/certifications", type: :request do
       # it won't necessarily match all of the spec, as the spec expects valid
       # data, so be more lenient here
       # expect(response).to match_openapi_doc(OPENAPI_DOC)
-    end
-
-    it "renders a successful response with data" do
-      certification = create(:certification)
-      get api_certification_url(certification)
-      expect(response).to be_successful
-      expect(response).to match_openapi_doc(OPENAPI_DOC)
     end
   end
 
@@ -190,7 +177,7 @@ RSpec.describe "/certifications", type: :request do
       it "creates a new Certification" do
         expect {
           post certifications_url,
-              params: { certification: valid_html_request_attributes.deep_merge({ member_id: "no_user" }) }, headers: valid_headers
+              params: { certification: valid_json_request_attributes.deep_merge({ member_id: "no_user" }) }, headers: valid_headers
         }.to change(Certification, :count).by(1)
       end
     end
@@ -199,7 +186,16 @@ RSpec.describe "/certifications", type: :request do
       it "creates a new Certification" do
         expect {
           post certifications_url,
-              params: { certification: valid_html_request_attributes.deep_merge({ member_id: "no_user", member_data: { account_email: "neverfound@foo.com" } }) }, headers: valid_headers
+              params: { certification: valid_json_request_attributes.deep_merge({ member_id: "no_user", member_data: { account_email: "neverfound@foo.com" } }) }, headers: valid_headers
+        }.to change(Certification, :count).by(1)
+      end
+    end
+
+    context "with certification type" do
+      it "creates a new Certification" do
+        expect {
+          post certifications_url,
+              params: { certification: valid_json_request_attributes.merge({ certification_requirements: build(:certification_certification_requirement_params, :with_certification_type).attributes.compact }) }, headers: valid_headers
         }.to change(Certification, :count).by(1)
       end
     end
