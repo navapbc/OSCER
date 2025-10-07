@@ -42,10 +42,7 @@ class CertificationService
     # otherwise they've specified some combo of parameters we need to derive the
     # final Certification requirements from
     requirement_params = Certifications::RequirementParams.new_filtered(requirements_input)
-
-    # if !requirement_params.valid?(:input)
-    #   # TODO: what do?
-    # end
+    requirement_params.validate!(:input)
 
     if requirement_params.certification_type.present?
       requirement_params.with_type_params(
@@ -61,9 +58,7 @@ class CertificationService
     raise TypeError, "Expected instance of Certifications::RequirementParams" unless requirement_params.is_a?(Certifications::RequirementParams)
 
     if !requirement_params.valid?(:use)
-      puts requirement_params.errors.full_messages
-      # TODO: handle this better
-      # raise Error, "Invalid params: #{requirement_params.errors.full_messages}"
+      raise ArgumentError, "Certifications::RequirementParams instance is not valid for use: #{requirement_params.errors.full_messages}"
     end
 
     Certifications::Requirements.new({

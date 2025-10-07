@@ -40,7 +40,12 @@ class CertificationsController < StaffController
     authorize @certification
 
     requirement_params = certification_params.fetch(:certification_requirements, {})
-    @certification.certification_requirements = certification_service.certification_requirements_from_input(requirement_params)
+    begin
+      @certification.certification_requirements = certification_service.certification_requirements_from_input(requirement_params)
+    rescue ActiveModel::ValidationError => e
+      render json: { certification_requirements: e.model.errors }, status: :unprocessable_entity
+      return
+    end
 
     if certification_service.save_new(@certification)
       render :show, status: :created, location: @certification

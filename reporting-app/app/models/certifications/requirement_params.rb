@@ -41,6 +41,8 @@ class Certifications::RequirementParams < Certifications::RequirementTypeParams
         return true
       end
     end
+
+    false
   end
 end
 
