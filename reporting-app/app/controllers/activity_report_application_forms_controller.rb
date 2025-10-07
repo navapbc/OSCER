@@ -99,7 +99,7 @@ class ActivityReportApplicationFormsController < ApplicationController
 
   def redirect_to_ivaas
     Rails.logger.debug("Redirecting user with id #{current_user.id} to CMS Income Verification Service")
-    name = Strata::Name.new(first: "Jane", last: "Doe")
+    name = Strata::Name.new(first: "Jane", last: "Doe") # TODO: get real name and remove this
     invitation = CMSIncomeVerificationService.new.create_invitation(@activity_report_application_form, name)
     redirect_to invitation.tokenized_url, allow_other_host: true
   end
