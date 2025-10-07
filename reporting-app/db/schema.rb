@@ -121,6 +121,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_07_181304) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index "lower((email)::text)", name: "index_members_on_lower_email"
+    t.index "lower((name_last)::text), lower((name_first)::text)", name: "index_members_on_lower_name_last_and_first"
+    t.index "upper((member_id)::text)", name: "index_members_on_upper_member_id", unique: true
   end
 
   create_table "strata_tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
