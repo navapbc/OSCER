@@ -12,6 +12,8 @@ class CertificationsController < StaffController
   # GET /certifications/1
   # GET /certifications/1.json
   def show
+    # binding.break
+    @activity_report_application_forms = [] # Initialize as empty array since relationship is being removed
   end
 
   # GET /certifications/new
@@ -23,6 +25,7 @@ class CertificationsController < StaffController
   # POST /certifications.json
   def create
     @certification = Certification.new(certification_params)
+    @activity_report_application_forms = [] # Initialize as empty array since relationship is being removed
 
     authorize @certification
 
@@ -36,6 +39,8 @@ class CertificationsController < StaffController
   # PATCH/PUT /certifications/1
   # PATCH/PUT /certifications/1.json
   def update
+    @activity_report_application_forms = [] # Initialize as empty array since relationship is being removed
+
     if @certification.update(certification_params)
       render :show, status: :ok, location: @certification
     else

@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe "activity_report_application_forms/edit", type: :view do
-  let(:activity_report_application_form) {
-    ActivityReportApplicationForm.create!()
-  }
+  let(:activity_report_application_form) { create(:activity_report_application_form) }
 
   before do
     assign(:activity_report_application_form, activity_report_application_form)
