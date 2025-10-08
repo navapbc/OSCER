@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MembersController < StaffController
   def index
     redirect_to search_members_path
