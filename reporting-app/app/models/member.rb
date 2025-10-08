@@ -22,7 +22,7 @@ class Member
   end
 
   def self.search_by_email(email)
-    certifications = Certification.find_by_member_email(email).uniq { |cert| cert.member_id }
+    certifications = Certification.find_by_member_email(email)
     certifications.map do |certification|
       Member.new(member_id: certification.member_id, email: certification.member_email)
     end
