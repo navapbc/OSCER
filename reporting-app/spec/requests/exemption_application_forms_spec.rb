@@ -40,7 +40,7 @@ RSpec.describe "/exemption_application_forms", type: :request do
 
   describe "GET /new" do
     it "renders a successful response" do
-      get new_exemption_application_form_url
+      get new_exemption_application_form_url(certification_case_id: certification_case.id)
       expect(response).to be_successful
     end
   end

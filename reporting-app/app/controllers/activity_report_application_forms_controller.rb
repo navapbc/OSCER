@@ -11,6 +11,7 @@ class ActivityReportApplicationFormsController < ApplicationController
   ]
   before_action :set_activity_report_case, only: %i[ show ]
   before_action :authenticate_user!
+  before_action :set_certification_case, only: %i[ new ]
   before_action :create_activity_report, only: %i[ new ]
   before_action :redirect_to_ivaas, only: %i[ new show edit ], if: :reporting_source_ivaas?
 
@@ -80,6 +81,10 @@ class ActivityReportApplicationFormsController < ApplicationController
     @activity_report_case = ActivityReportCase.find_by(application_form_id: @activity_report_application_form.id) if @activity_report_application_form.present?
   end
 
+  def set_certification_case
+    @certification_case = CertificationCase.find_by(id: params[:certification_case_id])
+  end
+
   def default_reporting_source
     Rails.application.config.reporting_source
   end
@@ -90,9 +95,11 @@ class ActivityReportApplicationFormsController < ApplicationController
   end
 
   def create_activity_report(params = {})
+    # binding.break
     activity_report_application_form = ActivityReportApplicationForm.new(params)
     activity_report_application_form.user_id = current_user.id
-    activity_report_application_form.certification = Certification.order(created_at: :desc).first
+    activity_report_application_form.certification_case = @certification_case
+    activity_report_application_form.certification = Certification.find(@certification_case.certification_id)
     activity_report_application_form.save!
     @activity_report_application_form = authorize activity_report_application_form
   end
