@@ -10,7 +10,7 @@ class Member
   attribute :member_id, :string
   attribute :email, :string
 
-  def self.find_by_member_id(member_id)
+  def self.find_member_and_certification_cases_by_member_id(member_id)
     certification_cases = certification_service.find_cases_by_member_id(member_id)
     if certification_cases.empty?
       raise ActiveRecord::RecordNotFound, "Couldn't find Certification with 'member_id'= \"#{member_id}\""
