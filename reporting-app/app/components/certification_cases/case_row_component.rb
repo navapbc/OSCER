@@ -15,6 +15,6 @@ class CertificationCases::CaseRowComponent < Strata::Cases::CaseRowComponent
   # Override default behavior to show the case number from the
   # certification request rather than the case.id UUID
   def case_no
-    link_to @case.certification&.case_number, certification_case_path(@case)
+    link_to @case.certification.case_number, certification_case_path(@case)
   end
 end
