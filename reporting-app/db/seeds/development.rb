@@ -5,9 +5,7 @@
     member_id: "1234567890",
     case_number: "1234567890"
   )
-  certification_case = CertificationCase.create!(
-    certification_id: certification.id
-  )
+  certification_case = CertificationCase.find_by!(certification_id: certification.id)
   app_form = ActivityReportApplicationForm.create!(
     reporting_period: Date.today.prev_month.beginning_of_month,
     certification_case_id: certification_case.id
