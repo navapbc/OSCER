@@ -6,18 +6,11 @@ class MembersController < StaffController
   end
 
   def show
-    @certification_cases = certification_service.find_cases_by_member_id(params[:id])
-    if @certification_cases.empty?
-      raise ActiveRecord::RecordNotFound, "Couldn't find Certification with 'member_id'= \"#{params[:id]}\""
-    end
-    @member = Member.new(member_id: params[:id], email: @certification_cases.last.certification.member_email)
+    @member, @certification_cases = Member.find_by_member_id(params[:id])
   end
 
   def search
-    @members = []
-    Certification.find_by_member_email(params[:email]).each do |certification|
-      @members << Member.new(member_id: certification.member_id, email: certification.member_email)
-    end
+    @members = Member.search_by_email(params[:email])
   end
 
   private
