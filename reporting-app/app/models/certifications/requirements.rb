@@ -42,8 +42,6 @@ class Certifications::RequirementsType < ActiveRecord::Type::Json
 
     return value if value.is_a?(Certifications::Requirements)
 
-    puts "Casting value #{value}"
-
     case value
     when Hash
       hash = value.with_indifferent_access
