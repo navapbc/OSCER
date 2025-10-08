@@ -2,6 +2,7 @@
 
 class CertificationsController < StaffController
   before_action :set_certification, only: %i[ show update ]
+  before_action :set_activity_report_application_forms, only: %i[ show create update ]
 
   # GET /certifications
   # GET /certifications.json
@@ -12,8 +13,6 @@ class CertificationsController < StaffController
   # GET /certifications/1
   # GET /certifications/1.json
   def show
-    # binding.break
-    @activity_report_application_forms = [] # Initialize as empty array since relationship is being removed
   end
 
   # GET /certifications/new
@@ -25,7 +24,6 @@ class CertificationsController < StaffController
   # POST /certifications.json
   def create
     @certification = Certification.new(certification_params)
-    @activity_report_application_forms = [] # Initialize as empty array since relationship is being removed
 
     authorize @certification
 
@@ -39,8 +37,6 @@ class CertificationsController < StaffController
   # PATCH/PUT /certifications/1
   # PATCH/PUT /certifications/1.json
   def update
-    @activity_report_application_forms = [] # Initialize as empty array since relationship is being removed
-
     if @certification.update(certification_params)
       render :show, status: :ok, location: @certification
     else
@@ -49,9 +45,12 @@ class CertificationsController < StaffController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_certification
       @certification = authorize Certification.find(params[:id])
+    end
+
+    def set_activity_report_application_forms
+      @activity_report_application_forms = ActivityReportApplicationForm.where(certification_id: @certification&.id)
     end
 
     def certification_service
