@@ -95,7 +95,6 @@ class ActivityReportApplicationFormsController < ApplicationController
   end
 
   def create_activity_report(params = {})
-    # binding.break
     activity_report_application_form = ActivityReportApplicationForm.new(params)
     activity_report_application_form.user_id = current_user.id
     activity_report_application_form.certification_case = @certification_case
