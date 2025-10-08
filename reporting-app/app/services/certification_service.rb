@@ -23,6 +23,15 @@ class CertificationService
     true
   end
 
+  def find_cases_by_member_id(member_id)
+    certifications_by_id = Certification.by_member_id(member_id).index_by(&:id)
+    certification_cases = CertificationCase.where(certification_id: certifications_by_id.keys)
+    certification_cases.each do |kase|
+      kase.certification = certifications_by_id[kase.certification_id]
+    end
+    certification_cases
+  end
+
   def member_user(certification)
     email = certification.member_email
     if not email

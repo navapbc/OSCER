@@ -16,6 +16,8 @@ class Certification < ApplicationRecord
 
   # TODO: add validation for JSON columns (they should be hashes, etc)
 
+  scope :by_member_id, ->(member_id) { where(member_id:) }
+
   def member_account_email
     return unless self.member_data
 
