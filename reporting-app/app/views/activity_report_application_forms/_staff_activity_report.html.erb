@@ -13,7 +13,7 @@
       <tr>
         <td>Work</td>
         <td><%= activity.name %></td>
-        <td><%= activity.month %></td>
+        <td><%= activity.month&.strftime("%b, %Y") %></td>
         <td class="text-right"><%= activity.hours %></td>
         <td>
           <% if activity.supporting_documents.any? %>
