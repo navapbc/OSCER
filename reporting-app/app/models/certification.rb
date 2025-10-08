@@ -7,10 +7,6 @@ class Certification < ApplicationRecord
   attribute :certification_requirements, :jsonb
   attribute :member_data, :jsonb
 
-  has_many :activity_report_application_forms
-
-  default_scope { includes(:activity_report_application_forms) }
-
   # TODO: some of this should be required, but leaving it open at the moment
   # validates :member_id, presence: true
 
