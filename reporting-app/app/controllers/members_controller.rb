@@ -10,7 +10,7 @@ class MembersController < StaffController
     if @certification_cases.empty?
       raise ActiveRecord::RecordNotFound, "Couldn't find Certification with 'member_id'= \"#{params[:id]}\""
     end
-    @member = Member.new(member_id: params[:id], email: @certification_cases.first.certification.member_email)
+    @member = Member.new(member_id: params[:id], email: @certification_cases.last.certification.member_email)
   end
 
   def search
