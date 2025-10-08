@@ -67,7 +67,6 @@ module TemplateApplicationRails
     end
 
     config.after_initialize do
-      ActivityReportBusinessProcess.start_listening_for_events
       ExemptionBusinessProcess.start_listening_for_events
       CertificationBusinessProcess.start_listening_for_events
     end
