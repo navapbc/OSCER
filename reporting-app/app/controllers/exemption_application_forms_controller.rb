@@ -11,7 +11,8 @@ class ExemptionApplicationFormsController < ApplicationController
   # GET /exemption_application_forms/new
   def new
     @exemption_application_form = authorize ExemptionApplicationForm.new(
-      certification_id: params[:certification_id]
+      certification_id: params[:certification_id],
+      certification_case_id: params[:certification_case_id]
     )
   end
 
@@ -108,7 +109,8 @@ class ExemptionApplicationFormsController < ApplicationController
     def exemption_application_form_params
       params.require(:exemption_application_form).permit(
         :exemption_type,
-        :certification_id
+        :certification_id,
+        :certification_case_id
         )
     end
 

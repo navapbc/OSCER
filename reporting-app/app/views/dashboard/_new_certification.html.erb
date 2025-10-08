@@ -18,7 +18,7 @@
           <%= link_to t(".activity_report.continue_report_button"), activity_report_application_form_path(activity_report), class: "usa-button" %><br />
           <%= link_to t(".activity_report.continue_report_ivaas_button"), activity_report_application_form_path(activity_report, reporting_source: "income_verification_service"), class: "usa-button margin-top-1" %>
         <% else %>
-          <%= link_to t(".activity_report.report_activities_button"), new_activity_report_application_form_path(certification_case_id: certification_case.id), class: "usa-button" %><br />
+          <%= link_to t(".activity_report.report_activities_button"), new_activity_report_application_form_path(certification_case_id: @certification_case.id), class: "usa-button" %><br />
           <%= link_to t(".activity_report.report_activities_ivaas_button"), new_activity_report_application_form_path(reporting_source: "income_verification_service"), class: "usa-button margin-top-1" %>
         <% end %>
       </div>
@@ -42,7 +42,7 @@
           </p>
           <%= link_to t(".exemption_request.continue_request_button"), exemption_application_form_path(exemption_application), class: "usa-button" %>
         <% else %>
-          <%= link_to t(".exemption_request.request_exemption_button"), new_exemption_application_form_path(certification_case_id: certification_case.id), class: "usa-button usa-button--outline" %>
+          <%= link_to t(".exemption_request.request_exemption_button"), new_exemption_application_form_path(certification_case_id: @certification_case.id), class: "usa-button usa-button--outline" %>
         <% end %>
       </div>
     </div>
