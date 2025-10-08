@@ -6,9 +6,7 @@ RSpec.describe "/staff/tasks", type: :request do
   include Warden::Test::Helpers
 
   let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
-  let(:activity_report_case) { create(:activity_report_case) }
-  let(:activity_report_application_form) { ActivityReportApplicationForm.find(activity_report_case.application_form_id) }
-  let!(:activity_report_task) { create(:review_activity_report_task, case: activity_report_case) }
+  let(:certification_case) { create(:certification_case) }
 
   let(:exemption_application_form) { create(:exemption_application_form) }
   let(:exemption_case) { create(:exemption_case, application_form_id: exemption_application_form.id) }
@@ -23,13 +21,16 @@ RSpec.describe "/staff/tasks", type: :request do
   end
 
   describe "GET /show" do
-    context "with ActivityReportCase" do
+    context "with CertificationCase" do
+      let(:activity_report_application_form) { create(:activity_report_application_form, certification_case_id: certification_case.id) }
+      let(:activity_report_task) { create(:review_activity_report_task, case: certification_case) }
+
       it "renders a successful response and sets the correct case and application form" do
         get "/staff/tasks/#{activity_report_task.id}"
         expect(response).to be_successful
-        expect(assigns(:case)).to eq(activity_report_case)
+        expect(assigns(:case)).to eq(certification_case)
         expect(assigns(:application_form)).to eq(activity_report_application_form)
-        expect(assigns(:case)).to be_a(ActivityReportCase)
+        expect(assigns(:case)).to be_a(CertificationCase)
         expect(assigns(:application_form)).to be_a(ActivityReportApplicationForm)
       end
     end

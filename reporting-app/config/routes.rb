@@ -44,18 +44,6 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :activity_report_cases, only: [ :index, :show ] do
-      collection do
-        get :closed
-      end
-
-      member do
-        get :tasks
-        get :documents
-        get :notes
-      end
-    end
-
     resources :exemption_cases, only: [ :index, :show ] do
       collection do
         get :closed

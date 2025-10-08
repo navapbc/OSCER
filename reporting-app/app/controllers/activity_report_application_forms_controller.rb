@@ -9,7 +9,6 @@ class ActivityReportApplicationFormsController < ApplicationController
     submit
     destroy
   ]
-  before_action :set_activity_report_case, only: %i[ show ]
   before_action :authenticate_user!
   before_action :set_certification_case, only: %i[ new ]
   before_action :create_activity_report, only: %i[ new ]
@@ -72,13 +71,8 @@ class ActivityReportApplicationFormsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_activity_report_application_form
     @activity_report_application_form = authorize ActivityReportApplicationForm.find(params[:id])
-  end
-
-  def set_activity_report_case
-    @activity_report_case = ActivityReportCase.find_by(application_form_id: @activity_report_application_form.id) if @activity_report_application_form.present?
   end
 
   def set_certification_case
@@ -109,7 +103,6 @@ class ActivityReportApplicationFormsController < ApplicationController
     redirect_to invitation.tokenized_url, allow_other_host: true
   end
 
-  # Only allow a list of trusted parameters through.
   def activity_report_application_form_params
     params.require(:activity_report_application_form).permit(
       :employer_name,
