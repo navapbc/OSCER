@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :exemption_application_form do
     exemption_type { "short_term_hardship" }
-    certification_case { create(:certification_case, certification: create(:certification)) }
+    certification_case_id { create(:certification_case, certification: create(:certification)).id }
 
     trait :with_supporting_documents do
       after(:build) do |form|

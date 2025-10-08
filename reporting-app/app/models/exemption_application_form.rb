@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ExemptionApplicationForm < Strata::ApplicationForm
-  belongs_to :certification_case
-
   enum :exemption_type, {
     short_term_hardship: "short_term_hardship",
     incarceration: "incarceration"
