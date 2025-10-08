@@ -16,3 +16,9 @@ en:
           submitted: "Your activity report is being reviewed"
           approved: "Your activity report has been approved"
           denied: "Your activity report has been denied"
+    staff_activity_report:
+      activity_type: Type
+      organization_name: Org name
+      month: Month
+      hours_income: "Hours / Income"
+      supporting_documents: Supporting documents
