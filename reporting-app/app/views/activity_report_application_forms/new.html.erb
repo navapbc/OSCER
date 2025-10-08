@@ -1,9 +1,11 @@
-<%= render partial: "application/breadcrumbs", locals: { crumbs: [
-  { name: "Dashboard", url: dashboard_path },
-  ], current_name: "New activity report" } %>
-
-<% content_for :title, "New activity report" %>
-
-<h1>New activity report</h1>
-
-<%= render "form", activity_report_application_form: @activity_report_application_form %>
+<%= content_for :title, "Before you start" %>
+<h1>Before you start</h1>
+<p><strong>Estimated time to complete:</strong> About 1 hour</p>
+<p> Before you begin, please have the following ready:</p>
+<ul>
+  <li>Details about your work, educational programs, community service, or work programs</li>
+  <li>Supporting documentation</li>
+  <li>If you believe you qualify for an exemption, you will need to provide supporting documentation</li>
+</ul>
+<p>You can save your progress and return anytime</p>
+<%= link_to "Start", edit_activity_report_application_form_path(@activity_report_application_form), class: "usa-button usa-button--big" %>
