@@ -1,21 +1,18 @@
+# frozen_string_literal: true
+
 class MembersController < StaffController
   def index
     redirect_to search_members_path
   end
 
   def show
-    @certification_cases = certification_service.find_cases_by_member_id(params[:id])
-    if @certification_cases.empty?
-      raise ActiveRecord::RecordNotFound, "Couldn't find Certification with 'member_id'= \"#{params[:id]}\""
-    end
-    @member = Member.new(member_id: params[:id], email: @certification_cases.first.certification.member_email)
+    member_id = params[:id]
+    @member = Member.find_by_member_id(member_id)
+    @certification_cases = certification_service.find_cases_by_member_id(member_id)
   end
 
   def search
-    @members = []
-    Certification.find_by_member_email(params[:email]).each do |certification|
-      @members << Member.new(member_id: certification.member_id, email: certification.member_email)
-    end
+    @members = Member.search_by_email(params[:email])
   end
 
   private

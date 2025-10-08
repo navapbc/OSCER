@@ -1,5 +1,10 @@
 <%= render partial: 'application/flash' %>
-<%= render partial: 'activity_report_application_forms/activity_report_application_form', locals: { activity_report_application_form: application_form } %>
+
+<h2><%= t(".intro") %></h2>
+<p><%= t(".instructions") %></p>
+
+<%= render partial: 'activity_report_application_forms/staff_activity_report', locals: { activity_report: application_form } %>
+
 <% if task.pending? %>
   <%= strata_form_with(model: task) do |f| %>
     <%= f.submit t("tasks.details.approve_button"), class: "usa-button--outline" %>
