@@ -36,5 +36,7 @@ class CertificationCasesController < StaffController
   def set_certification_elements
     @case = CertificationCase.find(params[:id])
     @certification = Certification.find(@case.certification_id)
+    @case.certification = @certification
+    @member = Member.new(member_id: @certification.member_id, email: @certification.member_email)
   end
 end

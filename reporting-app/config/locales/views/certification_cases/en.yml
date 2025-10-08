@@ -8,6 +8,6 @@ en:
     index:
       title: "Certification Cases"
     show:
-      title: "Details"
+      title: "Case: %{case_number}"
     notes:
       title: "Notes"
