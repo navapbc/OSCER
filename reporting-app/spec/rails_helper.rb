@@ -80,6 +80,6 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.before(:suite) do
-    OPENAPI_DOC = OpenapiContracts::Doc.parse(Rails.root, 'openapi.yaml')
+    OPENAPI_DOC = OpenapiContracts::Doc.parse(Rails.root, 'openapi.generated.yml')
   end
 end

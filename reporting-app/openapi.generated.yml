@@ -299,7 +299,7 @@
       }
     },
     "responses": {
-      "7e78019a27db774a95ea789dba0efe4b": {
+      "781b83cf0b3838ae78106ac309237aae": {
         "description": "Created Certification.",
         "content": {
           "application/json": {
@@ -309,7 +309,7 @@
           }
         }
       },
-      "50d4fec76a026b01b2fcfefb2e703e74": {
+      "3ca06fb30a11a752619e75bff3399517": {
         "description": "User error.",
         "content": {
           "application/json": {
@@ -319,7 +319,7 @@
           }
         }
       },
-      "0e8dfc9ecb50e3ec154f0283cf9f58ef": {
+      "9067d9ccaf12f89f82d8b5c0ac78ad03": {
         "description": "The server could not process the request due to semantic errors. Please check your input and try again.",
         "content": {
           "application/json": {
@@ -329,7 +329,7 @@
           }
         }
       },
-      "f8938e9848581236da18b4fdfb7871b7": {
+      "a5484d941404dd15fdaa6b8d79b2cdca": {
         "description": "A Certification",
         "content": {
           "application/json": {
@@ -339,7 +339,7 @@
           }
         }
       },
-      "43a16a549873e7acf22d9737a99134db": {
+      "c3bafa6c128be441333bfc31963fbe22": {
         "description": "The requested resource could not be found.",
         "content": {
           "application/json": {
@@ -349,7 +349,7 @@
           }
         }
       },
-      "d990e9bac2aee71c737d5088dc8329a7": {
+      "b5700262fd8300921a92c893d046adca": {
         "description": "Response",
         "content": {
           "application/json": {
@@ -373,7 +373,7 @@
       }
     },
     "requestBodies": {
-      "f91480f6745e3c4a1db134349900e0bc": {
+      "ef2aeb8e2655cf47b81bd23a51aec42c": {
         "description": "The Certification data.",
         "content": {
           "application/json": {
@@ -436,17 +436,17 @@
         "description": "#",
         "operationId": "POST__api_certifications",
         "requestBody": {
-          "$ref": "#/components/requestBodies/f91480f6745e3c4a1db134349900e0bc"
+          "$ref": "#/components/requestBodies/ef2aeb8e2655cf47b81bd23a51aec42c"
         },
         "responses": {
           "201": {
-            "$ref": "#/components/responses/7e78019a27db774a95ea789dba0efe4b"
+            "$ref": "#/components/responses/781b83cf0b3838ae78106ac309237aae"
           },
           "400": {
-            "$ref": "#/components/responses/50d4fec76a026b01b2fcfefb2e703e74"
+            "$ref": "#/components/responses/3ca06fb30a11a752619e75bff3399517"
           },
           "422": {
-            "$ref": "#/components/responses/0e8dfc9ecb50e3ec154f0283cf9f58ef"
+            "$ref": "#/components/responses/9067d9ccaf12f89f82d8b5c0ac78ad03"
           }
         }
       }
@@ -466,10 +466,10 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/f8938e9848581236da18b4fdfb7871b7"
+            "$ref": "#/components/responses/a5484d941404dd15fdaa6b8d79b2cdca"
           },
           "404": {
-            "$ref": "#/components/responses/43a16a549873e7acf22d9737a99134db"
+            "$ref": "#/components/responses/c3bafa6c128be441333bfc31963fbe22"
           }
         }
       }
@@ -484,7 +484,7 @@
         "operationId": "GET__api_health",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/d990e9bac2aee71c737d5088dc8329a7"
+            "$ref": "#/components/responses/b5700262fd8300921a92c893d046adca"
           }
         }
       }

@@ -216,9 +216,8 @@ precompile-assets:
 	SECRET_KEY_BASE_DUMMY=1
 	$(RAILS_RUN_CMD) assets:precompile
 
-.PHONY: openapi.yaml
-openapi.yaml: ## Output the OpenAPI spec for API endpoints
-	$(RUBY_RUN_CMD) bin/rake oas:generate > $@
+openapi-spec: ## Generate OpenAPI spec
+	$(RUBY_RUN_CMD) bin/rake oas:generate > openapi.generated.yml
 
 ##################################################
 # Miscellaneous Utilities
