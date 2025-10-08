@@ -6,7 +6,9 @@ class MembersController < StaffController
   end
 
   def show
-    @member, @certification_cases = Member.find_member_and_certification_cases_by_member_id(params[:id])
+    member_id = params[:id]
+    @member = Member.find_by_member_id(member_id)
+    @certification_cases = certification_service.find_cases_by_member_id(member_id)
   end
 
   def search
