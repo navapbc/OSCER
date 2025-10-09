@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_02_153955) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_07_205341) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,6 +60,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_02_153955) do
     t.integer "status"
     t.datetime "submitted_at"
     t.uuid "certification_id"
+    t.uuid "certification_case_id"
+    t.index ["certification_case_id"], name: "idx_on_certification_case_id_df9964575c"
     t.index ["certification_id"], name: "index_activity_report_application_forms_on_certification_id"
   end
 
@@ -101,6 +103,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_02_153955) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "certification_id"
+    t.uuid "certification_case_id"
+    t.index ["certification_case_id"], name: "index_exemption_application_forms_on_certification_case_id"
     t.index ["certification_id"], name: "index_exemption_application_forms_on_certification_id"
   end
 
@@ -142,7 +146,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_02_153955) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "activity_report_application_forms"
+  add_foreign_key "activity_report_application_forms", "certification_cases"
   add_foreign_key "activity_report_application_forms", "certifications"
   add_foreign_key "certification_cases", "certifications"
+  add_foreign_key "exemption_application_forms", "certification_cases"
   add_foreign_key "exemption_application_forms", "certifications"
 end

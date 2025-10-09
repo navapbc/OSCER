@@ -4,12 +4,14 @@ require 'rails_helper'
 
 RSpec.describe "dashboard/index", type: :view do
   let(:certification) { create(:certification) }
+  let(:certification_case) { create(:certification_case, certification_id: certification.id) }
 
   before do
     assign(:all_certifications, [
       certification
     ])
     assign(:certification, certification)
+    assign(:certification_case, certification_case)
   end
 
   context 'with no current exemption or activity report' do

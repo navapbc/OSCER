@@ -23,7 +23,8 @@ RSpec.describe "/dashboard", type: :request do
     end
 
     it "renders a successful response with no forms, but certification" do
-      create(:certification, :connected_to_email, email: user.email)
+      certification = create(:certification, :connected_to_email, email: user.email)
+      create(:certification_case, certification_id: certification.id)
 
       get dashboard_path
       expect(response).to be_successful

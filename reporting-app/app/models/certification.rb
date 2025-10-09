@@ -7,16 +7,16 @@ class Certification < ApplicationRecord
   attribute :certification_requirements, :jsonb
   attribute :member_data, :jsonb
 
-  has_many :activity_report_application_forms
-
-  default_scope { includes(:activity_report_application_forms) }
-
   # TODO: some of this should be required, but leaving it open at the moment
   # validates :member_id, presence: true
 
   # TODO: add validation for JSON columns (they should be hashes, etc)
 
   scope :by_member_id, ->(member_id) { where(member_id:) }
+
+  after_create_commit do
+    Strata::EventManager.publish("CertificationCreated", { certification_id: id })
+  end
 
   def member_account_email
     return unless self.member_data

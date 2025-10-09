@@ -1,5 +1,5 @@
 <h1><%= t(".title") %></h1>
-<%= render determine_dashboard_view, activity_report: @activity_report_application_form, exemption_application: @exemption_application_form, certification: @certification %>
+<%= render determine_dashboard_view, activity_report: @activity_report_application_form, exemption_application: @exemption_application_form, certification_case: @certification_case, certification: @certification %>
 <!-- Previous Certifications -->
 <% if @all_certifications.length > 1 %>
   <h2><%= t(".previous_certifications.title") %></h2>

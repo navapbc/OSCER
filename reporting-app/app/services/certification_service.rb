@@ -2,25 +2,7 @@
 
 class CertificationService
   def save_new(certification, current_user = nil)
-    if !certification.save
-      return false
-    end
-
-    # TODO: not sure how else to get Rails to stop complaining about
-    # :activity_report_application_forms strict loading on newly created record
-    certification.activity_report_application_forms = []
-    # temporarily create a certification case for the certification here.
-    # TODO: move to business process/event processing step
-    CertificationCase.create(certification_id: certification.id)
-
-    # TODO: this logic could/should be moved to an business process/event
-    # processing step
-    is_exempt = false
-    if is_exempt
-      # TODO: do something if automatically exempt
-    end
-
-    true
+    certification.save
   end
 
   def find_cases_by_member_id(member_id)
