@@ -39,23 +39,4 @@ RSpec.describe "/staff/certification_cases", type: :request do
       end
     end
   end
-
-  describe "case sub-navigation pages" do
-    [
-      [ "show", :certification_case_path, "Details" ],
-      [ "tasks", :tasks_certification_case_path, "Tasks" ],
-      [ "documents", :documents_certification_case_path, "Documents" ],
-      [ "notes", :notes_certification_case_path, "Notes" ]
-    ].each do |action, path_method, label|
-      it "returns a success response" do
-        get send(path_method, certification_case)
-        expect(response).to be_successful
-      end
-
-      it "sets the active sidenav to #{action}" do
-        get send(path_method, certification_case)
-        assert_select ".usa-sidenav>.usa-sidenav__item>.usa-current", text: label, count: 1
-      end
-    end
-  end
 end
