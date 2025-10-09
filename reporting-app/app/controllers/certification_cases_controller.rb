@@ -21,17 +21,6 @@ class CertificationCasesController < StaffController
   def show
   end
 
-  def tasks
-    @tasks = @case.tasks
-  end
-
-  def documents
-    @documents = []
-  end
-
-  def notes
-  end
-
   private
 
   def set_case
