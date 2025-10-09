@@ -22,7 +22,6 @@ class CertificationBusinessProcess < Strata::BusinessProcess
 
   # define start step
   start("certification_created", on: "CertificationCreated") do |event|
-    Rails.logger.info("Hello World!!! CertificationCreated")
     CertificationCase.new(certification_id: event[:payload][:certification_id])
   end
 
