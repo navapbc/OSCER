@@ -36,12 +36,7 @@
     </p>
     <p>
       <span class="text-bold"><%= t(".certification_date") %></span>
-      <span>
-        <%=
-          # TODO: We should make certification_requirements a real model rather than just a JSON blob
-          # so we can avoid needing to parse the date string in the view
-          Date.parse(@certification.certification_requirements&.dig("certification_date")).strftime("%m/%d/%Y")
-        %>
+      <span><%= @certification.certification_date&.strftime("%m/%d/%Y") %></span>
       </span>
     </p>
     <p>
@@ -54,7 +49,7 @@
     </p>
     <p>
       <span class="text-bold"><%= t(".certification_due_date") %></span>
-      <span><%= @certification.due_date.strftime("%m/%d/%Y") %></span>
+      <span><%= @certification.due_date&.strftime("%m/%d/%Y") %></span>
     </p>
   </div>
 </div>
