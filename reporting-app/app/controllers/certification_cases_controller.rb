@@ -5,7 +5,7 @@ class CertificationCasesController < StaffController
   before_action :set_certification, only: %i[ show tasks documents notes ]
 
   def index
-    @cases = CertificationCase.all
+    @cases = CertificationCase.open
     certification_ids = @cases.map(&:certification_id)
     certifications_by_id = Certification.where(id: certification_ids).index_by(&:id)
     @cases.each do |kase|

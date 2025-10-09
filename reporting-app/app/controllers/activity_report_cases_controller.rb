@@ -6,7 +6,7 @@ class ActivityReportCasesController < StaffController
 
   # GET /activity_report_cases or /activity_report_cases.json
   def index
-    @cases = ActivityReportCase.all
+    @cases = ActivityReportCase.open
   end
 
   def closed

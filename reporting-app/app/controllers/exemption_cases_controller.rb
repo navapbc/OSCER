@@ -5,7 +5,7 @@ class ExemptionCasesController < StaffController
   before_action :set_exemption_application_form, only: %i[ documents ]
 
   def index
-    @cases = ExemptionCase.all
+    @cases = ExemptionCase.open
   end
 
   def closed
