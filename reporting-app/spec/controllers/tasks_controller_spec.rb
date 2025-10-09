@@ -34,7 +34,7 @@ RSpec.describe TasksController do
 
     context "when filtering by completed status" do
       before do
-        get :index, params: { status: "completed" }
+        get :index, params: { filter_status: "completed" }
       end
 
       it "returns http success" do
@@ -43,10 +43,10 @@ RSpec.describe TasksController do
 
       it "returns non-pending tasks" do
         assigned_tasks = assigns(:tasks)
-        expect(assigned_tasks).to include(pending_task)
-        expect(assigned_tasks).not_to include(completed_task)
-        expect(assigned_tasks).not_to include(approved_task)
-        expect(assigned_tasks).not_to include(denied_task)
+        expect(assigned_tasks).not_to include(pending_task)
+        expect(assigned_tasks).to include(completed_task)
+        expect(assigned_tasks).to include(approved_task)
+        expect(assigned_tasks).to include(denied_task)
       end
     end
 
