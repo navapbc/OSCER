@@ -74,7 +74,7 @@
     <ul>
       <% @case.tasks.each do |task| %>  
         <li>
-          <%= link_to task.class.name.humanize, task_path(task) %>
+          <%= link_to task.class.name.humanize, task_path(task), class: "usa-link" %>
         </li>
       <% end %>
     </ul>
