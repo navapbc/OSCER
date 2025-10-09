@@ -123,6 +123,9 @@ class ActivityReportApplicationFormsController < ApplicationController
     )
 
     # Convert JSON strings to hash format for YearMonth
+    # TODO: Update strata-sdk to support setting strata array attributes from date strings (e.g. "2023-01").
+    # Linear Issue: TSS-375(https://linear.app/nava-platform/issue/TSS-375/add-ability-to-set-array-attributes)
+    # Remove the JSON parsing once strata-sdk supports this.
     if permitted_params[:reporting_periods].present?
       permitted_params[:reporting_periods] = permitted_params[:reporting_periods].filter_map do |json_string|
         next if json_string.blank?
