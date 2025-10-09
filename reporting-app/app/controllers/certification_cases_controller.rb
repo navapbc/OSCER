@@ -18,17 +18,6 @@ class CertificationCasesController < StaffController
   def show
   end
 
-  def tasks
-    @tasks = @case.tasks
-  end
-
-  def documents
-    @documents = []
-  end
-
-  def notes
-  end
-
   private
 
   def set_case
@@ -37,6 +26,8 @@ class CertificationCasesController < StaffController
 
   def set_certification
     @certification = Certification.find(@case.certification_id)
+    @case.certification = @certification
+    @member = Member.from_certification(@certification)
   end
 
   def hydrate_cases_with_certifications(cases)
