@@ -79,6 +79,10 @@ class ActivityReportApplicationFormsController < ApplicationController
     @certification_case = CertificationCase.find_by(id: params[:certification_case_id])
   end
 
+  def set_certification_case
+    @certification_case = CertificationCase.find_by(id: params[:certification_case_id])
+  end
+
   def default_reporting_source
     Rails.application.config.reporting_source
   end
