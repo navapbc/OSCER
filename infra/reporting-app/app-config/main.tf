@@ -51,6 +51,7 @@ locals {
   environment_configs = {
     dev     = module.dev_config
     staging = module.staging_config
+    sandbox = module.sandbox_config
     prod    = module.prod_config
   }
 
