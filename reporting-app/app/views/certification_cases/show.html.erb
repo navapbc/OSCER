@@ -5,16 +5,16 @@
 <div class="usa-header padding-bottom-3">
   <h1 class="font-sans-3xl text-semibold"><%= t(".title", case_number: @certification&.case_number) %></h1>
   <p>
-    <span class="text-bold">Status:</span>
+    <span class="text-bold"><%= t(".status") %></span>
     <span class="usa-tag"><%= @case.status %></span>
   </p>
   <p>
-    <span class="text-bold">Step:</span>
-    <span class="usa-tag"><%= @case.business_process_instance.current_step || "Missing" %></span>
+    <span class="text-bold"><%= t(".step") %></span>
+    <span class="usa-tag"><%= @case.business_process_instance.current_step || t(".missing") %></span>
   </p>
   <p>
-    <span class="text-bold">Assigned to:</span>
-    <span>Caseworker</span>
+    <span class="text-bold"><%= t(".assigned_to") %></span>
+    <span><%= t(".caseworker") %></span>
   </p>
 </div>
 
@@ -26,16 +26,16 @@
       aria-expanded="true"
       aria-controls="certification-details"
     >
-      Certification Details
+      <%= t(".certification_details") %>
     </button>
   </h4>
   <div id="certification-details" class="usa-accordion__content usa-prose">
     <p>
-      <span class="text-bold">Member name:</span>
+      <span class="text-bold"><%= t(".member_name") %></span>
       <span><%= @certification&.member_email %></span>
     </p>
     <p>
-      <span class="text-bold">Certification date:</span>
+      <span class="text-bold"><%= t(".certification_date") %></span>
       <span>
         <%=
           # TODO: We should make certification_requirements a real model rather than just a JSON blob
@@ -45,15 +45,15 @@
       </span>
     </p>
     <p>
-      <span class="text-bold">Lookback period:</span>
+      <span class="text-bold"><%= t(".lookback_period") %></span>
       <span><%= @certification.lookback_period.start.strftime("%b, %Y") %> – <%= @certification.lookback_period.end.strftime("%b, %Y") %></span>
     </p>
     <p>
-      <span class="text-bold">Number of months to certify:</span>
+      <span class="text-bold"><%= t(".number_of_months_to_certify") %></span>
       <span><%= @certification.certification_requirements&.dig("number_of_months_to_certify") %></span>
     </p>
     <p>
-      <span class="text-bold">Certification due date:</span>
+      <span class="text-bold"><%= t(".certification_due_date") %></span>
       <span><%= @certification.due_date.strftime("%m/%d/%Y") %></span>
     </p>
   </div>
@@ -67,7 +67,7 @@
       aria-expanded="false"
       aria-controls="tasks"
     >
-      Tasks
+      <%= t(".tasks") %>
     </button>
   </h4>
   <div id="tasks" class="usa-accordion__content usa-prose">
@@ -79,7 +79,7 @@
       <% end %>
     </ul>
     <% if @case.tasks.empty? %>
-      <p>No tasks</p>
+      <p><%= t(".no_tasks") %></p>
     <% end %>
   </div>
 </div>
@@ -92,10 +92,10 @@
       aria-expanded="false"
       aria-controls="ex-parte-data"
     >
-      Ex parte data
+      <%= t(".ex_parte_data") %>
     </button>
   </h4>
   <div id="ex-parte-data" class="usa-accordion__content usa-prose">
-    <p>None</p>
+    <p><%= t(".none") %></p>
   </div>
 </div>
