@@ -46,7 +46,7 @@
     </p>
     <p>
       <span class="text-bold"><%= t(".lookback_period") %></span>
-      <span><%= @certification.lookback_period.start.strftime("%b, %Y") %> – <%= @certification.lookback_period.end.strftime("%b, %Y") %></span>
+      <span><%= @certification.lookback_period.start&.strftime("%b, %Y") %> – <%= @certification.lookback_period.end&.strftime("%b, %Y") %></span>
     </p>
     <p>
       <span class="text-bold"><%= t(".number_of_months_to_certify") %></span>
