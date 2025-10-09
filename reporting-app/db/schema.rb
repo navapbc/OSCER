@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_07_205341) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_09_120656) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,15 +63,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_07_205341) do
     t.uuid "certification_case_id"
     t.index ["certification_case_id"], name: "idx_on_certification_case_id_df9964575c"
     t.index ["certification_id"], name: "index_activity_report_application_forms_on_certification_id"
-  end
-
-  create_table "activity_report_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "application_form_id"
-    t.integer "status"
-    t.string "business_process_current_step"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.jsonb "facts", default: {}
   end
 
   create_table "certification_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

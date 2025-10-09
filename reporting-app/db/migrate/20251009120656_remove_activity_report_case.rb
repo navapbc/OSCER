@@ -2,6 +2,12 @@
 
 class RemoveActivityReportCase < ActiveRecord::Migration[7.2]
   def up
+    # Delete tasks associated with ActivityReportCase
+    execute <<-SQL
+      DELETE FROM strata_tasks
+      WHERE case_type = 'ActivityReportCase'
+    SQL
+
     # Migrate data from activity_report_cases to certification_cases
     execute <<-SQL
       INSERT INTO certification_cases (
