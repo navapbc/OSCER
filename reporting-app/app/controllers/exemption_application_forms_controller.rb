@@ -4,8 +4,20 @@ class ExemptionApplicationFormsController < ApplicationController
   before_action :set_exemption_application_form, only: %i[ show edit update destroy review submit documents upload_documents ]
   before_action :set_exemption_case, only: %i[ show ]
 
+  # Skip authorization for informational pages
+  skip_after_action :verify_authorized, only: %i[ start ]
+
   # GET /exemption_application_forms/1 or /exemption_application_forms/1.json
   def show
+  end
+
+  # GET /exemption_application_forms/start
+  def start
+    @certification_case_id = params[:certification_case_id]
+
+    unless @certification_case_id
+      redirect_to dashboard_path, alert: "Certification case required"
+    end
   end
 
   # GET /exemption_application_forms/new

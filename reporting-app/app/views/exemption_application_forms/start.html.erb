@@ -1,0 +1,19 @@
+<% content_for :title, t(".title") %>
+
+<%= exemption_step_indicator(:start) %>
+
+<p><strong><%= t(".time_estimate") %></strong></p>
+<p><%= t(".intro") %></p>
+
+<ul>
+  <li><%= t(".what_you_need.item1") %></li>
+  <li><%= t(".what_you_need.item2") %></li>
+</ul>
+
+<p><%= t(".save_info") %></p>
+
+<%= link_to t(".get_started_button"), 
+            new_exemption_application_form_path(certification_case_id: @certification_case_id), 
+            class: "usa-button usa-button--big" %>
+<%= link_to t(".cancel"), dashboard_path, class: "usa-button usa-button--big usa-button--outline" %>
+
