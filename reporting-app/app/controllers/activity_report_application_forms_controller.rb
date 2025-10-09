@@ -80,6 +80,11 @@ class ActivityReportApplicationFormsController < ApplicationController
   end
 
   def set_certification_case
+    if params[:certification_case_id].blank?
+      redirect_to dashboard_path, alert: "Cannot create activity report without a certification case"
+      return
+    end
+
     @certification_case = CertificationCase.find_by(id: params[:certification_case_id])
   end
 

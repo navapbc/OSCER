@@ -1,33 +1,96 @@
-<% content_for :title, t(".title") %>
-<% content_for :case_details do %>
-  <h2 id="case-details-heading" class="usa-heading-lg margin-bottom-3"><%= t(".title") %></h2>
-  <% if @certification.present? %>
-    <dl class="grid-row grid-gap margin-0">
-      <div class="grid-col-12 tablet:grid-col-6">
-        <div class="margin-bottom-2">
-          <dt class="text-bold font-sans-sm text-base-dark">Assigned Worker</dt>
-          <dd class="margin-left-0 margin-top-1 font-sans-md">William Worker</dd>
-        </div>
-      </div>
-      <div class="grid-col-12 tablet:grid-col-6">
-        <div class="margin-bottom-2">
-          <dt class="text-bold font-sans-sm text-base-dark">Created</dt>
-          <dd class="margin-left-0 margin-top-1 font-sans-md">
-            <time datetime="<%= @case.created_at.strftime("%Y-%m-%d %H:%M:%S %Z") %>">
-              <%= @case.created_at.strftime("%m/%d/%Y %I:%M:%S %p %Z") %>
-            </time>
-          </dd>
-        </div>
-        <div class="margin-bottom-2">
-          <dt class="text-bold font-sans-sm text-base-dark">Last Updated</dt>
-          <dd class="margin-left-0 margin-top-1 font-sans-md">
-            <time datetime="<%= @case.updated_at.strftime("%Y-%m-%d %H:%M:%S %Z") %>">
-              <%= @case.updated_at.strftime("%m/%d/%Y %I:%M:%S %p %Z") %>
-            </time>
-          </dd>
-        </div>
-      </div>
-    </dl>
-  <% end %>
-<% end %>
-<%= render "case_layout" %>
+<% content_for :title, t(".title", case_number: @certification&.case_number) %>
+
+<%= render partial: "strata/shared/breadcrumbs", locals: { breadcrumbs: case_breadcrumbs(@member, @case) } %>
+
+<div class="usa-header padding-bottom-3">
+  <h1 class="font-sans-3xl text-semibold"><%= t(".title", case_number: @certification&.case_number) %></h1>
+  <p>
+    <span class="text-bold"><%= t(".status") %></span>
+    <span class="usa-tag"><%= @case.status %></span>
+  </p>
+  <p>
+    <span class="text-bold"><%= t(".step") %></span>
+    <span class="usa-tag"><%= @case.business_process_instance.current_step || t(".missing") %></span>
+  </p>
+  <p>
+    <span class="text-bold"><%= t(".assigned_to") %></span>
+    <span><%= t(".caseworker") %></span>
+  </p>
+</div>
+
+<div class="usa-accordion usa-accordion--multiselectable" data-allow-multiple>
+  <h4 class="usa-accordion__heading">
+    <button
+      type="button"
+      class="usa-accordion__button"
+      aria-expanded="true"
+      aria-controls="certification-details"
+    >
+      <%= t(".certification_details") %>
+    </button>
+  </h4>
+  <div id="certification-details" class="usa-accordion__content usa-prose">
+    <p>
+      <span class="text-bold"><%= t(".member_name") %></span>
+      <span><%= @certification&.member_email %></span>
+    </p>
+    <p>
+      <span class="text-bold"><%= t(".certification_date") %></span>
+      <span><%= @certification.certification_date&.strftime("%m/%d/%Y") %></span>
+      </span>
+    </p>
+    <p>
+      <span class="text-bold"><%= t(".lookback_period") %></span>
+      <span><%= @certification.lookback_period.start&.strftime("%b, %Y") %> – <%= @certification.lookback_period.end&.strftime("%b, %Y") %></span>
+    </p>
+    <p>
+      <span class="text-bold"><%= t(".number_of_months_to_certify") %></span>
+      <span><%= @certification.certification_requirements&.dig("number_of_months_to_certify") %></span>
+    </p>
+    <p>
+      <span class="text-bold"><%= t(".certification_due_date") %></span>
+      <span><%= @certification.due_date&.strftime("%m/%d/%Y") %></span>
+    </p>
+  </div>
+</div>
+
+<div class="usa-accordion usa-accordion--multiselectable" data-allow-multiple>
+  <h4 class="usa-accordion__heading">
+    <button
+      type="button"
+      class="usa-accordion__button"
+      aria-expanded="false"
+      aria-controls="tasks"
+    >
+      <%= t(".tasks") %>
+    </button>
+  </h4>
+  <div id="tasks" class="usa-accordion__content usa-prose">
+    <ul>
+      <% @case.tasks.each do |task| %>  
+        <li>
+          <%= link_to task.class.name.humanize, task_path(task), class: "usa-link" %>
+        </li>
+      <% end %>
+    </ul>
+    <% if @case.tasks.empty? %>
+      <p><%= t(".no_tasks") %></p>
+    <% end %>
+  </div>
+</div>
+
+<div class="usa-accordion usa-accordion--multiselectable" data-allow-multiple>
+  <h4 class="usa-accordion__heading">
+    <button
+      type="button"
+      class="usa-accordion__button"
+      aria-expanded="false"
+      aria-controls="ex-parte-data"
+    >
+      <%= t(".ex_parte_data") %>
+    </button>
+  </h4>
+  <div id="ex-parte-data" class="usa-accordion__content usa-prose">
+    <p><%= t(".none") %></p>
+  </div>
+</div>

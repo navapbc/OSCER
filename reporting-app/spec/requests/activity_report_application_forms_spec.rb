@@ -78,6 +78,13 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
     }
     let(:mock_service) { instance_double(CMSIncomeVerificationService) }
 
+    it "redirects to the dashboard with an error if no certification case is provided" do
+      get new_activity_report_application_form_url
+      expect(response).to redirect_to(dashboard_path)
+      follow_redirect!
+      expect(response.body).to include("Cannot create activity report without a certification case")
+    end
+
     it "creates a new ActivityReportApplicationForm" do
       expect {
         get new_activity_report_application_form_url(certification_case_id: certification_case.id)
