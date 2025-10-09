@@ -30,7 +30,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Update OpenAPI spec
-        run: make openapi-spec
+        run: make .env openapi-spec
 
       - name: Push changes
         run: |
