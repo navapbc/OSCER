@@ -6,15 +6,12 @@ class CertificationCasesController < StaffController
 
   def index
     @cases = CertificationCase.open
-    certification_ids = @cases.map(&:certification_id)
-    certifications_by_id = Certification.where(id: certification_ids).index_by(&:id)
-    @cases.each do |kase|
-      kase.certification = certifications_by_id[kase.certification_id]
-    end
+    hydrate_cases_with_certifications(@cases)
   end
 
   def closed
     @cases = CertificationCase.closed
+    hydrate_cases_with_certifications(@cases)
     render :index
   end
 
@@ -40,5 +37,13 @@ class CertificationCasesController < StaffController
 
   def set_certification
     @certification = Certification.find(@case.certification_id)
+  end
+
+  def hydrate_cases_with_certifications(cases)
+    certification_ids = cases.map(&:certification_id)
+    certifications_by_id = Certification.where(id: certification_ids).index_by(&:id)
+    cases.each do |kase|
+      kase.certification = certifications_by_id[kase.certification_id]
+    end
   end
 end
