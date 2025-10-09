@@ -217,7 +217,7 @@ precompile-assets:
 	$(RAILS_RUN_CMD) assets:precompile
 
 openapi-spec: ## Generate OpenAPI spec
-	$(RUBY_RUN_CMD) bin/rake oas:generate > openapi.generated.yml
+	$(RUBY_RUN_CMD) bin/rake oas:generate[yaml,openapi.generated.yml]
 
 ##################################################
 # Miscellaneous Utilities

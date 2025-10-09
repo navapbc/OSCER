@@ -43,6 +43,6 @@ jobs:
           git diff-index \
             --quiet HEAD \
             --ignore-matching-lines='ref": .*\/[0-9a-z]{32}"$' \
-            --ignore-matching-lines='"[0-9a-z]{32}": \{' \
+            --ignore-matching-lines='[ "'\'']+[0-9a-z]{32}["'\'']*:' \
             || git commit -m "Update OpenAPI spec"
           git push
