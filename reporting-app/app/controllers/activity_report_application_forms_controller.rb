@@ -131,7 +131,13 @@ class ActivityReportApplicationFormsController < ApplicationController
         next if json_string.blank?
 
         begin
-          JSON.parse(json_string).symbolize_keys
+          date = JSON.parse(json_string).symbolize_keys
+          # Validate the structure of the parsed JSON
+          unless date[:year].is_a?(Integer) && date[:month].is_a?(Integer)
+            raise ArgumentError, "Invalid reporting period format"
+          end
+
+          date
         rescue JSON::ParserError
           nil # Skip invalid JSON
         end
