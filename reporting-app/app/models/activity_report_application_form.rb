@@ -20,7 +20,7 @@ class ActivityReportApplicationForm < Strata::ApplicationForm
 
   # Override Strata::ApplicationForm#publish_submitted to include the case_id
   def publish_submitted
-    kase = CertificationCase.find_by(certification_id: certification_id)
+    kase = CertificationCase.find_by(id: certification_case_id)
     Strata::EventManager.publish("#{self.class.name}Submitted", { case_id: kase.id })
   end
 end
