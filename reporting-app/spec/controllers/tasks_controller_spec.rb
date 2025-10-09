@@ -11,7 +11,7 @@ RSpec.describe TasksController do
     let!(:approved_task) { create(:review_activity_report_task, case: case_record, status: :approved) }
     let!(:denied_task) { create(:review_activity_report_task, case: case_record, status: :denied) }
 
-    before(:each) do
+    before do
       sign_in user
     end
 
