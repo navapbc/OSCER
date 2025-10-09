@@ -23,8 +23,9 @@ class Certification < ApplicationRecord
   end
 
   def lookback_period
-    start_month = Date.parse(self.certification_requirements&.dig("months_that_can_be_certified").first)
-    end_month = Date.parse(self.certification_requirements&.dig("months_that_can_be_certified").last)
+    months_that_can_be_certified = self.certification_requirements&.dig("months_that_can_be_certified")
+    start_month = Date.parse(months_that_can_be_certified.first)
+    end_month = Date.parse(months_that_can_be_certified.last)
     Strata::DateRange.new(
       start: start_month,
       end: end_month
