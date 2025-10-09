@@ -116,10 +116,25 @@ class ActivityReportApplicationFormsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def activity_report_application_form_params
-    params.require(:activity_report_application_form).permit(
+    permitted_params = params.require(:activity_report_application_form).permit(
       :employer_name,
       :minutes,
-      :reporting_period
+      reporting_periods: [],
     )
+
+    # Convert JSON strings to hash format for YearMonth
+    if permitted_params[:reporting_periods].present?
+      permitted_params[:reporting_periods] = permitted_params[:reporting_periods].filter_map do |json_string|
+        next if json_string.blank?
+
+        begin
+          JSON.parse(json_string).symbolize_keys
+        rescue JSON::ParserError
+          nil # Skip invalid JSON
+        end
+      end
+    end
+
+    permitted_params
   end
 end

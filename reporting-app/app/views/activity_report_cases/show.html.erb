@@ -7,7 +7,7 @@
         <div class="margin-bottom-2">
           <dt class="text-bold font-sans-sm text-base-dark">Reporting Period</dt>
           <dd class="margin-left-0 margin-top-1 font-sans-sm">
-            <%= @activity_report_application_form.reporting_period&.strftime("%B, %Y") || "Unknown" %>
+            <%= @activity_report_application_form.reporting_periods&.first&.then { |ym| Date.new(ym.year, ym.month, 1).strftime("%B, %Y") } || "Unknown" %>
           </dd>
         </div>
         <div class="margin-bottom-2">
