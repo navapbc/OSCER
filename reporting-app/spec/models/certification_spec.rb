@@ -3,8 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe Certification, type: :model do
-  it "has ActivityReportApplicationForm" do
-    certification = create(:certification, :with_activity_report_application_form)
-    expect(certification.activity_report_application_forms.count).to eq(1)
+  describe 'after_create_commit callback' do
+    it 'publishes CertificationCreated event with certification_id' do
+      allow(Strata::EventManager).to receive(:publish)
+      certification = build(:certification)
+
+      certification.save!
+      expect(Strata::EventManager).to have_received(:publish).with(
+        'CertificationCreated',
+        { certification_id: certification.id }
+      )
+    end
   end
 end
