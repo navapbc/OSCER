@@ -37,6 +37,6 @@ class CertificationCasesController < StaffController
     @case = CertificationCase.find(params[:id])
     @certification = Certification.find(@case.certification_id)
     @case.certification = @certification
-    @member = Member.new(member_id: @certification.member_id, email: @certification.member_email)
+    @member = Member.from_certification(@certification)
   end
 end

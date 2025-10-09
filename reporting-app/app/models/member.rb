@@ -10,15 +10,20 @@ class Member
   attribute :member_id, :string
   attribute :email, :string
 
+  # We won't need this method once we have a full active record model for member
+  def self.from_certification(certification)
+    Member.new(member_id: certification.member_id, email: certification.member_email)
+  end
+
   def self.find_by_member_id(member_id)
     certification = Certification.by_member_id(member_id).last!
-    Member.new(member_id: certification.member_id, email: certification.member_email)
+    Member.from_certification(certification)
   end
 
   def self.search_by_email(email)
     certifications = Certification.find_by_member_email(email)
     certifications.map do |certification|
-      Member.new(member_id: certification.member_id, email: certification.member_email)
+      Member.from_certification(certification)
     end
   end
 
