@@ -17,33 +17,73 @@
     <span>Caseworker</span>
   </p>
 </div>
-<div class="border-top-1px border-base-lighter padding-y-3">
-  <h2 class="font-sans-xl text-semibold">Certification Details</h2>
-  <p>
-    <span class="text-bold">Member name:</span>
-    <span><%= @certification&.member_email %></span>
-  </p>
-  <p>
-    <span class="text-bold">Certification date:</span>
-    <span><%= @certification.certification_requirements&.dig("certification_date") %></span>
-  </p>
+
+<div class="usa-accordion usa-accordion--multiselectable" data-allow-multiple>
+  <h4 class="usa-accordion__heading">
+    <button
+      type="button"
+      class="usa-accordion__button"
+      aria-expanded="true"
+      aria-controls="certification-details"
+    >
+      Certification Details
+    </button>
+  </h4>
+  <div id="certification-details" class="usa-accordion__content usa-prose">
+    <p>
+      <span class="text-bold">Member name:</span>
+      <span><%= @certification&.member_email %></span>
+    </p>
+    <p>
+      <span class="text-bold">Certification date:</span>
+      <span>
+        <%=
+          # TODO: We should make certification_requirements a real model rather than just a JSON blob
+          # so we can avoid needing to parse the date string in the view
+          Date.parse(@certification.certification_requirements&.dig("certification_date")).strftime("%m/%d/%Y")
+        %>
+      </span>
+    </p>
+  </div>
 </div>
 
-<div class="padding-y-3">
-  <h2 class="font-sans-xl text-semibold">Tasks</h2>
-  <ul>
-    <% @case.tasks.each do |task| %>  
-      <li>
-        <%= link_to task.class.name.humanize, task_path(task) %>
-      </li>
+<div class="usa-accordion usa-accordion--multiselectable" data-allow-multiple>
+  <h4 class="usa-accordion__heading">
+    <button
+      type="button"
+      class="usa-accordion__button"
+      aria-expanded="false"
+      aria-controls="tasks"
+    >
+      Tasks
+    </button>
+  </h4>
+  <div id="tasks" class="usa-accordion__content usa-prose">
+    <ul>
+      <% @case.tasks.each do |task| %>  
+        <li>
+          <%= link_to task.class.name.humanize, task_path(task) %>
+        </li>
+      <% end %>
+    </ul>
+    <% if @case.tasks.empty? %>
+      <p>No tasks</p>
     <% end %>
-  </ul>
-  <% if @case.tasks.empty? %>
-    <p>No tasks</p>
-  <% end %>
+  </div>
 </div>
 
-<div class="padding-y-3">
-  <h2 class="font-sans-xl text-semibold">Ex parte data</h2>
-  <p>None</p>
+<div class="usa-accordion usa-accordion--multiselectable" data-allow-multiple>
+  <h4 class="usa-accordion__heading">
+    <button
+      type="button"
+      class="usa-accordion__button"
+      aria-expanded="false"
+      aria-controls="ex-parte-data"
+    >
+      Ex parte data
+    </button>
+  </h4>
+  <div id="ex-parte-data" class="usa-accordion__content usa-prose">
+    <p>None</p>
+  </div>
 </div>
