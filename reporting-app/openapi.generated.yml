@@ -1,493 +1,346 @@
-{
-  "components": {
-    "schemas": {
-      "CertificationCreateRequestBody": {
-        "type": "object",
-        "properties": {
-          "member_id": {
-            "type": "string",
-            "description": "An identifier for the person receiving benefits"
-          },
-          "case_number": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "An identifier for the case associated with the certification"
-          },
-          "certification_requirements": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CertificationRequirements"
-              },
-              {
-                "$ref": "#/components/schemas/CertificationRequirementParameters"
-              },
-              {
-                "$ref": "#/components/schemas/CertificationRequirementTypeParameters"
-              }
-            ]
-          },
-          "member_data": {
-            "type": [
-              "object",
-              "null"
-            ],
-            "description": "Description of beneficiary",
-            "properties": {}
-          }
-        },
-        "required": [
-          "member_id",
-          "certification_requirements"
-        ],
-        "examples": {
-          "fully_specified_certification_requirements": {
-            "value": {
-              "member_id": "123",
-              "case_number": "C-111",
-              "certification_requirements": {
-                "certification_date": "2025-09-26",
-                "lookback_period": 3,
-                "number_of_months_to_certify": 1,
-                "due_period_days": 30
-              },
-              "member_data": {
-                "contact": {
-                  "email": "john@doe.com",
-                  "phone": "+123456789"
-                }
-              }
-            }
-          },
-          "certification_type": {
-            "value": {
-              "member_id": "123",
-              "case_number": "C-111",
-              "certification_requirements": {
-                "certification_date": "2025-09-26",
-                "certification_type": "new_application"
-              },
-              "member_data": {
-                "contact": {
-                  "email": "john@doe.com",
-                  "phone": "+123456789"
-                }
-              }
-            }
-          }
-        }
-      },
-      "CertificationRequirements": {
-        "type": "object",
-        "description": "Description of certification needs",
-        "properties": {
-          "certification_date": {
-            "type": "string",
-            "format": "date",
-            "description": "The date of the certification"
-          },
-          "certification_type": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The type of certification"
-          },
-          "months_that_can_be_certified": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "date"
-            },
-            "description": "The list of months the Member can choose from"
-          },
-          "number_of_months_to_certify": {
-            "type": "integer",
-            "description": "The number of months the Member needs to certify"
-          },
-          "due_date": {
-            "type": "string",
-            "format": "date",
-            "description": "Date by which the Member must have submitted their evidence"
-          },
-          "params": {
-            "type": [
-              "object",
-              "null"
-            ],
-            "description": "Input parameters, if any.",
-            "properties": {}
-          }
-        },
-        "required": [
-          "certification_date",
-          "months_that_can_be_certified",
-          "number_of_months_to_certify",
-          "due_date"
-        ]
-      },
-      "CertificationRequirementParameters": {
-        "type": "object",
-        "properties": {
-          "certification_date": {
-            "type": "string",
-            "format": "date",
-            "description": "The date of the certification"
-          },
-          "lookback_period": {
-            "type": "integer",
-            "description": "The number of months before `certification_date` the Member can choose from"
-          },
-          "number_of_months_to_certify": {
-            "type": "integer",
-            "description": "The number of months the Member needs to certify"
-          },
-          "due_period_days": {
-            "type": "integer"
-          }
-        },
-        "required": [
-          "certification_date",
-          "lookback_period",
-          "number_of_months_to_certify",
-          "due_period_days"
-        ]
-      },
-      "CertificationRequirementTypeParameters": {
-        "type": "object",
-        "properties": {
-          "certification_date": {
-            "type": "string",
-            "format": "date",
-            "description": "The date of the certification"
-          },
-          "certification_type": {
-            "type": "string",
-            "description": "The type of certification"
-          }
-        },
-        "required": [
-          "certification_date",
-          "certification_type"
-        ]
-      },
-      "CertificationResponseBody": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "description": "Identifier for the certification record"
-          },
-          "member_id": {
-            "type": "string",
-            "description": "An identifier for the person receiving benefits"
-          },
-          "case_number": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "An identifier for the case associated with the certification"
-          },
-          "certification_requirements": {
-            "$ref": "#/components/schemas/CertificationRequirements"
-          },
-          "member_data": {
-            "type": [
-              "object",
-              "null"
-            ],
-            "description": "Description of beneficiary",
-            "properties": {}
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "member_id",
-          "created_at",
-          "updated_at"
-        ],
-        "example": {
-          "id": "63680317-0e33-40a7-8e1a-249a2f5855d9",
-          "member_id": "123",
-          "case_number": "C-111",
-          "certification_requirements": {
-            "certification_date": "2025-09-26",
-            "months_that_can_be_certified": [
-              "2025-07-01",
-              "2025-08-01",
-              "2025-09-01"
-            ],
-            "number_of_months_to_certify": 1,
-            "due_date": "2025-10-26",
-            "params": {
-              "lookback_period": 3,
-              "number_of_months_to_certify": 1,
-              "due_period_days": 30
-            }
-          },
-          "member_data": {
-            "contact": {
-              "email": "john@doe.com",
-              "phone": "+123456789"
-            }
-          },
-          "created_at": "1970-01-01T00:00:00.000Z",
-          "updated_at": "1970-01-01T00:00:00.000Z"
-        }
-      },
-      "ErrorResponseBody": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "integer"
-          },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "error": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "example": {
-          "status": 400
-        }
-      },
-      "bf2b49f733c3ee403393efcf6916e8be": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "integer"
-          },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "required": [
-          "status"
-        ]
-      },
-      "ece4f2c15f241af4536e1132d15a279a": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "status"
-        ]
-      }
-    },
-    "responses": {
-      "781b83cf0b3838ae78106ac309237aae": {
-        "description": "Created Certification.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/CertificationResponseBody"
-            }
-          }
-        }
-      },
-      "3ca06fb30a11a752619e75bff3399517": {
-        "description": "User error.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ErrorResponseBody"
-            }
-          }
-        }
-      },
-      "9067d9ccaf12f89f82d8b5c0ac78ad03": {
-        "description": "The server could not process the request due to semantic errors. Please check your input and try again.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/bf2b49f733c3ee403393efcf6916e8be"
-            }
-          }
-        }
-      },
-      "a5484d941404dd15fdaa6b8d79b2cdca": {
-        "description": "A Certification",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/CertificationResponseBody"
-            }
-          }
-        }
-      },
-      "c3bafa6c128be441333bfc31963fbe22": {
-        "description": "The requested resource could not be found.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/bf2b49f733c3ee403393efcf6916e8be"
-            }
-          }
-        }
-      },
-      "b5700262fd8300921a92c893d046adca": {
-        "description": "Response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ece4f2c15f241af4536e1132d15a279a"
-            }
-          }
-        }
-      }
-    },
-    "parameters": {
-      "49e46dd8af57e26752938ebb0d0ec979": {
-        "name": "id",
-        "in": "path",
-        "description": "Id of existing certification.",
-        "required": true,
-        "schema": {
-          "type": "string"
-        },
-        "style": "simple"
-      }
-    },
-    "requestBodies": {
-      "ef2aeb8e2655cf47b81bd23a51aec42c": {
-        "description": "The Certification data.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/CertificationCreateRequestBody"
-            },
-            "examples": {
-              "fully_specified_certification_requirements": {
-                "$ref": "#/components/schemas/CertificationCreateRequestBody/examples/fully_specified_certification_requirements"
-              },
-              "certification_type": {
-                "$ref": "#/components/schemas/CertificationCreateRequestBody/examples/certification_type"
-              }
-            }
-          }
-        },
-        "required": false
-      }
-    },
-    "securitySchemes": {},
-    "headers": {},
-    "examples": {},
-    "links": {},
-    "callbacks": {}
-  },
-  "openapi": "3.1.0",
-  "info": {
-    "title": "Community Engagement Medicaid",
-    "summary": "System for tracking and certifying community engagement requirements for Medicaid",
-    "description": "# Welcome to the Community Engagement Medicaid API\n\nThis is the OpenAPI spec for interacting with the Community Engagement Medicaid API.\n\n## Getting Started\n\nThis demo API has no required authentication at the moment.\n",
-    "termsOfService": "",
-    "contact": {
-      "name": "Nava PBC",
-      "url": "https://github.com/navapbc/community-engagement-medicaid",
-      "email": "medicaid@navapbc.com"
-    },
-    "license": {
-      "name": "Apache-2.0",
-      "url": "https://opensource.org/license/apache-2-0"
-    },
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "",
-      "description": "Current server"
-    },
-    {
-      "url": "http://medicaid.navateam.com",
-      "description": "Dev"
-    }
-  ],
-  "paths": {
-    "/api/certifications": {
-      "post": {
-        "tags": [
-          "Certifications"
-        ],
-        "summary": "Create a Certification record",
-        "description": "#",
-        "operationId": "POST__api_certifications",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/ef2aeb8e2655cf47b81bd23a51aec42c"
-        },
-        "responses": {
-          "201": {
-            "$ref": "#/components/responses/781b83cf0b3838ae78106ac309237aae"
-          },
-          "400": {
-            "$ref": "#/components/responses/3ca06fb30a11a752619e75bff3399517"
-          },
-          "422": {
-            "$ref": "#/components/responses/9067d9ccaf12f89f82d8b5c0ac78ad03"
-          }
-        }
-      }
-    },
-    "/api/certifications/{id}": {
-      "get": {
-        "tags": [
-          "Certifications"
-        ],
-        "summary": "Retrieve a Certification record",
-        "description": "#",
-        "operationId": "GET__api_certifications_{id}",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/49e46dd8af57e26752938ebb0d0ec979"
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/a5484d941404dd15fdaa6b8d79b2cdca"
-          },
-          "404": {
-            "$ref": "#/components/responses/c3bafa6c128be441333bfc31963fbe22"
-          }
-        }
-      }
-    },
-    "/api/health": {
-      "get": {
-        "tags": [
-          "Healthcheck"
-        ],
-        "summary": "Check service health",
-        "description": "#",
-        "operationId": "GET__api_health",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/b5700262fd8300921a92c893d046adca"
-          }
-        }
-      }
-    }
-  }
-}
+---
+components:
+  schemas:
+    CertificationCreateRequestBody:
+      type: object
+      properties:
+        member_id:
+          type: string
+          description: An identifier for the person receiving benefits
+        case_number:
+          type:
+          - string
+          - 'null'
+          description: An identifier for the case associated with the certification
+        certification_requirements:
+          oneOf:
+          - "$ref": "#/components/schemas/CertificationRequirements"
+          - "$ref": "#/components/schemas/CertificationRequirementParameters"
+          - "$ref": "#/components/schemas/CertificationRequirementTypeParameters"
+        member_data:
+          type:
+          - object
+          - 'null'
+          description: Description of beneficiary
+          properties: {}
+      required:
+      - member_id
+      - certification_requirements
+      examples:
+        fully_specified_certification_requirements:
+          value:
+            member_id: '123'
+            case_number: C-111
+            certification_requirements:
+              certification_date: '2025-09-26'
+              lookback_period: 3
+              number_of_months_to_certify: 1
+              due_period_days: 30
+            member_data:
+              contact:
+                email: john@doe.com
+                phone: "+123456789"
+        certification_type:
+          value:
+            member_id: '123'
+            case_number: C-111
+            certification_requirements:
+              certification_date: '2025-09-26'
+              certification_type: new_application
+            member_data:
+              contact:
+                email: john@doe.com
+                phone: "+123456789"
+    CertificationRequirements:
+      type: object
+      description: Description of certification needs
+      properties:
+        certification_date:
+          type: string
+          format: date
+          description: The date of the certification
+        certification_type:
+          type:
+          - string
+          - 'null'
+          description: The type of certification
+        months_that_can_be_certified:
+          type: array
+          items:
+            type: string
+            format: date
+          description: The list of months the Member can choose from
+        number_of_months_to_certify:
+          type: integer
+          description: The number of months the Member needs to certify
+        due_date:
+          type: string
+          format: date
+          description: Date by which the Member must have submitted their evidence
+        params:
+          type:
+          - object
+          - 'null'
+          description: Input parameters, if any.
+          properties: {}
+      required:
+      - certification_date
+      - months_that_can_be_certified
+      - number_of_months_to_certify
+      - due_date
+    CertificationRequirementParameters:
+      type: object
+      properties:
+        certification_date:
+          type: string
+          format: date
+          description: The date of the certification
+        lookback_period:
+          type: integer
+          description: The number of months before `certification_date` the Member
+            can choose from
+        number_of_months_to_certify:
+          type: integer
+          description: The number of months the Member needs to certify
+        due_period_days:
+          type: integer
+      required:
+      - certification_date
+      - lookback_period
+      - number_of_months_to_certify
+      - due_period_days
+    CertificationRequirementTypeParameters:
+      type: object
+      properties:
+        certification_date:
+          type: string
+          format: date
+          description: The date of the certification
+        certification_type:
+          type: string
+          description: The type of certification
+      required:
+      - certification_date
+      - certification_type
+    CertificationResponseBody:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier for the certification record
+        member_id:
+          type: string
+          description: An identifier for the person receiving benefits
+        case_number:
+          type:
+          - string
+          - 'null'
+          description: An identifier for the case associated with the certification
+        certification_requirements:
+          "$ref": "#/components/schemas/CertificationRequirements"
+        member_data:
+          type:
+          - object
+          - 'null'
+          description: Description of beneficiary
+          properties: {}
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - member_id
+      - created_at
+      - updated_at
+      example:
+        id: 63680317-0e33-40a7-8e1a-249a2f5855d9
+        member_id: '123'
+        case_number: C-111
+        certification_requirements:
+          certification_date: '2025-09-26'
+          months_that_can_be_certified:
+          - '2025-07-01'
+          - '2025-08-01'
+          - '2025-09-01'
+          number_of_months_to_certify: 1
+          due_date: '2025-10-26'
+          params:
+            lookback_period: 3
+            number_of_months_to_certify: 1
+            due_period_days: 30
+        member_data:
+          contact:
+            email: john@doe.com
+            phone: "+123456789"
+        created_at: '1970-01-01T00:00:00.000Z'
+        updated_at: '1970-01-01T00:00:00.000Z'
+    ErrorResponseBody:
+      type: object
+      properties:
+        status:
+          type: integer
+        errors:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+      required:
+      - status
+      example:
+        status: 400
+    bf2b49f733c3ee403393efcf6916e8be:
+      type: object
+      properties:
+        status:
+          type: integer
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+    ece4f2c15f241af4536e1132d15a279a:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+      - status
+  responses:
+    a70bfd4382cdbfa1478f2fc298976f2c:
+      description: Created Certification.
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/CertificationResponseBody"
+    3822b85a3ea0777801c3b15751b16fc1:
+      description: User error.
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/ErrorResponseBody"
+    310032d18e17cd87119594b3c75ed3cb:
+      description: The server could not process the request due to semantic errors.
+        Please check your input and try again.
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/bf2b49f733c3ee403393efcf6916e8be"
+    f659a5de5a66ed2bf019c495282c77ca:
+      description: A Certification
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/CertificationResponseBody"
+    2d177947a0c0624c93f592f49071b7ba:
+      description: The requested resource could not be found.
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/bf2b49f733c3ee403393efcf6916e8be"
+    35fd74d60d369c6ece2343989010c159:
+      description: Response
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/ece4f2c15f241af4536e1132d15a279a"
+  parameters:
+    49e46dd8af57e26752938ebb0d0ec979:
+      name: id
+      in: path
+      description: Id of existing certification.
+      required: true
+      schema:
+        type: string
+      style: simple
+  requestBodies:
+    37719771a4e4c943b4a643c43e19c5d1:
+      description: The Certification data.
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/CertificationCreateRequestBody"
+          examples:
+            fully_specified_certification_requirements:
+              "$ref": "#/components/schemas/CertificationCreateRequestBody/examples/fully_specified_certification_requirements"
+            certification_type:
+              "$ref": "#/components/schemas/CertificationCreateRequestBody/examples/certification_type"
+      required: false
+  securitySchemes: {}
+  headers: {}
+  examples: {}
+  links: {}
+  callbacks: {}
+openapi: 3.1.0
+info:
+  title: Community Engagement Medicaid
+  summary: System for tracking and certifying community engagement requirements for
+    Medicaid
+  description: |
+    # Welcome to the Community Engagement Medicaid API
+
+    This is the OpenAPI spec for interacting with the Community Engagement Medicaid API.
+
+    ## Getting Started
+
+    This demo API has no required authentication at the moment.
+  termsOfService: ''
+  contact:
+    name: Nava PBC
+    url: https://github.com/navapbc/community-engagement-medicaid
+    email: medicaid@navapbc.com
+  license:
+    name: Apache-2.0
+    url: https://opensource.org/license/apache-2-0
+  version: 1.0.0
+servers:
+- url: ''
+  description: Current server
+- url: http://medicaid.navateam.com
+  description: Dev
+paths:
+  "/api/certifications":
+    post:
+      tags:
+      - Certifications
+      summary: Create a Certification record
+      description: "#"
+      operationId: POST__api_certifications
+      requestBody:
+        "$ref": "#/components/requestBodies/37719771a4e4c943b4a643c43e19c5d1"
+      responses:
+        '201':
+          "$ref": "#/components/responses/a70bfd4382cdbfa1478f2fc298976f2c"
+        '400':
+          "$ref": "#/components/responses/3822b85a3ea0777801c3b15751b16fc1"
+        '422':
+          "$ref": "#/components/responses/310032d18e17cd87119594b3c75ed3cb"
+  "/api/certifications/{id}":
+    get:
+      tags:
+      - Certifications
+      summary: Retrieve a Certification record
+      description: "#"
+      operationId: GET__api_certifications_{id}
+      parameters:
+      - "$ref": "#/components/parameters/49e46dd8af57e26752938ebb0d0ec979"
+      responses:
+        '200':
+          "$ref": "#/components/responses/f659a5de5a66ed2bf019c495282c77ca"
+        '404':
+          "$ref": "#/components/responses/2d177947a0c0624c93f592f49071b7ba"
+  "/api/health":
+    get:
+      tags:
+      - Healthcheck
+      summary: Check service health
+      description: "#"
+      operationId: GET__api_health
+      responses:
+        '200':
+          "$ref": "#/components/responses/35fd74d60d369c6ece2343989010c159"
