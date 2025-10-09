@@ -18,8 +18,9 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
   include Warden::Test::Helpers
 
   let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
-
   let(:other_user) { User.create!(email: "test-other@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
+  let(:certification) { create(:certification) }
+  let(:certification_case) { create(:certification_case, certification: certification) }
 
   # This should return the minimal set of attributes required to create a valid
   # ActivityReportApplicationForm. As you add validations to ActivityReportApplicationForm, be sure to
@@ -33,7 +34,8 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
   let(:valid_db_attributes) do
     valid_request_attributes.merge!(
       {
-        user_id: user.id
+        user_id: user.id,
+        certification_case_id: certification_case.id
       }
     )
   end
@@ -78,7 +80,7 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
 
     it "creates a new ActivityReportApplicationForm" do
       expect {
-        get new_activity_report_application_form_url
+        get new_activity_report_application_form_url(certification_case_id: certification_case.id)
       }.to change(ActivityReportApplicationForm, :count).by(1)
     end
 
@@ -88,7 +90,7 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
       end
 
       it "renders a successful response" do
-        get new_activity_report_application_form_url
+        get new_activity_report_application_form_url(certification_case_id: certification_case.id)
         expect(response).to be_successful
       end
     end
@@ -103,7 +105,7 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
       end
 
       it "redirects to the income verification service" do
-        get new_activity_report_application_form_url
+        get new_activity_report_application_form_url(certification_case_id: certification_case.id)
         expect(response).to redirect_to("https://ivaas.gov/en/cbv/entry?token=dummy-token")
       end
     end

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class CertificationCasesController < StaffController
-  before_action :set_certification_elements, only: %i[ show tasks documents notes ]
+  before_action :set_case, only: %i[ show tasks documents notes ]
+  before_action :set_certification, only: %i[ show tasks documents notes ]
 
   def index
     @cases = CertificationCase.all
@@ -33,8 +34,11 @@ class CertificationCasesController < StaffController
 
   private
 
-  def set_certification_elements
+  def set_case
     @case = CertificationCase.find(params[:id])
+  end
+
+  def set_certification
     @certification = Certification.find(@case.certification_id)
     @case.certification = @certification
     @member = Member.from_certification(@certification)

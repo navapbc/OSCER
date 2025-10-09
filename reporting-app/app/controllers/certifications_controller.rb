@@ -2,6 +2,7 @@
 
 class CertificationsController < StaffController
   before_action :set_certification, only: %i[ show update ]
+  before_action :set_activity_report_application_forms, only: %i[ show create update ]
 
   # GET /certifications
   # GET /certifications.json
@@ -44,9 +45,12 @@ class CertificationsController < StaffController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_certification
       @certification = authorize Certification.find(params[:id])
+    end
+
+    def set_activity_report_application_forms
+      @activity_report_application_forms = ActivityReportApplicationForm.where(certification_id: @certification&.id)
     end
 
     def certification_service
