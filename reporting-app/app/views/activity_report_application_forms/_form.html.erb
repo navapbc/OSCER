@@ -3,20 +3,11 @@
     TODO: Add ability to select multiple months
   </p>
 
-  <% current_selection = activity_report_application_form.reporting_periods&.first %>
-  <% selected_value = current_selection ? { year: current_selection.year, month: current_selection.month }.to_json : nil %>
-
-  <%= f.select :reporting_periods,
+  <%= f.select :reporting_period,
     6.times.map { |i|
       date = (Date.today - i.months).beginning_of_month
-      # TODO: Update strata-sdk to support setting strata array attributes from date strings (e.g. "2023-01").
-      # Linear Issue: TSS-375(https://linear.app/nava-platform/issue/TSS-375/add-ability-to-set-array-attributes)
-      # Use datestring when supported: [date.strftime("%B %Y"), date.strftime("%Y-%m")]
-      hash_value = { year: date.year, month: date.month }.to_json
-      [date.strftime("%B %Y"), hash_value]
-    },
-    { prompt: "- Select -", selected: selected_value },
-    { name: "activity_report_application_form[reporting_periods][]" }
+      [date.strftime("%B %Y"), date]
+    }, { prompt: "- Select -" }
   %>
   <%= f.submit "Save", big: true %>
 <% end %>

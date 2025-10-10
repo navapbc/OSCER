@@ -7,7 +7,7 @@
   )
   certification_case = CertificationCase.find_by!(certification_id: certification.id)
   app_form = ActivityReportApplicationForm.create!(
-    reporting_periods: [ { year: Date.today.prev_month.year, month: Date.today.prev_month.month } ],
+    reporting_period: Date.today.prev_month.beginning_of_month,
     certification_case_id: certification_case.id
   )
   app_form.save!
