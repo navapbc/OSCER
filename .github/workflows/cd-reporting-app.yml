@@ -21,6 +21,7 @@ on:
         options:
           - dev
           - staging
+          - sandbox
           - prod
       version:
         required: true
