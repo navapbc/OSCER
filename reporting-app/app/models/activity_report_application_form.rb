@@ -18,9 +18,8 @@ class ActivityReportApplicationForm < Strata::ApplicationForm
 
   accepts_nested_attributes_for :activities, allow_destroy: true
 
-  # Override Strata::ApplicationForm#publish_submitted to include the case_id
-  def publish_submitted
-    kase = CertificationCase.find_by(id: certification_case_id)
-    Strata::EventManager.publish("#{self.class.name}Submitted", { case_id: kase.id })
+  # Include the case id
+  def event_payload
+    super.merge(case_id: certification_case_id)
   end
 end
