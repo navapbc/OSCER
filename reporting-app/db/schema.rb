@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_07_205341) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_09_164541) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,6 +61,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_07_205341) do
     t.datetime "submitted_at"
     t.uuid "certification_id"
     t.uuid "certification_case_id"
+    t.jsonb "reporting_periods"
     t.index ["certification_case_id"], name: "idx_on_certification_case_id_df9964575c"
     t.index ["certification_id"], name: "index_activity_report_application_forms_on_certification_id"
   end

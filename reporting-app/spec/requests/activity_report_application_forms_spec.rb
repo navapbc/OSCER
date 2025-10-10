@@ -27,7 +27,7 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
   # adjust the attributes here as well.
   let(:valid_request_attributes) do
     {
-      reporting_period: (Date.today - 1.month).beginning_of_month
+      reporting_periods: [ { year: 2025, month: 10 } ]
     }
   end
 
@@ -77,6 +77,13 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
       )
     }
     let(:mock_service) { instance_double(CMSIncomeVerificationService) }
+
+    it "redirects to the dashboard with an error if no certification case is provided" do
+      get new_activity_report_application_form_url
+      expect(response).to redirect_to(dashboard_path)
+      follow_redirect!
+      expect(response.body).to include("Cannot create activity report without a certification case")
+    end
 
     it "creates a new ActivityReportApplicationForm" do
       expect {
@@ -139,7 +146,7 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
     context "with valid parameters" do
       let(:new_attributes) {
         {
-          reporting_period: (Date.today - 3.month).beginning_of_month
+          reporting_periods: [ { year: 2025, month: 7 }.to_json ]
         }
       }
 
@@ -147,7 +154,7 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
         activity_report_application_form = ActivityReportApplicationForm.create! valid_db_attributes
         patch activity_report_application_form_url(activity_report_application_form), params: { activity_report_application_form: new_attributes }
         activity_report_application_form.reload
-        expect(activity_report_application_form.reporting_period).to eq((Date.today - 3.month).beginning_of_month)
+        expect(activity_report_application_form.reporting_periods).to eq([ Strata::YearMonth.new(year: 2025, month: 7) ])
       end
 
       it "does not update the requested activity_report_application_form if non-owning user" do
