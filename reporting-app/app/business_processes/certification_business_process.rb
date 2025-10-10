@@ -10,27 +10,22 @@ class CertificationBusinessProcess < Strata::BusinessProcess
 
   staff_task("review_activity_report", ReviewActivityReportTask)
   system_process("activity_report_task_approved", ->(kase) {
-    kase.handle_review_activity_report_task_completed("approved")
+    kase.accept_activity_report
   })
   system_process("activity_report_task_denied", ->(kase) {
-    kase.handle_review_activity_report_task_completed("denied")
-  })
-  system_process("activity_report_notification", ->(kase) {
-    # Send notification to user
-    Strata::EventManager.publish("ActivityReportNotificationSent", { case_id: kase.id })
+    kase.deny_activity_report
   })
 
   # define start step
-  start("certification_created", on: "CertificationCreated") do |event|
+  start("report_activities", on: "CertificationCreated") do |event|
     CertificationCase.new(certification_id: event[:payload][:certification_id])
   end
 
   # define transitions
   transition("activity_report_submitted", "ActivityReportApplicationFormSubmitted", "review_activity_report")
-  transition("certification_created", "ActivityReportApplicationFormSubmitted", "review_activity_report")
+  transition("report_activities", "ActivityReportApplicationFormSubmitted", "review_activity_report")
   transition("review_activity_report", "ReviewActivityReportTaskApproved", "activity_report_task_approved")
   transition("review_activity_report", "ReviewActivityReportTaskDenied", "activity_report_task_denied")
   transition("activity_report_task_approved", "ActivityReportStatusUpdated", "activity_report_notification")
   transition("activity_report_task_denied", "ActivityReportStatusUpdated", "activity_report_notification")
-  transition("activity_report_notification", "ActivityReportNotificationSent", "end") # This is not really the end
 end
