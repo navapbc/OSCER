@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_09_175414) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_10_203944) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -98,15 +98,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_09_175414) do
     t.uuid "certification_case_id"
     t.index ["certification_case_id"], name: "index_exemption_application_forms_on_certification_case_id"
     t.index ["certification_id"], name: "index_exemption_application_forms_on_certification_id"
-  end
-
-  create_table "exemption_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "application_form_id"
-    t.integer "status"
-    t.string "business_process_current_step"
-    t.jsonb "facts"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "strata_tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
