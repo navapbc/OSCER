@@ -13,7 +13,8 @@ class CertificationCase < Strata::Case
   # dependencies between the aggregates at the database layer
   attr_accessor :certification
 
-  store_accessor :facts, :activity_report_approval_status, :activity_report_approval_status_updated_at
+  store_accessor :facts, :activity_report_approval_status, :activity_report_approval_status_updated_at,
+    :exemption_request_approval_status, :exemption_request_approval_status_updated_at
 
   def accept_activity_report
     self.activity_report_approval_status = "approved"

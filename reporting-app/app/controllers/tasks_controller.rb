@@ -5,6 +5,6 @@ class TasksController < Strata::TasksController
 
   def set_application_form
     @application_form = ActivityReportApplicationForm.find_by(certification_case_id: @case.id) ||
-                        ExemptionApplicationForm.find_by(id: @case.application_form_id)
+                        ExemptionApplicationForm.find_by(certification_case_id: @case.id)
   end
 end
