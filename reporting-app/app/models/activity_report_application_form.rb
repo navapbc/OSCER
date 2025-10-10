@@ -4,10 +4,6 @@ class ActivityReportApplicationForm < Strata::ApplicationForm
   belongs_to :certification, optional: true
   has_many :activities, strict_loading: true, autosave: true, dependent: :destroy
 
-  # TODO: Remove ignored_columns and the reporting_period column after next deploy
-  # This is to support the migration from a single reporting_period to multiple reporting_periods
-  self.ignored_columns = %w[ reporting_period ]
-
   strata_attribute :reporting_periods, :year_month, array: true
 
   def activities_by_id
