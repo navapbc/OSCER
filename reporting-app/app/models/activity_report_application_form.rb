@@ -21,4 +21,9 @@ class ActivityReportApplicationForm < Strata::ApplicationForm
   default_scope { includes(:activities, :certification) }
 
   accepts_nested_attributes_for :activities, allow_destroy: true
+
+  # Include the case id
+  def event_payload
+    super.merge(case_id: certification_case_id)
+  end
 end

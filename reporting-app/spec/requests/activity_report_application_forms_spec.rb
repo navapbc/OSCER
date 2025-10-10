@@ -200,11 +200,11 @@ RSpec.describe "/dashboard/activity_report_application_forms", type: :request do
       expect(response).to redirect_to(activity_report_application_form_url(application_form))
     end
 
-    it "sets the current step of the case to 'review_report'" do
+    it "sets the current step of the case to 'review_activity_report'" do
       post submit_activity_report_application_form_url(application_form)
 
-      kase = ActivityReportCase.find_by(application_form_id: application_form.id)
-      expect(kase.business_process_instance.current_step).to eq("review_report")
+      kase = CertificationCase.find_by(id: application_form.certification_case_id)
+      expect(kase.business_process_instance.current_step).to eq("review_activity_report")
     end
 
     it "errors if not owning user" do
