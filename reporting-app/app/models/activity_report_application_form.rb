@@ -4,7 +4,11 @@ class ActivityReportApplicationForm < Strata::ApplicationForm
   belongs_to :certification, optional: true
   has_many :activities, strict_loading: true, autosave: true, dependent: :destroy
 
-  strata_attribute :reporting_period, :date
+  # TODO: Remove ignored_columns and the reporting_period column after next deploy
+  # This is to support the migration from a single reporting_period to multiple reporting_periods
+  self.ignored_columns = %w[ reporting_period ]
+
+  strata_attribute :reporting_periods, :year_month, array: true
 
   def activities_by_id
     @activities_by_id ||= activities.index_by(&:id)
@@ -18,9 +22,8 @@ class ActivityReportApplicationForm < Strata::ApplicationForm
 
   accepts_nested_attributes_for :activities, allow_destroy: true
 
-  # Override Strata::ApplicationForm#publish_submitted to include the case_id
-  def publish_submitted
-    kase = CertificationCase.find_by(id: certification_case_id)
-    Strata::EventManager.publish("#{self.class.name}Submitted", { case_id: kase.id })
+  # Include the case id
+  def event_payload
+    super.merge(case_id: certification_case_id)
   end
 end

@@ -8,6 +8,21 @@ en:
     index:
       title: "Certification Cases"
     show:
-      title: "Details"
+      assigned_to: "Assigned to:"
+      caseworker: "Caseworker"
+      certification_date: "Certification date:"
+      certification_details: "Certification Details"
+      certification_due_date: "Certification due date:"
+      ex_parte_data: "Ex parte data"
+      lookback_period: "Lookback period:"
+      member_name: "Member name:"
+      missing: "Missing"
+      no_tasks: "No tasks"
+      none: "None"
+      number_of_months_to_certify: "Number of months to certify:"
+      status: "Status:"
+      step: "Step:"
+      tasks: "Tasks"
+      title: "Case: %{case_number}"
     notes:
       title: "Notes"

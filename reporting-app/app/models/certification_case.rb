@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 class CertificationCase < Strata::Case
+  # The following attributes are inherited from Strata::Case
+  # attribute :certification_id, :uuid
+  # attribute :status, :integer
+  # enum :status, open: 0, closed: 1
+  # attribute :business_process_current_step, :string
+  # attribute :facts, :jsonb
+
   # Don't add an ActiveRecord association since Certification
   # is a separate aggregate root and we don't want to add
   # dependencies between the aggregates at the database layer
@@ -8,10 +15,16 @@ class CertificationCase < Strata::Case
 
   store_accessor :facts, :activity_report_approval_status, :activity_report_approval_status_updated_at
 
-  def handle_review_activity_report_task_completed(status)
-    raise "Invalid status" unless [ "approved", "denied" ].include?(status)
+  def accept_activity_report
+    self.activity_report_approval_status = "approved"
+    self.activity_report_approval_status_updated_at = Time.current
+    save!
 
-    self.activity_report_approval_status = status
+    Strata::EventManager.publish("ActivityReportStatusUpdated", { case_id: id })
+  end
+
+  def deny_activity_report
+    self.activity_report_approval_status = "denied"
     self.activity_report_approval_status_updated_at = Time.current
     save!
 
