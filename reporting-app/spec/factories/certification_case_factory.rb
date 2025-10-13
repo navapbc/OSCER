@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :certification_case do
-    business_process_current_step { "review_certification" }
+    business_process_current_step { "report_activities" }
 
     initialize_with {
       certification = create(:certification)

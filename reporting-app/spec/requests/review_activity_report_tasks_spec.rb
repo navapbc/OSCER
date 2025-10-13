@@ -6,7 +6,7 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
   include Warden::Test::Helpers
 
   let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
-  let(:kase) { create(:activity_report_case) }
+  let(:kase) { create(:certification_case) }
   let(:task) { create(:review_activity_report_task, case: kase) }
 
   before do
