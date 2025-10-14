@@ -14,10 +14,6 @@ class ExemptionApplicationFormsController < ApplicationController
   # GET /exemption_application_forms/start
   def start
     @certification_case_id = params[:certification_case_id]
-
-    unless @certification_case_id
-      redirect_to dashboard_path, alert: "Certification case required"
-    end
   end
 
   # GET /exemption_application_forms/new
