@@ -2,5 +2,21 @@
   task: @task,
   assigned_user_display_text: @assignee.try(:email) || "N/A",
   application_form: @application_form,
-  kase: @case
+  kase: @case,
+  breadcrumbs: [
+    {
+    text: t("strata.tasks.breadcrumbs.home"),
+    link: staff_path
+    },
+    {
+      text: @member.email || "N/A"
+    },
+    {
+      text: @case.id,
+      link: certification_case_path(@case)
+    },
+    {
+      text: t("tasks.types.#{@task.type.underscore}")
+    }
+  ]
 } %>
