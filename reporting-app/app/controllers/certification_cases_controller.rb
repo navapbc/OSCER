@@ -5,16 +5,11 @@ class CertificationCasesController < StaffController
   before_action :set_certification, only: %i[ show tasks documents notes ]
 
   def index
-    @cases = CertificationCase.all
-    certification_ids = @cases.map(&:certification_id)
-    certifications_by_id = Certification.where(id: certification_ids).index_by(&:id)
-    @cases.each do |kase|
-      kase.certification = certifications_by_id[kase.certification_id]
-    end
+    @cases = certification_service.fetch_open_cases
   end
 
   def closed
-    @cases = CertificationCase.closed
+    @cases = certification_service.fetch_closed_cases
     render :index
   end
 
@@ -31,5 +26,9 @@ class CertificationCasesController < StaffController
     @certification = Certification.find(@case.certification_id)
     @case.certification = @certification
     @member = Member.from_certification(@certification)
+  end
+
+  def certification_service
+    CertificationService.new
   end
 end
