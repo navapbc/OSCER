@@ -15,11 +15,11 @@ class CertificationService
   end
 
   def fetch_open_cases
-    hydrate_cases_with_certifications(CertificationCase.open)
+    hydrate_cases_with_certifications!(CertificationCase.open)
   end
 
   def fetch_closed_cases
-    hydrate_cases_with_certifications(CertificationCase.closed)
+    hydrate_cases_with_certifications!(CertificationCase.closed)
   end
 
   def member_user(certification)
@@ -68,7 +68,7 @@ class CertificationService
 
   private
 
-  def hydrate_cases_with_certifications(cases)
+  def hydrate_cases_with_certifications!(cases)
     certification_ids = cases.map(&:certification_id)
     certifications_by_id = Certification.where(id: certification_ids).index_by(&:id)
     cases.each do |kase|
