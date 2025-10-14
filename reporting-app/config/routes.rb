@@ -55,18 +55,6 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :exemption_cases, only: [ :index, :show ] do
-      collection do
-        get :closed
-      end
-
-      member do
-        get :tasks
-        get :documents
-        get :notes
-      end
-    end
-
     resources :tasks, only: [ :index, :show, :update ] do
       collection do
         post :pick_up_next_task

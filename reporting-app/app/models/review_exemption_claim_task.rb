@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
 class ReviewExemptionClaimTask < Strata::Task
-  # Add custom attributes and behavior here
-
-  # Example:
-  # attribute :custom_field, :string
-  # validates :custom_field, presence: true
+  enum status: { pending: 0, completed: 1, approved: 2, denied: 3 }
 end
