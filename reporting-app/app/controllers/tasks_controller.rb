@@ -6,7 +6,7 @@ class TasksController < Strata::TasksController
   def assign
     @task.assign(current_user.id)
     flash["task-message"] = "Task assigned to you."
-    redirect_to @task
+    redirect_to task_path(@task)
   end
   
   protected
