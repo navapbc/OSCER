@@ -4,15 +4,20 @@ require "rails_helper"
 
 RSpec.describe TasksController do
   describe "GET #index" do
-    let!(:user) { create(:user) }
-    let!(:case_record) { create(:certification_case) }
-    let!(:pending_task) { create(:review_activity_report_task, case: case_record, status: :pending) }
-    let!(:completed_task) { create(:review_activity_report_task, case: case_record, status: :completed) }
-    let!(:approved_task) { create(:review_activity_report_task, case: case_record, status: :approved) }
-    let!(:denied_task) { create(:review_activity_report_task, case: case_record, status: :denied) }
+    let(:user) { create(:user) }
+    let(:case_record) { create(:certification_case) }
+    let(:pending_task) { create(:review_activity_report_task, case: case_record, status: :pending) }
+    let(:completed_task) { create(:review_activity_report_task, case: case_record, status: :completed) }
+    let(:approved_task) { create(:review_activity_report_task, case: case_record, status: :approved) }
+    let(:denied_task) { create(:review_activity_report_task, case: case_record, status: :denied) }
 
     before do
       sign_in user
+      case_record
+      pending_task
+      completed_task
+      approved_task
+      denied_task
     end
 
     context "when filtering by pending status" do
