@@ -8,7 +8,7 @@ class TasksController < Strata::TasksController
         ? tasks.without_status(:pending) \
         : tasks.with_status(:pending)
   end
-  
+
   private
 
   def set_application_form

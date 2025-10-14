@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe TasksController do
   describe "GET #index" do
     let!(:user) { create(:user) }
-    let!(:case_record) { create(:activity_report_case) }
+    let!(:case_record) { create(:certification_case) }
     let!(:pending_task) { create(:review_activity_report_task, case: case_record, status: :pending) }
     let!(:completed_task) { create(:review_activity_report_task, case: case_record, status: :completed) }
     let!(:approved_task) { create(:review_activity_report_task, case: case_record, status: :approved) }
