@@ -8,5 +8,11 @@ FactoryBot.define do
       certification = create(:certification)
       CertificationCase.find_or_create_by!(certification_id: certification.id)
     }
+
+    trait :with_closed_status do
+      after(:build) do |case_obj|
+        case_obj.close
+      end
+    end
   end
 end
