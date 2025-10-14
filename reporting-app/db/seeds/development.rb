@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 
+3.times do
+  User.create!(
+    email: "#{Faker::Name.unique.first_name}.#{Faker::Name.unique.last_name}@example.com",
+    provider: "mock",
+    uid: SecureRandom.uuid
+  )
+end
+
 5.times do |index|
   certification = Certification.create!(
     member_id: "1234567890",
@@ -8,7 +16,8 @@
   certification_case = CertificationCase.find_by!(certification_id: certification.id)
   app_form = ActivityReportApplicationForm.create!(
     reporting_periods: [ { year: Date.today.prev_month.year, month: Date.today.prev_month.month } ],
-    certification_case_id: certification_case.id
+    certification_case_id: certification_case.id,
+    user_id: User.all.sample.id
   )
   app_form.save!
 
@@ -58,7 +67,6 @@
     ]
   )
   app_form.save!
-
 
   app_form.submit_application
 end
