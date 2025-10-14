@@ -7,7 +7,7 @@ class TasksController < Strata::TasksController
     flash["task-message"] = "Task assigned to you."
     redirect_to task_path(@task)
   end
-  
+
   protected
 
   def filter_tasks_by_status(tasks, status)
