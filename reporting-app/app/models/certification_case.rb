@@ -13,21 +13,36 @@ class CertificationCase < Strata::Case
   # dependencies between the aggregates at the database layer
   attr_accessor :certification
 
-  store_accessor :facts, :activity_report_approval_status, :activity_report_approval_status_updated_at
+  store_accessor :facts, :activity_report_approval_status, :activity_report_approval_status_updated_at,
+    :exemption_request_approval_status, :exemption_request_approval_status_updated_at
 
   def accept_activity_report
     self.activity_report_approval_status = "approved"
     self.activity_report_approval_status_updated_at = Time.current
+    self.status = :closed
     save!
 
-    Strata::EventManager.publish("ActivityReportStatusUpdated", { case_id: id })
+    Strata::EventManager.publish("DeterminedRequirementsMet", { case_id: id })
   end
 
   def deny_activity_report
     self.activity_report_approval_status = "denied"
     self.activity_report_approval_status_updated_at = Time.current
     save!
+  end
 
-    Strata::EventManager.publish("ActivityReportStatusUpdated", { case_id: id })
+  def accept_exemption_request
+    self.exemption_request_approval_status = "approved"
+    self.exemption_request_approval_status_updated_at = Time.current
+    self.status = :closed
+    save!
+
+    Strata::EventManager.publish("DeterminedRequirementsMet", { case_id: id })
+  end
+
+  def deny_exemption_request
+    self.exemption_request_approval_status = "denied"
+    self.exemption_request_approval_status_updated_at = Time.current
+    save!
   end
 end
