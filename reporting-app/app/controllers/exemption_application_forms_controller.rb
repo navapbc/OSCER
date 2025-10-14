@@ -2,7 +2,7 @@
 
 class ExemptionApplicationFormsController < ApplicationController
   before_action :set_exemption_application_form, only: %i[ show edit update destroy review submit documents upload_documents ]
-  before_action :set_exemption_case, only: %i[ show ]
+  before_action :set_certification_case, only: %i[ show ]
 
   # GET /exemption_application_forms/1 or /exemption_application_forms/1.json
   def show
@@ -100,12 +100,10 @@ class ExemptionApplicationFormsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_exemption_application_form
       @exemption_application_form = authorize ExemptionApplicationForm.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def exemption_application_form_params
       params.require(:exemption_application_form).permit(
         :exemption_type,
@@ -114,7 +112,7 @@ class ExemptionApplicationFormsController < ApplicationController
         )
     end
 
-    def set_exemption_case
-      @exemption_case = ExemptionCase.find_by(application_form_id: @exemption_application_form.id)
+    def set_certification_case
+      @certification_case = CertificationCase.find_by(id: @exemption_application_form.certification_case_id)
     end
 end

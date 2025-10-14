@@ -11,8 +11,11 @@ locals {
         hosted_zone = "medicaid.navateam.com"
 
         certificate_configs = {
-          # Example certificate configuration for a certificate that is managed by the project
           "medicaid.navateam.com" = {
+            source = "issued"
+          }
+
+          "dev.medicaid.navateam.com" = {
             source = "issued"
           }
 
