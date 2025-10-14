@@ -10,8 +10,8 @@ end
 
 5.times do |index|
   certification = Certification.create!(
-    member_id: "1234567890",
-    case_number: "1234567890"
+    member_id: Faker::Number.between(from: index * 1000, to: ((index + 1) * 1000) - 1).to_s,
+    case_number: Faker::Number.between(from: index * 1000, to: ((index + 1) * 1000) - 1).to_s
   )
   certification_case = CertificationCase.find_by!(certification_id: certification.id)
   app_form = ActivityReportApplicationForm.create!(
