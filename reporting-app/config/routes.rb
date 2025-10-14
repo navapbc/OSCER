@@ -57,7 +57,7 @@ Rails.application.routes.draw do
       end
 
       member do
-        get :assign
+        patch :assign
       end
     end
 
