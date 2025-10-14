@@ -1,6 +1,19 @@
 <%= render template: 'strata/tasks/show', locals: {
   task: @task,
-  assigned_user_display_text: @assignee.try(:email) || link_to("Assign to me", assign_task_path(@task), method: :post, class: "usa-button"),
   application_form: @application_form,
-  kase: @case
+  kase: @case,
+  task_info: [
+    {
+      label: t("strata.tasks.show.details.status"),
+      value: t("tasks.statuses.#{@task.status}")
+    },
+    {
+      label: t("strata.tasks.show.details.due_on"),
+      value: local_en_us(@task.due_on)
+    },
+    {
+      label: @assignee.present? ? t("strata.tasks.show.details.assigned_to") : "",
+      value: @assignee.try(:email) || link_to("Assign to me", assign_task_path(@task), method: :post, class: "usa-button")
+    }
+  ]
 } %>
