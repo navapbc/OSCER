@@ -1,0 +1,30 @@
+<h1><%= t('.title') %></h1>
+
+<h2><%= t('.instructions_heading') %></h2>
+<p class="font-serif-md"><%= t('.instructions_html') %></p>
+
+<div class="usa-alert usa-alert--info margin-top-3" role="status">
+  <div class="usa-alert__body">
+    <p class="usa-alert__text">
+      <%= @information_request.staff_comment || t('.caseworker_message_placeholder') %>
+    </p>
+  </div>
+</div>
+
+<p class="margin-top-2">
+  <strong>
+    <%= t('.due_by', due_date: @information_request.due_date&.strftime('%B %d, %Y') || '<date due>') %>
+  </strong>
+</p>
+
+<% update_path = information_request_path(@information_request) %>
+<% unless Rails.application.routes.url_helpers.respond_to?(:information_request_path) %>
+  <% update_path = "/information_requests/#{@information_request.id}" %>
+<% end %>
+
+<%= form_with model: @information_request, url: update_path, method: :patch, builder: UswdsFormBuilder do |f| %>
+  <%= f.file_field :supporting_documents, label: t('.upload_documents'), multiple: true %>
+  <%= f.text_area :member_comment, label: t('.comments_label') %>
+  <%= f.submit t('.submit_button'), big: true %>
+<% end %>
+

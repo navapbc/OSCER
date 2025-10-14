@@ -14,6 +14,7 @@ class DashboardController < ApplicationController
     if @certification_case
       @exemption_application_form = ExemptionApplicationForm.where(certification_case_id: @certification_case&.id).order(created_at: :desc).first
       @activity_report_application_form = policy_scope(ActivityReportApplicationForm).where(certification_case_id: @certification_case&.id).order(created_at: :desc).first
+      @information_request = Struct.new(:due_date, :id).new(Date.today + 14.days, 1)
     end
   end
 end

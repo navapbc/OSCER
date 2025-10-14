@@ -1,0 +1,16 @@
+<div class="usa-alert usa-alert--warning margin-bottom-3" role="status">
+  <div class="usa-alert__body">
+    <h3 class="usa-alert__heading"><%= t('.heading') %></h3>
+    <p class="usa-alert__text">
+      <%= t('.intro_html', due_date: information_request.due_date&.strftime('%B %d, %Y') || '<date due>') %>
+    </p>
+    <div class="margin-top-2">
+      <% path_to_edit = "/information_requests/#{information_request.id}/edit" %>
+      <% if Rails.application.routes.url_helpers.respond_to?(:edit_information_request_path) %>
+        <% path_to_edit = edit_information_request_path(information_request) %>
+      <% end %>
+      <%= link_to t('.cta_button'), path_to_edit, class: 'usa-button display-inline-block' %>
+    </div>
+  </div>
+</div>
+
