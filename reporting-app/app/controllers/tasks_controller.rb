@@ -2,6 +2,7 @@
 
 class TasksController < Strata::TasksController
   before_action :set_member, only: [ :show ]
+  before_action :set_certification, only: [ :show ]
 
   protected
 
@@ -20,5 +21,9 @@ class TasksController < Strata::TasksController
 
   def set_member
     @member = User.find(@application_form.user_id) if @application_form.present?
+  end
+
+  def set_certification
+    @certification = @case.certification if @case.present?
   end
 end
