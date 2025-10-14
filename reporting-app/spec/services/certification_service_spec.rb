@@ -7,7 +7,7 @@ RSpec.describe CertificationService do
   let(:open_case) { create(:certification_case) }
   let(:closed_case) { create(:certification_case, :with_closed_status) }
 
-  before(:each) do
+  before do
     open_case
     closed_case
   end
