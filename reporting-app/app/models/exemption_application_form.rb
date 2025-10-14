@@ -12,4 +12,8 @@ class ExemptionApplicationForm < Strata::ApplicationForm
   default_scope { with_attached_supporting_documents }
 
   strata_attribute :exemption_type, :string
+
+  def event_payload
+    super.merge(case_id: certification_case_id)
+  end
 end

@@ -13,7 +13,6 @@ class DashboardController < ApplicationController
     @certification_case = CertificationCase.find_by(certification_id: @certification&.id)
     if @certification_case
       @exemption_application_form = ExemptionApplicationForm.where(certification_case_id: @certification_case&.id).order(created_at: :desc).first
-      @exemption_case = ExemptionCase.find_by(application_form_id: @exemption_application_form&.id)
       @activity_report_application_form = policy_scope(ActivityReportApplicationForm).where(certification_case_id: @certification_case&.id).order(created_at: :desc).first
     end
   end
