@@ -1,0 +1,7 @@
+en:
+  exemption_application_forms:
+    steps:
+      start: "Before you start"
+      exemption_type: "Exemption type"
+      documents: "Supporting documents"
+      review: "Review and submit"

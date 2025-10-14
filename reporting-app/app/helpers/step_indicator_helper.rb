@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
 module StepIndicatorHelper
-  EXEMPTION_STEPS = [
-    { key: :start, label: "Before you start" },
-    { key: :exemption_type, label: "Exemption type" },
-    { key: :documents, label: "Supporting documents" },
-    { key: :review, label: "Review and submit" }
-  ].freeze
+  # Define exemption workflow steps in order
+  EXEMPTION_STEPS = %i[start exemption_type documents review].freeze
 
+  # Renders the step indicator for the exemption workflow using Strata SDK component
+  # @param current_step_key [Symbol] The current step (e.g., :start, :exemption_type)
+  # @param options [Hash] Optional settings (e.g., type: :counters)
+  # @return [String] Rendered HTML for the step indicator
   def exemption_step_indicator(current_step_key, options = {})
-    steps = EXEMPTION_STEPS.map { |s| s[:label] }
-    current_index = EXEMPTION_STEPS.index { |s| s[:key] == current_step_key }
-    current_step = current_index ? current_index + 1 : 1
-
-    render "application/step_indicator",
-           steps: steps,
-           current_step: current_step,
-           options: options
+    render "strata/shared/step_indicator",
+           steps: EXEMPTION_STEPS,
+           current_step: current_step_key,
+           translation_scope: "exemption_application_forms.steps",
+           **options
   end
 
+  # Maps controller action names to their corresponding step
+  # @param action_name [String, Symbol] The controller action name
+  # @return [Symbol] The corresponding step key
   def current_exemption_step(action_name)
     case action_name.to_sym
     when :start
