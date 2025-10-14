@@ -9,7 +9,6 @@ class ActivityReportApplicationFormsController < ApplicationController
     submit
     destroy
   ]
-  before_action :set_activity_report_case, only: %i[ show ]
   before_action :authenticate_user!
   before_action :set_certification_case, only: %i[ new ]
   before_action :create_activity_report, only: %i[ new ]
@@ -72,13 +71,12 @@ class ActivityReportApplicationFormsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_activity_report_application_form
     @activity_report_application_form = authorize ActivityReportApplicationForm.find(params[:id])
   end
 
-  def set_activity_report_case
-    @activity_report_case = ActivityReportCase.find_by(application_form_id: @activity_report_application_form.id) if @activity_report_application_form.present?
+  def set_certification_case
+    @certification_case = CertificationCase.find_by(id: params[:certification_case_id])
   end
 
   def set_certification_case
@@ -114,12 +112,35 @@ class ActivityReportApplicationFormsController < ApplicationController
     redirect_to invitation.tokenized_url, allow_other_host: true
   end
 
-  # Only allow a list of trusted parameters through.
   def activity_report_application_form_params
-    params.require(:activity_report_application_form).permit(
+    permitted_params = params.require(:activity_report_application_form).permit(
       :employer_name,
       :minutes,
-      :reporting_period
+      reporting_periods: [],
     )
+
+    # Convert JSON strings to hash format for YearMonth
+    # TODO: Update strata-sdk to support setting strata array attributes from date strings (e.g. "2023-01").
+    # Linear Issue: TSS-375(https://linear.app/nava-platform/issue/TSS-375/add-ability-to-set-array-attributes)
+    # Remove the JSON parsing once strata-sdk supports this.
+    if permitted_params[:reporting_periods].present?
+      permitted_params[:reporting_periods] = permitted_params[:reporting_periods].filter_map do |json_string|
+        next if json_string.blank?
+
+        begin
+          date = JSON.parse(json_string).symbolize_keys
+          # Validate the structure of the parsed JSON
+          unless date[:year].is_a?(Integer) && date[:month].is_a?(Integer)
+            raise ArgumentError, "Invalid reporting period format"
+          end
+
+          date
+        rescue JSON::ParserError
+          nil # Skip invalid JSON
+        end
+      end
+    end
+
+    permitted_params
   end
 end
