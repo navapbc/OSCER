@@ -6,6 +6,7 @@ class TasksController < Strata::TasksController
   def assign
     @task.assign(current_user.id)
   end
+  
   protected
 
   def filter_tasks_by_status(tasks, status)
