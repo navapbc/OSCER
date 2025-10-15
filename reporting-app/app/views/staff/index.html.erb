@@ -11,6 +11,12 @@
     </tr>
   </thead>
   <tbody>
+    <% if @tasks.any? %>
       <%= render partial: 'task_row', collection: @tasks, as: :task %>
+    <% else %>
+      <tr>
+        <td colspan="4" class="text-center">No pending tasks</td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
