@@ -8,9 +8,11 @@ en:
       completed: "Completed"
       approved: "Approved"
       denied: "Denied"
+      on_hold: "On Hold"
     details:
       approve_button: "Approve"
       deny_button: "Deny"
+      request_for_information_button: "Request more information"
       approved_message: "Task approved!"
       denied_message: "Task denied!"
   details:

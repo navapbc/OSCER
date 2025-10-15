@@ -1,0 +1,18 @@
+<% if @information_requests.any? %>
+<div>
+  <h4><%= t("certification_cases.show.information_request_sent") %></h4>
+  <p>
+    <%= t("certification_cases.show.information_request_info") %>
+    <ul>
+      <% information_requests.each do |information_request| %>
+        <li>
+          <a href=<%= information_request_path(information_request) %>><%= information_request %></a>
+        </li>
+      <% end %>
+  </p>
+</div>
+<% else %>
+  <p><%= t("certification_cases.show.no_information_requests") %></p>
+<% end %>
+
+
