@@ -11,6 +11,7 @@ class StaffController < Strata::StaffController
     # TODO: Move to a scope in Strata::Task
     # Strata::Task.for_assignee(current_user.id)
     @tasks = Strata::Task
+      .pending
       .where(assignee_id: current_user.id)
       .order(due_on: :desc)
       .includes(:case)
