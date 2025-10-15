@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module StepIndicatorHelper
+module ExemptionApplicationFormsHelper
   # Define exemption workflow steps in order
   EXEMPTION_STEPS = %i[start exemption_type documents review].freeze
 
