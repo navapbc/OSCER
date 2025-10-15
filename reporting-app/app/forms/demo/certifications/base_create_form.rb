@@ -14,6 +14,7 @@ module Demo
       DUE_PERIOD_OPTIONS = [ 15, 30, 60 ] # in days
 
       attribute :member_email, :string
+      attribute :member_full_name, :string
       attribute :case_number, :string
 
       # TODO: add validation you can't set both certification_type and the other params?

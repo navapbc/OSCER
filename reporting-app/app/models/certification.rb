@@ -80,4 +80,10 @@ class Certification < ApplicationRecord
   def self.find_by_member_email(email)
     self.find_by_member_account_email(email).or(self.find_by_member_contact_email(email))
   end
+
+  def member_full_name
+    return unless self.member_data
+
+    self.member_data.dig("full_name")
+  end
 end
