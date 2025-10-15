@@ -65,8 +65,21 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :review_activity_report_tasks, only: [ :update ]
-    resources :review_exemption_claim_tasks, only: [ :update ]
+    resources :information_requests, controller: "information_requests", only: [ :show ]
+
+    resources :review_activity_report_tasks, only: [ :update ] do
+      member do
+        get :request_information
+        post :create_information_request
+      end
+    end
+
+    resources :review_exemption_claim_tasks, only: [ :update ] do
+      member do
+        get :request_information
+        post :create_information_request
+      end
+    end
   end
 
   get "/staff", to: "staff#index"

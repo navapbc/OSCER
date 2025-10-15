@@ -8,6 +8,7 @@ en:
       completed: "Completed"
       approved: "Approved"
       denied: "Denied"
+      on_hold: "On Hold"
     details:
       approved_message: "Task approved!"
       denied_message: "Task denied!"
