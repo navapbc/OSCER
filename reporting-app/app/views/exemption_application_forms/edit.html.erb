@@ -1,10 +1,7 @@
-<% content_for :title, "Editing exemption" %>
+<% content_for :title, t(".title") %>
 
-<%= render partial: "application/breadcrumbs", locals: { crumbs: [
-  { name: "Dashboard", url: dashboard_path },
-  ], current_name: "Edit exemption" } %>
+<%= exemption_step_indicator(:exemption_type) %>
 
-<h1>Edit exemption</h1>
+<h1><%= t(".heading") %></h1>
 
 <%= render "form", exemption_application_form: @exemption_application_form %>
-

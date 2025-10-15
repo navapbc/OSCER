@@ -21,16 +21,16 @@ module ExemptionApplicationFormsHelper
   # @return [Symbol] The corresponding step key
   def current_exemption_step(action_name)
     case action_name.to_sym
-    when :new
+    when :new, :create
       :start  # "Before you start" page
-    when :create
+    when :edit, :update
       :exemption_type
     when :documents, :upload_documents
       :documents
     when :review, :submit
       :review
     else
-      :start  # Default to first step
+      :start
     end
   end
 end
