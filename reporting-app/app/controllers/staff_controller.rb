@@ -13,8 +13,14 @@ class StaffController < Strata::StaffController
     @tasks = Strata::Task
       .pending
       .where(assignee_id: current_user.id)
-    cases = @tasks.map(&:case)
-    certification_service.hydrate_cases_with_certifications!(cases)
+
+    # TODO: This is inefficiently querying for the cases twice,
+    # but we eventually plan on separating out Case and Task into separate aggregates.
+    # Once we do that, the Task query won't automatically include the case so we can do
+    # case_ids = @tasks.map(&:case_id)
+    # certification_service.fetch_cases(case_ids)
+    case_ids = @tasks.map(&:case).map(&:id)
+    @cases_by_id = certification_service.fetch_cases(case_ids).index_by(&:id)
   end
 
   protected
