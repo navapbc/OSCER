@@ -14,6 +14,8 @@ class ReviewActivityReportTasksController < TasksController
       raise "Invalid action"
     end
 
+    @task.completed!
+
     respond_to do |format|
       format.html { redirect_to task_path(@task), notice: }
       format.json { render :show, status: :ok, location: task_path(@task) }

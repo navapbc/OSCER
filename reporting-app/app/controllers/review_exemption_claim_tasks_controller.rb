@@ -3,6 +3,7 @@
 class ReviewExemptionClaimTasksController < TasksController
   def update
     kase = @task.case
+
     if approving_action?
       kase.accept_exemption_request
       notice = t("tasks.details.approved_message")
