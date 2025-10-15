@@ -7,6 +7,17 @@ class StaffController < Strata::StaffController
   skip_after_action :verify_authorized
   skip_after_action :verify_policy_scoped
 
+  def index
+    # TODO: Move to a scope in Strata::Task
+    # Strata::Task.for_assignee(current_user.id)
+    @tasks = Strata::Task
+      .where(assignee_id: current_user.id)
+      .order(due_on: :desc)
+      .includes(:case)
+    cases = @tasks.map(&:case)
+    certification_service.hydrate_cases_with_certifications!(cases)
+  end
+
   protected
 
   def header_links
@@ -16,5 +27,11 @@ class StaffController < Strata::StaffController
   def case_classes
     # Add case classes in your application
     [ CertificationCase ]
+  end
+
+  private
+
+  def certification_service
+    CertificationService.new
   end
 end

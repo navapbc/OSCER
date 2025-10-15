@@ -1,2 +1,16 @@
-<h1>Staff portal dashboard</h1>
-Edit me in views/staff/index.html.erb
+<h1><%= t(".title") %></h1>
+
+<h2><%= t(".my_tasks") %></h2>
+<table class="usa-table usa-table--borderless width-full">
+  <thead>
+    <tr>
+      <th scope="col"><%= t(".task_type") %></th>
+      <th scope="col"><%= t(".member_name") %></th>
+      <th scope="col"><%= t(".case_number") %></th>
+      <th scope="col"><%= t(".due_on") %></th>
+    </tr>
+  </thead>
+  <tbody>
+      <%= render partial: 'task_row', collection: @tasks, as: :task %>
+  </tbody>
+</table>
