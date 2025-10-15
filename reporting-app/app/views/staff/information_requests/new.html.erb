@@ -1,0 +1,9 @@
+<h1><%= t(".title") %></h1>
+<p><<%= t(".instructions") %></p>
+<%= strata_form_with(model: @information_request, url: information_requests_path(task_id: @task.id)) do |f| %>
+  <div class="usa-form-group">
+    <%= f.text_area :staff_comment, { label: t(".label"), rows: 5 } %>
+  </div>
+  <%= link_to t(".cancel_button"), task_path(@task), class: "usa-button usa-button--outline" %>
+  <%= f.submit t(".submit_button"), class: "usa-button" %>
+<% end %>

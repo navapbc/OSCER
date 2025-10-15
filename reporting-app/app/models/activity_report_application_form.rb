@@ -6,6 +6,8 @@ class ActivityReportApplicationForm < Strata::ApplicationForm
 
   strata_attribute :reporting_periods, :year_month, array: true
 
+  scope :for_certification_case, ->(case_id) { where(certification_case_id: case_id) }
+
   def activities_by_id
     @activities_by_id ||= activities.index_by(&:id)
   end

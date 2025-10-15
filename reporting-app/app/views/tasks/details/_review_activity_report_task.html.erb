@@ -4,10 +4,4 @@
 <p><%= t(".instructions") %></p>
 
 <%= render partial: 'activity_report_application_forms/staff_activity_report', locals: { activity_report: application_form } %>
-
-<% if task.pending? %>
-  <%= strata_form_with(model: task) do |f| %>
-    <%= f.submit t("tasks.details.approve_button"), class: "usa-button--outline" %>
-    <%= f.submit t("tasks.details.deny_button"), class: "usa-button--outline" %>
-  <% end %>
-<% end %>
+<%= render partial: 'task_actions', locals: { task: task, kase: kase } %>
