@@ -1,7 +1,16 @@
-<% content_for :title, "New exemption" %>
+<% content_for :title, t(".title") %>
 
-<%= exemption_step_indicator(:exemption_type) %>
+<%= exemption_step_indicator(:start) %>
 
-<h1>New exemption</h1>
+<h1><%= t(".heading") %></h1>
+
+<p><strong><%= t(".time_estimate") %></strong></p>
+
+<ul>
+  <li><%= t(".what_you_need.item1") %></li>
+  <li><%= t(".what_you_need.item2") %></li>
+</ul>
+
+<p><%= t(".save_info") %></p>
 
 <%= render "form", exemption_application_form: @exemption_application_form %>

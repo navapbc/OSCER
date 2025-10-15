@@ -5,7 +5,7 @@ module StepIndicatorHelper
   EXEMPTION_STEPS = %i[start exemption_type documents review].freeze
 
   # Renders the step indicator for the exemption workflow using Strata SDK component
-  # @param current_step_key [Symbol] The current step (e.g., :start, :exemption_type)
+  # @param current_step_key [Symbol] The current step (e.g., :start, :exemption_type, :documents)
   # @param options [Hash] Optional settings (e.g., type: :counters)
   # @return [String] Rendered HTML for the step indicator
   def exemption_step_indicator(current_step_key, options = {})
@@ -21,16 +21,16 @@ module StepIndicatorHelper
   # @return [Symbol] The corresponding step key
   def current_exemption_step(action_name)
     case action_name.to_sym
-    when :start
-      :start
-    when :new, :create
+    when :new
+      :start  # "Before you start" page
+    when :create
       :exemption_type
     when :documents, :upload_documents
       :documents
     when :review, :submit
       :review
     else
-      :start
+      :start  # Default to first step
     end
   end
 end

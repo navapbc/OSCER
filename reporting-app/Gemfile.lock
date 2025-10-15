@@ -1,6 +1,6 @@
 GIT
   remote: https://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:x-oauth-basic@github.com/navapbc/flex-sdk.git
-  revision: dfaddb9c1e50d5ceb432d753c5d935e374fcce38
+  revision: 88f9c7806ae71e12e7057daf848288f76cd10a1f
   specs:
     strata (0.1.0)
       pundit (>= 2.5.0)
@@ -165,7 +165,7 @@ GEM
     docile (1.4.1)
     dotenv (3.1.8)
     drb (2.2.3)
-    erb (5.0.3)
+    erb (5.1.1)
     erubi (1.13.1)
     factory_bot (6.5.5)
       activesupport (>= 6.1.0)
@@ -337,7 +337,7 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     racc (1.8.1)
-    rack (3.1.17)
+    rack (3.1.18)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)

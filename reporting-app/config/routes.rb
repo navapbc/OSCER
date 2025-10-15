@@ -15,10 +15,6 @@ Rails.application.routes.draw do
   end
 
   resources :exemption_application_forms, except: [ :index ] do
-    collection do
-      get :start
-    end
-
     member do
       get :review
       post :submit
