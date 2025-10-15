@@ -1,4 +1,4 @@
-# Community Engagement Medicaid
+# Open Source Community Engagement Reporting (OSCER)
 
 <h1 align="center">
   <img width="300" src="/img/logoname-white.svg#gh-dark-mode-only" alt="infisical">
@@ -6,11 +6,6 @@
 <p align="center">
   <p align="center"><b>A comprehensive platform for managing Medicaid community engagement requirements</b>: built to help states implement and administer work requirements and exemption processes in compliance with federal regulations.</p>
 </p>
-
-<h4 align="center">
-  <a href="https://navapbc.com">Website</a> |
-  <a href="https://navapbc.com/careers">Hiring (Remote)</a>
-</h4>
 
 <h4 align="center">
   <a href="https://github.com/navapbc/community-engagement-medicaid/blob/main/LICENSE">
@@ -28,6 +23,21 @@
 </h4>
 
 <img src="/img/OSCER_github_repo.png" width="100%" alt="Dashboard" />
+
+## About the app
+
+Nava’s Open Source Community Engagement Reporting tool (OSCER) is intended to be an open-source, self-contained application that plugs into existing Medicaid systems to handle end-to-end reporting to meet H.R.1 community engagement requirements (eligibility checks, reporting, verification) without locking into proprietary platforms or brittle customizations. 
+- **Open by default:** Transparent code and approach
+- **Sidecar architecture:** Integrates with existing cloud systems with minimal and well-defined touchpoints
+- **State-owned:** Runs in state-hosted cloud environments and states retain full ownership of the deployment, configuration, and data  
+  
+## Why OSCER 
+State Medicaid programs face real constraints: 
+- Proprietary COTS platforms: Slow to change, rigid licensing and customization
+- Closed custom builds: Every update becomes a costly change order, code often isn’t yours
+- Vendor lock-in: limited code access, slower security review, no reusable improvements  
+
+OSCER is approaching this differently than other vendors with transparent code, modular integration, and an architecture designed for frequent policy change.   
 
 ## Introduction
 
