@@ -2,18 +2,20 @@
 
 class ReviewActivityReportTasksController < TasksController
   def update
-    @task.completed!
+    kase = @task.case
 
     if is_approving
-      @task.approved!
+      kase.accept_activity_report
+      notice = t("tasks.details.approved_message")
     elsif is_denying
-      @task.denied!
+      kase.deny_activity_report
+      notice = t("tasks.details.denied_message")
     else
       raise "Invalid action"
     end
 
     respond_to do |format|
-      format.html { redirect_to task_path(@task), notice: task_complete_notice_text }
+      format.html { redirect_to task_path(@task), notice: }
       format.json { render :show, status: :ok, location: task_path(@task) }
     end
   end
