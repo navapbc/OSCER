@@ -71,9 +71,9 @@ RSpec.describe "/staff", type: :request do
         get "/staff"
         # Check that the later due date appears first in the HTML
         response_body = response.body
-        task_1_position = response_body.index(task_path(review_activity_report_task))
-        task_2_position = response_body.index(task_path(review_exemption_claim_task))
-        expect(task_2_position).to be < task_1_position
+        review_activity_report_task_position = response_body.index(task_path(review_activity_report_task))
+        review_exemption_claim_task_position = response_body.index(task_path(review_exemption_claim_task))
+        expect(review_exemption_claim_task_position).to be < review_activity_report_task_position
       end
     end
 

@@ -13,7 +13,7 @@ class StaffController < Strata::StaffController
     @tasks = Strata::Task
       .pending
       .where(assignee_id: current_user.id)
-      .order(due_on: :desc)
+      .order(due_on: :asc)
       .includes(:case)
     cases = @tasks.map(&:case)
     certification_service.hydrate_cases_with_certifications!(cases)
