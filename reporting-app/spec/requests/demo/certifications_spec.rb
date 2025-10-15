@@ -49,6 +49,18 @@ RSpec.describe "/demo/certifications", type: :request do
         }.to change(Certification, :count).by(1)
       end
 
+      it "creates a new Certification with empty string certification_type" do
+        expect {
+          post demo_certifications_url,
+               params: {
+                 demo_certifications_create_form:
+                   valid_request_attributes.deep_merge(
+                     build(:certification_certification_requirement_params, :with_direct_params, certification_type: "").attributes.compact
+                   )
+               }
+        }.to change(Certification, :count).by(1)
+      end
+
       it "creates a new 'new_application' Certification" do
         expect {
           post demo_certifications_url,

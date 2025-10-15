@@ -16,7 +16,7 @@ class EnumType < ActiveModel::Type::Value
   end
 
   def assert_valid_value(value)
-    value.nil? or @options.include?(value) or
+    value.blank? or @options.include?(value) or
       raise ArgumentError, "#{value.inspect} is not valid. Expected one of: #{@options}"
   end
 
