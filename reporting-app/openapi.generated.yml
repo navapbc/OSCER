@@ -212,38 +212,44 @@ components:
       required:
       - status
   responses:
-    a70bfd4382cdbfa1478f2fc298976f2c:
+    73df50a224b8b21226f3273c40ba2cca:
       description: Created Certification.
       content:
         application/json:
           schema:
             "$ref": "#/components/schemas/CertificationResponseBody"
-    3822b85a3ea0777801c3b15751b16fc1:
+    c4fefd2153de631e96063d2c00561b75:
       description: User error.
       content:
         application/json:
           schema:
             "$ref": "#/components/schemas/ErrorResponseBody"
-    310032d18e17cd87119594b3c75ed3cb:
+    252c7b1ba4f512ca84ef27fd8a923595:
       description: The server could not process the request due to semantic errors.
         Please check your input and try again.
       content:
         application/json:
           schema:
             "$ref": "#/components/schemas/bf2b49f733c3ee403393efcf6916e8be"
-    f659a5de5a66ed2bf019c495282c77ca:
+    a6e65b069fadca7641504828064856a6:
       description: A Certification
       content:
         application/json:
           schema:
             "$ref": "#/components/schemas/CertificationResponseBody"
-    2d177947a0c0624c93f592f49071b7ba:
+    471ce6c40c81880d273bbdc61f264b52:
       description: The requested resource could not be found.
       content:
         application/json:
           schema:
             "$ref": "#/components/schemas/bf2b49f733c3ee403393efcf6916e8be"
-    35fd74d60d369c6ece2343989010c159:
+    c51bbc0cd3e11c38c8e207774897e965:
+      description: Response
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/ece4f2c15f241af4536e1132d15a279a"
+    d7e53d9f5df4cf658e73cac12eff7925:
       description: Response
       content:
         application/json:
@@ -259,7 +265,7 @@ components:
         type: string
       style: simple
   requestBodies:
-    37719771a4e4c943b4a643c43e19c5d1:
+    bbf45f4c2d571a05e21db35464e1b05a:
       description: The Certification data.
       content:
         application/json:
@@ -312,14 +318,14 @@ paths:
       description: "#"
       operationId: POST__api_certifications
       requestBody:
-        "$ref": "#/components/requestBodies/37719771a4e4c943b4a643c43e19c5d1"
+        "$ref": "#/components/requestBodies/bbf45f4c2d571a05e21db35464e1b05a"
       responses:
         '201':
-          "$ref": "#/components/responses/a70bfd4382cdbfa1478f2fc298976f2c"
+          "$ref": "#/components/responses/73df50a224b8b21226f3273c40ba2cca"
         '400':
-          "$ref": "#/components/responses/3822b85a3ea0777801c3b15751b16fc1"
+          "$ref": "#/components/responses/c4fefd2153de631e96063d2c00561b75"
         '422':
-          "$ref": "#/components/responses/310032d18e17cd87119594b3c75ed3cb"
+          "$ref": "#/components/responses/252c7b1ba4f512ca84ef27fd8a923595"
   "/api/certifications/{id}":
     get:
       tags:
@@ -331,9 +337,9 @@ paths:
       - "$ref": "#/components/parameters/49e46dd8af57e26752938ebb0d0ec979"
       responses:
         '200':
-          "$ref": "#/components/responses/f659a5de5a66ed2bf019c495282c77ca"
+          "$ref": "#/components/responses/a6e65b069fadca7641504828064856a6"
         '404':
-          "$ref": "#/components/responses/2d177947a0c0624c93f592f49071b7ba"
+          "$ref": "#/components/responses/471ce6c40c81880d273bbdc61f264b52"
   "/api/health":
     get:
       tags:
@@ -343,4 +349,6 @@ paths:
       operationId: GET__api_health
       responses:
         '200':
-          "$ref": "#/components/responses/35fd74d60d369c6ece2343989010c159"
+          "$ref": "#/components/responses/c51bbc0cd3e11c38c8e207774897e965"
+        '503':
+          "$ref": "#/components/responses/d7e53d9f5df4cf658e73cac12eff7925"
