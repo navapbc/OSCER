@@ -27,4 +27,8 @@ module "dev_config" {
   # feature_flag_overrides = {
   #   BAR = true
   # }
+
+  service_override_extra_environment_variables = {
+    ENABLE_LOOKBOOK = "true"
+  }
 }
