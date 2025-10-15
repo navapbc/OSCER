@@ -10,6 +10,12 @@ class Api::HealthcheckController < ApiController
   #       status: !String,
   #     }
   #   ]
+  # @response Response(503)
+  #   [
+  #     Hash{
+  #       status: !String,
+  #     }
+  #   ]
   def index
     is_healthy = true
 
