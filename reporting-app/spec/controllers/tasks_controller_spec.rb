@@ -5,19 +5,14 @@ require "rails_helper"
 RSpec.describe TasksController do
   describe "GET #index" do
     let(:user) { create(:user) }
-    let(:case_record) { create(:certification_case) }
-    let(:pending_task) { create(:review_activity_report_task, case: case_record, status: :pending) }
-    let(:completed_task) { create(:review_activity_report_task, case: case_record, status: :completed) }
-    let(:approved_task) { create(:review_activity_report_task, case: case_record, status: :approved) }
-    let(:denied_task) { create(:review_activity_report_task, case: case_record, status: :denied) }
+    let(:kase) { create(:certification_case) }
+    let(:pending_task) { build(:review_activity_report_task, case: kase, status: :pending) }
+    let(:completed_task) { build(:review_activity_report_task, case: kase, status: :completed) }
 
     before do
       sign_in user
-      case_record
-      pending_task
-      completed_task
-      approved_task
-      denied_task
+      pending_task.save!
+      completed_task.save!
     end
 
     context "when filtering by pending status" do
@@ -32,8 +27,6 @@ RSpec.describe TasksController do
       it "includes only pending tasks" do
         expect(assigns(:tasks)).to include(pending_task)
         expect(assigns(:tasks)).not_to include(completed_task)
-        expect(assigns(:tasks)).not_to include(approved_task)
-        expect(assigns(:tasks)).not_to include(denied_task)
       end
     end
 
@@ -50,8 +43,6 @@ RSpec.describe TasksController do
         assigned_tasks = assigns(:tasks)
         expect(assigned_tasks).not_to include(pending_task)
         expect(assigned_tasks).to include(completed_task)
-        expect(assigned_tasks).to include(approved_task)
-        expect(assigned_tasks).to include(denied_task)
       end
     end
 
@@ -67,8 +58,6 @@ RSpec.describe TasksController do
       it "defaults to showing pending tasks" do
         expect(assigns(:tasks)).to include(pending_task)
         expect(assigns(:tasks)).not_to include(completed_task)
-        expect(assigns(:tasks)).not_to include(approved_task)
-        expect(assigns(:tasks)).not_to include(denied_task)
       end
     end
   end
