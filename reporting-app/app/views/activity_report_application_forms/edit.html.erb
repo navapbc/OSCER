@@ -1,9 +1,9 @@
-<% content_for :title, "Edit activity report" %>
+<% content_for :title, "Select reporting period" %>
 
 <%= render partial: "application/breadcrumbs", locals: { crumbs: [
   { name: "Dashboard", url: dashboard_path },
-  ], current_name: "Edit activity report" } %>
+  ], current_name: "Select reporting period" } %>
 
-<h1>Edit activity report</h1>
+<h1>Select reporting period</h1>
 
 <%= render "form", activity_report_application_form: @activity_report_application_form %>

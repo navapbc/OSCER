@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails/all"
@@ -8,6 +10,8 @@ Bundler.require(*Rails.groups)
 
 module TemplateApplicationRails
   class Application < Rails::Application
+    config.generators.test_framework = :rspec
+
     # Internationalization
     I18n.available_locales = [ :"en", :"es-US" ]
     I18n.default_locale = :"en"
@@ -21,6 +25,11 @@ module TemplateApplicationRails
 
     config.time_zone = ENV["TIME_ZONE"] || "Eastern Time (US & Canada)" # Convenient for time display in local development
 
+    config.view_component.previews.paths = [ "app/previews" ]
+    config.view_component.generate.preview = true
+    config.view_component.generate.locale = true
+    config.view_component.generate.distinct_locale_files = true
+
     # Fetch authentication flow; default to cognito
     Rails.application.config.auth_adapter = ENV.fetch("AUTH_ADAPTER", "cognito")
 
@@ -29,7 +38,7 @@ module TemplateApplicationRails
     #    Requires IVAAS_API_KEY, IVAAS_BASE_URL, and IVAAS_CLIENT_AGENCY_ID env
     #    variables to be set.
     # "reporting_app" - Built in application
-    config.reporting_source = "income_verification_service"
+    config.reporting_source = "reporting_app"
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -58,8 +67,7 @@ module TemplateApplicationRails
     end
 
     config.after_initialize do
-      ActivityReportBusinessProcess.start_listening_for_events
-      ExemptionBusinessProcess.start_listening_for_events
+      CertificationBusinessProcess.start_listening_for_events
     end
 
     # Support UUID generation. This was a callout in the ActiveStorage guide

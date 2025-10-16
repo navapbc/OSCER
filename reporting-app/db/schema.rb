@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_30_205618) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_10_203944) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,32 +55,35 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_30_205618) do
   create_table "activity_report_application_forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "reporting_period"
     t.uuid "user_id"
     t.integer "status"
     t.datetime "submitted_at"
     t.uuid "certification_id"
+    t.uuid "certification_case_id"
+    t.jsonb "reporting_periods"
+    t.index ["certification_case_id"], name: "idx_on_certification_case_id_df9964575c"
     t.index ["certification_id"], name: "index_activity_report_application_forms_on_certification_id"
   end
 
-  create_table "activity_report_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "application_form_id"
+  create_table "certification_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "certification_id", null: false
     t.integer "status"
     t.string "business_process_current_step"
+    t.jsonb "facts"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "facts", default: {}
+    t.index ["certification_id"], name: "index_certification_cases_on_certification_id"
   end
 
   create_table "certifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "beneficiary_id"
+    t.text "member_id"
     t.text "case_number"
     t.jsonb "certification_requirements"
-    t.jsonb "beneficiary_data"
+    t.jsonb "member_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["beneficiary_id"], name: "index_certifications_on_beneficiary_id"
     t.index ["case_number"], name: "index_certifications_on_case_number"
+    t.index ["member_id"], name: "index_certifications_on_member_id"
   end
 
   create_table "exemption_application_forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -91,16 +94,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_30_205618) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "certification_id"
+    t.uuid "certification_case_id"
+    t.index ["certification_case_id"], name: "index_exemption_application_forms_on_certification_case_id"
     t.index ["certification_id"], name: "index_exemption_application_forms_on_certification_id"
-  end
-
-  create_table "exemption_cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "application_form_id"
-    t.integer "status"
-    t.string "business_process_current_step"
-    t.jsonb "facts"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "strata_tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -132,6 +128,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_30_205618) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "activity_report_application_forms"
+  add_foreign_key "activity_report_application_forms", "certification_cases"
   add_foreign_key "activity_report_application_forms", "certifications"
+  add_foreign_key "certification_cases", "certifications"
+  add_foreign_key "exemption_application_forms", "certification_cases"
   add_foreign_key "exemption_application_forms", "certifications"
 end

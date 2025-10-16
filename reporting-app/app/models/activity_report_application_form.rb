@@ -1,10 +1,10 @@
-class ActivityReportApplicationForm < Strata::ApplicationForm
-  # TODO: perhaps in the future not optional?
-  belongs_to :certification, optional: true
+# frozen_string_literal: true
 
+class ActivityReportApplicationForm < Strata::ApplicationForm
+  belongs_to :certification, optional: true
   has_many :activities, strict_loading: true, autosave: true, dependent: :destroy
 
-  strata_attribute :reporting_period, :date
+  strata_attribute :reporting_periods, :year_month, array: true
 
   def activities_by_id
     @activities_by_id ||= activities.index_by(&:id)
@@ -17,4 +17,9 @@ class ActivityReportApplicationForm < Strata::ApplicationForm
   default_scope { includes(:activities, :certification) }
 
   accepts_nested_attributes_for :activities, allow_destroy: true
+
+  # Include the case id
+  def event_payload
+    super.merge(case_id: certification_case_id)
+  end
 end

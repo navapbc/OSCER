@@ -1,25 +1,33 @@
+# frozen_string_literal: true
+
 class CertificationService
   def save_new(certification, current_user = nil)
-    if !certification.save
-      return false
-    end
-
-    # TODO: not sure how else to get Rails to stop complaining about
-    # :activity_report_application_forms strict loading on newly created record
-    certification.activity_report_application_forms = []
-
-    # TODO: this logic could/should be moved to an business process/event
-    # processing step
-    is_exempt = false
-    if is_exempt
-      # TODO: do something if automatically exempt
-    end
-
-    true
+    certification.save
   end
 
-  def bene_user(certification)
-    email = certification.beneficiary_email
+  def find_cases_by_member_id(member_id)
+    certifications_by_id = Certification.by_member_id(member_id).index_by(&:id)
+    certification_cases = CertificationCase.where(certification_id: certifications_by_id.keys)
+    certification_cases.each do |kase|
+      kase.certification = certifications_by_id[kase.certification_id]
+    end
+    certification_cases
+  end
+
+  def fetch_open_cases
+    hydrate_cases_with_certifications!(CertificationCase.open)
+  end
+
+  def fetch_closed_cases
+    hydrate_cases_with_certifications!(CertificationCase.closed)
+  end
+
+  def fetch_cases(case_ids)
+    hydrate_cases_with_certifications!(CertificationCase.find(case_ids))
+  end
+
+  def member_user(certification)
+    email = certification.member_email
     if not email
       return
     end
@@ -59,6 +67,16 @@ class CertificationService
         number_of_months_to_certify: 3,
         due_period_days: 30
       }
+    end
+  end
+
+  private
+
+  def hydrate_cases_with_certifications!(cases)
+    certification_ids = cases.map(&:certification_id)
+    certifications_by_id = Certification.where(id: certification_ids).index_by(&:id)
+    cases.each do |kase|
+      kase.certification = certifications_by_id[kase.certification_id]
     end
   end
 end

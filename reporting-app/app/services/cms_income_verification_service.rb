@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CMSIncomeVerificationService
   class Config < Data.define(:api_key, :base_url, :client_agency_id, :log_level)
     def self.from_env

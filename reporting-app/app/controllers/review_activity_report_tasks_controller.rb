@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ReviewActivityReportTasksController < TasksController
   def update
     @task.completed!
@@ -6,6 +8,8 @@ class ReviewActivityReportTasksController < TasksController
       @task.approved!
     elsif is_denying
       @task.denied!
+    else
+      raise "Invalid action"
     end
 
     respond_to do |format|

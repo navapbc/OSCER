@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :activity_report_application_form do
     id { SecureRandom.uuid }
     activities { [] }
+    certification_case_id { create(:certification_case, certification: create(:certification)).id }
 
     trait :with_activities do
       after(:create) do |activity_report_application_form|

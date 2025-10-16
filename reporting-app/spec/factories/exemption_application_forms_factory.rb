@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :exemption_application_form do
     exemption_type { "short_term_hardship" }
+    certification_case_id { create(:certification_case, certification: create(:certification)).id }
 
     trait :with_supporting_documents do
       after(:build) do |form|
@@ -13,10 +16,6 @@ FactoryBot.define do
 
     trait :incarceration do
       exemption_type { "incarceration" }
-    end
-
-    trait :with_certification do
-      certification { create(:certification, :with_beneficiary_data) }
     end
 
     trait :with_submitted_status do

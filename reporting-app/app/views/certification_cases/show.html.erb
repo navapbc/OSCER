@@ -1,0 +1,65 @@
+<% content_for :title, t(".title", case_number: @certification&.case_number) %>
+
+<%= render partial: "strata/shared/breadcrumbs", locals: { breadcrumbs: case_breadcrumbs(@member, @case) } %>
+
+<div class="usa-header padding-bottom-3">
+  <h1 class="font-sans-3xl text-semibold"><%= t(".title", case_number: @certification&.case_number) %></h1>
+  <p>
+    <span class="text-bold"><%= t(".status") %></span>
+    <span class="usa-tag"><%= @case.status %></span>
+  </p>
+  <p>
+    <span class="text-bold"><%= t(".step") %></span>
+    <span class="usa-tag"><%= @case.business_process_instance.current_step || t(".missing") %></span>
+  </p>
+  <p>
+    <span class="text-bold"><%= t(".assigned_to") %></span>
+    <span><%= t(".caseworker") %></span>
+  </p>
+</div>
+
+<%= render Strata::US::AccordionComponent.new(heading_tag: :h4, is_multiselectable: true) do |component| %>
+  <% component.with_heading { t(".certification_details") } %>
+  <% component.with_body do %>
+    <p>
+      <span class="text-bold"><%= t(".member_name") %></span>
+      <span><%= @certification&.member_email %></span>
+    </p>
+    <p>
+      <span class="text-bold"><%= t(".certification_date") %></span>
+      <span><%= @certification.certification_date&.strftime("%m/%d/%Y") %></span>
+      </span>
+    </p>
+    <p>
+      <span class="text-bold"><%= t(".lookback_period") %></span>
+      <span><%= @certification.lookback_period.start&.strftime("%b, %Y") %> – <%= @certification.lookback_period.end&.strftime("%b, %Y") %></span>
+    </p>
+    <p>
+      <span class="text-bold"><%= t(".number_of_months_to_certify") %></span>
+      <span><%= @certification.certification_requirements&.dig("number_of_months_to_certify") %></span>
+    </p>
+    <p>
+      <span class="text-bold"><%= t(".certification_due_date") %></span>
+      <span><%= @certification.due_date&.strftime("%m/%d/%Y") %></span>
+    </p>
+  <% end %>
+  
+  <% component.with_heading { t(".tasks") } %>
+  <% component.with_body do %>
+    <ul>
+      <% @case.tasks.each do |task| %>  
+        <li>
+          <%= link_to task.class.name.humanize, task_path(task), class: "usa-link" %>
+        </li>
+      <% end %>
+    </ul>
+    <% if @case.tasks.empty? %>
+      <p><%= t(".no_tasks") %></p>
+    <% end %>
+  <% end %>
+  
+  <% component.with_heading { t(".ex_parte_data") } %>
+  <% component.with_body do %>
+    <p><%= t(".none") %></p>
+  <% end %>
+<% end %>

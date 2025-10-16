@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class CertificationsController < StaffController
   before_action :set_certification, only: %i[ show update ]
+  before_action :set_activity_report_application_forms, only: %i[ show create update ]
 
   # GET /certifications
   # GET /certifications.json
@@ -42,9 +45,12 @@ class CertificationsController < StaffController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_certification
       @certification = authorize Certification.find(params[:id])
+    end
+
+    def set_activity_report_application_forms
+      @activity_report_application_forms = ActivityReportApplicationForm.where(certification_id: @certification&.id)
     end
 
     def certification_service
@@ -61,12 +67,12 @@ class CertificationsController < StaffController
       end
 
       cert_params.permit(
-        :beneficiary_id,
+        :member_id,
         :case_number,
         :certification_requirements,
-        :beneficiary_data,
+        :member_data,
         certification_requirements: {},
-        beneficiary_data: {}
+        member_data: {}
       ).tap do |cert_params|
         begin
           # handle HTML form input of the JSON blob as a string
@@ -75,8 +81,8 @@ class CertificationsController < StaffController
           end
 
           # handle HTML form input of the JSON blob as a string
-          if cert_params[:beneficiary_data].present? && cert_params[:beneficiary_data].is_a?(String)
-            cert_params[:beneficiary_data] = JSON.parse(cert_params[:beneficiary_data])
+          if cert_params[:member_data].present? && cert_params[:member_data].is_a?(String)
+            cert_params[:member_data] = JSON.parse(cert_params[:member_data])
           end
         rescue JSON::ParserError => e
           raise ActionController::BadRequest.new(e.message)
