@@ -22,6 +22,10 @@ class CertificationService
     hydrate_cases_with_certifications!(CertificationCase.closed)
   end
 
+  def fetch_cases(case_ids)
+    hydrate_cases_with_certifications!(CertificationCase.find(case_ids))
+  end
+
   def member_user(certification)
     email = certification.member_email
     if not email

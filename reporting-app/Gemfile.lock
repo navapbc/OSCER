@@ -1,6 +1,6 @@
 GIT
   remote: https://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:x-oauth-basic@github.com/navapbc/flex-sdk.git
-  revision: 88f9c7806ae71e12e7057daf848288f76cd10a1f
+  revision: 5189b38756886bd7d0c145a88e5fafe9a4725da3
   specs:
     strata (0.1.0)
       pundit (>= 2.5.0)
@@ -359,10 +359,6 @@ GEM
       activesupport (= 7.2.2.2)
       bundler (>= 1.15.0)
       railties (= 7.2.2.2)
-    rails-controller-testing (1.0.5)
-      actionpack (>= 5.0.1.rc1)
-      actionview (>= 5.0.1.rc1)
-      activesupport (>= 5.0.1.rc1)
     rails-dom-testing (2.3.0)
       activesupport (>= 5.0.0)
       minitest
@@ -579,7 +575,6 @@ DEPENDENCIES
   pundit (= 2.5.0)
   pundit-matchers
   rails (~> 7.2.0, >= 7.2.2.1)
-  rails-controller-testing
   rails-erd
   route_translator
   rqrcode

@@ -55,6 +55,10 @@ Rails.application.routes.draw do
       collection do
         post :pick_up_next_task
       end
+
+      member do
+        patch :assign
+      end
     end
 
     resources :review_activity_report_tasks, only: [ :update ]

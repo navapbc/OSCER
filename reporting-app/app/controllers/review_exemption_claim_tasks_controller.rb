@@ -2,18 +2,20 @@
 
 class ReviewExemptionClaimTasksController < TasksController
   def update
-    @task.completed!
+    kase = @task.case
 
     if approving_action?
-      @task.approved!
+      kase.accept_exemption_request
+      notice = t("tasks.details.approved_message")
     elsif denying_action?
-      @task.denied!
+      kase.deny_exemption_request
+      notice = t("tasks.details.denied_message")
     end
 
-    task_complete_notice_text = approving_action? ? t("tasks.details.approved_message") : t("tasks.details.denied_message")
+    @task.completed!
 
     respond_to do |format|
-      format.html { redirect_to task_path(@task), notice: task_complete_notice_text }
+      format.html { redirect_to task_path(@task), notice: }
       format.json { render :show, status: :ok, location: task_path(@task) }
     end
   end
