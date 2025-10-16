@@ -46,9 +46,10 @@ RSpec.describe "/exemption_application_forms", type: :request do
   end
 
   describe "GET /edit" do
-    it "renders a successful response" do
+    it "renders the exemption type selection page" do
       get edit_exemption_application_form_url(existing_exemption_application_form)
-      expect(response).to redirect_to(documents_exemption_application_form_path(existing_exemption_application_form))
+      expect(response).to be_successful
+      expect(response.body).to include("What type of exemption are you requesting?")
     end
   end
 
@@ -60,9 +61,9 @@ RSpec.describe "/exemption_application_forms", type: :request do
         }.to change(ExemptionApplicationForm, :count).by(1)
       end
 
-      it "redirects to the created exemption_application_form" do
+      it "redirects to the exemption type selection page" do
         post exemption_application_forms_url, params: { exemption_application_form: valid_attributes }
-        expect(response).to redirect_to(documents_exemption_application_form_path(ExemptionApplicationForm.last))
+        expect(response).to redirect_to(edit_exemption_application_form_path(ExemptionApplicationForm.last))
       end
     end
 
@@ -92,15 +93,15 @@ RSpec.describe "/exemption_application_forms", type: :request do
         expect(exemption_application_form.reload.exemption_type).to eq("incarceration")
       end
 
-      it "redirects to the exemption_application_form" do
+      it "redirects to the documents page" do
         patch exemption_application_form_url(existing_exemption_application_form), params: { exemption_application_form: new_attributes }
         existing_exemption_application_form.reload
-        expect(response).to redirect_to(exemption_application_form_url(existing_exemption_application_form))
+        expect(response).to redirect_to(documents_exemption_application_form_path(existing_exemption_application_form))
       end
     end
 
     context "with invalid parameters" do
-      it "renders a response with 422 status (i.e. to display the 'edit' template)" do
+      it "renders a response with 422 status (i.e. to display the 'exemption_type' template)" do
         patch exemption_application_form_url(existing_exemption_application_form), params: { exemption_application_form: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_content)
       end
