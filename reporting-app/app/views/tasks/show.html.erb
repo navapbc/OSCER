@@ -17,19 +17,19 @@
     }
   ],
   breadcrumbs: [
-  {
-  text: t("strata.tasks.breadcrumbs.home"),
-  link: staff_path
-  },
-  {
-  text: @member.email
-  },
-  {
-  text: @certification.case_number,
-  link: certification_case_path(@case)
-  },
-  {
-  text: t("tasks.types.#{@task.type.underscore}")
-  }
-]
+    {
+    text: t("strata.tasks.breadcrumbs.home"),
+    link: staff_path
+    },
+    {
+    text: @member.email
+    },
+    {
+    text: @certification.case_number,
+    link: certification_case_path(@case)
+    },
+    {
+    text: t("tasks.types.#{@task.type.underscore}")
+    }
+  ]
 } %>
