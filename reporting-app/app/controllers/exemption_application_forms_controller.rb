@@ -18,10 +18,7 @@ class ExemptionApplicationFormsController < ApplicationController
 
   # GET /exemption_application_forms/1/edit
   def edit
-    respond_to do |format|
-      format.html { redirect_to documents_exemption_application_form_path(@exemption_application_form) }
-      format.json { render json: @exemption_application_form.as_json }
-    end
+    render :exemption_type
   end
 
   # POST /exemption_application_forms or /exemption_application_forms.json
@@ -33,7 +30,7 @@ class ExemptionApplicationFormsController < ApplicationController
 
     respond_to do |format|
       if @exemption_application_form.save
-        format.html { redirect_to documents_exemption_application_form_path(@exemption_application_form) }
+        format.html { redirect_to edit_exemption_application_form_path(@exemption_application_form) }
         format.json { render :show, status: :created, location: @exemption_application_form }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -46,10 +43,10 @@ class ExemptionApplicationFormsController < ApplicationController
   def update
     respond_to do |format|
       if @exemption_application_form.update(exemption_application_form_params)
-        format.html { redirect_to @exemption_application_form, notice: "Exemption application form was successfully updated.", status: :see_other }
+        format.html { redirect_to documents_exemption_application_form_path(@exemption_application_form) }
         format.json { render :show, status: :ok, location: @exemption_application_form }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :exemption_type, status: :unprocessable_entity }
         format.json { render json: @exemption_application_form.errors, status: :unprocessable_entity }
       end
     end

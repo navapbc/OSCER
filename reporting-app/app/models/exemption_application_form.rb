@@ -5,7 +5,7 @@ class ExemptionApplicationForm < Strata::ApplicationForm
     short_term_hardship: "short_term_hardship",
     incarceration: "incarceration"
   }
-  validates :exemption_type, inclusion: { in: exemption_types.values }
+  validates :exemption_type, inclusion: { in: exemption_types.values }, allow_nil: true
 
   has_many_attached :supporting_documents
 
