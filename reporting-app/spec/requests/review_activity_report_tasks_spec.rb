@@ -6,7 +6,7 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
   include Warden::Test::Helpers
 
   let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
-  let(:kase) { create(:certification_case) }
+  let(:kase) { create(:certification_case, business_process_current_step: "review_activity_report") }
   let(:task) { create(:review_activity_report_task, case: kase) }
 
   before do
@@ -23,8 +23,11 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
 
       it "marks task as approved" do
         task.reload
+        kase.reload
 
-        expect(task).to be_approved
+        expect(task).to be_completed
+        expect(kase.activity_report_approval_status).to eq("approved")
+        expect(kase.business_process_instance.current_step).to eq("end")
       end
 
       it "redirects back to the task" do
@@ -37,8 +40,11 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
 
       it "marks task as denied" do
         task.reload
+        kase.reload
 
-        expect(task).to be_denied
+        expect(task).to be_completed
+        expect(kase.activity_report_approval_status).to eq("denied")
+        expect(kase).to be_closed
       end
 
       it "redirects back to the task" do
