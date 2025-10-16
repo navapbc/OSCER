@@ -16,6 +16,11 @@ class ExemptionApplicationFormsController < ApplicationController
     )
   end
 
+  # GET /exemption_application_forms/1/edit
+  def edit
+    render :exemption_type
+  end
+
   # POST /exemption_application_forms or /exemption_application_forms.json
   def create
     @exemption_application_form = ExemptionApplicationForm.new(exemption_application_form_params)

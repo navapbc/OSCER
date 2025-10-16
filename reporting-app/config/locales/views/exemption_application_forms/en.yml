@@ -14,7 +14,7 @@ en:
         item2: "Information about your situation that qualifies for an exemption"
       save_info: "If at any time you need to take a break, simply save the form. You can start again where you left off when you are ready."
       start_button: "Start"
-    edit:
+    exemption_type:
       title: "Select exemption type"
       heading: "What type of exemption are you requesting?"
     show:
