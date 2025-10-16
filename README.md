@@ -33,38 +33,7 @@
 
 ## Introduction
 
-This open-source project provides a complete solution for state Medicaid agencies to manage community engagement requirements, including:
-
-- **Activity Reporting**: OSCER (Online Self-Certification of Eligible Requirements) system for beneficiaries to report qualifying activities
-- **Exemption Management**: Streamlined process for requesting and processing exemptions from community engagement requirements
-- **Income Verification**: Integration with CMS Income Verification as a Service (IVaaS) for automated eligibility verification
-- **Case Management**: Staff tools for reviewing applications, managing tasks, and tracking compliance
-- **Multi-language Support**: Built-in internationalization with English and Spanish support
-
-## Features
-
-### For Beneficiaries
-
-- **Activity Reporting**: Easy-to-use forms for reporting qualifying community engagement activities
-- **Document Upload**: Secure document submission for verification
-- **Exemption Requests**: Simple process for requesting exemptions with supporting documentation
-- **Multi-language Support**: Available in English and Spanish
-- **Mobile-Friendly**: Responsive design works on all devices
-
-### For State Staff
-
-- **Case Management**: Comprehensive tools for reviewing and processing applications
-- **Task Management**: Automated workflow management with task assignment
-- **Document Review**: Secure access to uploaded documents and supporting materials
-- **Reporting Dashboard**: Analytics and reporting capabilities
-- **Member Search**: Advanced search and filtering capabilities
-
-### For Administrators
-
-- **User Management**: Role-based access control with AWS Cognito integration
-- **System Monitoring**: CloudWatch integration for performance monitoring
-- **Audit Trails**: Comprehensive logging and audit capabilities
-- **Feature Flags**: Dynamic feature management for controlled rollouts
+This open-source project provides a complete solution for state Medicaid agencies to manage community engagement requirements.
 
 ## Architecture
 
