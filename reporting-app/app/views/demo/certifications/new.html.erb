@@ -9,9 +9,9 @@
     <%= render partial: "strata/cases/nav_tab", locals: tab %>
   <% end %>
 </nav>
-<%= us_form_with model: @form, url: demo_certifications_path do |f| %>
+<%= strata_form_with model: @form, url: demo_certifications_path do |f| %>
   <%= f.text_field :member_email %>
-  <%= f.text_field :member_full_name %>
+  <%= f.name :member_name %>
   <%= f.text_field :case_number, label: t("certifications.case_number") %>
   <%= f.hidden_field :certification_type, value: @form.certification_type %>
   <%= f.date_picker :certification_date %>

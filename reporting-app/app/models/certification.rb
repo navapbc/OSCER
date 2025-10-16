@@ -84,6 +84,6 @@ class Certification < ApplicationRecord
   def member_full_name
     return unless self.member_data
 
-    self.member_data.dig("full_name")
+    self.member_data.dig("name", "full")
   end
 end
