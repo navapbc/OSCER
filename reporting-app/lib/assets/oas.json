@@ -1,0 +1,250 @@
+{
+  "components": {
+    "schemas": {
+      "CertificationCreateRequestBody": {
+        "type": "object",
+        "properties": {
+          "member_id": {
+            "type": "string",
+            "description": "An identifier for the person receiving benefits"
+          },
+          "case_number": {
+            "type": ["string", "null"],
+            "description": "An identifier for the case associated with the certification"
+          },
+          "certification_requirements": {
+            "oneOf": [
+              { "$ref": "#/components/schemas/CertificationRequirements" },
+              { "$ref": "#/components/schemas/CertificationRequirementParameters" },
+              { "$ref": "#/components/schemas/CertificationRequirementTypeParameters" }
+            ]
+          },
+          "member_data": {
+            "type": ["object", "null"],
+            "description": "Description of beneficiary",
+            "properties": {}
+          }
+        },
+        "required": [
+          "member_id",
+          "certification_requirements"
+        ],
+        "examples": {
+          "fully_specified_certification_requirements": {
+            "value": {
+              "member_id": "123",
+              "case_number": "C-111",
+              "certification_requirements": {
+                "certification_date": "2025-09-26",
+                "lookback_period": 3,
+                "number_of_months_to_certify": 1,
+                "due_period_days": 30
+              },
+              "member_data": {
+                "contact": {
+                  "email": "john@doe.com",
+                  "phone": "+123456789"
+                }
+              }
+            }
+          },
+          "certification_type": {
+            "value": {
+              "member_id": "123",
+              "case_number": "C-111",
+              "certification_requirements": {
+                "certification_date": "2025-09-26",
+                "certification_type": "new_application"
+              },
+              "member_data": {
+                "contact": {
+                  "email": "john@doe.com",
+                  "phone": "+123456789"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CertificationRequirements": {
+        "type": "object",
+        "description": "Description of certification needs",
+        "properties": {
+          "certification_date": {
+            "type": "string",
+            "format": "date",
+            "description": "The date of the certification"
+          },
+          "certification_type": {
+            "type": ["string", "null"],
+            "description": "The type of certification"
+          },
+          "months_that_can_be_certified": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "The list of months the Member can choose from"
+          },
+          "number_of_months_to_certify": {
+            "type": "integer",
+            "description": "The number of months the Member needs to certify"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date by which the Member must have submitted their evidence"
+          },
+          "params": {
+            "type": ["object", "null"],
+            "description": "Input parameters, if any.",
+            "properties": {}
+          }
+        },
+        "required": [
+          "certification_date",
+          "months_that_can_be_certified",
+          "number_of_months_to_certify",
+          "due_date"
+        ]
+      },
+      "CertificationRequirementParameters": {
+        "type": "object",
+        "properties": {
+          "certification_date": {
+            "type": "string",
+            "format": "date",
+            "description": "The date of the certification"
+          },
+          "lookback_period": {
+            "type": "integer",
+            "description": "The number of months before `certification_date` the Member can choose from"
+          },
+          "number_of_months_to_certify": {
+            "type": "integer",
+            "description": "The number of months the Member needs to certify"
+          },
+          "due_period_days": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "certification_date",
+          "lookback_period",
+          "number_of_months_to_certify",
+          "due_period_days"
+        ]
+      },
+      "CertificationRequirementTypeParameters": {
+        "type": "object",
+        "properties": {
+          "certification_date": {
+            "type": "string",
+            "format": "date",
+            "description": "The date of the certification"
+          },
+          "certification_type": {
+            "type": "string",
+            "description": "The type of certification"
+          }
+        },
+        "required": [
+          "certification_date",
+          "certification_type"
+        ]
+      },
+      "CertificationResponseBody": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Identifier for the certification record"
+          },
+          "member_id": {
+            "type": "string",
+            "description": "An identifier for the person receiving benefits"
+          },
+          "case_number": {
+            "type": ["string", "null"],
+            "description": "An identifier for the case associated with the certification"
+          },
+          "certification_requirements": {
+            "$ref": "#/components/schemas/CertificationRequirements"
+          },
+          "member_data": {
+            "type": ["object", "null"],
+            "description": "Description of beneficiary",
+            "properties": {}
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "member_id",
+          "created_at",
+          "updated_at"
+        ],
+        "example": {
+          "id": "63680317-0e33-40a7-8e1a-249a2f5855d9",
+          "member_id": "123",
+          "case_number": "C-111",
+          "certification_requirements": {
+            "certification_date": "2025-09-26",
+            "months_that_can_be_certified": [
+              "2025-07-01",
+              "2025-08-01",
+              "2025-09-01"
+            ],
+            "number_of_months_to_certify": 1,
+            "due_date": "2025-10-26",
+            "params": {
+              "lookback_period": 3,
+              "number_of_months_to_certify": 1,
+              "due_period_days": 30
+            }
+          },
+          "member_data": {
+            "contact": {
+              "email": "john@doe.com",
+              "phone": "+123456789"
+            }
+          },
+          "created_at": "1970-01-01T00:00:00.000Z",
+          "updated_at": "1970-01-01T00:00:00.000Z"
+        }
+      },
+      "ErrorResponseBody": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "error": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "example": {
+          "status": 400
+        }
+      }
+    }
+  }
+}

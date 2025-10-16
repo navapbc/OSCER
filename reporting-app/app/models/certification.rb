@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
+require_relative "certifications/requirements"
+
 class Certification < ApplicationRecord
   attribute :member_id, :string
   attribute :case_number, :string
 
-  attribute :certification_requirements, :jsonb
+  attribute :certification_requirements, Certifications::RequirementsType.new
   attribute :member_data, :jsonb
 
   # TODO: some of this should be required, but leaving it open at the moment
   # validates :member_id, presence: true
+  validates :certification_requirements, presence: true, on: :save
 
   # TODO: add validation for JSON columns (they should be hashes, etc)
 
