@@ -4,7 +4,7 @@ import { ActivityReportPage } from './ActivityReportPage';
 
 export class ChooseMonthsPage extends BasePage {
   get pagePath() {
-    return '/activity_report_application_forms/new';
+    return '/activity_report_application_forms/*/edit';
   }
 
   readonly reportingPeriodDropdown: Locator;

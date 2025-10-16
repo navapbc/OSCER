@@ -4,14 +4,14 @@ import { ChooseMonthsPage } from './ChooseMonthsPage';
 
 export class BeforeYouStartPage extends BasePage {
   get pagePath() {
-    return '/activity_report_application_forms/new';
+    return '/activity_report_application_forms/new?*';
   }
 
   readonly startButton: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.startButton = page.getByRole('button', { name: /Start/i });
+    this.startButton = page.getByRole('link', { name: /start/i });
   }
 
   async clickStart() {

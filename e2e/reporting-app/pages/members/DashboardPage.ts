@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from '../BasePage';
-import { ChooseMonthsPage } from './activity-reports';
+import { BeforeYouStartPage } from './activity-reports';
 
 export class DashboardPage extends BasePage {
   get pagePath() {
@@ -16,6 +16,6 @@ export class DashboardPage extends BasePage {
 
   async clickReportActivities() {
     await this.reportActivitiesButton.click();
-    return new ChooseMonthsPage(this.page).waitForURLtoMatchPagePath();
+    return new BeforeYouStartPage(this.page).waitForURLtoMatchPagePath();
   }
 }
