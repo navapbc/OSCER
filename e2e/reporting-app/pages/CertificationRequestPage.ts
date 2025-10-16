@@ -7,6 +7,8 @@ export class CertificationRequestPage extends BasePage {
   }
 
   readonly emailField: Locator;
+  readonly firstNameField: Locator;
+  readonly lastNameField: Locator;
   readonly caseNumberField: Locator;
   readonly certificationDateField: Locator;
   readonly requestCertificationButton: Locator;
@@ -14,6 +16,8 @@ export class CertificationRequestPage extends BasePage {
   constructor(page: Page) {
     super(page);
     this.emailField = page.getByLabel('Email');
+    this.firstNameField = page.getByLabel('First or given name');
+    this.lastNameField = page.getByLabel('Last or family name');
     this.caseNumberField = page.getByLabel('Case number');
     this.certificationDateField = page.getByLabel('Certification date');
     this.requestCertificationButton = page.getByRole('button', { name: /Request certification/i });
@@ -30,6 +34,8 @@ export class CertificationRequestPage extends BasePage {
     const certificationDate = today.toLocaleDateString('en-US');
 
     await this.emailField.fill(email);
+    await this.firstNameField.fill('John');
+    await this.lastNameField.fill('Doe');
     await this.caseNumberField.fill(caseNumber);
     await this.certificationDateField.fill(certificationDate);
     await this.requestCertificationButton.click();
