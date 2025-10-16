@@ -46,7 +46,7 @@ class ExemptionApplicationFormsController < ApplicationController
         format.html { redirect_to documents_exemption_application_form_path(@exemption_application_form) }
         format.json { render :show, status: :ok, location: @exemption_application_form }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :exemption_type, status: :unprocessable_entity }
         format.json { render json: @exemption_application_form.errors, status: :unprocessable_entity }
       end
     end
