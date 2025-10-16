@@ -6,7 +6,7 @@ RSpec.describe "/review_exemption_claim_tasks", type: :request do
   include Warden::Test::Helpers
 
   let(:user) { User.create!(email: "test@example.com", uid: SecureRandom.uuid, provider: "login.gov") }
-  let(:certification_case) { create(:certification_case) }
+  let(:certification_case) { create(:certification_case, business_process_current_step: "review_exemption_claim") }
   let(:task) { create(:review_exemption_claim_task, case: certification_case) }
 
   before do
@@ -23,7 +23,14 @@ RSpec.describe "/review_exemption_claim_tasks", type: :request do
 
       it "marks task as completed" do
         task.reload
-        expect(task).to be_approved
+        expect(task).to be_completed
+      end
+
+      it "marks case exemption status as approved" do
+        certification_case.reload
+        expect(certification_case.exemption_request_approval_status).to eq("approved")
+        expect(certification_case.business_process_instance.current_step).to eq("end")
+        expect(certification_case).to be_closed
       end
 
       it "redirects back to the task" do
@@ -36,7 +43,14 @@ RSpec.describe "/review_exemption_claim_tasks", type: :request do
 
       it "marks task as completed" do
         task.reload
-        expect(task).to be_denied
+        expect(task).to be_completed
+      end
+
+      it "marks case exemption status as denied" do
+        certification_case.reload
+        expect(certification_case.exemption_request_approval_status).to eq("denied")
+        expect(certification_case.business_process_instance.current_step).to eq("end")
+        expect(certification_case).to be_closed
       end
 
       it "redirects back to the task" do
