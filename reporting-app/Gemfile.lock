@@ -1,6 +1,6 @@
 GIT
   remote: https://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:x-oauth-basic@github.com/navapbc/flex-sdk.git
-  revision: 28f91fa3bc7314cd2d9f94bd0eab2e664fada16d
+  revision: b72e6e89a3f203cf3c8b78843eeb82184dc480a0
   specs:
     strata (0.1.0)
       pundit (>= 2.5.0)
