@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from '../BasePage';
-import { ChooseMonthsPage } from './ChooseMonthsPage';
+import { ChooseMonthsPage } from './activity-reports';
 
 export class DashboardPage extends BasePage {
   get pagePath() {
