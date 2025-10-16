@@ -25,16 +25,6 @@ export class SignInPage extends BasePage {
     await this.submitButton.click();
 
     // First login will always go to the MFA Preference page.
-    const mfaPreferencePage = new MfaPreferencePage(this.page);
-    const dashboardPage = new DashboardPage(this.page);
-    this.page.waitForURL((url) => {
-      return mfaPreferencePage.pagePath === url.pathname
-       || dashboardPage.pagePath === url.pathname
-    });
-    if (mfaPreferencePage.pagePath === this.page.url()) {
-      return mfaPreferencePage.waitForURLtoMatchPagePath();
-    } else {
-      return dashboardPage.waitForURLtoMatchPagePath();
-    }
+    return new MfaPreferencePage(this.page).waitForURLtoMatchPagePath();
   }
 }

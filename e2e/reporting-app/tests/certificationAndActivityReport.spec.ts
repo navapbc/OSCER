@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 
 import { test } from '../../fixtures';
 import { AccountCreationFlow, ActivityReportFlow } from '../flows';
-import { CertificationRequestPage, StaffDashboardPage } from '../pages';
+import { CertificationRequestPage, MfaPreferencePage, StaffDashboardPage } from '../pages';
 
 test('Certification request and activity report flow', async ({ page, emailService }) => {
   // Triple the default timeout for this test due
@@ -18,7 +18,7 @@ test('Certification request and activity report flow', async ({ page, emailServi
   const accountCreationFlow = new AccountCreationFlow(page, emailService);
   const signInPage = await accountCreationFlow.run(email, password);
   const mfaPreferencePage = await signInPage.signIn(email, password);
-  const dashboardPage = await mfaPreferencePage.skipMFA();
+  await mfaPreferencePage.skipMFA();
 
   const activityReportFlow = new ActivityReportFlow(page);
   await activityReportFlow.run(email, password, 'Acme Inc', '80');
