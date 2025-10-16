@@ -21,11 +21,15 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
     context "with approve action" do
       before { patch review_activity_report_task_url(task), params: { commit: I18n.t("tasks.details.approve_button") } }
 
-      it "marks task as approved" do
+      it "marks task as completed" do
         task.reload
-        kase.reload
 
         expect(task).to be_completed
+      end
+
+      it "marks case as approved" do
+        kase.reload
+
         expect(kase.activity_report_approval_status).to eq("approved")
         expect(kase.business_process_instance.current_step).to eq("end")
         expect(kase).to be_closed
@@ -39,11 +43,15 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
     context "with deny action" do
       before { patch review_activity_report_task_url(task), params: { commit: I18n.t("tasks.details.deny_button") } }
 
-      it "marks task as denied" do
+      it "marks task as completed" do
         task.reload
-        kase.reload
 
         expect(task).to be_completed
+      end
+
+      it "marks case as denied" do
+        kase.reload
+
         expect(kase.activity_report_approval_status).to eq("denied")
         expect(kase.business_process_instance.current_step).to eq("end")
         expect(kase).to be_closed
