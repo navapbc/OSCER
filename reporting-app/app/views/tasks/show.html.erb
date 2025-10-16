@@ -1,22 +1,35 @@
 <%= render template: 'strata/tasks/show', locals: {
   task: @task,
-  assigned_user_display_text: @assignee.try(:email) || "N/A",
   application_form: @application_form,
   kase: @case,
-  breadcrumbs: [
+  task_info: [
     {
-    text: t("strata.tasks.breadcrumbs.home"),
-    link: staff_path
+      label: t("strata.tasks.show.details.status"),
+      value: t("tasks.statuses.#{@task.status}")
     },
     {
-      text: @member.email
+      label: t("strata.tasks.show.details.due_on"),
+      value: local_en_us(@task.due_on)
     },
     {
-      text: @certification.case_number,
-      link: certification_case_path(@case)
-    },
-    {
-      text: t("tasks.types.#{@task.type.underscore}")
+      label: @assignee.present? ? t("strata.tasks.show.details.assigned_to") : "",
+      value: @assignee.try(:email) || button_to("Assign to me", assign_task_path(@task), method: :patch, class: "usa-button")
     }
-  ]
+  ],
+  breadcrumbs: [
+  {
+  text: t("strata.tasks.breadcrumbs.home"),
+  link: staff_path
+  },
+  {
+  text: @member.email
+  },
+  {
+  text: @certification.case_number,
+  link: certification_case_path(@case)
+  },
+  {
+  text: t("tasks.types.#{@task.type.underscore}")
+  }
+]
 } %>
