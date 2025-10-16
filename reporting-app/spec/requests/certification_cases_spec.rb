@@ -17,23 +17,21 @@ RSpec.describe "/staff/certification_cases", type: :request do
   end
 
   describe "GET /show" do
+    let(:certification) { Certification.find(certification_case.certification_id) }
+
     it "returns http success" do
       get "/staff/certification_cases/#{certification_case.id}"
       expect(response).to have_http_status(:success)
     end
 
-    it "assigns the requested certification case to @case" do
+    it "displays the certification case information" do
       get "/staff/certification_cases/#{certification_case.id}"
-      expect(assigns(:case)).to eq(certification_case)
-    end
-
-    it "renders the show template" do
-      get "/staff/certification_cases/#{certification_case.id}"
-      expect(response).to render_template(:show)
+      expect(response.body).to include(certification.case_number)
+      expect(response.body).to include(certification_case.status)
     end
 
     context "when certification case does not exist" do
-      it "renders the show template with a warning" do
+      it "renders a 404 not found" do
         get "/staff/certification_cases/#{SecureRandom.uuid}"
         expect(response).to have_http_status(:not_found)
       end
