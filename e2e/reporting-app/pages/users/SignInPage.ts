@@ -1,6 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from '../BasePage';
-import { MFAPreferencePage } from './mfa/MFAPreferencePage';
+import { MfaPreferencePage } from './mfa/MfaPreferencePage';
+import { DashboardPage } from '../members/DashboardPage';
 
 export class SignInPage extends BasePage {
   get pagePath() {
@@ -24,8 +25,16 @@ export class SignInPage extends BasePage {
     await this.submitButton.click();
 
     // First login will always go to the MFA Preference page.
-    // TODO: check if this.page is the MFAPreferencePage or the LeaveRequestsPage
-    // since subsequent signins go directly to LeaveRequestsPage
-    return new MFAPreferencePage(this.page).waitForURLtoMatchPagePath();
+    const mfaPreferencePage = new MfaPreferencePage(this.page);
+    const dashboardPage = new DashboardPage(this.page);
+    this.page.waitForURL((url) => {
+      return mfaPreferencePage.pagePath === url.pathname
+       || dashboardPage.pagePath === url.pathname
+    });
+    if (mfaPreferencePage.pagePath === this.page.url()) {
+      return mfaPreferencePage.waitForURLtoMatchPagePath();
+    } else {
+      return dashboardPage.waitForURLtoMatchPagePath();
+    }
   }
 }

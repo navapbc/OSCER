@@ -2,7 +2,7 @@ import { Locator, Page } from '@playwright/test';
 import { BasePage } from '../../BasePage';
 import { DashboardPage } from '../../members';
 
-export class MFAPreferencePage extends BasePage {
+export class MfaPreferencePage extends BasePage {
   get pagePath() {
     return '/users/mfa/preference';
   }
