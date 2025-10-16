@@ -49,8 +49,11 @@ RSpec.describe "/review_exemption_claim_tasks", type: :request do
       it "marks case exemption status as denied" do
         certification_case.reload
         expect(certification_case.exemption_request_approval_status).to eq("denied")
-        expect(certification_case.business_process_instance.current_step).to eq("end")
-        expect(certification_case).to be_closed
+      end
+
+      it "sets case step to report activities" do
+        certification_case.reload
+        expect(certification_case.business_process_instance.current_step).to eq("report_activities")
       end
 
       it "redirects back to the task" do
