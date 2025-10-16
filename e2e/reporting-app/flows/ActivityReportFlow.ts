@@ -15,7 +15,8 @@ export class ActivityReportFlow {
     hours: string = '80'
   ) {
     const dashboardPage = await new DashboardPage(this.page).go();
-    const chooseMonthsPage = await dashboardPage.clickReportActivities();
+    const beforeYouStartPage = await dashboardPage.clickReportActivities();
+    const chooseMonthsPage = await beforeYouStartPage.clickStart();
     const activityReportPage = await chooseMonthsPage.selectFirstReportingPeriodAndSave();
     const activityDetailsPage = await activityReportPage.clickAddActivity();
     const supportingDocumentsPage = await activityDetailsPage.fillActivityDetails(

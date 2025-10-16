@@ -1,3 +1,4 @@
+export { BeforeYouStartPage } from './BeforeYouStartPage';
 export { ChooseMonthsPage } from './ChooseMonthsPage';
 export { ActivityReportPage } from './ActivityReportPage';
 export { ActivityDetailsPage } from './ActivityDetailsPage';
