@@ -28,6 +28,7 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
         expect(task).to be_completed
         expect(kase.activity_report_approval_status).to eq("approved")
         expect(kase.business_process_instance.current_step).to eq("end")
+        expect(kase).to be_closed
       end
 
       it "redirects back to the task" do
@@ -44,6 +45,7 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
 
         expect(task).to be_completed
         expect(kase.activity_report_approval_status).to eq("denied")
+        expect(kase.business_process_instance.current_step).to eq("end")
         expect(kase).to be_closed
       end
 
