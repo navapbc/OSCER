@@ -21,8 +21,19 @@ class Demo::CertificationsController < ApplicationController
     end
 
     certification_requirements = certification_service.calculate_certification_requirements(@form.attributes.with_indifferent_access)
+
+    # TODO: Eventually create a Service to handle member data construction
+    name_parts = [ @form.member_name_first, @form.member_name_middle, @form.member_name_last, @form.member_name_suffix ].compact.reject(&:blank?)
+    full_name = name_parts.join(" ")
+
     member_data = {
-      "full_name": @form.member_full_name
+      "name": {
+        "first": @form.member_name_first,
+        "middle": @form.member_name_middle,
+        "last": @form.member_name_last,
+        "suffix": @form.member_name_suffix,
+        "full": full_name
+      }
     }
 
     case @form.ex_parte_scenario
@@ -61,7 +72,8 @@ class Demo::CertificationsController < ApplicationController
       params.require(:demo_certifications_create_form)
             .permit(
               :member_email, :case_number, :certification_type, :certification_date, :lookback_period,
-              :number_of_months_to_certify, :due_period_days, :ex_parte_scenario, :member_full_name
+              :number_of_months_to_certify, :due_period_days, :ex_parte_scenario,
+              :member_name_first, :member_name_middle, :member_name_last, :member_name_suffix
             )
     end
 end
