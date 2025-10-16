@@ -3,7 +3,7 @@
 class TasksController < Strata::TasksController
   before_action :set_member, only: [ :show ]
   before_action :set_certification, only: [ :show ]
-  
+
   def assign
     set_task
     @task.assign(current_user.id)
