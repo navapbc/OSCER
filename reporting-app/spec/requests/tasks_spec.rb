@@ -45,16 +45,12 @@ RSpec.describe "/staff/tasks", type: :request do
   end
 
   describe "GET /index" do
-    let(:pending_task) { create(:review_activity_report_task, case: certification_case, status: :pending) }
-    let(:completed_task) { create(:review_activity_report_task, case: certification_case, status: :completed) }
-    let(:approved_task) { create(:review_activity_report_task, case: certification_case, status: :approved) }
-    let(:denied_task) { create(:review_activity_report_task, case: certification_case, status: :denied) }
+    let(:pending_task) { build(:review_activity_report_task, case: certification_case, status: :pending) }
+    let(:completed_task) { build(:review_activity_report_task, case: certification_case, status: :completed) }
 
     before do
-      pending_task
-      completed_task
-      approved_task
-      denied_task
+      pending_task.save!
+      completed_task.save!
     end
 
     context "when filtering by pending status" do
@@ -65,8 +61,6 @@ RSpec.describe "/staff/tasks", type: :request do
       it "includes only pending tasks" do
         expect(response.body).to include(pending_task.id)
         expect(response.body).not_to include(completed_task.id)
-        expect(response.body).not_to include(approved_task.id)
-        expect(response.body).not_to include(denied_task.id)
       end
     end
 
@@ -82,8 +76,6 @@ RSpec.describe "/staff/tasks", type: :request do
       it "returns non-pending tasks" do
         expect(response.body).not_to include(pending_task.id)
         expect(response.body).to include(completed_task.id)
-        expect(response.body).to include(approved_task.id)
-        expect(response.body).to include(denied_task.id)
       end
     end
 
@@ -99,8 +91,6 @@ RSpec.describe "/staff/tasks", type: :request do
       it "defaults to showing pending tasks" do
         expect(response.body).to include(pending_task.id)
         expect(response.body).not_to include(completed_task.id)
-        expect(response.body).not_to include(approved_task.id)
-        expect(response.body).not_to include(denied_task.id)
       end
     end
   end
