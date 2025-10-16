@@ -23,16 +23,13 @@ class Demo::CertificationsController < ApplicationController
     certification_requirements = certification_service.calculate_certification_requirements(Certifications::RequirementParams.new_filtered(@form.attributes.with_indifferent_access))
 
     # TODO: Eventually create a Service to handle member data construction
-    name_parts = [ @form.member_name_first, @form.member_name_middle, @form.member_name_last, @form.member_name_suffix ].compact.reject(&:blank?)
-    full_name = name_parts.join(" ")
 
     member_data = {
       "name": {
-        "first": @form.member_name_first,
-        "middle": @form.member_name_middle,
-        "last": @form.member_name_last,
-        "suffix": @form.member_name_suffix,
-        "full": full_name
+        "first": @form.member_name.first,
+        "middle": @form.member_name.middle,
+        "last": @form.member_name.last,
+        "suffix": @form.member_name.suffix
       }
     }
 
