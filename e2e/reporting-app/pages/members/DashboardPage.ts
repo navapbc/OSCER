@@ -11,7 +11,7 @@ export class DashboardPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.reportActivitiesButton = page.getByRole('link', { name: /report activities/i });
+    this.reportActivitiesButton = page.getByRole('link', { name: /^report activities$/i });
   }
 
   async clickReportActivities() {
