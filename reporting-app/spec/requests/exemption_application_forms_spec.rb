@@ -49,7 +49,7 @@ RSpec.describe "/exemption_application_forms", type: :request do
     it "renders the exemption type selection page" do
       get edit_exemption_application_form_url(existing_exemption_application_form)
       expect(response).to be_successful
-      expect(response).to render_template(:exemption_type)
+      expect(response.body).to include("What type of exemption are you requesting?")
     end
   end
 
