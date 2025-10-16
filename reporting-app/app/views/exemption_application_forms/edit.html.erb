@@ -1,6 +1,6 @@
 <% content_for :title, t(".title") %>
 
-<%= exemption_step_indicator(:exemption_type) %>
+<%= render "exemption_step_indicator", current_step: :exemption_type %>
 
 <h1><%= t(".heading") %></h1>
 
