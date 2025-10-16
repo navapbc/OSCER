@@ -12,6 +12,7 @@ module Demo
       DUE_PERIOD_OPTIONS = [ 15, 30, 60 ] # in days
 
       attribute :member_email, :string
+      strata_attribute :member_name, :name
       attribute :case_number, :string
 
       # TODO: add validation you can't set both certification_type and the other params?
@@ -26,6 +27,13 @@ module Demo
       attribute :due_period_days, :integer, default: DUE_PERIOD_OPTIONS[1]
 
       validates :certification_date, presence: true
+
+      # Name validations
+      validates :member_name_first, presence: true
+      validates :member_name_last, presence: true
+      validates :member_name_first, :member_name_last, :member_name_middle, :member_name_suffix,
+                format: { with: /\A[a-zA-Z\s\-'.]*\z/, message: "can only contain letters, spaces, hyphens, apostrophes, and periods" },
+                allow_blank: true
 
       # TODO: may eventually want a more custom validation with clearer error
       # message about relationship to number_of_months_to_certify
