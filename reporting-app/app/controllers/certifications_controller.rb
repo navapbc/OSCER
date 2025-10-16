@@ -4,14 +4,20 @@ class CertificationsController < StaffController
   before_action :set_certification, only: %i[ show update ]
   before_action :set_activity_report_application_forms, only: %i[ show create update ]
 
+  # for API endpoints
+  skip_before_action :authenticate_user!, only: %i[ create show]
+  protect_from_forgery unless: -> { request.format.json? }
+
   # GET /certifications
   # GET /certifications.json
   def index
     @certifications = policy_scope(Certification.all)
   end
 
-  # GET /certifications/1
-  # GET /certifications/1.json
+  # @summary Retrieve a Certification record
+  # @tags certifications
+  #
+  # @response A Certification(200) [Reference:#/components/schemas/CertificationResponseBody]
   def show
   end
 
@@ -20,12 +26,26 @@ class CertificationsController < StaffController
     @certification_form = authorize Certification.new
   end
 
-  # POST /certifications
-  # POST /certifications.json
+  # @summary Create a Certification record
+  # @tags certifications
+  #
+  # @request_body The Certification data. [Reference:#/components/schemas/CertificationCreateRequestBody]
+  # @request_body_example Fully specified certification requirements [Reference:#/components/schemas/CertificationCreateRequestBody/examples/fully_specified_certification_requirements]
+  # @request_body_example Certification type [Reference:#/components/schemas/CertificationCreateRequestBody/examples/certification_type]
+  # @response Created Certification.(201) [Reference:#/components/schemas/CertificationResponseBody]
+  # @response User error.(400) [Reference:#/components/schemas/ErrorResponseBody]
   def create
-    @certification = Certification.new(certification_params)
+    @certification = Certification.new(certification_params.except(:certification_requirements))
 
     authorize @certification
+
+    requirement_params = certification_params.fetch(:certification_requirements, {})
+    begin
+      @certification.certification_requirements = certification_service.certification_requirements_from_input(requirement_params)
+    rescue ActiveModel::ValidationError => e
+      render json: { certification_requirements: e.model.errors }, status: :unprocessable_entity
+      return
+    end
 
     if certification_service.save_new(@certification)
       render :show, status: :created, location: @certification
@@ -77,7 +97,10 @@ class CertificationsController < StaffController
         begin
           # handle HTML form input of the JSON blob as a string
           if cert_params[:certification_requirements].present? && cert_params[:certification_requirements].is_a?(String)
-            cert_params[:certification_requirements] = JSON.parse(cert_params[:certification_requirements])
+            cert_params[:certification_requirements] =
+              ActionController::Parameters.new(
+                JSON.parse(cert_params[:certification_requirements])
+              ).permit((Certifications::Requirements.attribute_names | Certifications::RequirementParams.attribute_names).map(&:to_sym))
           end
 
           # handle HTML form input of the JSON blob as a string
