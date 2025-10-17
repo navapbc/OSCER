@@ -13,9 +13,8 @@ module StaffHelper
   def member_breadcrumbs(member)
     dashboard_breadcrumbs + [
       {
-        # TODO: Replace with member name
-        text: member.email,
-        link: member_path(member.member_id)
+        text: member.name&.full_name,
+        link: members_path(member_id: member.member_id)
       }
     ]
   end
