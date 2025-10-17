@@ -3,7 +3,7 @@
 # Model for a Medicaid member.
 # Eventually this will be a full active record model, but for now it's just a
 # placeholder.
-class Member
+class Member < Strata::ValueObject
   include Strata::Attributes
 
   strata_attribute :member_id, :string
