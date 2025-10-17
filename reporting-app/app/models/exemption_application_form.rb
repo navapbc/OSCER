@@ -20,4 +20,8 @@ class ExemptionApplicationForm < Strata::ApplicationForm
   def event_payload
     super.merge(case_id: certification_case_id)
   end
+
+  def self.information_request_class
+    ExemptionInformationRequest
+  end
 end

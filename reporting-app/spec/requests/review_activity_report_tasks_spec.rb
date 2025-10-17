@@ -75,6 +75,8 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
   end
 
   describe "GET /request_information" do
+    before { create(:activity_report_application_form, certification_case_id: kase.id) }
+
     it "renders a successful response" do
       get request_information_review_activity_report_task_path(task)
       expect(response).to have_http_status(:ok)
