@@ -25,18 +25,14 @@ class ReviewActivityReportTasksController < TasksController
   private
 
   def is_approving
-    params[:review_activity_report_task][:activity_report_decision] == "yes"
+    activity_report_decision == "yes"
   end
 
   def is_denying
-    params[:review_activity_report_task][:activity_report_decision] == "no-not-acceptable" || params[:review_activity_report_task][:activity_report_decision] == "no-additional-info"
+    activity_report_decision == "no-not-acceptable" || activity_report_decision == "no-additional-info"
   end
 
-  def task_complete_notice_text
-    if @task.approved?
-      t("tasks.details.approved_message")
-    elsif @task.denied?
-      t("tasks.details.denied_message")
-    end
+  def activity_report_decision
+    params.dig(:review_activity_report_task, :activity_report_decision)
   end
 end
