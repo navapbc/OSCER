@@ -34,8 +34,8 @@ class CertificationCasesController < StaffController
   end
 
   def application_form_ids
-    [ ActivityReportApplicationForm, ExemptionApplicationForm ].flat_map do |form_class|
-      form_class.for_certification_case(@case).pluck(:id)
-    end
+    [ ActivityReportApplicationForm, ExemptionApplicationForm ].map do |form_class|
+      form_class.find_by_certification_case_id(@case.id)&.id
+    end.compact
   end
 end
