@@ -57,4 +57,8 @@ class TasksController < Strata::TasksController
   def set_member
     @member = Member.from_certification(@certification)
   end
+
+  def information_request_params
+    raise NotImplementedError, "Subclasses must implement information_request_params"
+  end
 end

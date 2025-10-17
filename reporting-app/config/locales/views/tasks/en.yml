@@ -24,3 +24,12 @@ en:
           no_additional_info: "No, additional information is needed"
           no_not_acceptable: "No, the documentation is not acceptable"
         submit_button: "Submit"
+    review_exemption_claim_task:
+      intro: Review the exemption form
+      exemption_decision:
+        heading: "Did the member provide a valid exemption?"
+        options:
+          yes_acceptable: "Yes, the documentation provided is acceptable"
+          no_additional_info: "No, additional information is needed"
+          no_not_acceptable: "No, the documentation is not acceptable"
+        submit_button: "Submit"
