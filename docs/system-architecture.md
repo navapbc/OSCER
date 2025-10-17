@@ -1,8 +1,15 @@
 # System Architecture
 
-This diagram shows the system architecture. [🔒 Make a copy of this Lucid template for your own application](https://lucid.app/lucidchart/8851888e-1292-4228-8fef-60a61c6b57e7/edit).
+OSCER is designed to be cloud-agnostic with infrastructure templates for different cloud providers. This diagram shows our AWS reference implementation. [🔒 Make a copy of this Lucid template for your own application](https://lucid.app/lucidchart/8851888e-1292-4228-8fef-60a61c6b57e7/edit).
+
+**Available Templates:**
+- **AWS**: [Reference implementation](https://github.com/navapbc/template-infra) (shown below)
+- **Azure**: [Infrastructure template](https://github.com/navapbc/template-infra-azure)
+- **Other CSPs**: Bring Your Own (BYO) infrastructure
 
 ![System architecture](https://lucid.app/publicSegments/view/e5a36152-200d-4d95-888e-4cdbdab80d1b/image.png)
+
+## AWS Implementation Components
 
 * **Access Logs** — Amazon S3 bucket storing the application service's access logs.
 * **Alarms SNS Topic** — SNS topic that notifies the incident management service when an alarm triggers.
