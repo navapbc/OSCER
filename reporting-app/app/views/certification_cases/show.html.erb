@@ -31,7 +31,7 @@
     </p>
     <p>
       <span class="text-bold"><%= t(".member_status") %></span>
-      <span class="usa-tag"><%= @member&.status_label %></span>
+      <span class="usa-tag"><%= t("certification_statuses.#{member_certification_status(@case, @certification_service)}") %></span>
     </p>
     <p>
       <span class="text-bold"><%= t(".certification_date") %></span>

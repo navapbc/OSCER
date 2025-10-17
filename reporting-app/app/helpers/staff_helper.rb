@@ -14,7 +14,7 @@ module StaffHelper
     dashboard_breadcrumbs + [
       {
         text: member.name&.full_name,
-        link: members_path(member_id: member.member_id)
+        link: member_path(member.member_id)
       }
     ]
   end
@@ -35,5 +35,9 @@ module StaffHelper
         link: task_path(task)
       }
     ]
+  end
+
+  def member_certification_status(certification_case, certification_service)
+    certification_service.calculate_member_certification_status(certification_case)
   end
 end

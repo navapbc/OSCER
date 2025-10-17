@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 class CertificationService
+  # Member certification status values
+  MEMBER_CERTIFICATION_STATUSES = {
+    met_requirements: "met_requirements",
+    exempt: "exempt",
+    pending_review: "pending_review",
+    awaiting_report: "awaiting_report"
+  }.freeze
+
   def save_new(certification, current_user = nil)
     certification.save
   end
@@ -92,7 +100,31 @@ class CertificationService
     end
   end
 
+  # Calculates the member's certification status by examining the case and related applications
+  # @param certification_case [CertificationCase] The case to evaluate
+  # @return [String] One of MEMBER_CERTIFICATION_STATUSES values
+  def calculate_member_certification_status(certification_case)
+    return MEMBER_CERTIFICATION_STATUSES[:exempt] if certification_case.exemption_request_approval_status == "approved"
+
+    return MEMBER_CERTIFICATION_STATUSES[:met_requirements] if certification_case.activity_report_approval_status == "approved"
+
+    if certification_case.exemption_request_approval_status == "pending" ||
+       certification_case.activity_report_approval_status == "pending" ||
+       has_submitted_application?(certification_case)
+      return MEMBER_CERTIFICATION_STATUSES[:pending_review]
+    end
+
+    MEMBER_CERTIFICATION_STATUSES[:awaiting_report]
+  end
+
   private
+
+  def has_submitted_application?(certification_case)
+    activity_report = ActivityReportApplicationForm.find_by(certification_case_id: certification_case.id)
+    exemption = ExemptionApplicationForm.find_by(certification_case_id: certification_case.id)
+
+    (activity_report&.submitted_at.present?) || (exemption&.submitted_at.present?)
+  end
 
   def hydrate_cases_with_certifications!(cases)
     certification_ids = cases.map(&:certification_id)

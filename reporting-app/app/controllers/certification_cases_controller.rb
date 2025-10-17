@@ -14,6 +14,7 @@ class CertificationCasesController < StaffController
   end
 
   def show
+    @certification_service = certification_service
   end
 
   private
