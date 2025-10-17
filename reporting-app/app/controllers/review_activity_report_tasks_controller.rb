@@ -6,10 +6,10 @@ class ReviewActivityReportTasksController < TasksController
 
     if is_approving
       kase.accept_activity_report
-      notice = I18n.t("tasks.details.approved_message")
+      notice = t("tasks.details.approved_message")
     elsif is_denying
       kase.deny_activity_report
-      notice = I18n.t("tasks.details.denied_message")
+      notice = t("tasks.details.denied_message")
     else
       raise "Invalid action"
     end
@@ -34,9 +34,9 @@ class ReviewActivityReportTasksController < TasksController
 
   def task_complete_notice_text
     if @task.approved?
-      I18n.t("tasks.details.approved_message")
+      t("tasks.details.approved_message")
     elsif @task.denied?
-      I18n.t("tasks.details.denied_message")
+      t("tasks.details.denied_message")
     end
   end
 end
