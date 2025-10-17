@@ -9,10 +9,11 @@ class Member
 
   attribute :member_id, :string
   attribute :email, :string
+  strata_attribute :name, :name
 
   # We won't need this method once we have a full active record model for member
   def self.from_certification(certification)
-    Member.new(member_id: certification.member_id, email: certification.member_email)
+    Member.new(member_id: certification.member_id, email: certification.member_email, name: certification.member_name)
   end
 
   def self.find_by_member_id(member_id)
