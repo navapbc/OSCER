@@ -1,5 +1,5 @@
 <h1 align="center">
-  Community Engagement Medicaid
+  OSCER
   <img width="300" src="/img/logoname-white.svg#gh-dark-mode-only" alt="infisical">
 </h1>
 <p align="center">
