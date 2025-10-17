@@ -6,9 +6,9 @@
 class Member < Strata::ValueObject
   include Strata::Attributes
 
-  attribute :member_id, :string
-  attribute :email, :string
-  attribute :name, :name
+  strata_attribute :member_id, :string
+  strata_attribute :email, :string
+  strata_attribute :name, :name
 
   # Member status based on certification case
   # Possible values: "met_requirements", "exempt", "pending_review", "awaiting_report"

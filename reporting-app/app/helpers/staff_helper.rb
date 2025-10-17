@@ -13,8 +13,8 @@ module StaffHelper
   def member_breadcrumbs(member)
     dashboard_breadcrumbs + [
       {
-        text: member.name || member.email,  # Fallback to email if name not available
-        link: "#"  # Placeholder link until member profile page exists
+        text: member.name,
+        link: member_path(member.member_id)
       }
     ]
   end
