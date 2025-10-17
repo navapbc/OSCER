@@ -15,4 +15,32 @@ RSpec.describe Certification, type: :model do
       )
     end
   end
+
+  describe 'member name accessors' do
+    context 'with structured name data' do
+      let(:certification) do
+        build(:certification, member_data: {
+          "name" => {
+            "first" => "Jane",
+            "middle" => "Q",
+            "last" => "Public",
+            "suffix" => "Jr",
+            "full" => "Jane Q Public Jr"
+          }
+        })
+      end
+
+      it 'returns full name from structured data' do
+        expect(certification.member_name.full_name).to eq("Jane Q Public Jr")
+      end
+    end
+
+    context 'with no member_data' do
+      let(:certification) { build(:certification, member_data: nil) }
+
+      it 'returns nil for full name' do
+        expect(certification.member_name).to be_nil
+      end
+    end
+  end
 end

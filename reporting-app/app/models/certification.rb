@@ -83,4 +83,16 @@ class Certification < ApplicationRecord
   def self.find_by_member_email(email)
     self.find_by_member_account_email(email).or(self.find_by_member_contact_email(email))
   end
+
+  def member_name
+    return unless self.member_data
+
+    name_data = self.member_data.fetch("name", {})
+    Strata::Name.new(
+      first: name_data["first"],
+      middle: name_data["middle"],
+      last: name_data["last"],
+      suffix: name_data["suffix"]
+    )
+  end
 end
