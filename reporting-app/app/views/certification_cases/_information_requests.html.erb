@@ -6,7 +6,8 @@
     <ul>
       <% information_requests.each do |information_request| %>
         <li>
-          <a href=<%= information_request_path(information_request) %>><%= information_request %></a>
+          <%= link_to "#{information_request.type.underscore.titleize} - #{information_request.created_at.strftime("%B %d, %Y")}",
+            information_request_path(information_request) %>
         </li>
       <% end %>
   </p>
