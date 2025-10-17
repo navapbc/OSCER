@@ -13,8 +13,8 @@ module StaffHelper
   def member_breadcrumbs(member)
     dashboard_breadcrumbs + [
       {
-        text: member.name,
-        link: member_path(member.member_id)
+        text: member.name&.full_name,
+        link: members_path(member_id: member.member_id)
       }
     ]
   end

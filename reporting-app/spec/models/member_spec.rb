@@ -22,7 +22,7 @@ RSpec.describe Member, type: :model do
 
       expect(member.member_id).to eq("MEMBER123")
       expect(member.email).to eq("test@example.com")
-      expect(member.name).to eq("Jane Q Public Jr")
+      expect(member.name.full_name).to eq("Jane Q Public Jr")
     end
 
     it 'loads the associated certification case' do
@@ -176,7 +176,7 @@ RSpec.describe Member, type: :model do
 
       expect(member.member_id).to eq("MEMBER123")
       expect(member.email).to eq("test@example.com")
-      expect(member.name).to eq("Jane Q Public Jr")
+      expect(member.name.full_name).to eq("Jane Q Public Jr")
     end
   end
 
@@ -205,11 +205,11 @@ RSpec.describe Member, type: :model do
     end
 
     it 'finds all members with matching email' do
-      members = Member.search_by_email("test@example.com")
+      members = described_class.search_by_email("test@example.com")
 
       expect(members.length).to eq(2)
       expect(members.map(&:member_id)).to contain_exactly("MEMBER1", "MEMBER2")
-      expect(members.map(&:name)).to contain_exactly("Jane Q Public Jr", "John Doe")
+      expect(members.map { |m| m.name.full_name }).to contain_exactly("Jane Q Public Jr", "John Doe")
     end
   end
 end
