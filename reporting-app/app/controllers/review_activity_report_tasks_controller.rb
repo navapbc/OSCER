@@ -4,14 +4,14 @@ class ReviewActivityReportTasksController < TasksController
   def update
     kase = @task.case
 
-    if is_approving
+    if approving?
       kase.accept_activity_report
       notice = t("tasks.details.approved_message")
-    elsif is_denying
+    elsif denying?
       kase.deny_activity_report
       notice = t("tasks.details.denied_message")
     else
-      raise "Invalid action"
+      notice = t("tasks.details.no_decision_made_message")
     end
 
     @task.completed!
@@ -24,19 +24,17 @@ class ReviewActivityReportTasksController < TasksController
 
   private
 
-  def is_approving
-    params[:commit] == t("tasks.details.approve_button")
+  def approving?
+    activity_report_decision == "yes"
   end
 
-  def is_denying
-    params[:commit] == t("tasks.details.deny_button")
+  def denying?
+    # only temporarily changed this to work with the current approve/deny setup, so that the functionality wouldn't be broken when updating the UI.
+    # Other work to handle RFI should address this functionality.
+    activity_report_decision == "no-not-acceptable" || activity_report_decision == "no-additional-info"
   end
 
-  def task_complete_notice_text
-    if @task.approved?
-      t("tasks.details.approved_message")
-    elsif @task.denied?
-      t("tasks.details.denied_message")
-    end
+  def activity_report_decision
+    params.dig(:review_activity_report_task, :activity_report_decision)
   end
 end
