@@ -1,5 +1,5 @@
 <div class="usa-header padding-bottom-3">
-  <h1><%= @member.name.full_name %></h1>
+  <h1><%= @member.name&.full_name %></h1>
   <p>
     Member ID: <%= @member.member_id %>
   </p>
