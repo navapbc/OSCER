@@ -6,10 +6,10 @@ class ReviewActivityReportTasksController < TasksController
 
     if is_approving
       kase.accept_activity_report
-      notice = t("tasks.details.approved_message")
+      notice = I18n.t("tasks.details.approved_message")
     elsif is_denying
       kase.deny_activity_report
-      notice = t("tasks.details.denied_message")
+      notice = I18n.t("tasks.details.denied_message")
     else
       raise "Invalid action"
     end
@@ -25,18 +25,18 @@ class ReviewActivityReportTasksController < TasksController
   private
 
   def is_approving
-    params[:commit] == t("tasks.details.approve_button")
+    params[:review_activity_report_task][:activity_report_decision] == "yes"
   end
 
   def is_denying
-    params[:commit] == t("tasks.details.deny_button")
+    params[:review_activity_report_task][:activity_report_decision] == "no-not-acceptable" || params[:review_activity_report_task][:activity_report_decision] == "no-additional-info"
   end
 
   def task_complete_notice_text
     if @task.approved?
-      t("tasks.details.approved_message")
+      I18n.t("tasks.details.approved_message")
     elsif @task.denied?
-      t("tasks.details.denied_message")
+      I18n.t("tasks.details.denied_message")
     end
   end
 end
