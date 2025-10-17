@@ -8,13 +8,17 @@ class CertificationCases::CaseRowComponent < Strata::Cases::CaseRowComponent
   protected
 
   def name
-    # TODO: Once we're collecting the name, use the actual name rather than the email
-    @case.certification.member_account_email
+    link_to @case.certification.member_name.full_name, member_path(@case.certification.member_id)
   end
 
   # Override default behavior to show the case number from the
   # certification request rather than the case.id UUID
   def case_no
     link_to @case.certification.case_number, certification_case_path(@case)
+  end
+
+  def step
+    step_name = @case.business_process_instance.current_step
+    t(".steps.#{step_name}")
   end
 end
