@@ -5,9 +5,14 @@
 <% if task.pending? %>
   <h2><%= t(".activity_report_decision.heading") %></h2>
   <%= strata_form_with(model: task) do |f| %>
-    <%= f.radio_button :activity_report_decision, "yes", { label: t(".activity_report_decision.options.yes_acceptable"), tile: false } %>
-    <%= f.radio_button :activity_report_decision, "no-additional-info", { label: t(".activity_report_decision.options.no_additional_info"), tile: false } %>
-    <%= f.radio_button :activity_report_decision, "no-not-acceptable", { label: t(".activity_report_decision.options.no_not_acceptable"), tile: false } %>
-    <%= f.submit t(".activity_report_decision.submit_button") %>
+    <script type="text/javascript">
+      function enableSubmitButton() {
+        document.getElementById("submit-button").disabled = false;
+      }
+    </script>
+    <%= f.radio_button :activity_report_decision, "yes", { label: t(".activity_report_decision.options.yes_acceptable"), tile: false, onclick: "enableSubmitButton()" } %>
+    <%= f.radio_button :activity_report_decision, "no-additional-info", { label: t(".activity_report_decision.options.no_additional_info"), tile: false, onclick: "enableSubmitButton()" } %>
+    <%= f.radio_button :activity_report_decision, "no-not-acceptable", { label: t(".activity_report_decision.options.no_not_acceptable"), tile: false, onclick: "enableSubmitButton()" } %>
+    <%= f.submit t(".activity_report_decision.submit_button"), disabled: true, id: "submit-button" %>
   <% end %>
 <% end %>
