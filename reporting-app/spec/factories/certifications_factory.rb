@@ -15,7 +15,14 @@ FactoryBot.define do
 
     trait :with_member_data_base do
       transient do
-        member_data_base { {} }
+        member_data_base { {
+          name: {
+            first: Faker::Name.first_name,
+            middle: Faker::Name.middle_name,
+            last: Faker::Name.last_name,
+            suffix: ""
+          }
+        } }
       end
 
       after(:build) do |cert, context|
