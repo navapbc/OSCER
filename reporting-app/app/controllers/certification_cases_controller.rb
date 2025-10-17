@@ -14,6 +14,7 @@ class CertificationCasesController < StaffController
   end
 
   def show
+    @information_requests = InformationRequest.for_application_forms(application_form_ids)
   end
 
   private
@@ -30,5 +31,11 @@ class CertificationCasesController < StaffController
 
   def certification_service
     CertificationService.new
+  end
+
+  def application_form_ids
+    [ ActivityReportApplicationForm, ExemptionApplicationForm ].map do |form_class|
+      form_class.find_by_certification_case_id(@case.id)&.id
+    end.compact
   end
 end
