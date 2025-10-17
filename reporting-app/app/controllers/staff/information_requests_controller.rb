@@ -53,7 +53,7 @@ module Staff
       when ReviewActivityReportTask.name
         ActivityReportInformationRequest
       when ReviewExemptionClaimTask.name
-        ExemptionClaimInformationRequest
+        ExemptionInformationRequest
       else
         raise StandardError, "Unknown task type #{@task.type}"
       end
