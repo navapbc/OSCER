@@ -10,6 +10,47 @@ FactoryBot.define do
       num_months { 1 }
     end
 
+    trait :with_full_name do
+      name {
+        {
+          "first" => "Jane",
+          "middle" => "Q",
+          "last" => "Public",
+          "suffix" => "Jr",
+          "full" => "Jane Q Public Jr"
+        }
+      }
+    end
+
+    trait :with_name_parts do
+      name {
+        {
+          "first" => "John",
+          "last" => "Doe"
+        }
+      }
+    end
+
+    trait :with_middle_name do
+      name {
+        {
+          "first" => "John",
+          "middle" => "Q",
+          "last" => "Doe"
+        }
+      }
+    end
+
+    trait :with_suffix do
+      name {
+        {
+          "first" => "John",
+          "last" => "Doe",
+          "suffix" => "Jr"
+        }
+      }
+    end
+
     trait :partially_met_work_hours_requirement do
       payroll_accounts {
         [

@@ -83,4 +83,26 @@ class Certification < ApplicationRecord
   def self.find_by_member_email(email)
     self.find_by_member_account_email(email).or(self.find_by_member_contact_email(email))
   end
+
+  def member_name
+    return unless self.member_data
+
+    # Prefer structured name format with pre-constructed full name
+    full_name = self.member_data.dig("name", "full")
+    return full_name if full_name.present?
+
+    # Fallback: construct from individual name parts in structured format
+    name_hash = self.member_data["name"]
+    if name_hash.is_a?(Hash)
+      first = name_hash["first"]
+      middle = name_hash["middle"]
+      last = name_hash["last"]
+      suffix = name_hash["suffix"]
+
+      parts = [ first, middle, last, suffix ].compact.reject(&:blank?)
+      return parts.join(" ") if parts.any?
+    end
+
+    nil
+  end
 end
