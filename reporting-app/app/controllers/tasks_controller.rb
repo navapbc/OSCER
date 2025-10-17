@@ -29,6 +29,6 @@ class TasksController < Strata::TasksController
   end
 
   def set_certification
-    @certification = @case.certification if @case.present?
+    @certification = Certification.find(@case.certification_id) if @case.present?
   end
 end
