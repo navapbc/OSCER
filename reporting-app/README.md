@@ -4,11 +4,11 @@ This is a [Ruby on Rails](https://rubyonrails.org/) application. It includes:
 
 - [U.S. Web Design System (USWDS)](https://designsystem.digital.gov/) for themeable styling and a set of common components
   - Custom USWDS form builder
-- Integration with AWS services, including
-  - Database integration with AWS RDS Postgresql using UUIDs
-  - Active Storage configuration with AWS S3
-  - Action Mailer configuration with AWS SES
-  - Authentication with [devise](https://github.com/heartcombo/devise) and AWS Cognito
+- Cloud-agnostic design with optional AWS integrations, including
+  - Database integration with PostgreSQL using UUIDs (AWS RDS in AWS deployment)
+  - Active Storage configuration (AWS S3 in AWS deployment)
+  - Action Mailer configuration (AWS SES in AWS deployment)
+  - Authentication with [devise](https://github.com/heartcombo/devise) (AWS Cognito in AWS deployment)
 - Internationalization (i18n)
 - Authorization using [pundit](https://github.com/varvet/pundit)
 - Linting and code formatting using [rubocop](https://rubocop.org/)
@@ -50,8 +50,10 @@ Below are the primary directories to be aware of when working on the app:
 
 - A container runtime (e.g. [Docker](https://www.docker.com/) or [Finch](https://github.com/runfinch/finch))
   - By default, `docker` is used. To change this, set the `CONTAINER_CMD` variable to `finch` (or whatever your container runtime is) in the shell.
+
+**For AWS deployment (optional):**
 - An AWS account with a Cognito User Pool and App Client configured
-  - By default, the application configures authentication using AWS Cognito
+  - The application can be configured for authentication using AWS Cognito, or other authentication providers
 
 ### 💾 Setup
 

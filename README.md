@@ -45,14 +45,14 @@ OSCER is approaching this differently than other vendors with transparent code, 
 The platform consists of:
 
 - **Reporting Application**: Ruby on Rails web application with modern UI using U.S. Web Design System (USWDS)
-- **Cloud Infrastructure**: AWS-based infrastructure with Terraform for Infrastructure as Code
+- **Cloud Infrastructure**: Cloud-agnostic design with Infrastructure as Code (current demo deployed on AWS)
 - **Security & Compliance**: Built with security best practices and compliance requirements in mind
 
 ### Key Technologies
 
 - **Backend**: Ruby on Rails 7.2, PostgreSQL
 - **Frontend**: USWDS, ERB templates, JavaScript
-- **Infrastructure**: AWS (ECS, RDS, Cognito, S3, SES), Terraform
+- **Infrastructure**: Terraform (AWS implementation provided as reference)
 - **Testing**: RSpec, Playwright (E2E)
 - **CI/CD**: GitHub Actions
 
@@ -61,7 +61,6 @@ The platform consists of:
 ### Prerequisites
 
 - Docker or Finch (container runtime)
-- AWS account with appropriate permissions
 - Ruby 3.x (for native development)
 - Node.js LTS (for native development)
 
@@ -100,16 +99,27 @@ The platform consists of:
    - Open http://localhost:3000 in your browser
    - Default authentication is set to mock mode for development
 
-### Infrastructure Setup
+### Cloud Deployment Options
 
-For production deployment, see our comprehensive [infrastructure documentation](docs/infra/).
+OSCER is designed to be cloud-agnostic. We provide infrastructure templates for different cloud providers:
 
-```bash
-# Set up AWS account and infrastructure
-make infra-set-up-account ACCOUNT_NAME=your-account-name
-make infra-configure-network NETWORK_NAME=dev
-make infra-update-app-build-repository APP_NAME=reporting-app
-```
+**Prerequisites for cloud deployment (choose one):**
+- **AWS**: AWS account with appropriate permissions (uses our [AWS template](https://github.com/navapbc/template-infra))
+- **Azure**: Azure account with appropriate permissions (uses our [Azure template](https://github.com/navapbc/template-infra-azure))
+- **Other CSPs**: Account with your chosen cloud provider (BYO infrastructure)
+
+**AWS Deployment:**
+- **Reference implementation** using our [AWS infrastructure template](https://github.com/navapbc/template-infra)
+- See our [AWS implementation as a reference.](docs/infra/)
+
+**Azure Deployment:**
+- **Azure infrastructure template** available at [navapbc/template-infra-azure](https://github.com/navapbc/template-infra-azure)
+- Provides equivalent functionality using Azure services
+
+**Other Cloud Providers (GCP, etc.):**
+- **Bring Your Own (BYO)** infrastructure approach
+- The application architecture remains the same
+- You'll need to create infrastructure code for your chosen provider's services
 
 ## Documentation
 
