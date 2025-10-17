@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 5.times do |index|
-  certification = Certification.create!(
-    member_id: "1234567890",
-    case_number: "1234567890"
-  )
+  certification = FactoryBot.create(:certification, :with_member_data_base)
   certification_case = CertificationCase.find_by!(certification_id: certification.id)
   app_form = ActivityReportApplicationForm.create!(
     reporting_periods: [ { year: Date.today.prev_month.year, month: Date.today.prev_month.month } ],
