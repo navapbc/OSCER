@@ -1,13 +1,4 @@
 # frozen_string_literal: true
-
-3.times do
-  User.create!(
-    email: "#{Faker::Name.unique.first_name}.#{Faker::Name.unique.last_name}@example.com",
-    provider: "mock",
-    uid: SecureRandom.uuid
-  )
-end
-
 5.times do |index|
   certification = FactoryBot.create(:certification, :with_member_data_base)
   certification_case = CertificationCase.find_by!(certification_id: certification.id)
