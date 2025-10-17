@@ -88,10 +88,10 @@ RSpec.describe "/review_exemption_claim_tasks", type: :request do
     before { exemption_application_form.save! }
 
     it "creates a new information request and marks the task as on hold" do
-      form_params  =  { exemption_claim_information_request: { staff_comment: "Need more Info!" } }
+      form_params  =  { exemption_information_request: { staff_comment: "Need more Info!" } }
       expect {
         post create_information_request_review_exemption_claim_task_path(task), params: form_params
-      }.to change(ExemptionClaimInformationRequest, :count).from(0).to(1)
+      }.to change(ExemptionInformationRequest, :count).from(0).to(1)
 
       expect(response).to redirect_to(certification_case_path(certification_case))
 
@@ -100,10 +100,10 @@ RSpec.describe "/review_exemption_claim_tasks", type: :request do
     end
 
     it "renders :unprocessable_entity when staff_comment is blank" do
-      form_params  =  { exemption_claim_information_request: { staff_comment: "" } }
+      form_params  =  { exemption_information_request: { staff_comment: "" } }
       expect {
         post create_information_request_review_exemption_claim_task_path(task), params: form_params
-      }.not_to change(ExemptionClaimInformationRequest, :count)
+      }.not_to change(ExemptionInformationRequest, :count)
 
       expect(response).to have_http_status(:unprocessable_entity)
 
