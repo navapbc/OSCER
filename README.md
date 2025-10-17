@@ -34,15 +34,15 @@
 ## Introduction
 
 Nava’s Open Source Community Engagement Reporting tool (OSCER) is intended to be an open-source, self-contained application that plugs into existing Medicaid systems to handle end-to-end reporting to meet H.R.1 community engagement requirements (eligibility checks, reporting, verification) without locking into proprietary platforms or brittle customizations. 
-	•	Open by default - transparent code and approach
-	•	Sidecar architecture - integrates with existing cloud systems with minimal and well-defined touchpoints
-	•	State-owned - runs in state-hosted cloud environments and states retain full ownership of the deployment, configuration, and data
+- Open by default - transparent code and approach
+- Sidecar architecture - integrates with existing cloud systems with minimal and well-defined touchpoints
+- State-owned - runs in state-hosted cloud environments and states retain full ownership of the deployment, configuration, and data
 
-Why OSCER 
+### Why OSCER 
 State Medicaid programs face real constraints: 
-	•	Proprietary COTS platforms: Slow to change, rigid licensing and customization
-	•	Closed custom builds: Every update becomes a costly change order, code often isn’t yours
-	•	Vendor lock-in: limited code access, slower security review, no reusable improvements
+- Proprietary COTS platforms: Slow to change, rigid licensing and customization
+- Closed custom builds: Every update becomes a costly change order, code often isn’t yours
+- Vendor lock-in: limited code access, slower security review, no reusable improvements
 
 OSCER is approaching this differently than other vendors with transparent code, modular integration, and an architecture designed for frequent policy change. 
 
