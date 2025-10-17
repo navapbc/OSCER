@@ -6,6 +6,6 @@
   <%= strata_form_with(model: task) do |f| %>
     <%= f.submit t("tasks.details.approve_button"), class: "usa-button--outline" %>
     <%= f.submit t("tasks.details.deny_button"), class: "usa-button--outline" %>
-    <%= link_to t("tasks.details.request_for_information_button"), new_information_request_path(task_id: @task.id), class: "usa-button usa-button--outline" %>
+    <%= f.submit t("tasks.details.request_for_information_button"), class: "usa-button--outline" %>
   <% end %>
 <% end %>

@@ -4,12 +4,17 @@ class ReviewActivityReportTasksController < TasksController
   def update
     kase = @task.case
 
-    if is_approving
+    if approving_action?
       kase.accept_activity_report
       notice = t("tasks.details.approved_message")
-    elsif is_denying
+    elsif denying_action?
       kase.deny_activity_report
       notice = t("tasks.details.denied_message")
+    elsif information_request_action?
+      # Redirect to new information request form. Task will be marked as "on hold" when
+      # the information request is created.
+      redirect_to(action: :request_information)
+      return
     else
       raise "Invalid action"
     end
@@ -24,12 +29,28 @@ class ReviewActivityReportTasksController < TasksController
 
   private
 
-  def is_approving
+  def application_form_class
+    ActivityReportApplicationForm
+  end
+
+  def information_request_class
+    ActivityReportInformationRequest
+  end
+
+  def set_create_path
+    @create_path = create_information_request_review_activity_report_task_path
+  end
+
+  def approving_action?
     params[:commit] == t("tasks.details.approve_button")
   end
 
-  def is_denying
+  def denying_action?
     params[:commit] == t("tasks.details.deny_button")
+  end
+
+  def information_request_action?
+    params[:commit] == t("tasks.details.request_for_information_button")
   end
 
   def task_complete_notice_text
