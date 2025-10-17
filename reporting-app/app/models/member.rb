@@ -3,18 +3,20 @@
 # Model for a Medicaid member.
 # Eventually this will be a full active record model, but for now it's just a
 # placeholder.
-class Member
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+class Member < Strata::ValueObject
   include Strata::Attributes
 
-  attribute :member_id, :string
-  attribute :email, :string
+  strata_attribute :member_id, :string
+  strata_attribute :email, :string
   strata_attribute :name, :name
 
   # We won't need this method once we have a full active record model for member
   def self.from_certification(certification)
-    Member.new(member_id: certification.member_id, email: certification.member_email, name: certification.member_name)
+    Member.new(
+      member_id: certification.member_id,
+      email: certification.member_email,
+      name: certification.member_name
+    )
   end
 
   def self.find_by_member_id(member_id)

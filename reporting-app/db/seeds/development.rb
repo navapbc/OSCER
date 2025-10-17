@@ -9,21 +9,7 @@
 end
 
 5.times do |index|
-  certification = Certification.create!(
-    member_id: User.all.sample.id,
-    case_number: Faker::Number.between(from: index * 1000, to: ((index + 1) * 1000) - 1).to_s,
-    member_data: {
-      account_email: Faker::Internet.email,
-      contact: {
-        email: Faker::Internet.email
-      },
-      name: {
-        first: Faker::Name.first_name,
-        middle: Faker::Name.middle_name,
-        last: Faker::Name.last_name
-      }
-    }
-  )
+  certification = FactoryBot.create(:certification, :with_member_data_base)
   certification_case = CertificationCase.find_by!(certification_id: certification.id)
   app_form = ActivityReportApplicationForm.create!(
     reporting_periods: [ { year: Date.today.prev_month.year, month: Date.today.prev_month.month } ],
