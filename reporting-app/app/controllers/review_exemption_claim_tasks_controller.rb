@@ -34,7 +34,7 @@ class ReviewExemptionClaimTasksController < TasksController
   end
 
   def information_request_class
-    ExemptionClaimInformationRequest
+    ExemptionInformationRequest
   end
 
   def set_create_path
