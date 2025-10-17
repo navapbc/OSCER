@@ -6,7 +6,7 @@
   <p align="center"><b>A comprehensive platform for managing Medicaid community engagement requirements</b>: built to help states implement and administer work requirements and exemption processes in compliance with federal regulations.</p>
 </p>
 <p align="center">
-  <p align="center"><b>Built with Nava Strata</p>
+  <p align="center">Built with Nava Strata</p>
 </p>
 
 <h4 align="center">
