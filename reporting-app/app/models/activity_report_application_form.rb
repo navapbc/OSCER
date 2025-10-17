@@ -6,8 +6,6 @@ class ActivityReportApplicationForm < Strata::ApplicationForm
 
   strata_attribute :reporting_periods, :year_month, array: true
 
-  scope :for_certification_case, ->(case_id) { where(certification_case_id: case_id) }
-
   def activities_by_id
     @activities_by_id ||= activities.index_by(&:id)
   end
@@ -19,6 +17,10 @@ class ActivityReportApplicationForm < Strata::ApplicationForm
   default_scope { includes(:activities, :certification) }
 
   accepts_nested_attributes_for :activities, allow_destroy: true
+
+  def self.find_by_certification_case_id(certification_case_id)
+    find_by(certification_case_id:)
+  end
 
   # Include the case id
   def event_payload
