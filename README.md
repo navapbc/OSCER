@@ -1,19 +1,12 @@
-# Community Engagement Medicaid
-
 <h1 align="center">
-  <img width="300" src="/img/logoname-white.svg#gh-dark-mode-only" alt="infisical">
+  Open Source Community Engagement Reporting (OSCER)
 </h1>
 <p align="center">
   <p align="center"><b>A comprehensive platform for managing Medicaid community engagement requirements</b>: built to help states implement and administer work requirements and exemption processes in compliance with federal regulations.</p>
 </p>
 <p align="center">
-  <p align="center"><b>Built with Nava Strata</p>
+  <p align="center">Built with Nava Strata</p>
 </p>
-
-<h4 align="center">
-  <a href="https://navapbc.com">Website</a> |
-  <a href="https://navapbc.com/careers">Hiring (Remote)</a>
-</h4>
 
 <h4 align="center">
   <a href="https://github.com/navapbc/community-engagement-medicaid/blob/main/LICENSE">
@@ -34,52 +27,32 @@
 
 ## Introduction
 
-This open-source project provides a complete solution for state Medicaid agencies to manage community engagement requirements, including:
+Nava’s Open Source Community Engagement Reporting tool (OSCER) is intended to be an open-source, self-contained application that plugs into existing Medicaid systems to handle end-to-end reporting to meet H.R.1 community engagement requirements (eligibility checks, reporting, verification) without locking into proprietary platforms or brittle customizations. 
+- **Open by default** - transparent code and approach
+- **Sidecar architecture** - integrates with existing cloud systems with minimal and well-defined touchpoints
+- **State-owned** - runs in state-hosted cloud environments and states retain full ownership of the deployment, configuration, and data
 
-- **Activity Reporting**: OSCER (Online Self-Certification of Eligible Requirements) system for beneficiaries to report qualifying activities
-- **Exemption Management**: Streamlined process for requesting and processing exemptions from community engagement requirements
-- **Income Verification**: Integration with CMS Income Verification as a Service (IVaaS) for automated eligibility verification
-- **Case Management**: Staff tools for reviewing applications, managing tasks, and tracking compliance
-- **Multi-language Support**: Built-in internationalization with English and Spanish support
+### Why OSCER 
+State Medicaid programs face real constraints: 
+- **Proprietary COTS platforms**: Slow to change, rigid licensing and customization
+- **Closed custom builds**: Every update becomes a costly change order, code often isn’t yours
+- **Vendor lock-in**: limited code access, slower security review, no reusable improvements
 
-## Features
-
-### For Beneficiaries
-
-- **Activity Reporting**: Easy-to-use forms for reporting qualifying community engagement activities
-- **Document Upload**: Secure document submission for verification
-- **Exemption Requests**: Simple process for requesting exemptions with supporting documentation
-- **Multi-language Support**: Available in English and Spanish
-- **Mobile-Friendly**: Responsive design works on all devices
-
-### For State Staff
-
-- **Case Management**: Comprehensive tools for reviewing and processing applications
-- **Task Management**: Automated workflow management with task assignment
-- **Document Review**: Secure access to uploaded documents and supporting materials
-- **Reporting Dashboard**: Analytics and reporting capabilities
-- **Member Search**: Advanced search and filtering capabilities
-
-### For Administrators
-
-- **User Management**: Role-based access control with AWS Cognito integration
-- **System Monitoring**: CloudWatch integration for performance monitoring
-- **Audit Trails**: Comprehensive logging and audit capabilities
-- **Feature Flags**: Dynamic feature management for controlled rollouts
+OSCER is approaching this differently than other vendors with transparent code, modular integration, and an architecture designed for frequent policy change. 
 
 ## Architecture
 
 The platform consists of:
 
 - **Reporting Application**: Ruby on Rails web application with modern UI using U.S. Web Design System (USWDS)
-- **Cloud Infrastructure**: AWS-based infrastructure with Terraform for Infrastructure as Code
+- **Cloud Infrastructure**: Cloud-agnostic design with Infrastructure as Code (current demo deployed on AWS)
 - **Security & Compliance**: Built with security best practices and compliance requirements in mind
 
 ### Key Technologies
 
 - **Backend**: Ruby on Rails 7.2, PostgreSQL
 - **Frontend**: USWDS, ERB templates, JavaScript
-- **Infrastructure**: AWS (ECS, RDS, Cognito, S3, SES), Terraform
+- **Infrastructure**: Terraform (AWS implementation provided as reference)
 - **Testing**: RSpec, Playwright (E2E)
 - **CI/CD**: GitHub Actions
 
@@ -88,7 +61,6 @@ The platform consists of:
 ### Prerequisites
 
 - Docker or Finch (container runtime)
-- AWS account with appropriate permissions
 - Ruby 3.x (for native development)
 - Node.js LTS (for native development)
 
@@ -127,16 +99,27 @@ The platform consists of:
    - Open http://localhost:3000 in your browser
    - Default authentication is set to mock mode for development
 
-### Infrastructure Setup
+### Cloud Deployment Options
 
-For production deployment, see our comprehensive [infrastructure documentation](docs/infra/).
+OSCER is designed to be cloud-agnostic. We provide infrastructure templates for different cloud providers:
 
-```bash
-# Set up AWS account and infrastructure
-make infra-set-up-account ACCOUNT_NAME=your-account-name
-make infra-configure-network NETWORK_NAME=dev
-make infra-update-app-build-repository APP_NAME=reporting-app
-```
+**Prerequisites for cloud deployment (choose one):**
+- **AWS**: AWS account with appropriate permissions (uses our [AWS template](https://github.com/navapbc/template-infra))
+- **Azure**: Azure account with appropriate permissions (uses our [Azure template](https://github.com/navapbc/template-infra-azure))
+- **Other CSPs**: Account with your chosen cloud provider (BYO infrastructure)
+
+**AWS Deployment:**
+- **Reference implementation** using our [AWS infrastructure template](https://github.com/navapbc/template-infra)
+- See our [AWS implementation as a reference.](docs/infra/)
+
+**Azure Deployment:**
+- **Azure infrastructure template** available at [navapbc/template-infra-azure](https://github.com/navapbc/template-infra-azure)
+- Provides equivalent functionality using Azure services
+
+**Other Cloud Providers (GCP, etc.):**
+- **Bring Your Own (BYO)** infrastructure approach
+- The application architecture remains the same
+- You'll need to create infrastructure code for your chosen provider's services
 
 ## Documentation
 

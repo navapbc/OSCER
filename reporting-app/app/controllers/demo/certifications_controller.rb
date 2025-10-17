@@ -13,7 +13,6 @@ class Demo::CertificationsController < ApplicationController
   end
 
   def create
-    form_params = params.require(:demo_certifications_create_form).permit(:member_email, :case_number, :certification_type, :certification_date, :lookback_period, :number_of_months_to_certify, :due_period_days, :ex_parte_scenario)
     @form = Demo::Certifications::CreateForm.new(form_params)
 
     if @form.invalid?
@@ -22,7 +21,17 @@ class Demo::CertificationsController < ApplicationController
     end
 
     certification_requirements = certification_service.calculate_certification_requirements(Certifications::RequirementParams.new_filtered(@form.attributes.with_indifferent_access))
-    member_data = {}
+
+    # TODO: Eventually create a Service to handle member data construction
+
+    member_data = {
+      "name": {
+        "first": @form.member_name.first,
+        "middle": @form.member_name.middle,
+        "last": @form.member_name.last,
+        "suffix": @form.member_name.suffix
+      }
+    }
 
     case @form.ex_parte_scenario
     when "Partially met work hours requirement"
@@ -54,5 +63,14 @@ class Demo::CertificationsController < ApplicationController
   private
     def certification_service
       CertificationService.new
+    end
+
+    def form_params
+      params.require(:demo_certifications_create_form)
+            .permit(
+              :member_email, :case_number, :certification_type, :certification_date, :lookback_period,
+              :number_of_months_to_certify, :due_period_days, :ex_parte_scenario,
+              :member_name_first, :member_name_middle, :member_name_last, :member_name_suffix
+            )
     end
 end

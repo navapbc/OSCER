@@ -17,6 +17,7 @@ en:
       ex_parte_data: "Ex parte data"
       lookback_period: "Lookback period:"
       member_name: "Member name:"
+      member_email: "Member email:"
       member_status: "Member Status:"
       missing: "Missing"
       no_tasks: "No tasks"

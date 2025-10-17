@@ -19,7 +19,7 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
 
   describe "PATCH /update" do
     context "with approve action" do
-      before { patch review_activity_report_task_url(task), params: { commit: I18n.t("tasks.details.approve_button") } }
+      before { patch review_activity_report_task_url(task), params: { review_activity_report_task: { activity_report_decision: "yes" } } }
 
       it "marks task as completed" do
         task.reload
@@ -40,8 +40,30 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
       end
     end
 
-    context "with deny action" do
-      before { patch review_activity_report_task_url(task), params: { commit: I18n.t("tasks.details.deny_button") } }
+    context "with not acceptable action" do
+      before { patch review_activity_report_task_url(task), params: { review_activity_report_task: { activity_report_decision: "no-not-acceptable" } } }
+
+      it "marks task as completed" do
+        task.reload
+
+        expect(task).to be_completed
+      end
+
+      it "marks case as denied" do
+        kase.reload
+
+        expect(kase.activity_report_approval_status).to eq("denied")
+        expect(kase.business_process_instance.current_step).to eq("end")
+        expect(kase).to be_closed
+      end
+
+      it "redirects back to the task" do
+        expect(response).to redirect_to(task_path(task))
+      end
+    end
+
+    context "with needs more info action" do
+      before { patch review_activity_report_task_url(task), params: { review_activity_report_task: { activity_report_decision: "no-additional-info" } } }
 
       it "marks task as completed" do
         task.reload

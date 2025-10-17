@@ -3,13 +3,12 @@
 # Model for a Medicaid member.
 # Eventually this will be a full active record model, but for now it's just a
 # placeholder.
-class Member
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+class Member < Strata::ValueObject
+  include Strata::Attributes
 
   attribute :member_id, :string
   attribute :email, :string
-  attribute :name, :string
+  attribute :name, :name
 
   # Member status based on certification case
   # Possible values: "met_requirements", "exempt", "pending_review", "awaiting_report"
