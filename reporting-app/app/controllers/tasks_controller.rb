@@ -25,10 +25,10 @@ class TasksController < Strata::TasksController
   end
 
   def set_certification
-    @certification = Certification.find(@case.certification_id) if @case.present?
+    @certification = Certification.find(@case.certification_id)
   end
 
   def set_member
-    @member = Member.find_by_member_id(@certification.member_id) if @certification.present?
+    @member = Member.find_by_member_id(@certification.member_id)
   end
 end
