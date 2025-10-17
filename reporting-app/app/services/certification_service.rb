@@ -101,8 +101,6 @@ class CertificationService
   end
 
   # Calculates the member's certification status by examining the case and related applications
-  # @param certification_case [CertificationCase] The case to evaluate
-  # @return [String] One of MEMBER_CERTIFICATION_STATUSES values
   def calculate_member_certification_status(certification_case)
     return MEMBER_CERTIFICATION_STATUSES[:exempt] if certification_case.exemption_request_approval_status == "approved"
 
