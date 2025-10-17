@@ -21,7 +21,8 @@ FactoryBot.define do
             middle: Faker::Name.middle_name,
             last: Faker::Name.last_name,
             suffix: ""
-          }
+          },
+          account_email: Faker::Internet.email,
         } }
       end
 
