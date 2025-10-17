@@ -20,8 +20,9 @@ class TasksController < Strata::TasksController
   end
 
   def set_application_form
-    @application_form = ActivityReportApplicationForm.find_by(certification_case_id: @case.id) ||
-                        ExemptionApplicationForm.find_by(certification_case_id: @case.id)
+    # We do not want to grab the application form class from Certification Case
+    # because it can be tied to multiple application form types
+    @application_form = @task.class.application_form_class.find_by(certification_case_id: @task.case_id)
   end
 
   def set_certification
