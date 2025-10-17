@@ -1,6 +1,25 @@
 # Overview
 
-This project practices infrastructure-as-code and uses the [Terraform framework](https://www.terraform.io). This directory contains the infrastructure code for this project, including infrastructure for all application resources. This terraform project uses the [AWS provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs). It is based on the [Nava platform infrastructure template](https://github.com/navapbc/template-infra).
+OSCER is designed to be cloud-agnostic with infrastructure templates for different cloud providers:
+
+## Cloud Provider Templates
+
+**AWS (This Directory):**
+- **Reference implementation** using our [AWS infrastructure template](https://github.com/navapbc/template-infra)
+- Based on the [Nava platform infrastructure template](https://github.com/navapbc/template-infra)
+- Uses the [AWS provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
+
+**Azure:**
+- **Azure infrastructure template** available at [navapbc/template-infra-azure](https://github.com/navapbc/template-infra-azure)
+- Provides equivalent functionality using Azure services
+- Uses Terraform with Azure provider
+
+**Other Cloud Providers:**
+- **Bring Your Own (BYO)** approach
+- Use this AWS implementation as a reference for the required components
+- Adapt to your cloud provider's equivalent services
+
+This project practices infrastructure-as-code using the [Terraform framework](https://www.terraform.io).
 
 ## 📂 Directory structure
 
