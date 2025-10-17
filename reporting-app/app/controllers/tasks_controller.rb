@@ -29,6 +29,6 @@ class TasksController < Strata::TasksController
   end
 
   def set_member
-    @member = Member.find_by_member_id(@certification.member_id)
+    @member = Member.from_certification(@certification)
   end
 end
