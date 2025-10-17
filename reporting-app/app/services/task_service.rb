@@ -11,9 +11,8 @@ module TaskService
       task.on_hold!
     end
 
-    return { success: true }
+    { success: true }
   rescue ActiveRecord::RecordInvalid => e
-    return { success: false, information_request_record: e.record }
+    { success: false, information_request_record: e.record }
   end
 end
-
