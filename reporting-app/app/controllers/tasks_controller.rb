@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class TasksController < Strata::TasksController
-  before_action :set_member, only: [ :show ]
   before_action :set_certification, only: [ :show ]
+  before_action :set_member, only: [ :show ]
 
   def assign
     set_task
@@ -24,11 +24,11 @@ class TasksController < Strata::TasksController
                         ExemptionApplicationForm.find_by(certification_case_id: @case.id)
   end
 
-  def set_member
-    @member = User.find(@application_form.user_id) if @application_form.present?
-  end
-
   def set_certification
     @certification = Certification.find(@case.certification_id) if @case.present?
+  end
+
+  def set_member
+    @member = Member.find_by_member_id(@certification.member_id) if @certification.present?
   end
 end
