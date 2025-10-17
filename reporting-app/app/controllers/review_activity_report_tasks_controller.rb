@@ -11,7 +11,7 @@ class ReviewActivityReportTasksController < TasksController
       kase.deny_activity_report
       notice = t("tasks.details.denied_message")
     else
-      raise "Invalid action"
+      notice = t("tasks.details.no_decision_made_message")
     end
 
     @task.completed!

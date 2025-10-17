@@ -11,6 +11,7 @@ en:
     details:
       approved_message: "Task approved!"
       denied_message: "Task denied!"
+      no_decision_made_message: "Please select a decision before submitting."
   details:
     review_activity_report_task:
       intro: Review the activity report form
