@@ -29,16 +29,12 @@ class ReviewExemptionClaimTasksController < TasksController
 
   private
 
-  def application_form_class
-    ExemptionApplicationForm
-  end
-
-  def information_request_class
-    ExemptionInformationRequest
-  end
-
   def set_create_path
     @create_path = create_information_request_review_activity_report_task_path
+  end
+
+  def information_request_params
+    params.require(:exemption_information_request).permit(:staff_comment)
   end
 
   def approving_action?

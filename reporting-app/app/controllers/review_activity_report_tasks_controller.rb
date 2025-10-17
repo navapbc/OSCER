@@ -44,4 +44,12 @@ class ReviewActivityReportTasksController < TasksController
   def activity_report_decision
     params.dig(:review_activity_report_task, :activity_report_decision)
   end
+
+  def set_create_path
+    @create_path = create_information_request_review_activity_report_task_path
+  end
+
+  def information_request_params
+    params.require(:activity_report_information_request).permit(:staff_comment)
+  end
 end

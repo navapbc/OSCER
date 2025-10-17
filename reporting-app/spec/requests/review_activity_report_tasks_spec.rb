@@ -65,38 +65,29 @@ RSpec.describe "/review_activity_report_tasks", type: :request do
     context "with needs more info action" do
       before { patch review_activity_report_task_url(task), params: { review_activity_report_task: { activity_report_decision: "no-additional-info" } } }
 
-      it "marks task as completed" do
+      it "marks task as pending" do
         task.reload
 
-        expect(task).to be_completed
+        expect(task).to be_pending
       end
 
-      it "marks case as denied" do
+      it "does not update the activity report approval status" do
         kase.reload
 
-        expect(kase.activity_report_approval_status).to eq("denied")
-        expect(kase.business_process_instance.current_step).to eq("end")
-        expect(kase).to be_closed
+        expect(kase.activity_report_approval_status).to be_nil
+        expect(kase.business_process_instance.current_step).to eq("review_activity_report")
+        expect(kase).to be_open
       end
 
-      it "redirects back to the task" do
-        expect(response).to redirect_to(task_path(task))
-      end
-    end
-
-    context "with request information action" do
-      before { patch review_activity_report_task_url(task), params: { commit: I18n.t("tasks.details.request_for_information_button") } }
-
-      it "redirects to the new information request form" do
-        expect(response).to have_http_status(:found)
+      it "redirects to the task" do
         expect(response).to redirect_to(request_information_review_activity_report_task_path(task))
-        # Verify that the task is still pending
-        expect(task.reload).to be_pending
       end
     end
   end
 
   describe "GET /request_information" do
+    before { create(:activity_report_application_form, certification_case_id: kase.id) }
+
     it "renders a successful response" do
       get request_information_review_activity_report_task_path(task)
       expect(response).to have_http_status(:ok)

@@ -13,8 +13,8 @@ class TasksController < Strata::TasksController
 
   def request_information
     set_task
-    @application_form = application_form_class.find_by(certification_case_id: @task.case_id)
-    @information_request = information_request_class.new
+    @application_form = @task.class.application_form_class.find_by(certification_case_id: @task.case_id)
+    @information_request = @application_form.class.information_request_class.new
     set_create_path
 
     render "tasks/request_information"
@@ -25,8 +25,6 @@ class TasksController < Strata::TasksController
     result = TaskService.request_more_information(
       @task,
       information_request_params,
-      information_request_class: information_request_class,
-      application_form_class: application_form_class
     )
 
     if result[:success]
@@ -37,13 +35,6 @@ class TasksController < Strata::TasksController
       render "tasks/request_information", status: :unprocessable_entity
     end
   end
-
-  private
-
-  def information_request_params
-    params.require(information_request_class.name.underscore.to_sym).permit(:staff_comment)
-  end
-
 
   protected
 
