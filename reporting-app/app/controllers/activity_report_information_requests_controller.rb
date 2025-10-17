@@ -4,9 +4,6 @@ class ActivityReportInformationRequestsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_information_request, only: %i[ show edit update ]
 
-  def show
-  end
-
   def edit
   end
 

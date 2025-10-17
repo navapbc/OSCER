@@ -77,7 +77,6 @@ RSpec.describe "/review_exemption_claim_tasks", type: :request do
     before { create(:exemption_application_form, certification_case_id: certification_case.id) }
 
     it "renders a successful response" do
-
       get request_information_review_exemption_claim_task_path(task)
       expect(response).to have_http_status(:ok)
     end
