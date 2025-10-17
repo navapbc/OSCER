@@ -6,6 +6,7 @@
 class Member
   include ActiveModel::Model
   include ActiveModel::Attributes
+  include Strata::Attributes
 
   attribute :member_id, :string
   attribute :email, :string
