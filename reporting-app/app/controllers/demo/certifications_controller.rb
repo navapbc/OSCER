@@ -25,34 +25,28 @@ class Demo::CertificationsController < ApplicationController
     # TODO: Eventually create a Service to handle member data construction
 
     member_data = {
-      "name": {
-        "first": @form.member_name.first,
-        "middle": @form.member_name.middle,
-        "last": @form.member_name.last,
-        "suffix": @form.member_name.suffix
-      }
+      "name": Certifications::MemberData::Name.from_strata(@form.member_name)
     }
 
     case @form.ex_parte_scenario
     when "Partially met work hours requirement"
-      member_data.merge!(FactoryBot.build(:certification_member_data, :partially_met_work_hours_requirement, cert_date: @form.certification_date))
+      member_data.merge!(FactoryBot.build(:certification_member_data, :partially_met_work_hours_requirement, cert_date: @form.certification_date).attributes)
     when "Fully met work hours requirement"
-      member_data.merge!(FactoryBot.build(:certification_member_data, :fully_met_work_hours_requirement, cert_date: @form.certification_date, num_months: @form.number_of_months_to_certify))
+      member_data.merge!(FactoryBot.build(:certification_member_data, :fully_met_work_hours_requirement, cert_date: @form.certification_date, num_months: @form.number_of_months_to_certify).attributes)
     else
       # nothing
     end
 
     @certification = FactoryBot.build(
       :certification,
-      :with_member_data_base,
       :connected_to_email,
-      member_data_base: member_data,
       email: @form.member_email,
       case_number: @form.case_number,
       certification_requirements: certification_requirements,
+      member_data: Certifications::MemberData.new_filtered(member_data),
     )
 
-    if certification_service.save_new(@certification, current_user)
+    if @certification.save
       redirect_to certification_path(@certification)
     else
       flash.now[:errors] = @certification.errors.full_messages

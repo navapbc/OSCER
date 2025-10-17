@@ -8,26 +8,12 @@ class Certifications::RequirementParams < Certifications::RequirementTypeParams
 
   validates :certification_date, presence: true
 
-  # either :certification_type or all type params are required
-  validates :certification_type, presence: true, on: :input, if: Proc.new { |params| params.has_missing_type_params? }
-  validates :lookback_period, presence: true, on: :input, if: Proc.new { |params| params.certification_type.blank? }
-  validates :number_of_months_to_certify, presence: true, on: :input, if: Proc.new { |params| params.certification_type.blank? }
-
-  # either :due_date or :due_period_days is required, if :certification_type not specified
-  validates :due_period_days, presence: true, on: :input, if: Proc.new { |params| params.certification_type.blank? && params.due_date.blank? }
-  validates :due_date, presence: true, on: :input, if: Proc.new { |params| params.certification_type.blank? && params.due_period_days.blank? }
-
   # ultimately before being used, we should have these
-  validates :lookback_period, presence: true, on: :use
-  validates :number_of_months_to_certify, presence: true, on: :use
+  validates :lookback_period, presence: true
+  validates :number_of_months_to_certify, presence: true
   # one or the other
-  validates :due_period_days, presence: true, on: :use, if: Proc.new { |params| params.due_date.blank? }
-  validates :due_date, presence: true, on: :use, if: Proc.new { |params| params.due_period_days.blank? }
-
-  def self.new_filtered(hash)
-    possible_param_names = Certifications::RequirementParams.attribute_names.map(&:to_sym)
-    Certifications::RequirementParams.new(hash.slice(*possible_param_names))
-  end
+  validates :due_period_days, presence: true, if: Proc.new { |params| params.due_date.blank? }
+  validates :due_date, presence: true, if: Proc.new { |params| params.due_period_days.blank? }
 
   def with_type_params(requirement_type_params)
     self.lookback_period = requirement_type_params.lookback_period
@@ -43,21 +29,5 @@ class Certifications::RequirementParams < Certifications::RequirementTypeParams
     end
 
     false
-  end
-end
-
-class Certifications::RequirementParamsType < ActiveRecord::Type::Json
-  def cast(value)
-    return nil if value.nil?
-
-    return value if value.is_a?(Certifications::RequirementParams)
-
-    case value
-    when Hash
-      hash = value.with_indifferent_access
-      Certifications::RequirementParams.new_filtered(hash)
-    else
-      nil
-    end
   end
 end
